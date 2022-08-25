@@ -32,6 +32,8 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 
 ################################################################################
 # Set executable
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
 add_executable(${EXECUTABLE}
 	${PROJECT_SOURCES}
 )
