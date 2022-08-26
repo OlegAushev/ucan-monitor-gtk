@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include <memory>
-#include "adwaita.h"
+#include <adwaita.h>
 
 
 void onAppActivate(GtkApplication* app)
