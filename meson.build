@@ -1,25 +1,26 @@
-project('ucan-monitor', 'cpp',
+project('ucan-monitor', 'c',
 	version: '0.1.0',
 	meson_version: '>= 0.59.0',
 	default_options: [
 	],
 )
 
+
 gnome = import('gnome')
 
 app_sources = [
-	'src/main.cpp',
-	#'gui/app_window.cpp'
+	'src/main.c',
 ]
 
 app_deps = [
-	dependency('libadwaita-1', version: '>= 1.0'),
+	dependency('gtk4',		version: '>= 4.5.0'),
+	dependency('libadwaita-1',	version: '>= 1.0'),
 ]
 
-#app_sources += gnome.compile_resources('app_resources',
-#	'gresource.xml',
-#	c_name: 'ucan_monitor'
-#)
+app_sources += gnome.compile_resources('app_resources',
+	'gresource.xml',
+	c_name: 'ucan_monitor'
+)
 
 executable('ucan-monitor', app_sources,
 	dependencies: app_deps,
