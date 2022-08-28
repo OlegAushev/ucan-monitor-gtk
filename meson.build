@@ -10,6 +10,8 @@ gnome = import('gnome')
 
 app_sources = [
 	'src/main.c',
+	'gui/ucan_monitor_application.c',
+	'gui/ucan_monitor_window.c'
 ]
 
 app_deps = [
