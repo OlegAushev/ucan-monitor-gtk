@@ -16,7 +16,7 @@
     </child>
     <child>
       <object class="GtkLabel" id="label">
-        <property name="label">Hello, World!</property>
+        <property name="label">Hello, GTK4!</property>
         <attributes>
           <attribute name="weight" value="bold"/>
           <attribute name="scale" value="2"/>
@@ -36,9 +36,11 @@
         <attribute name="action">win.show-help-overlay</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_About text-viewer</attribute>
+        <attribute name="label" translatable="yes">_About uCAN-monitor</attribute>
         <attribute name="action">app.about</attribute>
       </item>
     </section>
   </menu>
 </interface>
+
+

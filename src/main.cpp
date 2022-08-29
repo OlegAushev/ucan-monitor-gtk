@@ -14,6 +14,7 @@
 #include <memory>
 #include <adwaita.h>
 
+#include <glib/gi18n.h>
 #include "gui/ucan_monitor_application.h"
 
 

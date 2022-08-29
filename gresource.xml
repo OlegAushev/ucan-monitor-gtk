@@ -2,5 +2,6 @@
 <gresources>
 	<gresource prefix="/">
 		<file>gui/ucan_monitor_window.ui</file>
+		<file>gui/gtk/help-overlay.ui</file>
 	</gresource>
 </gresources>

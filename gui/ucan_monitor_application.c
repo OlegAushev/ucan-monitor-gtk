@@ -101,7 +101,7 @@ static void ucan_monitor_application_show_about (GSimpleAction *action,
   window = gtk_application_get_active_window (GTK_APPLICATION (self));
 
   gtk_show_about_dialog (window,
-                         "program-name", "text-viewer",
+                         "program-name", "uCAN-monitor",
                          "authors", authors,
                          "version", "0.1.0",
                          NULL);
