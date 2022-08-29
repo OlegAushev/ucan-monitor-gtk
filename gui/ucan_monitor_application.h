@@ -26,10 +26,9 @@ G_DECLARE_FINAL_TYPE(UcanMonitorApplication, ucan_monitor_application, UCAN_MONI
 UcanMonitorApplication* ucan_monitor_application_new(const char* application_id,
                                                     GApplicationFlags flags);
 
-
 struct _UcanMonitorApplication
 {
-	GtkApplication* parent_instance;
+	GtkApplication parent_instance;
 };
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-	<gresource>
+	<gresource prefix="/">
+		<file>gui/ucan_monitor_window.ui</file>
 	</gresource>
 </gresources>

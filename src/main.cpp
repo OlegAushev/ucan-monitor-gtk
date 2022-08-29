@@ -10,8 +10,8 @@
  */
 
 
-//#include <iostream>
-//#include <memory>
+#include <iostream>
+#include <memory>
 #include <adwaita.h>
 
 #include "gui/ucan_monitor_application.h"
@@ -19,7 +19,6 @@
 
 int main(int argc, char* argv[])
 {
-	//std::unique_ptr<UcanMonitorApplication>
 	UcanMonitorApplication* app = ucan_monitor_application_new("com.example.uCAN-Monitor",
 			G_APPLICATION_FLAGS_NONE);
 

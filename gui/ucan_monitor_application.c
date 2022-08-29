@@ -24,9 +24,9 @@ UcanMonitorApplication* ucan_monitor_application_new(const char* application_id,
 						GApplicationFlags flags)
 {
 	return g_object_new(UCAN_MONITOR_TYPE_APPLICATION,
-					"application-id", application_id,
-					"flags", flags,
-					NULL);
+			"application-id", application_id,
+			"flags", flags,
+			NULL);
 }
 
 
@@ -36,7 +36,7 @@ UcanMonitorApplication* ucan_monitor_application_new(const char* application_id,
 static void ucan_monitor_application_finalize(GObject* object)
 {
 	UcanMonitorApplication* self = (UcanMonitorApplication*)object;
-	G_OBJECT_CLASS(ucan_monitor_application_parent_class)->finalize (object);
+	G_OBJECT_CLASS(ucan_monitor_application_parent_class)->finalize(object);
 }
 
 
@@ -56,8 +56,8 @@ static void ucan_monitor_application_activate(GApplication* app)
 	if (window == NULL)
 	{
 		window = g_object_new(UCAN_MONITOR_TYPE_WINDOW,
-						"application", app,
-						NULL);
+				"application", app,
+				NULL);
 	}
 
 	/* Ask the window manager/compositor to present the window. */
@@ -65,15 +65,13 @@ static void ucan_monitor_application_activate(GApplication* app)
 }
 
 
-
-
 ///
 ///
 ///
 static void ucan_monitor_application_class_init(UcanMonitorApplicationClass* klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS(klass);
-	GApplicationClass *app_class = G_APPLICATION_CLASS(klass);
+	GObjectClass* object_class = G_OBJECT_CLASS(klass);
+	GApplicationClass* app_class = G_APPLICATION_CLASS(klass);
 
 	object_class->finalize = ucan_monitor_application_finalize;
 
@@ -115,7 +113,7 @@ static void ucan_monitor_application_show_about (GSimpleAction *action,
 ///
 static void ucan_monitor_application_init(UcanMonitorApplication* self)
 {
-	g_autoptr(GSimpleAction) quit_action = g_simple_action_new ("quit", NULL);
+	g_autoptr(GSimpleAction) quit_action = g_simple_action_new("quit", NULL);
 	g_signal_connect_swapped(quit_action, "activate", G_CALLBACK (g_application_quit), self);
 	g_action_map_add_action(G_ACTION_MAP (self), G_ACTION (quit_action));
 

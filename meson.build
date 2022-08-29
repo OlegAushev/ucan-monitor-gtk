@@ -1,4 +1,4 @@
-project('ucan-monitor', 'c',
+project('ucan-monitor', 'cpp',
 	version: '0.1.0',
 	meson_version: '>= 0.59.0',
 	default_options: [
@@ -9,9 +9,9 @@ project('ucan-monitor', 'c',
 gnome = import('gnome')
 
 app_sources = [
-	'src/main.c',
+	'src/main.cpp',
 	'gui/ucan_monitor_application.c',
-	'gui/ucan_monitor_window.c'
+	'gui/ucan_monitor_window.c',
 ]
 
 app_deps = [
