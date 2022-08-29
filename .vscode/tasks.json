@@ -2,13 +2,15 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "meson",
-			"mode": "build",
-			"problemMatcher": [
-				"$meson-gcc"
+			"type": "cmake",
+			"label": "CMake: build",
+			"command": "build",
+			"targets": [
+				"ucan-monitor"
 			],
 			"group": "build",
-			"label": "Meson: Build all targets"
+			"problemMatcher": [],
+			"detail": "CMake build task"
 		}
 	]
 }

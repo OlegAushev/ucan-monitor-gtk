@@ -28,6 +28,30 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/include/*.cpp
 	${PROJECT_SOURCE_DIR}/src/*.c
 	${PROJECT_SOURCE_DIR}/src/*.cpp
+	${PROJECT_SOURCE_DIR}/gui/*.c
+	${PROJECT_SOURCE_DIR}/gui/*.cpp
+)
+
+################################################################################
+# Set resources
+find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
+set(GRESOURCE_XML gresource.xml)
+set(GRESOURCE_C ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
+message(msg: ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+
+add_custom_command(
+	OUTPUT ${GRESOURCE_C}
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${GRESOURCE_C} ${GRESOURCE_XML}
+	VERBATIM
+	#MAIN_DEPENDENCY ${GRESOURCE_XML}
+	DEPENDS
+		gui/ucan_monitor_window.ui
+)
+
+add_custom_target(
+	gresource-target
+	DEPENDS ${GRESOURCE_C}
 )
 
 ################################################################################
@@ -36,7 +60,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(${EXECUTABLE}
 	${PROJECT_SOURCES}
+	${GRESOURCE_C}
 )
+
+set_source_files_properties(
+	${GRESOURCE_C}
+	PROPERTIES GENERATED TRUE
+)
+
+add_dependencies(${EXECUTABLE} gresource-target)
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
 	$<$<CONFIG:Debug>:DEBUG>
@@ -60,6 +92,7 @@ target_compile_options(${EXECUTABLE} PRIVATE
 )
 
 target_compile_features(${EXECUTABLE} PRIVATE
+	c_std_11
 	cxx_std_17
 )
 
