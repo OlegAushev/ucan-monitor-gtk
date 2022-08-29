@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/">
-		<file>gui/ucan_monitor_window.ui</file>
+		<file>gui/monitor_window.ui</file>
 		<file>gui/gtk/help-overlay.ui</file>
 	</gresource>
 </gresources>

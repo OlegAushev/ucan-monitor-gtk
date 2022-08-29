@@ -46,7 +46,7 @@ add_custom_command(
 	VERBATIM
 	#MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
-		gui/ucan_monitor_window.ui
+		gui/monitor_window.ui
 )
 
 add_custom_target(

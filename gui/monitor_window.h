@@ -1,5 +1,5 @@
 /**
- * @file ucan_monitor_window.h
+ * @file monitor_window.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -19,12 +19,12 @@
 G_BEGIN_DECLS
 
 
-#define UCAN_MONITOR_TYPE_WINDOW (ucan_monitor_window_get_type())
+#define MONITOR_TYPE_WINDOW (monitor_window_get_type())
 
-G_DECLARE_FINAL_TYPE(UcanMonitorWindow, ucan_monitor_window, UCAN_MONITOR, WINDOW, GtkApplicationWindow)
+G_DECLARE_FINAL_TYPE(MonitorWindow, monitor_window, MONITOR, WINDOW, GtkApplicationWindow)
 
 
-struct _UcanMonitorWindow
+struct _MonitorWindow
 {
 	GtkApplicationWindow  parent_instance;
 

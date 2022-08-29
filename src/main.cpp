@@ -15,12 +15,12 @@
 #include <adwaita.h>
 
 #include <glib/gi18n.h>
-#include "gui/ucan_monitor_application.h"
+#include "gui/monitor_application.h"
 
 
 int main(int argc, char* argv[])
 {
-	UcanMonitorApplication* app = ucan_monitor_application_new("com.example.uCAN-Monitor",
+	MonitorApplication* app = monitor_application_new("com.example.uCAN-Monitor",
 			G_APPLICATION_FLAGS_NONE);
 
 	return g_application_run(G_APPLICATION(app), argc, argv);
