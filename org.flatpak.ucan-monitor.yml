@@ -1,0 +1,21 @@
+app-id: org.flatpak.ucan-monitor
+runtime: org.gnome.Platform
+runtime-version: '42'
+sdk: org.gnome.Sdk
+command: ucan-monitor
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=session-bus
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host
+  - --device=dri
+modules:
+  - name: ucan-monitor
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    sources:
+      - type: dir
+        path: /home/oleg/MEGA/workdir/vscode/git-repos/ucan-monitor

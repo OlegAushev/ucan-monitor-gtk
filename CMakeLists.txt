@@ -99,3 +99,12 @@ target_compile_features(${EXECUTABLE} PRIVATE
 ################################################################################
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+################################################################################
+# Set install target for flatpak-builder
+install(TARGETS ${CMAKE_PROJECT_NAME}
+	RUNTIME
+	DESTINATION /app/bin
+)
+
+
