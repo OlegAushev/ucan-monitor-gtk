@@ -13,9 +13,23 @@
 #include "monitor_window.h"
 
 
-G_DEFINE_TYPE (MonitorWindow, monitor_window, GTK_TYPE_APPLICATION_WINDOW)
+struct _MonitorWindow
+{
+	GtkApplicationWindow parent_instance;
 
-static void monitor_window_class_init (MonitorWindowClass *klass)
+	/* Template widgets */
+	GtkHeaderBar*		header_bar;
+	GtkLabel*		label;
+};
+
+
+G_DEFINE_TYPE(MonitorWindow, monitor_window, GTK_TYPE_APPLICATION_WINDOW)
+
+
+///
+///
+///
+static void monitor_window_class_init(MonitorWindowClass* klass)
 {
 	GtkWidgetClass* widget_class = GTK_WIDGET_CLASS(klass);
 
@@ -24,7 +38,13 @@ static void monitor_window_class_init (MonitorWindowClass *klass)
 	gtk_widget_class_bind_template_child(widget_class, MonitorWindow, label);
 }
 
-static void monitor_window_init (MonitorWindow *self)
+
+///
+///
+///
+static void monitor_window_init(MonitorWindow* self)
 {
 	gtk_widget_init_template(GTK_WIDGET(self));
 }
+
+

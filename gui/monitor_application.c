@@ -14,14 +14,19 @@
 #include "monitor_window.h"
 
 
+struct _MonitorApplication
+{
+	GtkApplication parent_instance;
+};
+
+
 G_DEFINE_TYPE(MonitorApplication, monitor_application, ADW_TYPE_APPLICATION)
 
 
 ///
 ///
 ///
-MonitorApplication* monitor_application_new(const char* application_id,
-						GApplicationFlags flags)
+MonitorApplication* monitor_application_new(const char* application_id, GApplicationFlags flags)
 {
 	return g_object_new(MONITOR_TYPE_APPLICATION,
 			"application-id", application_id,
@@ -88,7 +93,7 @@ static void monitor_application_class_init(MonitorApplicationClass* klass)
 ///
 ///
 ///
-static void monitor_application_show_about (GSimpleAction *action,
+static void monitor_application_show_about(GSimpleAction *action,
                                     GVariant      *parameter,
                                     gpointer       user_data)
 {
@@ -126,3 +131,5 @@ static void monitor_application_init(MonitorApplication* self)
 						"app.quit",
 						accels);
 }
+
+

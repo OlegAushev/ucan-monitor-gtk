@@ -1,5 +1,5 @@
 /**
- * @file monitor_window.h
+ * @file monitor_headerbar.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -19,9 +19,9 @@
 G_BEGIN_DECLS
 
 
-#define MONITOR_TYPE_WINDOW (monitor_window_get_type())
+#define MONITOR_TYPE_HEADERBAR (monitor_headerbar_get_type())
 
-G_DECLARE_FINAL_TYPE(MonitorWindow, monitor_window, MONITOR, WINDOW, GtkApplicationWindow)
+GtkWidget* monitor_headerbar_new();
 
 
 G_END_DECLS

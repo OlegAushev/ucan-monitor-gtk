@@ -23,13 +23,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE(MonitorApplication, monitor_application, MONITOR, APPLICATION, AdwApplication)
 
-MonitorApplication* monitor_application_new(const char* application_id,
-                                                    GApplicationFlags flags);
-
-struct _MonitorApplication
-{
-	GtkApplication parent_instance;
-};
+MonitorApplication* monitor_application_new(const char* application_id, GApplicationFlags flags);
 
 
 G_END_DECLS
