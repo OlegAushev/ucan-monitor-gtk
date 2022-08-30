@@ -6,9 +6,15 @@ project(ucan-monitor VERSION 0.1)
 set(EXECUTABLE ${CMAKE_PROJECT_NAME})
 
 ################################################################################
-# GTK
+# GTK and VALA
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4 libadwaita-1)
+
+list(APPEND CMAKE_MODULE_PATH
+    ${CMAKE_SOURCE_DIR}/cmake/vala
+)
+find_package(Vala REQUIRED)
+include(${VALA_USE_FILE})
 
 include_directories(${GTK4_INCLUDE_DIRS})
 link_directories(${GTK4_LIBRARY_DIRS})
@@ -16,7 +22,7 @@ link_directories(${GTK4_LIBRARY_DIRS})
 add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
-# Set headers and sources
+# HEADERS and SOURCES
 set(PROJECT_INCLUDE_DIRECTORIES
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/include
@@ -33,7 +39,7 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 )
 
 ################################################################################
-# Set resources
+# XML and UI resources
 find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
 set(GRESOURCE_XML gresource.xml)
 set(GRESOURCE_C ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
@@ -46,7 +52,7 @@ add_custom_command(
 	VERBATIM
 	#MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
-		gui/monitor_window.ui
+		gui/window.ui
 )
 
 add_custom_target(
@@ -55,12 +61,27 @@ add_custom_target(
 )
 
 ################################################################################
-# Set executable
+# VALA
+vala_precompile(VALA_C
+	gui/main.vala
+	gui/window.vala
+	gui/application.vala
+PACKAGES
+	gtk4
+	libadwaita-1
+OPTIONS
+	--gresources=${PROJECT_SOURCE_DIR}/${GRESOURCE_XML}
+)
+
+
+################################################################################
+# EXECUTABLE
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(${EXECUTABLE}
-	${PROJECT_SOURCES}
+	##${PROJECT_SOURCES}
 	${GRESOURCE_C}
+	${VALA_C}
 )
 
 set_source_files_properties(
@@ -82,7 +103,7 @@ target_include_directories(${EXECUTABLE} PRIVATE
 target_link_libraries(${EXECUTABLE} ${GTK4_LIBRARIES})
 
 ################################################################################
-# Set compiler options and features
+# Compiler OPTIONS and FEATURES
 target_compile_options(${EXECUTABLE} PRIVATE
 	-Wall
 	-Wextra

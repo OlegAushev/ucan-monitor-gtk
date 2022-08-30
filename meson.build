@@ -1,4 +1,4 @@
-project('ucan-monitor', 'cpp',
+project('ucan-monitor', ['c', 'vala'],
 	version: '0.1.0',
 	meson_version: '>= 0.59.0',
 	default_options: [
@@ -9,9 +9,9 @@ project('ucan-monitor', 'cpp',
 gnome = import('gnome')
 
 app_sources = [
-	'src/main.cpp',
-	'gui/monitor_application.c',
-	'gui/monitor_window.c',
+	'gui/main.vala',
+	'gui/window.vala',
+	'gui/application.vala',
 ]
 
 app_deps = [
