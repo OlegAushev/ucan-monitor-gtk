@@ -50,5 +50,9 @@
 		"streambuf": "cpp",
 		"cinttypes": "cpp",
 		"typeinfo": "cpp"
-	}
+	},
+	"[Log]": {
+		"editor.fontSize": 14
+	},
+	"terminal.integrated.fontSize": 14,
 }
