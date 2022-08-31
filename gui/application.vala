@@ -19,7 +19,7 @@
 namespace CanMonitor {
     public class Application : Adw.Application {
         public Application () {
-            Object (application_id: "org.example.TextViewerVala", flags: ApplicationFlags.FLAGS_NONE);
+            Object (application_id: "org.example.uCAN-Monitor", flags: ApplicationFlags.FLAGS_NONE);
         }
 
         construct {
