@@ -35,56 +35,48 @@
   <requires lib="gtk" version="4.6"/>
   <requires lib="libadwaita" version="1.1"/>
   <template class="CanMonitorWindow" parent="GtkApplicationWindow">
-	<property name="default-height">300</property>
-	<property name="default-width">600</property>
-	<child type="titlebar">
-	  <object class="GtkHeaderBar" id="headerbar">
-	    <child type="end">
-	      <object class="GtkMenuButton">
-		<property name="halign">baseline</property>
-		<property name="icon-name">open-menu-symbolic</property>
-	      </object>
-	    </child>
-	    <child type="title">
-	      <object class="AdwViewSwitcher">
-		<property name="policy">wide</property>
-		<property name="stack">main_stack</property>
-		<property name="vexpand">True</property>
-		<child>
-		  <object class="GtkButton">
-		    <property name="accessible-role">tab</property>
-		    <property name="label">Page 1</property>
-		  </object>
-		</child>
-		<child>
-		  <object class="GtkButton">
-		    <property name="accessible-role">tab</property>
-		    <property name="label">Page 2</property>
-		  </object>
-		</child>
-	      </object>
-	    </child>
-	  </object>
-	</child>
-	<child>
-	  <object class="AdwViewStack" id="main_stack">
-	    <child>
-	      <object class="GtkLabel">
-		<property name="label">This is page 1</property>
-		<property name="margin-top">4</property>
-	      </object>
-	    </child>
-	    <child>
-	      <object class="GtkLabel">
-		<property name="label">This is page 2</property>
-		<property name="margin-top">4</property>
-	      </object>
-	    </child>
-	  </object>
-	</child>
+    <property name="default-height">300</property>
+    <property name="default-width">600</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="headerbar">
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="halign">baseline</property>
+            <property name="icon-name">open-menu-symbolic</property>
+          </object>
+        </child>
+        <child type="title">
+          <object class="AdwViewSwitcherTitle" id="viewswitcher_main">
+            <property name="stack">viewstack_main</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwViewStack" id="viewstack_main">
+        <child>
+          <object class="AdwViewStackPage" id="viewstack_main_page1">
+            <property name="child">
+              <object class="GtkLabel">
+                <property name="label">This is page 1</property>
+              </object>
+            </property>
+            <property name="title">Page 1</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage" id="viewstack_main_page2">
+            <property name="child">
+              <object class="GtkLabel">
+                <property name="label">This is page 2</property>
+              </object>
+            </property>
+            <property name="title">Page 2</property>
+          </object>
+        </child>
+      </object>
+    </child>
   </template>
-
-
 
 
 

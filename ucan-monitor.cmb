@@ -2,34 +2,30 @@
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
 <cambalache-project version="0.10.3" target_tk="gtk-4.0">
   <ui>
-	(1,None,"ucan-monitor.ui","ucan-monitor.ui",None,None,None,None,None,None)
+	(1,1,"ucan-monitor.ui","ucan-monitor.ui",None,None,None,None,None,None)
   </ui>
   <object>
-	(1,1,"GtkApplicationWindow",None,None,None,None,None,None),
+	(1,1,"GtkApplicationWindow","CanMonitorWindow",None,None,None,None,None),
 	(1,7,"GtkHeaderBar","headerbar",1,None,"titlebar",None,None),
 	(1,8,"GtkMenuButton",None,7,None,"end",None,None),
-	(1,10,"AdwViewStack","main_stack",1,None,None,None,2),
-	(1,11,"GtkLabel",None,10,None,None,None,None),
-	(1,12,"GtkLabel",None,10,None,None,None,1),
-	(1,13,"AdwViewSwitcher",None,7,None,"title",None,None),
-	(1,14,"GtkButton",None,13,None,None,None,None),
-	(1,15,"GtkButton",None,13,None,None,None,1)
+	(1,10,"AdwViewStack","viewstack_main",1,None,None,None,2),
+	(1,16,"AdwViewStackPage","viewstack_main_page1",10,None,None,None,None),
+	(1,17,"GtkLabel",None,16,None,None,None,None),
+	(1,18,"AdwViewStackPage","viewstack_main_page2",10,None,None,None,1),
+	(1,19,"GtkLabel",None,18,None,None,None,None),
+	(1,21,"AdwViewSwitcherTitle","viewswitcher_main",7,None,"title",None,None)
   </object>
   <object_property>
 	(1,1,"GtkWindow","default-height","300",None,None,None,None,None),
 	(1,1,"GtkWindow","default-width","600",None,None,None,None,None),
 	(1,8,"GtkMenuButton","icon-name","open-menu-symbolic",None,None,None,None,None),
 	(1,8,"GtkWidget","halign","baseline",None,None,None,None,None),
-	(1,11,"GtkLabel","label","This is page 1",None,None,None,None,None),
-	(1,11,"GtkWidget","margin-top","4",None,None,None,None,None),
-	(1,12,"GtkLabel","label","This is page 2",None,None,None,None,None),
-	(1,12,"GtkWidget","margin-top","4",None,None,None,None,None),
-	(1,13,"AdwViewSwitcher","policy","wide",None,None,None,None,None),
-	(1,13,"AdwViewSwitcher","stack","10",None,None,None,None,None),
-	(1,13,"GtkWidget","vexpand","True",None,None,None,None,None),
-	(1,14,"GtkAccessible","accessible-role","tab",None,None,None,None,None),
-	(1,14,"GtkButton","label","Page 1",None,None,None,None,None),
-	(1,15,"GtkAccessible","accessible-role","tab",None,None,None,None,None),
-	(1,15,"GtkButton","label","Page 2",None,None,None,None,None)
+	(1,16,"AdwViewStackPage","child",None,None,None,None,None,17),
+	(1,16,"AdwViewStackPage","title","Page 1",None,None,None,None,None),
+	(1,17,"GtkLabel","label","This is page 1",None,None,None,None,None),
+	(1,18,"AdwViewStackPage","child",None,None,None,None,None,19),
+	(1,18,"AdwViewStackPage","title","Page 2",None,None,None,None,None),
+	(1,19,"GtkLabel","label","This is page 2",None,None,None,None,None),
+	(1,21,"AdwViewSwitcherTitle","stack","10",None,None,None,None,None)
   </object_property>
 </cambalache-project>
