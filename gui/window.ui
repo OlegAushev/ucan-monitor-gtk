@@ -3,20 +3,24 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorWindow" parent="GtkApplicationWindow">
 		<property name="title">uCAN Monitor</property>
-		<property name="default-width">600</property>
-		<property name="default-height">300</property>
+		<property name="width-request">300</property>
+		<property name="default-width">1200</property>
+		<property name="default-height">600</property>
 		<child type="titlebar">		
-			<object class="GtkHeaderBar" id="headerbar">
+			<object class="AdwHeaderBar" id="headerbar">
+				<property name="centering-policy">strict</property>
 				<!-- SIDEBAR BUTTON -->
 				<child type="start">
 					<object class="GtkToggleButton">
 						<property name="icon-name">sidebar-show-symbolic</property>
+						<property name="active" bind-source="flap_main" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
 				<!-- VIEW SWITCHER -->
 				<child type="title">
-					<object class="AdwViewSwitcherTitle" id="viewswitcher_main">
+					<object class="AdwViewSwitcherTitle" id="viewswitcher_main_title">
 						<property name="stack">viewstack_main</property>
+						<property name="title" bind-source="CanMonitorWindow" bind-property="title" bind-flags="sync-create"/>
 					</object>
 				</child>
 				<!-- MENU BUTTON -->
@@ -30,51 +34,82 @@
 		</child>
 
 		<child>
-			<object class="AdwFlap" id="flap_main">
-				<property name="content">viewstack_main</property>
-				<property name="separator">flap_main_separator</property>
-				<property name="flap">label_flap</property>
-				<!-- FLAP -->
+			<object class="GtkBox">
+				<property name="orientation">vertical</property>
 				<child>
-					<object class="GtkLabel" id="label_flap">
-						<property name="label">    flap    </property>
-					</object>
-				</child>
-				<!-- SEPARATOR -->
-				<child>
-					<object class="GtkSeparator" id="flap_main_separator"></object>
-				</child>
-				<!-- CONTENT -->
-				<child>
-					<object class="AdwViewStack" id="viewstack_main">
+					<object class="AdwFlap" id="flap_main">
+						<property name="flap">label_flap</property>
+						<property name="separator">flap_main_separator</property>
+						<property name="content">viewstack_main</property>
+						<!-- FLAP -->
 						<child>
-							<!-- PAGE 1 of VIEWSTACK -->
-							<object class="AdwViewStackPage" id="viewstack_main_page1">
-								<property name="title">Control</property>
-								<property name="icon-name">joystick</property>
-								<property name="child">
-									<object class="GtkLabel">
-										<property name="label">This is page 1</property>
+							<object class="GtkLabel" id="label_flap">
+								<property name="label">                    flap                    </property>
+								<style>
+									<class name="background"/>
+								</style>
+							</object>			      
+						</child>
+						<!-- SEPARATOR -->
+						<child>
+							<object class="GtkSeparator" id="flap_main_separator"></object>
+						</child>
+						<!-- CONTENT -->
+						<child>
+							<object class="AdwViewStack" id="viewstack_main">
+								<property name="vexpand">True</property>
+								<child>
+									<!-- PAGE 1 of VIEWSTACK -->
+									<object class="AdwViewStackPage" id="viewstack_main_page1">
+										<property name="title">Data</property>
+										<property name="icon-name">table-symbolic</property>
+										<property name="child">
+											<object class="GtkLabel">
+												<property name="label">                    This is page 1                    </property>
+											</object>
+										</property>
 									</object>
-								</property>
+								</child>
+								<child>
+									<!-- PAGE 2 of VIEWSTACK -->
+									<object class="AdwViewStackPage" id="viewstack_main_page2">
+										<property name="title">Charts</property>
+										<property name="icon-name">utilities-system-monitor-symbolic</property>
+										<property name="child">
+											<object class="GtkLabel">
+												<property name="label">                    This is page 2                    </property>
+											</object>
+										</property>
+									</object>
+								</child>
+								<child>
+									<!-- PAGE 3 of VIEWSTACK -->
+									<object class="AdwViewStackPage" id="viewstack_main_page3">
+										<property name="title">Setup</property>
+										<property name="icon-name">utilities-tweak-tool-symbolic</property>
+										<property name="child">
+											<object class="GtkLabel">
+												<property name="label">This is page 3</property>
+											</object>
+										</property>
+									</object>
+								</child>
 							</object>
 						</child>
-						<child>
-							<!-- PAGE 2 of VIEWSTACK -->
-							<object class="AdwViewStackPage" id="viewstack_main_page2">
-								<property name="title">Setup</property>
-								<property name="icon-name">utilities-tweak-tool-symbolic</property>
-								<property name="child">
-									<object class="GtkLabel">
-										<property name="label">This is page 2</property>
-									</object>
-								</property>
-							</object>
-						</child>
+					</object>		
+				</child>
+				
+				<child>
+					<object class="AdwViewSwitcherBar" id="viewswitcher_main_bar">
+						<property name="stack">viewstack_main</property>
+						<property name="reveal" bind-source="viewswitcher_main_title" bind-property="title-visible" bind-flags="sync-create"/>
 					</object>
 				</child>
-			</object>		
+			</object>
 		</child>
+	      
+
+
 	</template>
 
 
