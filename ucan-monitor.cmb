@@ -7,25 +7,36 @@
   <object>
 	(1,1,"GtkApplicationWindow","CanMonitorWindow",None,None,None,None,None),
 	(1,7,"GtkHeaderBar","headerbar",1,None,"titlebar",None,None),
-	(1,8,"GtkMenuButton",None,7,None,"end",None,None),
-	(1,10,"AdwViewStack","viewstack_main",1,None,None,None,2),
-	(1,16,"AdwViewStackPage","viewstack_main_page1",10,None,None,None,None),
-	(1,17,"GtkLabel",None,16,None,None,None,None),
-	(1,18,"AdwViewStackPage","viewstack_main_page2",10,None,None,None,1),
-	(1,19,"GtkLabel",None,18,None,None,None,None),
-	(1,21,"AdwViewSwitcherTitle","viewswitcher_main",7,None,"title",None,None)
+	(1,8,"GtkMenuButton",None,7,None,"end",None,1),
+	(1,21,"AdwViewSwitcherTitle","viewswitcher_main",7,None,"title",None,2),
+	(1,23,"AdwFlap","flap_main",1,None,None,None,1),
+	(1,24,"GtkLabel","label_flap",23,None,None,None,None),
+	(1,26,"AdwViewStack","viewstack_main",23,None,None,None,2),
+	(1,27,"AdwViewStackPage","viewstack_main_page1",26,None,None,None,None),
+	(1,28,"GtkLabel",None,27,None,None,None,None),
+	(1,29,"AdwViewStackPage","viewstack_main_page2",26,None,None,None,1),
+	(1,30,"GtkLabel",None,29,None,None,None,None),
+	(1,31,"GtkToggleButton",None,7,None,"start",None,None),
+	(1,32,"GtkSeparator","flap_main_separator",23,None,None,None,1)
   </object>
   <object_property>
 	(1,1,"GtkWindow","default-height","300",None,None,None,None,None),
-	(1,1,"GtkWindow","default-width","600",None,None,None,None,None),
+	(1,1,"GtkWindow","default-width","1000",None,None,None,None,None),
 	(1,8,"GtkMenuButton","icon-name","open-menu-symbolic",None,None,None,None,None),
 	(1,8,"GtkWidget","halign","baseline",None,None,None,None,None),
-	(1,16,"AdwViewStackPage","child",None,None,None,None,None,17),
-	(1,16,"AdwViewStackPage","title","Page 1",None,None,None,None,None),
-	(1,17,"GtkLabel","label","This is page 1",None,None,None,None,None),
-	(1,18,"AdwViewStackPage","child",None,None,None,None,None,19),
-	(1,18,"AdwViewStackPage","title","Page 2",None,None,None,None,None),
-	(1,19,"GtkLabel","label","This is page 2",None,None,None,None,None),
-	(1,21,"AdwViewSwitcherTitle","stack","10",None,None,None,None,None)
+	(1,21,"AdwViewSwitcherTitle","stack","26",None,None,None,None,None),
+	(1,23,"AdwFlap","content","26",None,None,None,None,None),
+	(1,23,"AdwFlap","flap","24",None,None,None,None,None),
+	(1,23,"AdwFlap","separator","32",None,None,None,None,None),
+	(1,24,"GtkLabel","label","flap",None,None,None,None,None),
+	(1,27,"AdwViewStackPage","child",None,None,None,None,None,28),
+	(1,27,"AdwViewStackPage","icon-name","joystick",None,None,None,None,None),
+	(1,27,"AdwViewStackPage","title","Control",None,None,None,None,None),
+	(1,28,"GtkLabel","label","This is page 1",None,None,None,None,None),
+	(1,29,"AdwViewStackPage","child",None,None,None,None,None,30),
+	(1,29,"AdwViewStackPage","icon-name","utilities-tweak-tool-symbolic",None,None,None,None,None),
+	(1,29,"AdwViewStackPage","title","Setup",None,None,None,None,None),
+	(1,30,"GtkLabel","label","This is page 2",None,None,None,None,None),
+	(1,31,"GtkButton","icon-name","sidebar-show-symbolic",None,None,None,None,None)
   </object_property>
 </cambalache-project>

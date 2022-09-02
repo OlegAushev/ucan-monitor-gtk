@@ -1,4 +1,3 @@
-<!--
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
@@ -6,89 +5,80 @@
 		<property name="title">uCAN Monitor</property>
 		<property name="default-width">600</property>
 		<property name="default-height">300</property>
-		<child type="titlebar">
+		<child type="titlebar">		
 			<object class="GtkHeaderBar" id="headerbar">
+				<!-- SIDEBAR BUTTON -->
+				<child type="start">
+					<object class="GtkToggleButton">
+						<property name="icon-name">sidebar-show-symbolic</property>
+					</object>
+				</child>
+				<!-- VIEW SWITCHER -->
+				<child type="title">
+					<object class="AdwViewSwitcherTitle" id="viewswitcher_main">
+						<property name="stack">viewstack_main</property>
+					</object>
+				</child>
+				<!-- MENU BUTTON -->
 				<child type="end">
 					<object class="GtkMenuButton">
 						<property name="icon-name">open-menu-symbolic</property>
-						<property name="menu-model">primary_menu</property>
+						<property name="menu-model">menu_primary</property>
 					</object>
 				</child>
 			</object>
 		</child>
+
 		<child>
-			<object class="GtkLabel" id="label">
-				<property name="label">Hello, World!</property>
-				<attributes>
-					<attribute name="weight" value="bold" />
-					<attribute name="scale" value="2" />
-				</attributes>
-			</object>
+			<object class="AdwFlap" id="flap_main">
+				<property name="content">viewstack_main</property>
+				<property name="separator">flap_main_separator</property>
+				<property name="flap">label_flap</property>
+				<!-- FLAP -->
+				<child>
+					<object class="GtkLabel" id="label_flap">
+						<property name="label">    flap    </property>
+					</object>
+				</child>
+				<!-- SEPARATOR -->
+				<child>
+					<object class="GtkSeparator" id="flap_main_separator"></object>
+				</child>
+				<!-- CONTENT -->
+				<child>
+					<object class="AdwViewStack" id="viewstack_main">
+						<child>
+							<!-- PAGE 1 of VIEWSTACK -->
+							<object class="AdwViewStackPage" id="viewstack_main_page1">
+								<property name="title">Control</property>
+								<property name="icon-name">joystick</property>
+								<property name="child">
+									<object class="GtkLabel">
+										<property name="label">This is page 1</property>
+									</object>
+								</property>
+							</object>
+						</child>
+						<child>
+							<!-- PAGE 2 of VIEWSTACK -->
+							<object class="AdwViewStackPage" id="viewstack_main_page2">
+								<property name="title">Setup</property>
+								<property name="icon-name">utilities-tweak-tool-symbolic</property>
+								<property name="child">
+									<object class="GtkLabel">
+										<property name="label">This is page 2</property>
+									</object>
+								</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>		
 		</child>
 	</template>
--->
-
-<?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.10.3 -->
-<interface>
-  <!-- interface-name ucan-monitor.ui -->
-  <requires lib="gtk" version="4.6"/>
-  <requires lib="libadwaita" version="1.1"/>
-  <template class="CanMonitorWindow" parent="GtkApplicationWindow">
-    <property name="default-height">300</property>
-    <property name="default-width">600</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="headerbar">
-        <child type="end">
-          <object class="GtkMenuButton">
-            <property name="halign">baseline</property>
-            <property name="icon-name">open-menu-symbolic</property>
-          </object>
-        </child>
-        <child type="title">
-          <object class="AdwViewSwitcherTitle" id="viewswitcher_main">
-            <property name="stack">viewstack_main</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwViewStack" id="viewstack_main">
-        <child>
-          <object class="AdwViewStackPage" id="viewstack_main_page1">
-            <property name="child">
-              <object class="GtkLabel">
-                <property name="label">This is page 1</property>
-              </object>
-            </property>
-            <property name="title">Page 1</property>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewStackPage" id="viewstack_main_page2">
-            <property name="child">
-              <object class="GtkLabel">
-                <property name="label">This is page 2</property>
-              </object>
-            </property>
-            <property name="title">Page 2</property>
-          </object>
-        </child>
-      </object>
-    </child>
-  </template>
 
 
-
-
-
-
-
-
-
-
-
-	<menu id="primary_menu">
+	<menu id="menu_primary">
 		<section>
 			<item>
 				<attribute name="label" translatable="yes">_Preferences</attribute>
