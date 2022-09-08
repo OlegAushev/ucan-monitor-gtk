@@ -66,6 +66,7 @@ vala_precompile(VALA_C
 	gui/main.vala
 	gui/window.vala
 	gui/application.vala
+	gui/window_canbusprefs.vala
 PACKAGES
 	gtk4
 	libadwaita-1

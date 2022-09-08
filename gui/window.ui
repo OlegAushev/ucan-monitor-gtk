@@ -116,6 +116,10 @@
 	<menu id="menu_primary">
 		<section>
 			<item>
+				<attribute name="label" translatable="yes">_CAN bus</attribute>
+				<attribute name="action">app.canbus</attribute>
+			</item>
+			<item>
 				<attribute name="label" translatable="yes">_Preferences</attribute>
 				<attribute name="action">app.preferences</attribute>
 			</item>

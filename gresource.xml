@@ -2,5 +2,6 @@
 <gresources>
 	<gresource prefix="/">
 		<file>gui/window.ui</file>
+		<file>gui/window_canbusprefs.ui</file>
 	</gresource>
 </gresources>

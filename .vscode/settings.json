@@ -52,7 +52,7 @@
 		"typeinfo": "cpp"
 	},
 	"[Log]": {
-		"editor.fontSize": 14
+		"editor.fontSize": 12
 	},
-	"terminal.integrated.fontSize": 14,
+	"terminal.integrated.fontSize": 12,
 }

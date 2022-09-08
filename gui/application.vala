@@ -26,6 +26,7 @@ namespace CanMonitor {
             ActionEntry[] action_entries = {
                 { "about", this.on_about_action },
                 { "preferences", this.on_preferences_action },
+		{ "canbus", this.on_canbus_action },
                 { "quit", this.quit }
             };
             this.add_action_entries (action_entries, this);
@@ -52,5 +53,10 @@ namespace CanMonitor {
         private void on_preferences_action () {
             message ("app.preferences action activated");
         }
+
+	private void on_canbus_action() {
+		var win_canbus = new CanMonitor.WindowCanBusPrefs(this);
+		win_canbus.present();
+	}
     }
 }
