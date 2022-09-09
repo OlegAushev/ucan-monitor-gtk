@@ -3,10 +3,11 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorWindowCanBusPrefs" parent="AdwPreferencesWindow">
 		<property name="title">CAN Bus Preferences</property>
-		<property name="default-width">200</property>
-		<property name="default-height">400</property>
-		<property name="search-enabled">False</property>
-		
+		<property name="width-request">300</property>
+		<property name="height-request">350</property>
+		<property name="default-width">300</property>
+		<property name="default-height">350</property>
+		<property name="search-enabled">False</property>	
 		<child>
 			<object class="AdwPreferencesPage">
 				<child>
@@ -43,8 +44,35 @@
 						</child>
 					</object>
 				</child>
+				<child>
+					<object class="AdwPreferencesGroup">
+						<child>
+							<object class="GtkBox">
+								<property name="orientation">vertical</property>
+								<property name="spacing">8</property>
+								<!-- CONNECT BUTTON -->
+								<child>
+									<object class="GtkButton">
+										<property name="label">Connect</property>
+										<style>
+											<class name="suggested-action"/>
+										</style>
+									</object>
+								</child>						
+								<!-- DISCONNECT BUTTON -->
+								<child>
+									<object class="GtkButton">
+										<property name="label">Disconnect</property>
+										<style>
+											<class name="destructive-action"/>
+										</style>
+									</object>
+								</child>
+							</object>
+						</child>
+					</object>
+				</child>
 			</object>>
 		</child>
-
 	</template>
 </interface>
