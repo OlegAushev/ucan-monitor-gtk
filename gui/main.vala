@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-int main (string[] args) {
-    var app = new CanMonitor.Application ();
-    return app.run (args);
+int main(string[] args)
+{
+	var app = new CanMonitor.Application();
+	return app.run(args);
 }
+
+
