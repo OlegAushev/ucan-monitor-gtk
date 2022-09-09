@@ -53,6 +53,7 @@ add_custom_command(
 	#MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
 		gui/window.ui
+		gui/window_canbusprefs.ui
 )
 
 add_custom_target(

@@ -10,8 +10,9 @@ gnome = import('gnome')
 
 app_sources = [
 	'gui/main.vala',
-	'gui/window.vala',
 	'gui/application.vala',
+	'gui/window.vala',
+	'gui/window_canbusprefs.vala'
 ]
 
 app_deps = [

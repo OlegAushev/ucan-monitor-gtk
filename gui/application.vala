@@ -19,7 +19,7 @@
 namespace CanMonitor {
 
 
-public class Application : Adw.Application 
+public class Application : Adw.Application
 {
 	public Application()
 	{
