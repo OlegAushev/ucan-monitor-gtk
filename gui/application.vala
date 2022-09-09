@@ -65,7 +65,7 @@ public class Application : Adw.Application
 
 	private void on_canbus_action()
 	{
-		var win_canbus = new CanMonitor.WindowCanBusPrefs(this);
+		var win_canbus = new CanMonitor.WindowCanBusPrefs();
 		win_canbus.present();
 	}
 }

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="CanMonitorWindowCanBusPrefs" parent="GtkApplicationWindow">
-		<child type="titlebar">		
+	<template class="CanMonitorWindowCanBusPrefs" parent="AdwPreferencesWindow">
+		<property name="title">CAN Bus Preferences</property>
+		<property name="default-width">200</property>
+		<property name="default-height">400</property>
+		<property name="search-enabled">False</property>
+		<child type="titlebar">	
 			<object class="AdwHeaderBar" id="headerbar">
+				
+			</object>
+		</child>
+		<child>
+			<object class="AdwPreferencesGroup">
+				
 			</object>
 		</child>
 

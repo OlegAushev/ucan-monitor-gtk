@@ -2,7 +2,8 @@
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
 <cambalache-project version="0.10.3" target_tk="gtk-4.0">
   <ui>
-	(1,1,"ucan-monitor.ui","ucan-monitor.ui",None,None,None,None,None,None)
+	(1,1,"ucan-monitor.ui","window.ui",None,None,None,None,None,None),
+	(3,1,None,"window_canbusprefs.ui",None,None,None,None,None,None)
   </ui>
   <object>
 	(1,1,"GtkApplicationWindow","CanMonitorWindow",None,None,None,None,None),
@@ -17,7 +18,11 @@
 	(1,33,"AdwHeaderBar","headerbar",1,None,"titlebar",None,None),
 	(1,34,"GtkToggleButton",None,33,None,"start",None,None),
 	(1,35,"AdwViewSwitcherTitle","viewswitcher_main",33,None,"title",None,1),
-	(1,36,"GtkMenuButton",None,33,None,"end",None,2)
+	(1,36,"GtkMenuButton",None,33,None,"end",None,2),
+	(3,1,"AdwPreferencesWindow","CanMonitorWindowCanBusPrefs",None,None,None,None,None),
+	(3,3,"AdwPreferencesPage",None,1,None,None,None,None),
+	(3,4,"AdwPreferencesPage",None,3,None,None,None,None),
+	(3,5,"AdwComboRow","combo_can_interface",4,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkWindow","default-height","300",None,None,None,None,None),
@@ -39,6 +44,7 @@
 	(1,34,"GtkToggleButton","active","True",None,None,None,None,None),
 	(1,35,"AdwViewSwitcherTitle","stack","26",None,None,None,None,None),
 	(1,36,"GtkMenuButton","icon-name","open-menu-symbolic",None,None,None,None,None),
-	(1,36,"GtkWidget","halign","baseline",None,None,None,None,None)
+	(1,36,"GtkWidget","halign","baseline",None,None,None,None,None),
+	(3,1,"AdwPreferencesWindow","search-enabled","False",None,None,None,None,None)
   </object_property>
 </cambalache-project>

@@ -6,7 +6,7 @@
 		<property name="width-request">300</property>
 		<property name="default-width">1200</property>
 		<property name="default-height">600</property>
-		<child type="titlebar">		
+		<child type="titlebar">
 			<object class="AdwHeaderBar" id="headerbar">
 				<property name="centering-policy">strict</property>
 				<!-- SIDEBAR BUTTON -->
@@ -116,7 +116,7 @@
 	<menu id="menu_primary">
 		<section>
 			<item>
-				<attribute name="label" translatable="yes">_CAN bus</attribute>
+				<attribute name="label" translatable="yes">_CAN Bus</attribute>
 				<attribute name="action">app.canbus</attribute>
 			</item>
 			<item>

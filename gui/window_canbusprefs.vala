@@ -5,12 +5,12 @@ namespace CanMonitor {
 
 
 [GtkTemplate (ui = "/gui/window_canbusprefs.ui")]
-public class WindowCanBusPrefs : Gtk.ApplicationWindow {
+public class WindowCanBusPrefs : Adw.PreferencesWindow {
 	[GtkChild]
 
-	public WindowCanBusPrefs(Gtk.Application app)
+	public WindowCanBusPrefs()
 	{
-		Object (application: app);
+		//Object();
 	}
 }
 
