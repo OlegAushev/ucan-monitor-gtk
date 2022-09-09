@@ -6,15 +6,44 @@
 		<property name="default-width">200</property>
 		<property name="default-height">400</property>
 		<property name="search-enabled">False</property>
-		<child type="titlebar">	
-			<object class="AdwHeaderBar" id="headerbar">
-				
-			</object>
-		</child>
+		
 		<child>
-			<object class="AdwPreferencesGroup">
-				
-			</object>
+			<object class="AdwPreferencesPage">
+				<child>
+					<object class="AdwPreferencesGroup">
+						<!-- INTERFACE COMBOBOX -->
+						<child>
+							<object class="AdwComboRow" id="combo_can_interface">
+								<property name="title">Interface</property>
+								<property name="model">
+									<object class="GtkStringList">
+										<items>
+											<item>can0</item>
+											<item>can1</item>
+										</items>
+									</object>
+								</property>
+							</object>
+						</child>
+						<!-- BITRATE COMBOBOX -->
+						<child>
+							<object class="AdwComboRow" id="combo_can_bitrate">
+								<property name="title">Bitrate</property>
+								<property name="model">
+									<object class="GtkStringList">
+										<items>
+											<item>125000</item>
+											<item>250000</item>
+											<item>500000</item>
+											<item>1000000</item>
+										</items>
+									</object>
+								</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>>
 		</child>
 
 	</template>
