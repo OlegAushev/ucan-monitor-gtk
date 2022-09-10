@@ -1,7 +1,9 @@
-project('ucan-monitor', ['c', 'vala'],
+project('ucan-monitor', ['c', 'vala', 'cpp'],
 	version: '0.1.0',
 	meson_version: '>= 0.59.0',
 	default_options: [
+		'c_std=c11',
+		'cpp_std=c++20'
 	],
 )
 
@@ -12,8 +14,16 @@ app_sources = [
 	'src/gui/main.vala',
 	'src/gui/application.vala',
 	'src/gui/window.vala',
-	'src/gui/window_canbusprefs.vala'
+	'src/gui/window_canbusprefs.vala',
+
+	'src/main.cpp',
+	'src/cansocket/cansocket.cpp',
+	'src/ucanopen/ucanopen_client.cpp',
+	'src/ucanopen/objectdictionary/objectdictionary.cpp',
+	'src/ucanopen/ucanopen_servernode/ucanopen_servernode.cpp',
 ]
+
+app_incdirs = include_directories('src')
 
 app_deps = [
 	dependency('gtk4',		version: '>= 4.5.0'),
@@ -26,5 +36,6 @@ app_sources += gnome.compile_resources('app_resources',
 )
 
 executable('ucan-monitor', app_sources,
+	include_directories: app_incdirs,
 	dependencies: app_deps,
 )
