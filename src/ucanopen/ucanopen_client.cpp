@@ -34,11 +34,11 @@ Client::Client(NodeId _nodeId, std::shared_ptr<can::Socket> _canSocket)
 	m_tpdoInfo.insert({TpdoType::TPDO3, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
 	m_tpdoInfo.insert({TpdoType::TPDO4, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
 
-	std::future<void> futureExit = m_signalExitRunThread.get_future();
-	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
 #ifdef STD_COUT_ENABLED
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
 #endif
+	std::future<void> futureExit = m_signalExitRunThread.get_future();
+	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
 	m_state = NmtState::OPERATIONAL;
 }
 

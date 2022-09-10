@@ -49,7 +49,23 @@
 		"stdexcept": "cpp",
 		"streambuf": "cpp",
 		"cinttypes": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"chrono": "cpp",
+		"codecvt": "cpp",
+		"condition_variable": "cpp",
+		"ctime": "cpp",
+		"list": "cpp",
+		"map": "cpp",
+		"set": "cpp",
+		"optional": "cpp",
+		"ratio": "cpp",
+		"iomanip": "cpp",
+		"mutex": "cpp",
+		"ranges": "cpp",
+		"semaphore": "cpp",
+		"stop_token": "cpp",
+		"thread": "cpp",
+		"future": "cpp"
 	},
 	"[Log]": {
 		"editor.fontSize": 12

@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+extern int main_enter();
+extern void main_exit();
+
+
 namespace CanMonitor {
 
 
@@ -36,17 +41,21 @@ public class Application : Adw.Application
 		};
 		this.add_action_entries (action_entries, this);
 		this.set_accels_for_action ("app.quit", {"<primary>q"});
+
+		this.shutdown.connect(main_exit);
         }
 
 	public override void activate()
 	{
-		base.activate ();
+		main_enter();
+
+		base.activate();
 		var win = this.active_window;
 		if (win == null)
 		{
 			win = new CanMonitor.Window (this);
 		}
-		win.present ();
+		win.present();
         }
 
 	private void on_about_action()
