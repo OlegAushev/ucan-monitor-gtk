@@ -22,6 +22,35 @@ namespace can {
 Socket::Socket()
 {
 	m_socket = -1;
+
+	// check can0: may be interface is already enabled
+	/* FIND SCRIPT */
+	std::filesystem::path scriptPath = findScript("socketcan_check.sh");
+	if (scriptPath.empty())
+	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Warning: SocketCAN checking script not found." << std::endl;
+#endif
+		return;
+	}
+
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cansocket] SocketCAN checking script found: " << scriptPath << std::endl;
+#endif
+
+	/* RUN SCRIPT */
+	std::string cmd = "sh " + scriptPath.string() + " " + "can0";
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cansocket] System cmd: " << cmd << std::endl;
+#endif
+	int shRet = system(cmd.c_str());
+	if (shRet == 0)
+	{
+		if (createSocket("can0") != Error::NO_ERROR)
+		{
+			m_socket = -1;
+		}
+	}
 }
 
 
@@ -37,28 +66,8 @@ Socket::~Socket()
 ///
 ///
 ///
-Error Socket::connect(const std::string& interface, int bitrate)
+Error Socket::createSocket(const std::string& interface)
 {
-	if (!detail::interfaceList.contains(interface)
-			|| !detail::bitrateList.contains(bitrate))
-	{
-		return Error::INVALID_ARGUMENT;
-	}
-
-	std::lock_guard<std::mutex> lock1(m_sendMutex);
-	std::lock_guard<std::mutex> lock2(m_recvMutex);
-
-	m_interface = interface;
-	m_bitrate = bitrate;
-
-	/* FIND and RUN SHELL SCRIPT */
-	Error error;
-	error = runConnectionScript(interface, bitrate);
-	if (error != Error::NO_ERROR)
-	{
-		return error;
-	}
-
 	/* CREATE SOCKET */
 	m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (m_socket < 0)
@@ -96,6 +105,70 @@ Error Socket::connect(const std::string& interface, int bitrate)
 ///
 ///
 ///
+Error Socket::connect(const std::string& interface, int bitrate)
+{
+	if (!detail::interfaceList.contains(interface)
+			|| !detail::bitrateList.contains(bitrate))
+	{
+		return Error::INVALID_ARGUMENT;
+	}
+
+	std::lock_guard<std::mutex> lock1(m_sendMutex);
+	std::lock_guard<std::mutex> lock2(m_recvMutex);
+
+	/* FIND SCRIPT */
+	std::filesystem::path scriptPath = findScript("socketcan_enable.sh");
+	if (scriptPath.empty())
+	{
+		return Error::SCRIPT_NOT_FOUND;
+	}
+
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cansocket] SocketCAN enabling script found: " << scriptPath << std::endl;
+#endif
+
+	/* RUN SCRIPT */
+	std::string cmd = "pkexec sh " + scriptPath.string() + " " + interface + " " + std::to_string(bitrate);
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cansocket] System cmd: " << cmd << std::endl;
+#endif
+	int pkexecRet = system(cmd.c_str());
+	Error error;
+
+	switch (pkexecRet)
+	{
+	case 0:
+		error = Error::NO_ERROR;
+		break;
+	case 1:
+		error = Error::INVALID_ARGUMENT;
+		break;
+	case 2:
+		error = Error::DEVICE_NOT_FOUND;
+		break;
+	case 3:
+		error = Error::SOCKETCAN_FAILED;
+		break;
+	default:
+		error = Error::SCRIPT_EXEC_FAILED;
+		break;
+	}
+
+	if (error != Error::NO_ERROR)
+	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] CAN socket creation failed. Error code: " << static_cast<int>(error) << std::endl;
+#endif
+		return error;
+	}
+
+	return createSocket(interface);
+}
+
+
+///
+///
+///
 Error Socket::disconnect()
 {
 	if (m_socket < 0)
@@ -108,10 +181,16 @@ Error Socket::disconnect()
 
 	if (close(m_socket) < 0)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Socket closing failed." << std::endl;
+#endif
 		return Error::SOCKET_CLOSING_FAILED;
 	}
 	else
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Socket closed." << std::endl;
+#endif
 		m_socket = -1;
 		return Error::NO_ERROR;
 	}
@@ -121,48 +200,18 @@ Error Socket::disconnect()
 ///
 ///
 ///
-Error Socket::runConnectionScript(const std::string& interface, int bitrate)
+std::filesystem::path Socket::findScript(std::filesystem::path name)
 {
 	std::filesystem::path scriptPath;
-
-	/* FIND SCRIPT */
-	for (auto path : can::detail::scriptPathList)
+	for (auto loc : can::detail::scriptsLocationList)
 	{
-		auto absolutePath = std::filesystem::absolute(path);
+		auto absolutePath = std::filesystem::absolute(loc/name);
 		if (std::filesystem::exists(absolutePath))
 		{
-			scriptPath = std::filesystem::canonical(path);
-#ifdef STD_COUT_ENABLED
-			std::cout << "[cansocket] SocketCAN script found: " << scriptPath << std::endl;
-#endif
+			scriptPath = std::filesystem::canonical(loc/name);
 		}
 	}
-
-	if (scriptPath.empty())
-	{
-		return Error::SCRIPT_NOT_FOUND;
-	}
-
-	/* RUN SCRIPT */
-	std::string cmd = "pkexec sh " + scriptPath.string() + " " + interface + " " + std::to_string(bitrate);
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] System cmd: " << cmd << std::endl;
-#endif
-	int error = system(cmd.c_str());
-
-	switch (error)
-	{
-	case 0:
-		return Error::NO_ERROR;
-	case 1:
-		return Error::INVALID_ARGUMENT;
-	case 2:
-		return Error::DEVICE_NOT_FOUND;
-	case 3:
-		return Error::SOCKETCAN_FAILED;
-	default:
-		return Error::SCRIPT_EXEC_FAILED;
-	}
+	return scriptPath;
 }
 
 

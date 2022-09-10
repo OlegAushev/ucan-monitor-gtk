@@ -58,11 +58,11 @@ namespace detail {
 
 const std::set<std::string> interfaceList = {"can0", "can1"};
 const std::set<int> bitrateList = {125'000, 250'000, 500'000, 1'000'000};
-const std::set<std::filesystem::path> scriptPathList = {
-	"socketcan_enable.sh",
-	"scripts/socketcan_enable.sh",
-	"../socketcan_enable.sh",
-	"../scripts/socketcan_enable.sh"
+const std::set<std::filesystem::path> scriptsLocationList = {
+	"",
+	"scripts",
+	"..",
+	"../scripts"
 };
 
 
@@ -76,9 +76,6 @@ const std::set<std::filesystem::path> scriptPathList = {
 class Socket
 {
 private:
-	std::string m_interface;
-	int m_bitrate;
-
 	int m_socket;
 	ifreq m_ifr;
 	sockaddr_can m_addr;
@@ -103,7 +100,8 @@ public:
 	Error recv();
 
 private:
-	Error runConnectionScript(const std::string& interface, int bitrate);
+	Error createSocket(const std::string& interface);
+	std::filesystem::path findScript(std::filesystem::path name);
 };
 
 
