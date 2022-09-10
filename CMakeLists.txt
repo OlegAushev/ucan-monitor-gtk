@@ -6,6 +6,12 @@ project(ucan-monitor VERSION 0.1)
 set(EXECUTABLE ${CMAKE_PROJECT_NAME})
 
 ################################################################################
+# THREADS
+set(CMAKE_THREAD_PREFER_PTHREAD ON)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+################################################################################
 # GTK and VALA
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4 libadwaita-1)
@@ -79,7 +85,7 @@ OPTIONS
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(${EXECUTABLE}
-	##${PROJECT_SOURCES}
+	${PROJECT_SOURCES}
 	${GRESOURCE_C}
 	${VALA_C}
 )
@@ -100,21 +106,24 @@ target_include_directories(${EXECUTABLE} PRIVATE
 	${PROJECT_INCLUDE_DIRECTORIES}
 )
 
-target_link_libraries(${EXECUTABLE} ${GTK4_LIBRARIES})
+target_link_libraries(${EXECUTABLE}
+	${GTK4_LIBRARIES}
+	Threads::Threads
+)
 
 ################################################################################
 # Compiler OPTIONS and FEATURES
 target_compile_options(${EXECUTABLE} PRIVATE
+	#$<$<CONFIG:Debug>:-Og -g3 -ggdb>
+	#$<$<CONFIG:Release>:-Og -g0>
 	-Wall
 	-Wextra
 	-Wpedantic
-	$<$<CONFIG:Debug>:-Og -g3 -ggdb>
-	$<$<CONFIG:Release>:-Og -g0>
 )
 
 target_compile_features(${EXECUTABLE} PRIVATE
 	c_std_11
-	cxx_std_17
+	cxx_std_20
 )
 
 ################################################################################
