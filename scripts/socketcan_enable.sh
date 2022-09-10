@@ -10,7 +10,7 @@ then
 	echo "Device $1 found."
 	if ip link set $1 down
 	then
-		ip link set $1 type can bitrate $2
+		ip link set $1 type can bitrate $2 restart-ms 100
 		ip link set $1 up
 		echo "SocketCAN interface $1 (bitrate = $2) enabled."
 		exit 0
