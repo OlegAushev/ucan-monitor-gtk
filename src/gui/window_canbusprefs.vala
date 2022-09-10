@@ -1,6 +1,12 @@
 ///
 ///
 ///
+
+
+extern void cansocket_connect();
+extern void cansocket_disconnect();
+
+
 namespace CanMonitor {
 
 

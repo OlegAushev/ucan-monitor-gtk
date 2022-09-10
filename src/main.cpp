@@ -43,7 +43,7 @@ int main_loop(std::future<void> futureExit)
 	});
 
 	ucanopen::Tester ucanTester;
-
+/*
 	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1, std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester),
 			std::chrono::milliseconds(500));
 	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2, std::bind(&ucanopen::Tester::makeTpdo2, &ucanTester),
@@ -52,7 +52,7 @@ int main_loop(std::future<void> futureExit)
 			std::chrono::milliseconds(2000));
 	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO4, std::bind(&ucanopen::Tester::makeTpdo4, &ucanTester),
 			std::chrono::milliseconds(4000));
-
+*/
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO1,
 			std::bind(&ucanopen::Tester::processRpdo1, &ucanTester, std::placeholders::_1));
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO2,
@@ -61,11 +61,11 @@ int main_loop(std::future<void> futureExit)
 			std::bind(&ucanopen::Tester::processRpdo3, &ucanTester, std::placeholders::_1));
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO4,
 			std::bind(&ucanopen::Tester::processRpdo4, &ucanTester, std::placeholders::_1));
-
+/*
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).enableRpdo();
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnSendPdo(ucanopen::RpdoType::RPDO1,
 			std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester), std::chrono::milliseconds(500));
-
+*/
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
 
@@ -111,4 +111,15 @@ void main_exit()
 }
 
 
+extern "C"
+void cansocket_connect()
+{
+	g_canSocket->connect("can0", 125000);
+}
 
+
+extern "C"
+void cansocket_disconnect()
+{
+	g_canSocket->disconnect();
+}

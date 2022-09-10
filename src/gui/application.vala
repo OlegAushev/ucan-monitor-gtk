@@ -34,10 +34,10 @@ public class Application : Adw.Application
 	construct
 	{
 		ActionEntry[] action_entries = {
-			{ "about", this.on_about_action },
-			{ "preferences", this.on_preferences_action },
-			{ "canbus", this.on_canbus_action },
-			{ "quit", this.quit }
+			{"about", this.on_about_action},
+			{"preferences", this.on_preferences_action},
+			{"canbus", this.on_canbus_action},
+			{"quit", this.quit}
 		};
 		this.add_action_entries (action_entries, this);
 		this.set_accels_for_action ("app.quit", {"<primary>q"});

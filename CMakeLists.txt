@@ -127,6 +127,10 @@ target_compile_features(${EXECUTABLE} PRIVATE
 	cxx_std_20
 )
 
+target_link_options(${EXECUTABLE} PRIVATE
+	-Wl,--export-dynamic # sic! for signals
+)
+
 ################################################################################
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

@@ -57,6 +57,7 @@
 										<style>
 											<class name="suggested-action"/>
 										</style>
+										<signal name="clicked" handler="cansocket_connect"/>
 									</object>
 								</child>						
 								<!-- DISCONNECT BUTTON -->
@@ -66,6 +67,7 @@
 										<style>
 											<class name="destructive-action"/>
 										</style>
+										<signal name="clicked" handler="cansocket_disconnect"/>
 									</object>
 								</child>
 							</object>
