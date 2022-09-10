@@ -9,10 +9,10 @@ project('ucan-monitor', ['c', 'vala'],
 gnome = import('gnome')
 
 app_sources = [
-	'gui/main.vala',
-	'gui/application.vala',
-	'gui/window.vala',
-	'gui/window_canbusprefs.vala'
+	'src/gui/main.vala',
+	'src/gui/application.vala',
+	'src/gui/window.vala',
+	'src/gui/window_canbusprefs.vala'
 ]
 
 app_deps = [

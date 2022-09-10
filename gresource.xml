@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/">
-		<file>gui/window.ui</file>
-		<file>gui/window_canbusprefs.ui</file>
+		<file>src/gui/window.ui</file>
+		<file>src/gui/window_canbusprefs.ui</file>
 	</gresource>
 </gresources>

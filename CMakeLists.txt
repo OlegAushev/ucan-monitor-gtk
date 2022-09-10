@@ -34,8 +34,6 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/include/*.cpp
 	${PROJECT_SOURCE_DIR}/src/*.c
 	${PROJECT_SOURCE_DIR}/src/*.cpp
-	${PROJECT_SOURCE_DIR}/gui/*.c
-	${PROJECT_SOURCE_DIR}/gui/*.cpp
 )
 
 ################################################################################
@@ -52,8 +50,8 @@ add_custom_command(
 	VERBATIM
 	#MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
-		gui/window.ui
-		gui/window_canbusprefs.ui
+		src/gui/window.ui
+		src/gui/window_canbusprefs.ui
 )
 
 add_custom_target(
@@ -64,10 +62,10 @@ add_custom_target(
 ################################################################################
 # VALA
 vala_precompile(VALA_C
-	gui/main.vala
-	gui/window.vala
-	gui/application.vala
-	gui/window_canbusprefs.vala
+	src/gui/main.vala
+	src/gui/window.vala
+	src/gui/application.vala
+	src/gui/window_canbusprefs.vala
 PACKAGES
 	gtk4
 	libadwaita-1
