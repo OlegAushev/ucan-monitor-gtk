@@ -165,7 +165,7 @@ inline TpdoType oppositePdo(RpdoType type)
 
 
 /// OD entry data types
-enum OD_EntryDataType
+enum ODEntryDataType
 {
 	OD_BOOL,
 	OD_INT16,
@@ -180,7 +180,7 @@ enum OD_EntryDataType
 
 
 /// OD entry access right types
-enum OD_EntryAccessRight
+enum ODEntryAccessRight
 {
 	OD_ACCESS_RW,
 	OD_ACCESS_RO,
@@ -245,7 +245,7 @@ public:
 		return val;
 	}
 
-	std::string toString(OD_EntryDataType type) const
+	std::string toString(ODEntryDataType type) const
 	{
 		switch (type)
 		{
@@ -334,27 +334,27 @@ enum SdoType
  * @brief OD entry key.
  * 
  */
-struct OD_EntryKey
+struct ODEntryKey
 {
 	unsigned int index;
 	unsigned int subindex;
 };
 
 
-inline bool operator<(const OD_EntryKey& lhs, const OD_EntryKey& rhs)
+inline bool operator<(const ODEntryKey& lhs, const ODEntryKey& rhs)
 {
 	return (lhs.index < rhs.index) || ((lhs.index == rhs.index) && (lhs.subindex < rhs.subindex));
 }
 
 
-struct OD_EntryValue
+struct ODEntryValue
 {
 	std::string category;
 	std::string subcategory;
 	std::string name;
 	std::string unit;
-	OD_EntryDataType dataType;
-	OD_EntryAccessRight accessRight;
+	ODEntryDataType dataType;
+	ODEntryAccessRight accessRight;
 
 	/**
 	 * @brief Checks OD-entry read access.
@@ -379,7 +379,7 @@ struct OD_EntryValue
 };
 
 
-struct OD_EntryValueAux
+struct ODEntryValueAux
 {
 	std::string category;
 	std::string subcategory;
@@ -387,7 +387,7 @@ struct OD_EntryValueAux
 };
 
 
-inline bool operator<(const OD_EntryValueAux& lhs, const OD_EntryValueAux& rhs)
+inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
 {
 	return (lhs.category < rhs.category) 
 			|| ((lhs.category == rhs.category) && (lhs.subcategory < rhs.subcategory))
@@ -395,8 +395,8 @@ inline bool operator<(const OD_EntryValueAux& lhs, const OD_EntryValueAux& rhs)
 }
 
 
-typedef std::map<OD_EntryKey, OD_EntryValue> ObjectDictionaryType;
-typedef std::map<OD_EntryValueAux, std::map<OD_EntryKey, OD_EntryValue>::const_iterator> ObjectDictionaryAuxType;
+typedef std::map<ODEntryKey, ODEntryValue> ObjectDictionaryType;
+typedef std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator> ObjectDictionaryAuxType;
 
 
 /**
@@ -418,7 +418,7 @@ inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8
 
 
 /// OD_TASK execution status
-enum OD_TaskStatus
+enum ODTaskStatus
 {
 	TASK_SUCCESS = 0,
 	TASK_FAIL = 1,
@@ -428,7 +428,7 @@ enum OD_TaskStatus
 
 
 /// OD request status
-enum class OD_RequestStatus
+enum class ODRequestStatus
 {
 	REQUEST_SUCCESS = 0,
 	REQUEST_FAIL = 1,

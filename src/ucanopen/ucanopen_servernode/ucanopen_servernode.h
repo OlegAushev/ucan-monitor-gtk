@@ -60,7 +60,7 @@ private:
 	std::map<RpdoType, RpdoInfo> m_rpdoInfo;
 
 	/* SDO */
-	std::function<void(SdoType, std::map<OD_EntryKey,OD_EntryValue>::const_iterator, CobSdoData)> m_rsdoCallback;
+	std::function<void(SdoType, std::map<ODEntryKey,ODEntryValue>::const_iterator, CobSdoData)> m_rsdoCallback;
 
 public:
 	ServerNode(NodeId _nodeId, std::shared_ptr<can::Socket> _socket, const ObjectDictionaryType& _dictionary);
@@ -84,7 +84,7 @@ public:
 	void onFrameReceived(can_frame frame);
 
 private:
-	std::map<OD_EntryKey, OD_EntryValue>::const_iterator findOdEntry(
+	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
 		const std::string& category,
 		const std::string& subcategory,
 		const std::string& name)
@@ -97,10 +97,10 @@ private:
 		return it->second;
 	}
 public:
-	OD_RequestStatus read(const std::string& category, const std::string& subcategory, const std::string& name);
-	OD_RequestStatus exec(const std::string& category, const std::string& subcategory, const std::string& name);
-	OD_RequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data = {});
-	OD_RequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value);
+	ODRequestStatus read(const std::string& category, const std::string& subcategory, const std::string& name);
+	ODRequestStatus exec(const std::string& category, const std::string& subcategory, const std::string& name);
+	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data = {});
+	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value);
 
 public:
 	std::set<std::string> watchEntriesList();

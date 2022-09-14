@@ -22,7 +22,7 @@
 namespace ucanopen {
 
 
-extern const std::map<OD_EntryKey, OD_EntryValue> OBJECT_DICTIONARY;
+extern const std::map<ODEntryKey, ODEntryValue> OBJECT_DICTIONARY;
 
 
 } // namespace ucanopen

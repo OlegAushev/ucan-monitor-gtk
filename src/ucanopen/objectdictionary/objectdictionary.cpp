@@ -16,7 +16,7 @@
 namespace ucanopen {
 
 
-extern const std::map<OD_EntryKey, OD_EntryValue> OBJECT_DICTIONARY = {	
+extern const std::map<ODEntryKey, ODEntryValue> OBJECT_DICTIONARY = {	
 {{0x1008, 0x00}, {"SYSTEM", "INFO", "DEVICE_NAME", "", OD_STRING, OD_ACCESS_RO}},
 {{0x5FFF, 0x00}, {"SYSTEM", "INFO", "SOFTWARE_VERSION", "", OD_UINT32, OD_ACCESS_RO}},
 {{0x5FFF, 0x01}, {"SYSTEM", "INFO", "BUILD_CONFIGURATION", "", OD_STRING, OD_ACCESS_RO}},

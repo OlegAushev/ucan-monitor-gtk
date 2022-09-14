@@ -89,7 +89,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 	{
 		CobSdo msg;
 		memcpy(&msg, frame.data, sizeof(CobSdo));
-		OD_EntryKey key = {msg.index, msg.subindex};
+		ODEntryKey key = {msg.index, msg.subindex};
 		auto odEntry = m_dictionary.find(key);
 		if (odEntry == m_dictionary.end())
 		{
@@ -100,7 +100,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 		switch (msg.cs)
 		{
 		case SDO_SCS_READ:
-			if (odEntry->second.dataType == OD_EntryDataType::OD_TASK)
+			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
 			{
 				type = SdoType::RESPONSE_TO_TASK;
 			}
@@ -124,17 +124,17 @@ void ServerNode::onFrameReceived(can_frame frame)
 ///
 ///
 ///
-OD_RequestStatus ServerNode::read(const std::string& category, const std::string& subcategory, const std::string& name)
+ODRequestStatus ServerNode::read(const std::string& category, const std::string& subcategory, const std::string& name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
 	if (entryIt == m_dictionary.end())
 	{
-		return OD_RequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::REQUEST_FAIL;
 	}
 	else if (entryIt->second.hasReadAccess() == false)
 	{
-		return OD_RequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
 	CobSdo message = {};
@@ -146,14 +146,14 @@ OD_RequestStatus ServerNode::read(const std::string& category, const std::string
 	memcpy(&data, &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return OD_RequestStatus::REQUEST_SUCCESS;
+	return ODRequestStatus::REQUEST_SUCCESS;
 }
 
 
 ///
 ///
 ///
-OD_RequestStatus ServerNode::exec(const std::string& odEntryCategory,
+ODRequestStatus ServerNode::exec(const std::string& odEntryCategory,
 		const std::string& odEntrySubcategory,
 		const std::string& odEntryName)
 {
@@ -164,17 +164,17 @@ OD_RequestStatus ServerNode::exec(const std::string& odEntryCategory,
 ///
 ///
 ///
-OD_RequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData sdoData)
+ODRequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData sdoData)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
 	if (entryIt == m_dictionary.end())
 	{
-		return OD_RequestStatus::REQUEST_FAIL;;
+		return ODRequestStatus::REQUEST_FAIL;;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
-		return OD_RequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
 	CobSdo message = {};
@@ -187,14 +187,14 @@ OD_RequestStatus ServerNode::write(const std::string& category, const std::strin
 	memcpy(&data, &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return OD_RequestStatus::REQUEST_SUCCESS;
+	return ODRequestStatus::REQUEST_SUCCESS;
 }
 
 
 ///
 ///
 ///
-OD_RequestStatus ServerNode::write(
+ODRequestStatus ServerNode::write(
 		const std::string& odEntryCategory,
 		const std::string& odEntrySubcategory,
 		const std::string& odEntryName,
@@ -204,11 +204,11 @@ OD_RequestStatus ServerNode::write(
 	
 	if (entryIt == m_dictionary.end())
 	{
-		return OD_RequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::REQUEST_FAIL;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
-		return OD_RequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
 	CobSdoData sdoData;
@@ -221,7 +221,7 @@ OD_RequestStatus ServerNode::write(
 		else if (value == "FALSE" || value == "OFF" || value == "0")
 			sdoData = CobSdoData(true);
 		else
-			return OD_RequestStatus::REQUEST_FAIL;
+			return ODRequestStatus::REQUEST_FAIL;
 		break;
 	case OD_INT16:
 		sdoData = CobSdoData(int16_t(std::stoi(value)));
@@ -242,7 +242,7 @@ OD_RequestStatus ServerNode::write(
 		sdoData = CobSdoData(uint16_t(std::stoi(value)));
 		break;
 	default:
-		return OD_RequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::REQUEST_FAIL;
 	}
 
 	CobSdo message = {};
@@ -255,7 +255,7 @@ OD_RequestStatus ServerNode::write(
 	memcpy(&data, &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return OD_RequestStatus::REQUEST_SUCCESS;
+	return ODRequestStatus::REQUEST_SUCCESS;
 }
 
 
