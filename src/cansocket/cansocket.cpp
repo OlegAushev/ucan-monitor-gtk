@@ -72,12 +72,18 @@ Error Socket::createSocket(const std::string& interface)
 	m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (m_socket < 0)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Socket creation failed." << std::endl;
+#endif
 		return Error::SOCKET_CREATION_FAILED;
 	}
 
 	std::strcpy(m_ifr.ifr_name, interface.c_str());
 	if (ioctl(m_socket, SIOCGIFINDEX, &m_ifr) < 0)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Interface retrieving failed." << std::endl;
+#endif
 		return Error::INTERFACE_RETRIEVING_FAILED;
 	}
 
@@ -92,12 +98,18 @@ Error Socket::createSocket(const std::string& interface)
 
 	if (bind(m_socket, (sockaddr*)&m_addr, sizeof(m_addr)) < 0)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] Socket binding failed." << std::endl;
+#endif
 		return Error::SOCKET_BINDING_FAILED;
 	}
 
 	m_recvFd.fd = m_socket;
 	m_recvFd.events = POLLIN;
 
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cansocket] Socket is created." << std::endl;
+#endif
 	return Error::NO_ERROR;
 }
 
@@ -124,7 +136,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	}
 
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] SocketCAN enabling script found: " << scriptPath << std::endl;
+	std::cout << "[cansocket] SocketCAN interface enabling script found: " << scriptPath << std::endl;
 #endif
 
 	/* RUN SCRIPT */
@@ -157,7 +169,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	if (error != Error::NO_ERROR)
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[cansocket] CAN socket creation failed. Error code: " << static_cast<int>(error) << std::endl;
+		std::cout << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << std::endl;
 #endif
 		return error;
 	}
@@ -173,6 +185,9 @@ Error Socket::disconnect()
 {
 	if (m_socket < 0)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[cansocket] No socket to close." << std::endl;
+#endif
 		return Error::NO_ERROR;
 	}
 
