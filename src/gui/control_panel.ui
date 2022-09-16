@@ -3,41 +3,26 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorControlPanel" parent="AdwBin">
 		<child>
-			<object class="GtkGrid">
-				<property name="margin-start">20</property>
-				<property name="margin-end">20</property>
-				<property name="margin-top">20</property>
-				<property name="margin-bottom">20</property>
-				<property name="row-spacing">10</property>
-				<property name="column-spacing">10</property>
+			<object class="GtkBox">
+				<property name="margin-start">10</property>
+				<property name="margin-end">10</property>
+				<property name="margin-top">10</property>
+				<property name="margin-bottom">10</property>
+				<property name="orientation">vertical</property>
+				<property name="spacing">10</property>	
 
 				<child>
-					<object class="GtkScale" id="scale">
-						<property name="width-request">200</property>
-						<property name="draw-value">1</property>
-						<property name="adjustment">adjustment</property>
+					<object class="SliderWithText" id="slider1">
+
 					</object>
 				</child>
-		
+
 				<child>
-					<object class="GtkSpinButton" id="spinbutton">
-						<property name="width-chars">5</property>
-						<property name="adjustment">adjustment</property>
-						<property name="climb-rate">1</property>
-						<property name="digits">2</property>
-						<property name="numeric">1</property>
+					<object class="SliderWithText" id="slider2">
+
 					</object>
 				</child>
 			</object>
 		</child>
 	</template>
-
-	<object class="GtkAdjustment" id="adjustment">
-		<property name="lower">-10.5</property>
-		<property name="upper">10.5</property>
-		<property name="value">0</property>
-		<property name="step-increment">0.1</property>
-		<property name="page-increment">1</property>
-	</object>
-
 </interface>

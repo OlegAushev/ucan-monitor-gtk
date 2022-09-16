@@ -22,7 +22,7 @@ namespace CanMonitor {
 [GtkTemplate (ui = "/src/gui/window.ui")]
 public class Window : Gtk.ApplicationWindow
 {
-	[GtkChild]
+	//[GtkChild]
 	//private unowned Gtk.Label label;
 
 	public Window (Gtk.Application app)

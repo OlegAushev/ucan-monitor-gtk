@@ -59,6 +59,7 @@ add_custom_command(
 		src/gui/window.ui
 		src/gui/window_canbusprefs.ui
 		src/gui/control_panel.ui
+		src/gui/components/slider_with_text.ui
 )
 
 add_custom_target(
@@ -74,6 +75,7 @@ vala_precompile(VALA_C
 	src/gui/application.vala
 	src/gui/window_canbusprefs.vala
 	src/gui/control_panel.vala
+	src/gui/components/slider_with_text.vala
 PACKAGES
 	gtk4
 	libadwaita-1

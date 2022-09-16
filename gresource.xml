@@ -4,5 +4,6 @@
 		<file>src/gui/window.ui</file>
 		<file>src/gui/window_canbusprefs.ui</file>
 		<file>src/gui/control_panel.ui</file>
+		<file>src/gui/components/slider_with_text.ui</file>
 	</gresource>
 </gresources>
