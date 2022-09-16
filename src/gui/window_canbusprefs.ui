@@ -14,7 +14,7 @@
 					<object class="AdwPreferencesGroup">
 						<!-- INTERFACE COMBOBOX -->
 						<child>
-							<object class="AdwComboRow" id="combo_can_interface">
+							<object class="AdwComboRow" id="comborow_canInterface">
 								<property name="title">Interface</property>
 								<property name="model">
 									<object class="GtkStringList">
@@ -28,7 +28,7 @@
 						</child>
 						<!-- BITRATE COMBOBOX -->
 						<child>
-							<object class="AdwComboRow" id="combo_can_bitrate">
+							<object class="AdwComboRow" id="comborow_canBitrate">
 								<property name="title">Bitrate</property>
 								<property name="model">
 									<object class="GtkStringList">

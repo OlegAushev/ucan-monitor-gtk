@@ -3,5 +3,6 @@
 	<gresource prefix="/">
 		<file>src/gui/window.ui</file>
 		<file>src/gui/window_canbusprefs.ui</file>
+		<file>src/gui/control_panel.ui</file>
 	</gresource>
 </gresources>
