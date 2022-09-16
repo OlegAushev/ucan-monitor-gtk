@@ -3,16 +3,41 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorControlPanel" parent="AdwBin">
 		<child>
-			<object class="GtkLabel" id="label_flap">
-				<property name="label">                    flap bin                 </property>
-				<style>
-					<class name="background"/>
-				</style>
+			<object class="GtkGrid">
+				<property name="margin-start">20</property>
+				<property name="margin-end">20</property>
+				<property name="margin-top">20</property>
+				<property name="margin-bottom">20</property>
+				<property name="row-spacing">10</property>
+				<property name="column-spacing">10</property>
+
+				<child>
+					<object class="GtkScale" id="scale">
+						<property name="width-request">200</property>
+						<property name="draw-value">1</property>
+						<property name="adjustment">adjustment</property>
+					</object>
+				</child>
+		
+				<child>
+					<object class="GtkSpinButton" id="spinbutton">
+						<property name="width-chars">5</property>
+						<property name="adjustment">adjustment</property>
+						<property name="climb-rate">1</property>
+						<property name="digits">2</property>
+						<property name="numeric">1</property>
+					</object>
+				</child>
 			</object>
 		</child>
-		<!--property name="label">                    flap test test                   </property>
-		<style>
-			<class name="background"/>
-		</style-->
 	</template>
+
+	<object class="GtkAdjustment" id="adjustment">
+		<property name="lower">-10.5</property>
+		<property name="upper">10.5</property>
+		<property name="value">0</property>
+		<property name="step-increment">0.1</property>
+		<property name="page-increment">1</property>
+	</object>
+
 </interface>
