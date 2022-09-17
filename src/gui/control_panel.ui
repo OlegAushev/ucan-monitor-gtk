@@ -18,8 +18,9 @@
 						<property name="upper">8000</property>
 						<property name="step">1</property>
 						<property name="value">0</property>
-						<property name="spin-width">10</property>
+						<property name="spin-width">6</property>
 						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
 						<property name="scale-width">200</property>
 					</object>
 				</child>
@@ -31,8 +32,9 @@
 						<property name="upper">100</property>
 						<property name="step">0.01</property>
 						<property name="value">0</property>
-						<property name="spin-width">5</property>
+						<property name="spin-width">6</property>
 						<property name="spin-digits">2</property>
+						<property name="scale-digits">2</property>
 						<property name="scale-width">200</property>
 					</object>
 				</child>

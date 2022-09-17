@@ -74,6 +74,11 @@ public class SliderWithText : Adw.Bin
 		set { _scale.width_request = value; }
 	} 
 
+	public int scale_digits
+	{
+		get { return _scale.round_digits; }
+		set { _scale.round_digits = value; }
+	} 
 }
 	
 	
