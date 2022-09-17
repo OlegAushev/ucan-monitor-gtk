@@ -3,44 +3,31 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="SliderWithText" parent="AdwBin">
 		<child>
-			<object class="GtkGrid" id="_grid_root">
-				<property name="row-spacing">0</property>
-				<property name="column-spacing">10</property>
+			<object class="AdwPreferencesGroup" id="_group">
+				<property name="hexpand">false</property>
 				<child>
-					<object class="GtkLabel" id="_label">
-						<property name="label">Text</property>
-						<layout>
-							<property name="row">0</property>
-							<property name="column">1</property>
-						</layout>
-					</object>
-				</child>
-
-				<child>
-					<object class="GtkScale" id="_scale">
-						<property name="width-request">200</property>
-						<property name="draw-value">true</property>
-						<property name="adjustment">_adjustment</property>
-						<layout>
-							<property name="row">1</property>
-							<property name="column">1</property>
-						</layout>
-					</object>
-				</child>
-		
-				<child>
-					<object class="GtkSpinButton" id="_spinbutton">
-						<property name="halign">center</property>
-						<property name="valign">center</property>
-						<property name="width-chars">10</property>
-						<property name="adjustment">_adjustment</property>
-						<property name="climb-rate">1</property>
-						<property name="digits">2</property>
-						<property name="numeric">true</property>
-						<layout>
-							<property name="row">1</property>
-							<property name="column">0</property>
-						</layout>
+					<object class="GtkBox" id="_box">
+						<property name="orientation">horizontal</property>
+						<property name="spacing">10</property>	
+						<child>
+							<object class="GtkSpinButton" id="_spinbutton">
+								<property name="hexpand">true</property>
+								<property name="halign">start</property>
+								<property name="valign">center</property>
+								<property name="adjustment">_adjustment</property>
+								<property name="climb-rate">1</property>
+								<property name="numeric">true</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="GtkScale" id="_scale">
+								<property name="hexpand">true</property>
+								<property name="halign">end</property>
+								<property name="draw-value">true</property>
+								<property name="adjustment">_adjustment</property>
+							</object>
+						</child>
 					</object>
 				</child>
 			</object>
@@ -48,10 +35,5 @@
 	</template>
 
 	<object class="GtkAdjustment" id="_adjustment">
-		<!--property name="lower">-8000</property-->
-		<property name="upper">8000</property>
-		<property name="value">0</property>
-		<property name="step-increment">0.1</property>
-		<property name="page-increment">1</property>
 	</object>
 </interface>
