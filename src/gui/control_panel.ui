@@ -13,13 +13,13 @@
 
 				<child>
 					<object class="SliderWithText" id="slider1">
-
+						<property name="label">Speed, rpm</property>
 					</object>
 				</child>
 
 				<child>
 					<object class="SliderWithText" id="slider2">
-
+						<property name="label">Torque, %</property>
 					</object>
 				</child>
 			</object>

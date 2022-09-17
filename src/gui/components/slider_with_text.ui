@@ -3,11 +3,11 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="SliderWithText" parent="AdwBin">
 		<child>
-			<object class="GtkGrid">
+			<object class="GtkGrid" id="_grid_root">
 				<property name="row-spacing">0</property>
 				<property name="column-spacing">10</property>
 				<child>
-					<object class="GtkLabel" id="label">
+					<object class="GtkLabel" id="_label">
 						<property name="label">Text</property>
 						<layout>
 							<property name="row">0</property>
@@ -17,10 +17,10 @@
 				</child>
 
 				<child>
-					<object class="GtkScale" id="scale">
+					<object class="GtkScale" id="_scale">
 						<property name="width-request">200</property>
 						<property name="draw-value">true</property>
-						<property name="adjustment">adjustment</property>
+						<property name="adjustment">_adjustment</property>
 						<layout>
 							<property name="row">1</property>
 							<property name="column">1</property>
@@ -29,11 +29,11 @@
 				</child>
 		
 				<child>
-					<object class="GtkSpinButton" id="spinbutton">
+					<object class="GtkSpinButton" id="_spinbutton">
 						<property name="halign">center</property>
 						<property name="valign">center</property>
 						<property name="width-chars">10</property>
-						<property name="adjustment">adjustment</property>
+						<property name="adjustment">_adjustment</property>
 						<property name="climb-rate">1</property>
 						<property name="digits">2</property>
 						<property name="numeric">true</property>
@@ -47,8 +47,8 @@
 		</child>
 	</template>
 
-	<object class="GtkAdjustment" id="adjustment">
-		<property name="lower">-8000</property>
+	<object class="GtkAdjustment" id="_adjustment">
+		<!--property name="lower">-8000</property-->
 		<property name="upper">8000</property>
 		<property name="value">0</property>
 		<property name="step-increment">0.1</property>
