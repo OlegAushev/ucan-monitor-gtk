@@ -11,6 +11,7 @@
 
 
 #include "ucanopen/ucanopen_client.h"
+#include "motordrive/controller/motordrive_controller.h"
 
 
 static std::thread threadMain;
@@ -19,6 +20,7 @@ static std::promise<void> signalExitMain;
 
 std::shared_ptr<can::Socket> g_canSocket;
 std::shared_ptr<ucanopen::Client> g_ucanClient;
+std::shared_ptr<motordrive::Controller> g_motordriveController;
 
 
 /**
@@ -111,15 +113,3 @@ void main_exit()
 }
 
 
-extern "C"
-void cansocket_connect()
-{
-	g_canSocket->connect("can0", 125000);
-}
-
-
-extern "C"
-void cansocket_disconnect()
-{
-	g_canSocket->disconnect();
-}
