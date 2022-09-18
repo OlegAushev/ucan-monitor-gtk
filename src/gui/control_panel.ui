@@ -15,60 +15,33 @@
 					<object class="AdwPreferencesGroup" id="groupActions">
 						<property name="hexpand">false</property>
 						<property name="title">Actions</property>
-
+						
 						<child>
-							<object class="GtkGrid">
-								<property name="row-spacing">10</property>
-								<property name="column-spacing">10</property>
-								<property name="margin-start">0</property>
-								<property name="margin-end">0</property>
-								<property name="margin-top">0</property>
-								<property name="margin-bottom">0</property>
-								<!-- POWER ON/OFF BUTTON -->
+							<object class="AdwActionRow">
+								<property name="title">Power ON/OFF</property>
+								<property name="activatable_widget">switchPower</property>
 								<child>
-									<object class="GtkToggleButton">
-										<property name="child">
-											<object class="AdwButtonContent">
-												<property name="label">Power</property>
-												<property name="icon-name">gnome-power-manager-symbolic</property>
-												<property name="hexpand">true</property>
-												<property name="halign">baseline</property>							
-											</object>
-										</property>
-										<style>
-											<class name="suggested-action"/>
-										</style>
-										<layout>
-											<property name="row">0</property>
-											<property name="column">0</property>
-										</layout>
-										<!--signal name="clicked" handler="cansocket_connect"/-->
-									</object>
-								</child>						
-								<!-- RUN ON/OFF BUTTON -->
-								<child>
-									<object class="GtkToggleButton">
-										<property name="child">
-											<object class="AdwButtonContent">
-												<property name="label">Run</property>
-												<property name="icon-name">media-playback-start-symbolic</property>
-												<property name="hexpand">true</property>
-												<property name="halign">baseline</property>							
-											</object>
-										</property>
-										<style>
-											<class name="suggested-action"/>
-										</style>
-										<layout>
-											<property name="row">0</property>
-											<property name="column">1</property>
-										</layout>
-										<!--signal name="clicked" handler="cansocket_connect"/-->
+									<object class="GtkSwitch" id="switchPower">
+										<property name="valign">center</property>
+										<property name="active">false</property>
 									</object>
 								</child>
 							</object>
 						</child>
-						
+
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">Run ON/OFF</property>
+								<property name="activatable_widget">switchRun</property>
+								<child>
+									<object class="GtkSwitch" id="switchRun">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
+							</object>
+						</child>
+
 					</object>
 				</child>
 
@@ -107,14 +80,17 @@
 						<property name="vexpand">true</property>
 						<property name="valign">end</property>
 						<child>
-							<object class="GtkToggleButton">
-								<property name="label">Emergency Stop</property>
-								<style>
-									<class name="destructive-action"/>
-								</style>
-								<!--signal name="clicked" handler="cansocket_disconnect"/-->
+							<object class="AdwActionRow">
+								<property name="title">Emergency Stop</property>
+								<property name="activatable_widget">switchEmergency</property>
+								<child>
+									<object class="GtkSwitch" id="switchEmergency">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
 							</object>
-						</child>					
+						</child>				
 					</object>
 				</child>
 			</object>
