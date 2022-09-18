@@ -20,14 +20,14 @@ extern std::shared_ptr<can::Socket> g_canSocket;
 ///
 ///
 /// 
-void cansocket_connect()
+void cansocket_connect(const char* interface, int bitrate)
 {
 	if (g_canSocket == nullptr)
 	{
 		return;
 	}
 
-	g_canSocket->connect("can0", 125000);
+	g_canSocket->connect(interface, bitrate);
 }
 
 

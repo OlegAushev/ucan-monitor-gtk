@@ -16,7 +16,7 @@
 extern "C" {
 
 
-void cansocket_connect();
+void cansocket_connect(const char* interface, int bitrate);
 void cansocket_disconnect();
 
 
