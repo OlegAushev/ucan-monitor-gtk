@@ -85,9 +85,9 @@ void Controller::setTorque(double valPu)
 }
 
 
-/// 
 ///
-/// 
+///
+///
 void Controller::setSpeed(double val)
 {
 	m_speedRef = val;
@@ -95,6 +95,41 @@ void Controller::setSpeed(double val)
 	std::cout << "[motordrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
 #endif
 }
+
+
+///
+///
+///
+std::array<uint8_t, 8> Controller::makeTpdo1()
+{
+	ucanopen::CobTpdo1 message = {};
+
+	message.run = ((m_runState) ? 1 : 0);
+	message.emergencyStop = ((m_emergencyState) ? 1 : 0);
+	
+	std::array<uint8_t, 8> ret;
+	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo1));
+	return ret;
+}
+
+
+///
+///
+///
+std::array<uint8_t, 8> Controller::makeTpdo2()
+{
+	ucanopen::CobTpdo2 message = {};
+	
+	message.speed = m_speedRef;
+	message.torque = m_torquePuRef;
+
+	std::array<uint8_t, 8> ret;
+	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo2));
+	return ret;
+}
+
+
+
 
 
 }

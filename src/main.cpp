@@ -46,17 +46,13 @@ int main_loop(std::future<void> futureExit)
 
 	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
 
+	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1, std::bind(&motordrive::Controller::makeTpdo1, g_motordriveController),
+			std::chrono::milliseconds(250));
+	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2, std::bind(&motordrive::Controller::makeTpdo2, g_motordriveController),
+			std::chrono::milliseconds(100));
+
+
 	ucanopen::Tester ucanTester;
-/*
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1, std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester),
-			std::chrono::milliseconds(500));
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2, std::bind(&ucanopen::Tester::makeTpdo2, &ucanTester),
-			std::chrono::milliseconds(1000));
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO3, std::bind(&ucanopen::Tester::makeTpdo3, &ucanTester),
-			std::chrono::milliseconds(2000));
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO4, std::bind(&ucanopen::Tester::makeTpdo4, &ucanTester),
-			std::chrono::milliseconds(4000));
-*/
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO1,
 			std::bind(&ucanopen::Tester::processRpdo1, &ucanTester, std::placeholders::_1));
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO2,
