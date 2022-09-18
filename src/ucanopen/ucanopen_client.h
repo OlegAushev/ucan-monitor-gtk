@@ -92,11 +92,6 @@ public:
 	void enableTpdo() { m_isTpdoEnabled = true; }
 	void disableTpdo() { m_isTpdoEnabled = false; }
 	void sendTpdo();
-
-	ODRequestStatus sendOdReadRequest(const std::string& category, const std::string& subcategory, const std::string& name);
-	void sendOdWriteRequest(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data = {});
-	void sendOdWriteRequest(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value);
-	void sendOdTaskRequest(const std::string& category, const std::string& subcategory, const std::string& name);
 };
 
 
