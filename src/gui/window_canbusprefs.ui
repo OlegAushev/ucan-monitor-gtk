@@ -52,22 +52,20 @@
 								<property name="spacing">10</property>
 								<!-- CONNECT BUTTON -->
 								<child>
-									<object class="GtkButton">
+									<object class="GtkButton" id="buttonConnect">
 										<property name="label">Connect</property>
 										<style>
 											<class name="suggested-action"/>
 										</style>
-										<signal name="clicked" handler="cansocket_connect"/>
 									</object>
 								</child>						
 								<!-- DISCONNECT BUTTON -->
 								<child>
-									<object class="GtkButton">
+									<object class="GtkButton" id="buttonDisconnect">
 										<property name="label">Disconnect</property>
 										<style>
 											<class name="destructive-action"/>
 										</style>
-										<signal name="clicked" handler="cansocket_disconnect"/>
 									</object>
 								</child>
 							</object>
