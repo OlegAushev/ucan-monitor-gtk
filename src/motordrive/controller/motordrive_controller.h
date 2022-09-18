@@ -13,6 +13,7 @@
 #pragma once
 
 
+#include <algorithm>
 #include "ucanopen/ucanopen_client.h"
 
 
@@ -38,8 +39,10 @@ public:
 
 	void setRunState(bool state);
 	void setEmergencyState(bool state);
-};
 
+	void setTorque(double valPercents);
+	void setSpeed(double val);
+};
 
 
 } // namespace motordrive

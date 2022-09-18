@@ -73,6 +73,30 @@ void Controller::setEmergencyState(bool state)
 }
 
 
+///
+///
+///
+void Controller::setTorque(double valPu)
+{
+	m_torquePuRef = std::clamp(valPu, -1.0, 1.0);
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] Torque reference: " << m_torquePuRef * 100.0 << "%" << std::endl;
+#endif	
+}
+
+
+/// 
+///
+/// 
+void Controller::setSpeed(double val)
+{
+	m_speedRef = val;
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
+#endif
+}
+
+
 }
 
 

@@ -75,7 +75,12 @@ public class SliderWithText : Adw.Bin
 	{
 		get { return _scale.round_digits; }
 		set { _scale.round_digits = value; }
-	} 
+	}
+
+	public Gtk.Adjustment* adjustment
+	{
+		get { return _adjustment; }
+	}
 }
 	
 	

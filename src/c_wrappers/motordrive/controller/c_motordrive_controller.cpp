@@ -51,3 +51,22 @@ void motordrive_controller_set_emergency_state(bool state)
 	g_motordriveController->setEmergencyState(state);
 }
 
+
+///
+///
+///
+void motordrive_controller_set_torque(double valPu)
+{
+	g_motordriveController->setTorque(valPu);
+}
+
+
+///
+///
+///
+void motordrive_controller_set_speed(double val)
+{
+	g_motordriveController->setSpeed(val);
+}
+
+
