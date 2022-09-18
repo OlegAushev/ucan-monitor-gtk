@@ -34,3 +34,20 @@ void motordrive_controller_set_power_state(bool state)
 }
 
 
+///
+///
+///
+void motordrive_controller_set_run_state(bool state)
+{
+	g_motordriveController->setRunState(state);
+}
+
+
+///
+///
+///
+void motordrive_controller_set_emergency_state(bool state)
+{
+	g_motordriveController->setEmergencyState(state);
+}
+

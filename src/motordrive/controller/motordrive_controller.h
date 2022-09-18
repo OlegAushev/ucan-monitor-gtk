@@ -24,8 +24,8 @@ class Controller
 private:
 	std::shared_ptr<ucanopen::Client> m_ucanClient;
 
-	bool m_runFlag = false;
-	bool m_emergencyFlag = false;
+	bool m_runState = false;
+	bool m_emergencyState = false;
 
 	float m_torquePuRef = 0;
 	float m_speedRef = 0;
@@ -35,6 +35,9 @@ public:
 	
 	void powerUp();
 	void powerDown();
+
+	void setRunState(bool state);
+	void setEmergencyState(bool state);
 };
 
 

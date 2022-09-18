@@ -49,6 +49,28 @@ void Controller::powerDown()
 }
 
 
+///
+///
+///
+void Controller::setRunState(bool state)
+{
+	m_runState = state;
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] RUN state: " << state << std::endl;
+#endif	
+}
+
+
+///
+///
+///
+void Controller::setEmergencyState(bool state)
+{
+	m_emergencyState = state;
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] EMERGENCY state: " << state << std::endl;
+#endif		
+}
 
 
 }
