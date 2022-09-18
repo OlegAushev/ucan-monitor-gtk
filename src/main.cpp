@@ -44,6 +44,8 @@ int main_loop(std::future<void> futureExit)
 			ucanopen::ServerNode(ucanopen::NodeId(0x42), g_canSocket, ucanopen::OBJECT_DICTIONARY)
 	});
 
+	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
+
 	ucanopen::Tester ucanTester;
 /*
 	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1, std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester),

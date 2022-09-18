@@ -1,16 +1,13 @@
 ///
 ///
 ///
-int foo = 1000;
+
 
 [GtkTemplate (ui = "/src/gui/components/slider_with_text.ui")]
 public class SliderWithText : Adw.Bin
 {
 	[GtkChild]
 	private unowned Adw.PreferencesGroup _group;
-
-	[GtkChild]
-	private unowned Gtk.Box _box;
 
 	[GtkChild]
 	private unowned Gtk.Scale _scale;

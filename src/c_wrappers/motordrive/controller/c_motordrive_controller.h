@@ -16,8 +16,7 @@
 extern "C" {
 
 
-void motordrive_controller_powerup();
-void motordrive_controller_powerdown();
+void motordrive_controller_set_power_state(bool state);
 
 
 }

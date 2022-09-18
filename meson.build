@@ -11,8 +11,10 @@ project('ucan-monitor', ['c', 'vala', 'cpp'],
 gnome = import('gnome')
 
 app_sources = [
-	'src/gui/main.vala',
+	'src/gui/components/slider_with_text.vala',
 	'src/gui/application.vala',
+	'src/gui/control_panel.vala',
+	'src/gui/main.vala',
 	'src/gui/window.vala',
 	'src/gui/window_canbusprefs.vala',
 

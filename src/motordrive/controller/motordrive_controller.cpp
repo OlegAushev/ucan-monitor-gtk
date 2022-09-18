@@ -31,6 +31,9 @@ Controller::Controller(std::shared_ptr<ucanopen::Client> ucanClient)
 void Controller::powerUp()
 {
 	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).exec("DRIVE", "CONTROL", "POWERUP");
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] Power UP motor drive." << std::endl;
+#endif	
 }
 
 
@@ -40,6 +43,9 @@ void Controller::powerUp()
 void Controller::powerDown()
 {
 	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).exec("DRIVE", "CONTROL", "POWERDOWN");
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] Power DOWN motor drive." << std::endl;
+#endif
 }
 
 

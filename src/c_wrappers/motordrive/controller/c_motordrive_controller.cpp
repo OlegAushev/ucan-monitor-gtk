@@ -10,6 +10,7 @@
  */
 
 
+#include <iostream>
 #include "c_motordrive_controller.h"
 #include "motordrive/controller/motordrive_controller.h"
 
@@ -20,28 +21,16 @@ extern std::shared_ptr<motordrive::Controller> g_motordriveController;
 ///
 ///
 ///
-void motordrive_controller_powerup()
+void motordrive_controller_set_power_state(bool state)
 {
-	if (g_motordriveController == nullptr)
+	if (state)
 	{
-		return;
+		g_motordriveController->powerUp();
 	}
-
-	g_motordriveController->powerUp();
-}
-
-
-///
-///
-///
-void motordrive_controller_powerdown()
-{
-	if (g_motordriveController == nullptr)
+	else
 	{
-		return;
+		g_motordriveController->powerDown();
 	}
-
-	g_motordriveController->powerDown();
 }
 
 
