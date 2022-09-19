@@ -89,6 +89,11 @@ public:
 	}
 
 public:
+	void setNodeId(NodeId _nodeId)
+	{
+		nodeId = _nodeId;
+	}
+
 	void enableTpdo() { m_isTpdoEnabled = true; }
 	void disableTpdo() { m_isTpdoEnabled = false; }
 	void sendTpdo();

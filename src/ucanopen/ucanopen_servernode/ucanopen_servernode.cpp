@@ -75,7 +75,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoInfo)
 	{
-		if (frame.can_id == cobId(toCobType(tpdo.first), nodeId.value))
+		if (frame.can_id == cobId(toCobType(tpdo.first), nodeId.value()))
 		{
 			std::array<uint8_t, 8> data;
 			memcpy(&data, frame.data, frame.can_dlc);
@@ -85,7 +85,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 		}
 	}
 
-	if (frame.can_id == cobId(CobType::TSDO, nodeId.value))
+	if (frame.can_id == cobId(CobType::TSDO, nodeId.value()))
 	{
 		CobSdo msg;
 		memcpy(&msg, frame.data, sizeof(CobSdo));

@@ -30,9 +30,11 @@ namespace ucanopen {
 
 class NodeId
 {
+private:
+	unsigned int m_value;
 public:
-	const unsigned int value;
-	explicit NodeId(unsigned int _value) : value(_value) {}
+	explicit NodeId(unsigned int value) : m_value(value) {}
+	unsigned int value() const { return m_value; }
 };
 
 
@@ -410,7 +412,7 @@ typedef std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iter
 inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8> data)
 {
 	can_frame frame;
-	frame.can_id = cobId(cobType, nodeId.value);
+	frame.can_id = cobId(cobType, nodeId.value());
 	frame.len = cobDataLen[static_cast<size_t>(cobType)];
 	memcpy(frame.data, &data, frame.len);
 	return frame;
