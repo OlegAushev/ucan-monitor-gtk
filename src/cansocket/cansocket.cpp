@@ -21,8 +21,6 @@ namespace can {
 ///
 Socket::Socket()
 {
-	m_socket = -1;
-
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
 	std::filesystem::path scriptPath = findScript("socketcan_check.sh");

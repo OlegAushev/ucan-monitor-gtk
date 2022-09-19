@@ -77,7 +77,7 @@ const std::set<std::filesystem::path> scriptsLocationList = {
 class Socket
 {
 private:
-	int m_socket;
+	int m_socket {-1};
 	ifreq m_ifr;
 	sockaddr_can m_addr;
 
