@@ -65,7 +65,8 @@
 		"semaphore": "cpp",
 		"stop_token": "cpp",
 		"thread": "cpp",
-		"future": "cpp"
+		"future": "cpp",
+		"charconv": "cpp"
 	},
 	"[Log]": {
 		"editor.fontSize": 12

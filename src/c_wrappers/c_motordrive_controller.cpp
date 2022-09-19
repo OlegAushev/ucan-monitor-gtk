@@ -11,11 +11,13 @@
 
 
 #include <iostream>
-#include "c_motordrive_controller.h"
 #include "motordrive/controller/motordrive_controller.h"
 
 
 extern std::shared_ptr<motordrive::Controller> g_motordriveController;
+
+
+extern "C" {
 
 
 ///
@@ -67,6 +69,9 @@ void motordrive_controller_set_torque(double valPu)
 void motordrive_controller_set_speed(double val)
 {
 	g_motordriveController->setSpeed(val);
+}
+
+
 }
 
 

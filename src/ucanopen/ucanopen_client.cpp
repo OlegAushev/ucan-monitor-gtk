@@ -27,7 +27,7 @@ Client::Client(NodeId _nodeId, std::shared_ptr<can::Socket> _canSocket)
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
 	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
-	m_isTpdoEnabled = true;
+	m_isTpdoEnabled = false;
 
 	m_tpdoInfo.insert({TpdoType::TPDO1, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
 	m_tpdoInfo.insert({TpdoType::TPDO2, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});

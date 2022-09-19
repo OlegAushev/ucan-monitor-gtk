@@ -39,23 +39,23 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		switchPower.notify["state"].connect((s, p) => {
-			motordrive_controller_set_power_state(switchPower.state);
+				motordrive_controller_set_power_state(switchPower.state);
 		});
 
 		switchRun.notify["state"].connect((s, p) => {
-			motordrive_controller_set_run_state(switchRun.state);
+				motordrive_controller_set_run_state(switchRun.state);
 		});
 
 		switchEmergency.notify["state"].connect((s, p) => {
-			motordrive_controller_set_emergency_state(switchEmergency.state);
+				motordrive_controller_set_emergency_state(switchEmergency.state);
 		});
 
 		sliderSpeed.adjustment->notify["value"].connect((s, p) => {
-			motordrive_controller_set_speed(sliderSpeed.value);
+				motordrive_controller_set_speed(sliderSpeed.value);
 		});
 
 		sliderTorque.adjustment->notify["value"].connect((s, p) => {
-			motordrive_controller_set_torque(sliderTorque.value / 100.0);
+				motordrive_controller_set_torque(sliderTorque.value / 100.0);
 		});
 	}
 }

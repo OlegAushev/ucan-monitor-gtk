@@ -10,11 +10,13 @@
  */
 
 
-#include "c_cansocket.h"
 #include "cansocket/cansocket.h"
 
 
 extern std::shared_ptr<can::Socket> g_canSocket;
+
+
+extern "C" {
 
 
 ///
@@ -42,6 +44,9 @@ void cansocket_disconnect()
 	}
 
 	g_canSocket->disconnect();
+}
+
+
 }
 
 
