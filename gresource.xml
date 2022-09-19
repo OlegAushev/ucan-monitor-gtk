@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/">
-		<file>src/gui/window.ui</file>
-		<file>src/gui/window_canbusprefs.ui</file>
-		<file>src/gui/control_panel.ui</file>
+		<file>src/gui/components/simple_table.ui</file>
 		<file>src/gui/components/slider_with_text.ui</file>
+		<file>src/gui/control_panel.ui</file>
+		<file>src/gui/window_canbusprefs.ui</file>
+		<file>src/gui/window.ui</file>
 	</gresource>
 </gresources>

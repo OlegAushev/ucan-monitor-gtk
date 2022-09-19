@@ -4,7 +4,7 @@
 	<template class="SliderWithText" parent="AdwBin">
 		<child>
 			<object class="AdwPreferencesGroup" id="_group">
-				<property name="hexpand">false</property>
+				<property name="hexpand">false</property>	      
 				<child>
 					<object class="GtkBox" id="_box">
 						<property name="orientation">horizontal</property>
@@ -32,6 +32,10 @@
 				</child>
 			</object>
 		</child>
+		<!--style>
+			<class name="toolbar"/>
+			<class name="osd"/>
+		</style-->
 	</template>
 
 	<object class="GtkAdjustment" id="_adjustment">

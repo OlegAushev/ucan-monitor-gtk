@@ -59,9 +59,12 @@
 										<property name="title">Data</property>
 										<property name="icon-name">table-symbolic</property>
 										<property name="child">
-											<object class="GtkLabel">
-												<property name="label">                    This is page 1                    </property>
+											<object class="SimpleTable">
+												
 											</object>
+											<!--object class="GtkLabel">
+												<property name="label">                    This is page 1                    </property>
+											</object-->
 										</property>
 									</object>
 								</child>

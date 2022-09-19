@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="SimpleTable" parent="AdwBin">
+		<child>
+			<object class="AdwPreferencesGroup" id="_group">
+				<property name="title">SocketCAN</property>
+				<property name="hexpand">true</property>
+				<property name="halign">start</property>
+				<child>
+					<object class="GtkTreeView" id="_treeview">
+						<child>
+							<object class="GtkTreeViewColumn" id="_treeviewcolumnName">
+								<property name="title">Name</property>
+							</object>
+						</child>
+
+						<child>
+							<object class="GtkTreeViewColumn" id="_treeviewcolumnValue">
+								<property name="title">Value</property>
+							</object>
+						</child>
+
+						<child>
+							<object class="GtkTreeViewColumn" id="_treeviewcolumnUnit">
+								<property name="title">Unit</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>
