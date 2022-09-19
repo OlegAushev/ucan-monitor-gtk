@@ -19,6 +19,7 @@
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Power ON/OFF</property>
+								<property name="icon-name">system-shutdown-symbolic</property>
 								<property name="activatable_widget">switchPower</property>
 								<child>
 									<object class="GtkSwitch" id="switchPower">
@@ -32,6 +33,7 @@
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Run ON/OFF</property>
+								<property name="icon-name">media-playback-start-symbolic</property>
 								<property name="activatable_widget">switchRun</property>
 								<child>
 									<object class="GtkSwitch" id="switchRun">
@@ -82,6 +84,7 @@
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Emergency Stop</property>
+								<property name="icon-name">dialog-error-symbolic</property>
 								<property name="activatable_widget">switchEmergency</property>
 								<child>
 									<object class="GtkSwitch" id="switchEmergency">
