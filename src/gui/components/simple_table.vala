@@ -19,7 +19,13 @@ public class SimpleTable : Adw.Bin
 	{
 		SimpleTableRow _labels = new SimpleTableRow();
 		_group.add(_labels);
-		_group.add(_labels);		
+		_group.add(_labels);
+		_group.add(_labels);
+		_group.add(_labels);	
+		_group.add(_labels);
+		_group.add(_labels);	
+		_group.add(_labels);
+		_group.add(_labels);			
 	}
 }
 
