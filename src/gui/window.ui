@@ -13,13 +13,13 @@
 				<child type="start">
 					<object class="GtkToggleButton">
 						<property name="icon-name">sidebar-show-symbolic</property>
-						<property name="active" bind-source="flap_main" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
+						<property name="active" bind-source="flapMain" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
 				<!-- VIEW SWITCHER -->
 				<child type="title">
-					<object class="AdwViewSwitcherTitle" id="viewswitcher_title">
-						<property name="stack">viewstack_main</property>
+					<object class="AdwViewSwitcherTitle" id="viewswitcherTitle">
+						<property name="stack">viewstackMain</property>
 						<property name="title" bind-source="CanMonitorWindow" bind-property="title" bind-flags="sync-create"/>
 					</object>
 				</child>
@@ -37,25 +37,25 @@
 			<object class="GtkBox">
 				<property name="orientation">vertical</property>
 				<child>
-					<object class="AdwFlap" id="flap_main">
-						<property name="flap">controlpanel_main</property>
-						<property name="separator">separator_main</property>
-						<property name="content">viewstack_main</property>
+					<object class="AdwFlap" id="flapMain">
+						<property name="flap">controlpanel</property>
+						<property name="separator">flapMainSeparator</property>
+						<property name="content">viewstackMain</property>
 						<!-- FLAP -->
 						<child>
-							<object class="CanMonitorControlPanel" id="controlpanel_main"></object>
+							<object class="CanMonitorControlPanel" id="controlpanel"></object>
 						</child>
 						<!-- SEPARATOR -->
 						<child>
-							<object class="GtkSeparator" id="separator_main"></object>
+							<object class="GtkSeparator" id="flapMainSeparator"></object>
 						</child>
 						<!-- CONTENT -->
 						<child>
-							<object class="AdwViewStack" id="viewstack_main">
+							<object class="AdwViewStack" id="viewstackMain">
 								<property name="vexpand">True</property>
 								<child>
 									<!-- PAGE 1 of VIEWSTACK -->
-									<object class="AdwViewStackPage" id="viewstack_mainPage1">
+									<object class="AdwViewStackPage" id="viewstackPage1">
 										<property name="title">Data</property>
 										<property name="icon-name">table-symbolic</property>
 										<property name="child">
@@ -70,7 +70,7 @@
 								</child>
 								<child>
 									<!-- PAGE 2 of VIEWSTACK -->
-									<object class="AdwViewStackPage" id="viewstack_mainPage2">
+									<object class="AdwViewStackPage" id="viewstackPage2">
 										<property name="title">Charts</property>
 										<property name="icon-name">utilities-system-monitor-symbolic</property>
 										<property name="child">
@@ -82,7 +82,7 @@
 								</child>
 								<child>
 									<!-- PAGE 3 of VIEWSTACK -->
-									<object class="AdwViewStackPage" id="viewstack_mainPage3">
+									<object class="AdwViewStackPage" id="viewstackPage3">
 										<property name="title">Setup</property>
 										<property name="icon-name">utilities-tweak-tool-symbolic</property>
 										<property name="child">
@@ -98,9 +98,9 @@
 				</child>
 				
 				<child>
-					<object class="AdwViewSwitcherBar" id="viewswitcher_bar">
-						<property name="stack">viewstack_main</property>
-						<property name="reveal" bind-source="viewswitcher_title" bind-property="title-visible" bind-flags="sync-create"/>
+					<object class="AdwViewSwitcherBar" id="viewswitcherBar">
+						<property name="stack">viewstackMain</property>
+						<property name="reveal" bind-source="viewswitcherTitle" bind-property="title-visible" bind-flags="sync-create"/>
 					</object>
 				</child>
 			</object>
