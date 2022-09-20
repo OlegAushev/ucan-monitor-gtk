@@ -61,6 +61,7 @@ add_custom_command(
 		src/gui/control_panel.ui
 		src/gui/components/slider_with_text.ui
 		src/gui/components/simple_table.ui
+		src/gui/components/simple_table_row.ui
 )
 
 add_custom_target(
@@ -78,6 +79,7 @@ vala_precompile(VALA_C
 	src/gui/control_panel.vala
 	src/gui/components/slider_with_text.vala
 	src/gui/components/simple_table.vala
+	src/gui/components/simple_table_row.vala
 PACKAGES
 	gtk4
 	libadwaita-1

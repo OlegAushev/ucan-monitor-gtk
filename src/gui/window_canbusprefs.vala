@@ -39,6 +39,11 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	
 	public WindowCanBusPrefs()
 	{
+
+	}
+
+	construct
+	{
 		switchTpdo.set_active(_tpdoState);
 
 		buttonConnect.clicked.connect(() => {
