@@ -69,7 +69,7 @@ private:
 	std::promise<void> m_signalExitRunThread;
 
 public:
-	Client(NodeId _nodeId, std::shared_ptr<can::Socket> _canSocket);
+	Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket);
 	~Client();
 	void run(std::future<void> futureExit);
 

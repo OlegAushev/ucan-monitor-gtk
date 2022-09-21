@@ -19,9 +19,9 @@ namespace ucanopen {
 ///
 ///
 ///
-Client::Client(NodeId _nodeId, std::shared_ptr<can::Socket> _canSocket)
-	: nodeId(_nodeId)
-	, m_canSocket(_canSocket)
+Client::Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket)
+	: nodeId(t_nodeId)
+	, m_canSocket(t_canSocket)
 	, m_state(NmtState::INITIALIZATION)
 {
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
