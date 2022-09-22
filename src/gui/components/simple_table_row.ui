@@ -4,6 +4,7 @@
 	<template class="SimpleTableRow" parent="AdwActionRow">
 		<child>
 			<object class="GtkEntry" id="_entry">
+				<property name="hexpand">false</property>
 				<property name="halign">end</property>
 				<property name="valign">center</property>
 				<property name="editable">false</property>

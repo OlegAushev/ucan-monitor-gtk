@@ -24,6 +24,18 @@ public class SimpleTableRow : Adw.ActionRow
 		get { return _entry.text; }
 		set { _entry.text = value; }
 	}
+
+	public int entry_width
+	{
+		get { return _entry.width_request; }
+		set { _entry.width_request = value; }
+	}
+
+	public int entry_chars
+	{
+		get { return _entry.max_width_chars; }
+		set { _entry.max_width_chars = value; }
+	}
 }
 
 

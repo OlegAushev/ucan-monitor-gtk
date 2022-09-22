@@ -31,6 +31,8 @@ public class SimpleTable : Adw.Bin
 		label1.title = "Uptime";
 		label1.subtitle = "Time since system start";
 		label1.entry_text = "12345.67"; 
+		label1.entry_width = 100;
+		label1.entry_chars = 10;
 	}
 }
 
