@@ -2,10 +2,13 @@
 <interface>
 	<requires lib="gtk" version="4.0" />
 	<template class="SimpleTableRow" parent="AdwActionRow">
-		<!--child>
-			<object class="AdwActionRow" id="_row">
-
+		<child>
+			<object class="GtkEntry" id="_entry">
+				<property name="halign">end</property>
+				<property name="valign">center</property>
+				<property name="editable">false</property>
+				<property name="can_focus">false</property>
 			</object>
-		</child-->
+		</child>
 	</template>
 </interface>
