@@ -22,15 +22,15 @@
 						</layout>
 
 						<child>
-							<object class="SimpleTableRow">
-								<property name="title">Uptime</property>
+							<object class="TableRow">
+								<property name="title">Uptime, s</property>
 								<property name="subtitle">Time since system startup</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">State</property>
 								<property name="subtitle"></property>
 								<property name="entry-width">100</property>
@@ -38,7 +38,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">Errors</property>
 								<property name="subtitle">Hex code</property>
 								<property name="entry-width">100</property>
@@ -46,7 +46,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">Warnings</property>
 								<property name="subtitle">Hex code</property>
 								<property name="entry-width">100</property>
@@ -67,7 +67,7 @@
 						</layout>
 
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">Uptime</property>
 								<property name="subtitle">Time since system startup</property>
 								<property name="entry-width">100</property>
@@ -75,7 +75,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">State</property>
 								<property name="subtitle"></property>
 								<property name="entry-width">100</property>
@@ -83,7 +83,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">Errors</property>
 								<property name="subtitle">Hex code</property>
 								<property name="entry-width">100</property>
@@ -91,7 +91,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="SimpleTableRow">
+							<object class="TableRow">
 								<property name="title">Warnings</property>
 								<property name="subtitle">Hex code</property>
 								<property name="entry-width">100</property>

@@ -3,13 +3,13 @@
 ///
 
 
-[GtkTemplate (ui = "/src/gui/components/simple_table_row.ui")]
-public class SimpleTableRow : Adw.ActionRow
+[GtkTemplate (ui = "/src/gui/components/table_row.ui")]
+public class TableRow : Adw.ActionRow
 {
 	[GtkChild]
 	private unowned Gtk.Entry _entry;
 
-	public SimpleTableRow()
+	public TableRow()
 	{
 		_entry.set_alignment(1);
 	}
