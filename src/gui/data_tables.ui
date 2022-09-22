@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="DataTables" parent="AdwBin">
+		<child>
+			<object class="GtkGrid">
+				<property name="row-spacing">10</property>
+				<property name="column-spacing">10</property>
+				<property name="margin-start">10</property>
+				<property name="margin-end">10</property>
+				<property name="margin-top">10</property>
+				<property name="margin-bottom">10</property>				
+
+				<child>
+					<object class="AdwPreferencesGroup" id="groupSystem">
+						<property name="title">System</property>
+						<property name="hexpand">true</property>
+						<property name="halign">start</property>
+						<layout>
+							<property name="row">0</property>
+							<property name="column">0</property>
+						</layout>
+
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Uptime</property>
+								<property name="subtitle">Time since system startup</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">State</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Errors</property>
+								<property name="subtitle">Hex code</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Warnings</property>
+								<property name="subtitle">Hex code</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<object class="AdwPreferencesGroup" id="groupVoltCurr">
+						<property name="title">Voltages and Currents</property>
+						<property name="hexpand">true</property>
+						<property name="halign">start</property>
+						<layout>
+							<property name="row">1</property>
+							<property name="column">0</property>
+						</layout>
+
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Uptime</property>
+								<property name="subtitle">Time since system startup</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">State</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Errors</property>
+								<property name="subtitle">Hex code</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="SimpleTableRow">
+								<property name="title">Warnings</property>
+								<property name="subtitle">Hex code</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>

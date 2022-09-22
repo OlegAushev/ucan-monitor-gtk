@@ -69,7 +69,7 @@
 												<property name="title">Data</property>
 												<property name="icon-name">table-symbolic</property>
 												<property name="child">
-													<object class="SimpleTable">
+													<object class="DataTables">
 														
 													</object>
 													<!--object class="GtkLabel">

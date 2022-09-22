@@ -56,12 +56,12 @@ add_custom_command(
 	VERBATIM
 	#MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
-		src/gui/window.ui
-		src/gui/window_canbusprefs.ui
 		src/gui/control_panel.ui
-		src/gui/components/slider_with_text.ui
-		src/gui/components/simple_table.ui
+		src/gui/data_tables.ui
+		src/gui/window_canbusprefs.ui
+		src/gui/window.ui
 		src/gui/components/simple_table_row.ui
+		src/gui/components/slider_with_text.ui
 )
 
 add_custom_target(
@@ -72,14 +72,14 @@ add_custom_target(
 ################################################################################
 # VALA
 vala_precompile(VALA_C
-	src/gui/main.vala
-	src/gui/window.vala
 	src/gui/application.vala
-	src/gui/window_canbusprefs.vala
 	src/gui/control_panel.vala
-	src/gui/components/slider_with_text.vala
-	src/gui/components/simple_table.vala
+	src/gui/data_tables.vala
+	src/gui/main.vala
+	src/gui/window_canbusprefs.vala
+	src/gui/window.vala
 	src/gui/components/simple_table_row.vala
+	src/gui/components/slider_with_text.vala
 PACKAGES
 	gtk4
 	libadwaita-1
