@@ -61,7 +61,7 @@ add_custom_command(
 		src/gui/window_canbusprefs.ui
 		src/gui/window.ui
 		src/gui/components/slider_with_text.ui
-		src/gui/components/table_row.ui
+		src/gui/components/table_entry.ui
 )
 
 add_custom_target(
@@ -79,7 +79,7 @@ vala_precompile(VALA_C
 	src/gui/window_canbusprefs.vala
 	src/gui/window.vala
 	src/gui/components/slider_with_text.vala
-	src/gui/components/table_row.vala
+	src/gui/components/table_entry.vala
 PACKAGES
 	gtk4
 	libadwaita-1

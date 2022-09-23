@@ -7,7 +7,7 @@
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
-	private unowned Adw.PreferencesGroup groupSystem;
+	private unowned TableEntry entryUptime;
 
 	public DataTables()
 	{

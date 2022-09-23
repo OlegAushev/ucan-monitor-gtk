@@ -18,7 +18,7 @@ app_sources = [
 	'src/gui/window_canbusprefs.vala',
 	'src/gui/window.vala',
 	'src/gui/components/slider_with_text.vala',
-	'src/gui/components/table_row.vala',
+	'src/gui/components/table_entry.vala',
 
 	'src/main.cpp',
 	'src/cansocket/cansocket.cpp',
