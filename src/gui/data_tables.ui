@@ -3,24 +3,19 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="DataTables" parent="AdwBin">
 		<child>
-			<object class="GtkGrid">
-				<property name="row-spacing">10</property>
-				<property name="column-spacing">10</property>
+			<object class="GtkBox">
 				<property name="margin-start">10</property>
 				<property name="margin-end">10</property>
 				<property name="margin-top">10</property>
-				<property name="margin-bottom">10</property>				
+				<property name="margin-bottom">10</property>
+				<property name="orientation">horizontal</property>
+				<property name="spacing">10</property>
 
 				<child>
 					<object class="AdwPreferencesGroup" id="groupSystem">
 						<property name="width-request">250</property>
 						<property name="title">System</property>
-						<property name="hexpand">true</property>
-						<property name="halign">start</property>
-						<layout>
-							<property name="row">0</property>
-							<property name="column">0</property>
-						</layout>
+						<property name="hexpand">false</property>
 
 						<child>
 							<object class="TableRow">
@@ -58,15 +53,83 @@
 				</child>
 
 				<child>
-					<object class="AdwPreferencesGroup" id="groupVoltCurr">
+					<object class="AdwPreferencesGroup" id="groupMotor">
 						<property name="width-request">250</property>
-						<property name="title">Voltages and Currents</property>
-						<property name="hexpand">true</property>
-						<property name="halign">start</property>
-						<layout>
-							<property name="row">1</property>
-							<property name="column">0</property>
-						</layout>
+						<property name="title">Motor</property>
+						<property name="hexpand">false</property>
+
+						<child>
+							<object class="TableRow">
+								<property name="title">Speed</property>
+								<property name="subtitle">rpm</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Torque</property>
+								<property name="subtitle">Nm</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Stator Current</property>
+								<property name="subtitle">A</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Field Current</property>
+								<property name="subtitle">A</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Axis-D Current</property>
+								<property name="subtitle">A</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Axis-Q Current</property>
+								<property name="subtitle">A</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Stator Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">FW Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<object class="AdwPreferencesGroup" id="groupInverter">
+						<property name="width-request">250</property>
+						<property name="title">Inverter</property>
+						<property name="hexpand">false</property>
 
 						<child>
 							<object class="TableRow">
@@ -78,7 +141,7 @@
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhU Current</property>
+								<property name="title">DC Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
@@ -86,7 +149,7 @@
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhV Current</property>
+								<property name="title">PhA Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
@@ -94,7 +157,7 @@
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhW Current</property>
+								<property name="title">PhB Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
@@ -102,7 +165,7 @@
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhX Current</property>
+								<property name="title">PhC Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
@@ -110,16 +173,32 @@
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhY Current</property>
-								<property name="subtitle">A</property>
+								<property name="title">PhA Temperature</property>
+								<property name="subtitle">°C</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableRow">
-								<property name="title">PhZ Current</property>
-								<property name="subtitle">A</property>
+								<property name="title">PhB Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">PhC Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">100</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableRow">
+								<property name="title">Air Temperature</property>
+								<property name="subtitle">°C</property>
 								<property name="entry-width">100</property>
 								<property name="entry-chars">10</property>
 							</object>
@@ -129,4 +208,17 @@
 			</object>
 		</child>
 	</template>
+
+
+
+
+	
+
+
+
+
+
+
+
+
 </interface>
