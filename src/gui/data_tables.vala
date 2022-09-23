@@ -3,6 +3,9 @@
 ///
 
 
+
+
+
 [GtkTemplate (ui = "/src/gui/data_tables.ui")]
 public class DataTables : Adw.Bin
 {
@@ -17,7 +20,16 @@ public class DataTables : Adw.Bin
 
 	construct
 	{
+		Timeout.add(50, update);
+	}
+	
+	int msec = 0;
 
+	public bool update()
+	{
+		msec += 50;
+		entryUptime.entry_text = msec.to_string();
+		return true;
 	}
 }
 
