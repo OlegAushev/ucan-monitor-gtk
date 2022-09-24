@@ -18,6 +18,7 @@
 
 namespace ucanopen {
 
+
 /* ========================================================================== */
 /* =================== APPLICATION-SPECIFIC PART BEGIN ====================== */
 /* ========================================================================== */
@@ -26,9 +27,11 @@ struct CobTpdo1
 	uint16_t run : 1;
 	uint32_t reserved1 : 31;
 	uint16_t emergencyStop : 1;
-	uint32_t reserved2 : 31;
+	uint16_t reserved2 : 1;
+	uint16_t braking : 1;
+	uint32_t reserved3 : 29;
 	CobTpdo1() = default;
-	explicit CobTpdo1(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo1)); }
+	CobTpdo1(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo1)); }
 	uint64_t all() const
 	{
 		uint64_t data = 0;
@@ -37,12 +40,15 @@ struct CobTpdo1
 	}
 };
 
+
 struct CobTpdo2
 {
-	float speed;
-	float torque;
+	int8_t torqueObsolete : 8;
+	uint8_t reserved1 : 8;
+	int16_t torque : 16;
+	uint32_t reserved2 : 32;
 	CobTpdo2() = default;
-	explicit CobTpdo2(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo2)); }
+	CobTpdo2(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo2)); }
 	uint64_t all() const
 	{
 		uint64_t data = 0;
@@ -50,6 +56,7 @@ struct CobTpdo2
 		return data;
 	}
 };
+
 
 struct CobTpdo3
 {
@@ -62,6 +69,7 @@ struct CobTpdo3
 	}
 };
 
+
 struct CobTpdo4
 {
 	uint64_t data;
@@ -72,9 +80,11 @@ struct CobTpdo4
 		return data;
 	}
 };
-
 /* ========================================================================== */
 /* =================== APPLICATION-SPECIFIC PART END ======================== */
 /* ========================================================================== */
 
+
 } // namespace ucanopen
+
+

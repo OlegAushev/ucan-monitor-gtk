@@ -18,6 +18,7 @@
 
 namespace ucanopen {
 
+
 /* ========================================================================== */
 /* =================== APPLICATION-SPECIFIC PART BEGIN ====================== */
 /* ========================================================================== */
@@ -30,10 +31,8 @@ struct CobRpdo1
 	uint16_t statusFault : 1;	// bit 1
 	uint16_t statusWarning : 1;	// bit 2
 	uint16_t statusOverheat : 1;	// bit 3
-	uint16_t referenceType : 1;	// bit 4
-	uint16_t controlLoopType : 1;	// bit 5
-	uint16_t statusReserved : 2;	// bit 6..7
-	uint8_t driveState : 8;
+	uint16_t statusReserved : 4;	// bit 4..7
+	int8_t torque : 8;
 	int16_t speed : 16;
 	int8_t currentS : 8;
 	int8_t power : 8;
@@ -48,6 +47,7 @@ struct CobRpdo1
 		return data;
 	}
 };
+
 
 /**
  * @brief
@@ -73,6 +73,7 @@ struct CobRpdo2
 	}
 };
 
+
 /**
  * @brief
  */
@@ -84,7 +85,8 @@ struct CobRpdo3
 	uint16_t statusInsulationLow : 1;		// bit 1
 	uint16_t statusInsulationLowWoFilter : 1;	// bit 2
 	uint16_t statusReserved2 : 1;			// bit 3
-	uint16_t reserved1 : 4;
+	uint16_t reserved1 : 3;
+	uint16_t driveReference : 1;
 	int8_t currentDC : 8;
 	uint32_t syslogInfo : 32;
 	CobRpdo3() = default;
@@ -97,12 +99,13 @@ struct CobRpdo3
 	}
 };
 
+
 /**
  * @brief
  */
 struct CobRpdo4
 {
-	uint32_t faults : 32;
+	uint32_t errors : 32;
 	uint32_t warnings : 32;
 	CobRpdo4() = default;
 	CobRpdo4(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobRpdo4)); }
@@ -117,8 +120,7 @@ struct CobRpdo4
 /* =================== APPLICATION-SPECIFIC PART END ======================== */
 /* ========================================================================== */
 
+
 } // namespace ucanopen
-
-
 
 
