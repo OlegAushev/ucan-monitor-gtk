@@ -120,8 +120,8 @@ std::array<uint8_t, 8> Controller::makeTpdo2()
 {
 	ucanopen::CobTpdo2 message = {};
 	
-	message.speed = m_speedRef;
-	message.torque = m_torquePuRef;
+	//message.speed = m_speedRef;
+	//message.torque = m_torquePuRef;
 
 	std::array<uint8_t, 8> ret;
 	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo2));
