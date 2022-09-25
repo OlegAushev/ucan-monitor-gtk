@@ -3,7 +3,7 @@
 ///
 
 
-
+extern void motordrive_data_get_watch(string name, string value);
 
 
 [GtkTemplate (ui = "/src/gui/data_tables.ui")]
@@ -23,12 +23,11 @@ public class DataTables : Adw.Bin
 		Timeout.add(50, update);
 	}
 	
-	int msec = 0;
-
 	public bool update()
 	{
-		msec += 50;
-		entryUptime.entry_text = msec.to_string();
+		string result = string.nfill(16, '\0');
+		motordrive_data_get_watch("UPTIME", result);
+		entryUptime.entry_text = result;
 		return true;
 	}
 }
