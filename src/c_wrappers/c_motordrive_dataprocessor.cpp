@@ -31,7 +31,8 @@ void motordrive_data_get_watch(const char* name, char* value)
 		if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), counter, std::chars_format::fixed, 2);
 				ec == std::errc())
 		{
-			std::copy(buf.begin(), ptr, value);
+			*ptr = '\0';	// add terminating null
+			std::copy(buf.begin(), std::next(ptr), value);
 		}
 		else
 		{

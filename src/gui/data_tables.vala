@@ -25,7 +25,7 @@ public class DataTables : Adw.Bin
 	
 	public bool update()
 	{
-		string result = string.nfill(16, '\0');
+		string result = "";// = string.nfill(16, '\0');
 		motordrive_data_get_watch("UPTIME", result);
 		entryUptime.entry_text = result;
 		return true;
