@@ -20,11 +20,21 @@ app_sources = [
 	'src/gui/components/slider_with_text.vala',
 	'src/gui/components/table_entry.vala',
 
+
 	'src/main.cpp',
+
 	'src/cansocket/cansocket.cpp',
+
 	'src/ucanopen/ucanopen_client.cpp',
 	'src/ucanopen/objectdictionary/objectdictionary.cpp',
 	'src/ucanopen/ucanopen_servernode/ucanopen_servernode.cpp',
+
+	'src/motordrive/controller/motordrive_controller.cpp',
+
+	'src/c_wrappers/c_cansocket.cpp',
+	'src/c_wrappers/c_motordrive_controller.cpp',
+	'src/c_wrappers/c_motordrive_dataprocessor.cpp',
+	'src/c_wrappers/c_ucanopen.cpp',
 ]
 
 app_incdirs = include_directories('src')
