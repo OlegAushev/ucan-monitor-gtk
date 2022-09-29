@@ -51,5 +51,6 @@ app_sources += gnome.compile_resources('app_resources',
 
 executable('ucan-monitor', app_sources,
 	include_directories: app_incdirs,
-	dependencies: app_deps,
+	dependencies: app_deps, export_dynamic: true,
+	cpp_args : '-DSTD_COUT_ENABLED',
 )
