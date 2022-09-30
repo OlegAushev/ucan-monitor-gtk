@@ -10,7 +10,7 @@ project('ucan-monitor', ['c', 'vala', 'cpp'],
 
 gnome = import('gnome')
 
-app_sources = [
+app_sources = files(
 	'src/gui/application.vala',
 	'src/gui/control_panel.vala',
 	'src/gui/data_tables.vala',
@@ -35,7 +35,9 @@ app_sources = [
 	'src/c_wrappers/c_motordrive_controller.cpp',
 	'src/c_wrappers/c_motordrive_dataprocessor.cpp',
 	'src/c_wrappers/c_ucanopen.cpp',
-]
+)
+
+subdir('src/gui/advvchart')
 
 app_incdirs = include_directories('src')
 

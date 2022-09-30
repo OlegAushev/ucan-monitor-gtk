@@ -91,8 +91,8 @@
 												<property name="title">Charts</property>
 												<property name="icon-name">utilities-system-monitor-symbolic</property>
 												<property name="child">
-													<object class="GtkLabel">
-														<property name="label">                    This is page 2                    </property>
+													<object class="AdvvChartChart">
+														<!--property name="label">                    This is page 2                    </property-->
 													</object>
 												</property>
 											</object>
