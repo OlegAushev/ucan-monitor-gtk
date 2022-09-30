@@ -47,21 +47,20 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
 set(GRESOURCE_XML gresource.xml)
 set(GRESOURCE_C ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
-message(msg: ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+#message("glib-compile-resources output: " ${GRESOURCE_C})
+
+file(GLOB_RECURSE UI_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
+	${PROJECT_SOURCE_DIR}/src/gui/*.ui
+)
 
 add_custom_command(
 	OUTPUT ${GRESOURCE_C}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${GRESOURCE_C} ${GRESOURCE_XML}
 	VERBATIM
-	#MAIN_DEPENDENCY ${GRESOURCE_XML}
+	MAIN_DEPENDENCY ${GRESOURCE_XML}
 	DEPENDS
-		src/gui/control_panel.ui
-		src/gui/data_tables.ui
-		src/gui/window_canbusprefs.ui
-		src/gui/window.ui
-		src/gui/components/slider_with_text.ui
-		src/gui/components/table_entry.ui
+		${UI_SOURCES}
 )
 
 add_custom_target(
@@ -71,22 +70,19 @@ add_custom_target(
 
 ################################################################################
 # VALA
+file(GLOB_RECURSE VALA_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
+	${PROJECT_SOURCE_DIR}/src/gui/*.vala
+)
+
 vala_precompile(VALA_C
-	src/gui/application.vala
-	src/gui/control_panel.vala
-	src/gui/data_tables.vala
-	src/gui/main.vala
-	src/gui/window_canbusprefs.vala
-	src/gui/window.vala
-	src/gui/components/slider_with_text.vala
-	src/gui/components/table_entry.vala
+	${VALA_SOURCES}
 PACKAGES
 	gtk4
 	libadwaita-1
 OPTIONS
 	--gresources=${PROJECT_SOURCE_DIR}/${GRESOURCE_XML}
 )
-
+#message("valac output: " ${VALA_C})
 
 ################################################################################
 # EXECUTABLE
