@@ -60,7 +60,7 @@ private:
 	std::map<RpdoType, RpdoInfo> m_rpdoInfo;
 
 	/* SDO */
-	std::function<void(SdoType, ObjectDictionaryType::const_iterator, CobSdoData)> m_callbackOnSdoRecv;
+	std::function<void(SdoType, ObjectDictionaryType::const_iterator, CobSdoData)> callbackOnSdoRecv;
 
 public:
 	ServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary);
@@ -79,7 +79,7 @@ public:
 
 	void registerCallbackOnRecvSdo(std::function<void(SdoType, ObjectDictionaryType::const_iterator, CobSdoData)> callback)
 	{
-		m_callbackOnSdoRecv = callback;
+		callbackOnSdoRecv = callback;
 	}
 
 public:
