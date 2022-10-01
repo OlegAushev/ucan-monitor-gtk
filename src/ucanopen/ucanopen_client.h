@@ -67,11 +67,11 @@ private:
 	/* THREADS */
 	std::thread m_threadRun;
 	std::promise<void> m_signalExitRunThread;
+	void run(std::future<void> futureExit);
 
 public:
 	Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket);
 	~Client();
-	void run(std::future<void> futureExit);
 
 private:
 	void onFrameReceived(can_frame frame);

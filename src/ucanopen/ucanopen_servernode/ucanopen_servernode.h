@@ -103,7 +103,7 @@ public:
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 
 public:
-	std::set<std::string_view> watchEntriesList() const;
+	std::vector<std::string_view> watchEntriesList() const;
 };
 
 

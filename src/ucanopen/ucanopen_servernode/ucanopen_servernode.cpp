@@ -323,15 +323,15 @@ ODRequestStatus ServerNode::exec(std::string_view category, std::string_view sub
 ///
 ///
 ///
-std::set<std::string_view> ServerNode::watchEntriesList() const
+std::vector<std::string_view> ServerNode::watchEntriesList() const
 {
-	std::set<std::string_view> list;
+	std::vector<std::string_view> list;
 	for (auto entry : m_dictionary)
 	{
 		if ((entry.second.category == "WATCH") 
 				&& (entry.second.dataType == OD_FLOAT32))
 		{
-			list.insert(entry.second.name);
+			list.push_back(entry.second.name);
 		}
 	}
 	return list;

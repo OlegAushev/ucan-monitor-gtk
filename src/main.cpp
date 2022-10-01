@@ -86,7 +86,7 @@ int main_loop(std::future<void> futureExit)
 */
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
-
+		
 	}
 
 #ifdef STD_COUT_ENABLED
