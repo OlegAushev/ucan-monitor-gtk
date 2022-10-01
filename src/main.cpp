@@ -46,9 +46,15 @@ int main_loop(std::future<void> futureExit)
 
 	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
 
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1, std::bind(&motordrive::Controller::makeTpdo1, g_motordriveController),
+	// define and register TPDO callbacks
+	auto callbackMakeTpdo1 = []() { return g_motordriveController->makeTpdo1(); };
+	auto callbackMakeTpdo2 = []() { return g_motordriveController->makeTpdo2(); };
+
+	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1,
+			callbackMakeTpdo1,
 			std::chrono::milliseconds(250));
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2, std::bind(&motordrive::Controller::makeTpdo2, g_motordriveController),
+	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2,
+			callbackMakeTpdo2,
 			std::chrono::milliseconds(100));
 
 

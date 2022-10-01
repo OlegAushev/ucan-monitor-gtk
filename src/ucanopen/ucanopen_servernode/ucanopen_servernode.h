@@ -98,9 +98,9 @@ private:
 	}
 public:
 	ODRequestStatus read(const std::string& category, const std::string& subcategory, const std::string& name);
-	ODRequestStatus exec(const std::string& category, const std::string& subcategory, const std::string& name);
-	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data = {});
+	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data);
 	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value);
+	ODRequestStatus exec(const std::string& category, const std::string& subcategory, const std::string& name);
 
 public:
 	std::set<std::string> watchEntriesList();

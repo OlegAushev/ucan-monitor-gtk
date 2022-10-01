@@ -94,6 +94,7 @@ void Controller::setSpeed(double val)
 #ifdef STD_COUT_ENABLED
 	std::cout << "[motordrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
 #endif
+	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(m_speedRef));
 }
 
 
@@ -119,9 +120,8 @@ std::array<uint8_t, 8> Controller::makeTpdo1()
 std::array<uint8_t, 8> Controller::makeTpdo2()
 {
 	ucanopen::CobTpdo2 message = {};
-	
-	//message.speed = m_speedRef;
-	//message.torque = m_torquePuRef;
+
+	message.torque = ((m_torquePuRef > 0) ? m_torquePuRef * 32767 : m_torquePuRef * 32768);
 
 	std::array<uint8_t, 8> ret;
 	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo2));

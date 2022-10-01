@@ -130,10 +130,20 @@ ODRequestStatus ServerNode::read(const std::string& category, const std::string&
 	
 	if (entryIt == m_dictionary.end())
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot read "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no such OD entry." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_FAIL;
 	}
 	else if (entryIt->second.hasReadAccess() == false)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot read "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no access." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
@@ -153,27 +163,26 @@ ODRequestStatus ServerNode::read(const std::string& category, const std::string&
 ///
 ///
 ///
-ODRequestStatus ServerNode::exec(const std::string& odEntryCategory,
-		const std::string& odEntrySubcategory,
-		const std::string& odEntryName)
-{
-	return read(odEntryCategory, odEntrySubcategory, odEntryName);
-}
-
-
-///
-///
-///
 ODRequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData sdoData)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
 	if (entryIt == m_dictionary.end())
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot write "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no such OD entry." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_FAIL;;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot write "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no access." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
@@ -194,20 +203,26 @@ ODRequestStatus ServerNode::write(const std::string& category, const std::string
 ///
 ///
 ///
-ODRequestStatus ServerNode::write(
-		const std::string& odEntryCategory,
-		const std::string& odEntrySubcategory,
-		const std::string& odEntryName,
-		const std::string& value)
+ODRequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value)
 {
-	auto entryIt = findOdEntry(odEntryCategory, odEntrySubcategory, odEntryName);
+	auto entryIt = findOdEntry(category, subcategory, name);
 	
 	if (entryIt == m_dictionary.end())
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot write "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no such OD entry." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_FAIL;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot write "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no access." << std::endl;
+#endif
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
@@ -250,6 +265,52 @@ ODRequestStatus ServerNode::write(
 	message.subindex = entryIt->first.subindex;
 	message.cs = SDO_CCS_WRITE;
 	message.data = sdoData;
+
+	std::array<uint8_t, 8> data;
+	memcpy(&data, &message, sizeof(CobSdo));
+
+	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
+	return ODRequestStatus::REQUEST_SUCCESS;
+}
+
+
+///
+///
+///
+ODRequestStatus ServerNode::exec(const std::string& category, const std::string& subcategory, const std::string& name)
+{
+	auto entryIt = findOdEntry(category, subcategory, name);
+	if (entryIt == m_dictionary.end())
+	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot execute "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - no such OD entry." << std::endl;
+#endif
+		return ODRequestStatus::REQUEST_FAIL;
+	}
+	else if (entryIt->second.dataType != ODEntryDataType::OD_TASK)
+	{
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Cannot execute "
+				<< category << "::" << subcategory << "::" << name 
+				<< " - not executable OD entry." << std::endl;
+#endif
+		return ODRequestStatus::REQUEST_NO_ACCESS;
+	}
+
+	CobSdo message = {};
+	message.index = entryIt->first.index;
+	message.subindex = entryIt->first.subindex;
+
+	if (entryIt->second.hasReadAccess())
+	{
+		message.cs = SDO_CCS_READ;
+	}
+	else if (entryIt->second.hasWriteAccess())
+	{
+		message.cs = SDO_CCS_WRITE;
+	}
 
 	std::array<uint8_t, 8> data;
 	memcpy(&data, &message, sizeof(CobSdo));
