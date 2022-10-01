@@ -23,7 +23,7 @@ extern "C" {
 ///
 ///
 ///
-void motordrive_data_get_watch(const char* name, char* retval)
+void motordrive_get_watch_value(const char* name, char* retval)
 {
 	g_motordriveObserver->watchValue(name, retval);
 }

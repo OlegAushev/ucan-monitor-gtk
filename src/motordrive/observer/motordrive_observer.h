@@ -62,6 +62,7 @@ public:
 		{
 			const char* str = "n/a";
 			std::strcpy(retval, str);
+			return;
 		}
 		std::lock_guard<std::mutex> lock(m_watchMutex);
 		std::strcpy(retval, it->second.c_str());

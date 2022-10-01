@@ -67,7 +67,7 @@ int main_loop(std::future<void> futureExit)
 	auto callbackProcessRpdo3 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo3(data); };
 	auto callbackProcessRpdo4 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo4(data); };
 
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
+	/*g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
 			ucanopen::TpdoType::TPDO1,
 			callbackProcessRpdo1);
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
@@ -78,7 +78,7 @@ int main_loop(std::future<void> futureExit)
 			callbackProcessRpdo3);
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
 			ucanopen::TpdoType::TPDO4,
-			callbackProcessRpdo4);
+			callbackProcessRpdo4);*/
 
 	// define and register SDO callback
 	auto callbackProcessSdo = [](ucanopen::SdoType sdoType,

@@ -28,7 +28,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryState">
 								<property name="title">State</property>
 								<property name="subtitle"></property>
 								<property name="entry-width">80</property>
@@ -36,7 +36,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryErrors">
 								<property name="title">Errors</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
@@ -44,7 +44,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryWarnings">
 								<property name="title">Warnings</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
@@ -64,7 +64,7 @@
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entrySpeed">
 								<property name="title">Speed</property>
 								<property name="subtitle">rpm</property>
 								<property name="entry-width">80</property>
@@ -72,7 +72,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTorque">
 								<property name="title">Torque</property>
 								<property name="subtitle">Nm</property>
 								<property name="entry-width">80</property>
@@ -80,7 +80,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrS">
 								<property name="title">Stator Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -88,7 +88,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrF">
 								<property name="title">Field Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -96,7 +96,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrD">
 								<property name="title">Axis-D Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -104,7 +104,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrQ">
 								<property name="title">Axis-Q Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -112,7 +112,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryGamma">
 								<property name="title">Gamma</property>
 								<property name="subtitle">°</property>
 								<property name="entry-width">80</property>
@@ -120,7 +120,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempS">
 								<property name="title">Stator Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -128,7 +128,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempFW">
 								<property name="title">FW Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -136,7 +136,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryPowerMech">
 								<property name="title">Output Power</property>
 								<property name="subtitle">W</property>
 								<property name="entry-width">80</property>
@@ -156,7 +156,7 @@
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryVoltDC">
 								<property name="title">DC Voltage</property>
 								<property name="subtitle">V</property>
 								<property name="entry-width">80</property>
@@ -164,7 +164,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrDC">
 								<property name="title">DC Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -172,7 +172,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrPhA">
 								<property name="title">PhA Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -180,7 +180,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrPhB">
 								<property name="title">PhB Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -188,7 +188,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryCurrPhC">
 								<property name="title">PhC Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -196,7 +196,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempPhA">
 								<property name="title">PhA Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -204,7 +204,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempPhB">
 								<property name="title">PhB Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -212,7 +212,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempPhC">
 								<property name="title">PhC Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -220,7 +220,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryTempAir">
 								<property name="title">Air Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -228,7 +228,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entryPowerElec">
 								<property name="title">Output Power</property>
 								<property name="subtitle">W</property>
 								<property name="entry-width">80</property>
