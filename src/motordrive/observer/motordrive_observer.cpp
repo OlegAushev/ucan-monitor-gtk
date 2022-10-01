@@ -66,6 +66,21 @@ void Observer::run(std::future<void> futureExit)
 }
 
 
+///
+///
+///
+void Observer::processSdo(ucanopen::SdoType sdoType,
+		ucanopen::ObjectDictionaryType::const_iterator entryIt,
+		ucanopen::CobSdoData data)
+{
+#ifdef STD_COUT_ENABLED
+	std::cout << "[motordrive] SDO received." << std::endl;
+#endif
+}
+
+
+
+
 } // namespace motordrive
 
 

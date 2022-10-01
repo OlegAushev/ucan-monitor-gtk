@@ -67,7 +67,9 @@ public:
 		std::strcpy(retval, it->second.c_str());
 	}
 
-
+	void processSdo(ucanopen::SdoType sdoType,
+			ucanopen::ObjectDictionaryType::const_iterator entryIt,
+			ucanopen::CobSdoData data);
 
 };
 

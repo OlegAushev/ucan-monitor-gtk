@@ -116,7 +116,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 			return;
 		}
 		
-		(void) std::async(m_rsdoCallback, type, odEntry, msg.data);
+		(void) std::async(m_callbackOnSdoRecv, type, odEntry, msg.data);
 	}	
 }
 
