@@ -85,9 +85,9 @@ public:
 
 private:
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
-		const std::string& category,
-		const std::string& subcategory,
-		const std::string& name)
+		std::string_view category,
+		std::string_view subcategory,
+		std::string_view name)
 	{
 		auto it = m_dictionaryAux.find({category, subcategory, name});
 		if (it == m_dictionaryAux.end())
@@ -97,13 +97,13 @@ private:
 		return it->second;
 	}
 public:
-	ODRequestStatus read(const std::string& category, const std::string& subcategory, const std::string& name);
-	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData data);
-	ODRequestStatus write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value);
-	ODRequestStatus exec(const std::string& category, const std::string& subcategory, const std::string& name);
+	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
+	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
+	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
+	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 
 public:
-	std::set<std::string> watchEntriesList();
+	std::set<std::string> watchEntriesList() const;
 };
 
 

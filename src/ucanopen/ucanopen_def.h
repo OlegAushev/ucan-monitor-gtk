@@ -17,6 +17,7 @@
 #include <cstdint>
 #include <cstring>
 #include <string>
+#include <string_view>
 #include <charconv>
 #include <array>
 #include <ios>
@@ -351,10 +352,10 @@ inline bool operator<(const ODEntryKey& lhs, const ODEntryKey& rhs)
 
 struct ODEntryValue
 {
-	std::string category;
-	std::string subcategory;
-	std::string name;
-	std::string unit;
+	std::string_view category;
+	std::string_view subcategory;
+	std::string_view name;
+	std::string_view unit;
 	ODEntryDataType dataType;
 	ODEntryAccessRight accessRight;
 
@@ -383,9 +384,9 @@ struct ODEntryValue
 
 struct ODEntryValueAux
 {
-	std::string category;
-	std::string subcategory;
-	std::string name;
+	std::string_view category;
+	std::string_view subcategory;
+	std::string_view name;
 };
 
 

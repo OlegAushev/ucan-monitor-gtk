@@ -124,7 +124,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 ///
 ///
 ///
-ODRequestStatus ServerNode::read(const std::string& category, const std::string& subcategory, const std::string& name)
+ODRequestStatus ServerNode::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -163,7 +163,7 @@ ODRequestStatus ServerNode::read(const std::string& category, const std::string&
 ///
 ///
 ///
-ODRequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, CobSdoData sdoData)
+ODRequestStatus ServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -203,7 +203,7 @@ ODRequestStatus ServerNode::write(const std::string& category, const std::string
 ///
 ///
 ///
-ODRequestStatus ServerNode::write(const std::string& category, const std::string& subcategory, const std::string& name, const std::string& value)
+ODRequestStatus ServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -277,7 +277,7 @@ ODRequestStatus ServerNode::write(const std::string& category, const std::string
 ///
 ///
 ///
-ODRequestStatus ServerNode::exec(const std::string& category, const std::string& subcategory, const std::string& name)
+ODRequestStatus ServerNode::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	if (entryIt == m_dictionary.end())
@@ -323,7 +323,7 @@ ODRequestStatus ServerNode::exec(const std::string& category, const std::string&
 ///
 ///
 ///
-std::set<std::string> ServerNode::watchEntriesList()
+std::set<std::string> ServerNode::watchEntriesList() const
 {
 	std::set<std::string> list;
 	for (auto entry : m_dictionary)
@@ -331,7 +331,7 @@ std::set<std::string> ServerNode::watchEntriesList()
 		if ((entry.second.category == "WATCH") 
 				&& (entry.second.dataType == OD_FLOAT32))
 		{
-			list.insert(entry.second.name);
+			list.insert(std::string(entry.second.name));
 		}
 	}
 	return list;
