@@ -57,16 +57,25 @@ int main_loop(std::future<void> futureExit)
 			callbackMakeTpdo2,
 			std::chrono::milliseconds(100));
 
-
+	// define and register RPDO callbacks
 	ucanopen::Tester ucanTester;
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO1,
-			std::bind(&ucanopen::Tester::processRpdo1, &ucanTester, std::placeholders::_1));
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO2,
-			std::bind(&ucanopen::Tester::processRpdo2, &ucanTester, std::placeholders::_1));
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO3,
-			std::bind(&ucanopen::Tester::processRpdo3, &ucanTester, std::placeholders::_1));
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(ucanopen::TpdoType::TPDO4,
-			std::bind(&ucanopen::Tester::processRpdo4, &ucanTester, std::placeholders::_1));
+	auto callbackProcessRpdo1 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo1(data); };
+	auto callbackProcessRpdo2 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo2(data); };
+	auto callbackProcessRpdo3 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo3(data); };
+	auto callbackProcessRpdo4 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo4(data); };
+
+	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
+			ucanopen::TpdoType::TPDO1,
+			callbackProcessRpdo1);
+	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
+			ucanopen::TpdoType::TPDO2,
+			callbackProcessRpdo2);
+	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
+			ucanopen::TpdoType::TPDO3,
+			callbackProcessRpdo3);
+	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
+			ucanopen::TpdoType::TPDO4,
+			callbackProcessRpdo4);
 /*
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).enableRpdo();
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnSendPdo(ucanopen::RpdoType::RPDO1,
