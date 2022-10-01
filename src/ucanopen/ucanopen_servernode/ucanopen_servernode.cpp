@@ -328,8 +328,7 @@ std::vector<std::string_view> ServerNode::watchEntriesList() const
 	std::vector<std::string_view> list;
 	for (auto entry : m_dictionary)
 	{
-		if ((entry.second.category == "WATCH") 
-				&& (entry.second.dataType == OD_FLOAT32))
+		if (entry.second.category == "WATCH")
 		{
 			list.push_back(entry.second.name);
 		}

@@ -73,9 +73,14 @@ void Observer::processSdo(ucanopen::SdoType sdoType,
 		ucanopen::ObjectDictionaryType::const_iterator entryIt,
 		ucanopen::CobSdoData data)
 {
-#ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] SDO received." << std::endl;
-#endif
+	if (entryIt->second.category == "WATCH")
+	{
+		auto dataType = entryIt->second.dataType;
+		if (dataType != ucanopen::ODEntryDataType::OD_ENUM16)
+		{
+			m_watchData[entryIt->second.name] = data.toString(entryIt->second.dataType);
+		}
+	}
 }
 
 

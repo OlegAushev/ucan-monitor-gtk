@@ -32,7 +32,7 @@ private:
 	/* THREADS */
 	std::thread m_threadRun;
 	std::promise<void> m_signalExitRunThread;
-	std::chrono::milliseconds m_watchPeriod = std::chrono::milliseconds(1000);
+	std::chrono::milliseconds m_watchPeriod = std::chrono::milliseconds(10);
 	void run(std::future<void> futureExit);
 	void sendWatchRequest()
 	{
