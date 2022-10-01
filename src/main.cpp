@@ -38,10 +38,10 @@ int main_loop(std::future<void> futureExit)
 
 	g_canSocket = std::make_shared<can::Socket>();
 	
-	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x43), g_canSocket);
+	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), g_canSocket);
 	g_ucanClient->serverNodes.insert({
 			ucanopen::ServerNode::Name::C2000,
-			ucanopen::ServerNode(ucanopen::NodeId(0x42), g_canSocket, ucanopen::OBJECT_DICTIONARY)
+			ucanopen::ServerNode(ucanopen::NodeId(0x01), g_canSocket, ucanopen::OBJECT_DICTIONARY)
 	});
 
 	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
