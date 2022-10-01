@@ -12,6 +12,7 @@
 
 #include "ucanopen/ucanopen_client.h"
 #include "motordrive/controller/motordrive_controller.h"
+#include "motordrive/observer/motordrive_observer.h"
 
 
 static std::thread threadMain;
@@ -21,6 +22,7 @@ static std::promise<void> signalExitMain;
 std::shared_ptr<can::Socket> g_canSocket;
 std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<motordrive::Controller> g_motordriveController;
+std::shared_ptr<motordrive::Observer> g_motordriveObserver;
 
 
 /**
@@ -45,6 +47,7 @@ int main_loop(std::future<void> futureExit)
 	});
 
 	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
+	g_motordriveObserver = std::make_shared<motordrive::Observer>(g_ucanClient);
 
 	// define and register TPDO callbacks
 	auto callbackMakeTpdo1 = []() { return g_motordriveController->makeTpdo1(); };

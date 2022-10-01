@@ -20,9 +20,8 @@ namespace motordrive {
 ///
 ///
 Controller::Controller(std::shared_ptr<ucanopen::Client> ucanClient)
-{
-	m_ucanClient = ucanClient;
-}
+	: m_ucanClient(ucanClient)
+{}
 
 
 ///

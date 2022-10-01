@@ -33,7 +33,7 @@ app_sources = files(
 
 	'src/c_wrappers/c_cansocket.cpp',
 	'src/c_wrappers/c_motordrive_controller.cpp',
-	'src/c_wrappers/c_motordrive_dataprocessor.cpp',
+	'src/c_wrappers/c_motordrive_observer.cpp',
 	'src/c_wrappers/c_ucanopen.cpp',
 )
 
