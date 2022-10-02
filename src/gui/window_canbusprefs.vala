@@ -7,6 +7,7 @@ extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void motordrive_observer_set_watch_enabled(bool isEnabled);
+extern void motordrive_observer_set_watch_period(int period);
 
 
 namespace CanMonitor {
@@ -39,8 +40,16 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	[GtkChild]
 	private unowned Gtk.Switch switchWatch;
 
+	[GtkChild]
+	private unowned Adw.ComboRow comborowWatchPeriod;
+
+	[GtkChild]
+	private unowned Gtk.StringList listWatchPeriod;
+
 	private static bool _switchTpdoState = true;
 	private static bool _switchWatchState = true;
+	private static uint _watchPeriodSelected = 3;
+	public const int watchPeriodDefault = 10;
 	
 	public WindowCanBusPrefs()
 	{
@@ -51,10 +60,11 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	{
 		switchTpdo.set_active(_switchTpdoState);
 		switchWatch.set_active(_switchWatchState);
+		comborowWatchPeriod.set_selected(_watchPeriodSelected);
 
 		buttonConnect.clicked.connect(() => {
-				cansocket_connect(listCanInterface.get_string(comborowCanInterface.get_selected())
-				, int.parse(listCanBitrate.get_string(comborowCanBitrate.get_selected())));
+			cansocket_connect(listCanInterface.get_string(comborowCanInterface.selected)
+					, int.parse(listCanBitrate.get_string(comborowCanBitrate.selected)));
 		});
 		buttonDisconnect.clicked.connect(cansocket_disconnect);
 
@@ -66,6 +76,11 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		switchWatch.notify["state"].connect((s,p) => {
 			motordrive_observer_set_watch_enabled(switchWatch.state);
 			_switchWatchState = switchWatch.state;
+		});
+
+		comborowWatchPeriod.notify["selected"].connect((s,p) => {
+			motordrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
+			_watchPeriodSelected = comborowWatchPeriod.selected;
 		});
 	}
 

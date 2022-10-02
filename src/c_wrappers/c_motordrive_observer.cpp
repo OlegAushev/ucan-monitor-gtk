@@ -38,7 +38,15 @@ void motordrive_observer_set_watch_enabled(bool isEnabled)
 }
 
 
+///
+///
+///
+void motordrive_observer_set_watch_period(int period)
+{
+	if (period <= 0) return;
 
+	g_motordriveObserver->setWatchPeriod(std::chrono::milliseconds(period));
+}
 
 
 

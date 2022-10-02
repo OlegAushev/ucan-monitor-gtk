@@ -25,16 +25,13 @@ class Observer
 private:
 	std::shared_ptr<ucanopen::Client> m_ucanClient;
 
+	/* WATCH */
 	std::map<std::string_view, std::string> m_watchData;
 	mutable std::mutex m_watchMutex;
 	std::vector<std::string_view> m_watchList;
 	volatile bool m_isWatchEnabled{false};
+	std::chrono::milliseconds m_watchPeriod{std::chrono::milliseconds(10)};
 	
-	/* THREADS */
-	std::thread m_threadRun;
-	std::promise<void> m_signalExitRunThread;
-	std::chrono::milliseconds m_watchPeriod = std::chrono::milliseconds(10);
-	void run(std::future<void> futureExit);
 	void sendWatchRequest()
 	{
 		static size_t i = 0;
@@ -45,6 +42,11 @@ private:
 		}
 	}
 
+	/* THREADS */
+	std::thread m_threadRun;
+	std::promise<void> m_signalExitRunThread;
+	void run(std::future<void> futureExit);
+	
 public:
 	Observer(std::shared_ptr<ucanopen::Client> ucanClient);
 	~Observer();
@@ -52,6 +54,11 @@ public:
 	void setWatchEnabled(bool isEnabled)
 	{
 		m_isWatchEnabled = isEnabled;
+	}
+
+	void setWatchPeriod(std::chrono::milliseconds period)
+	{
+		m_watchPeriod = period;
 	}
 
 	std::string watchValue(std::string_view watchName) const

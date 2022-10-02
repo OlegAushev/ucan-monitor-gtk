@@ -52,6 +52,7 @@ public class Application : Adw.Application
 		while (!g_isBackendReady) { /* wait */ }
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		motordrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
+		motordrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
 
 		base.activate();
 		var win = this.active_window;
