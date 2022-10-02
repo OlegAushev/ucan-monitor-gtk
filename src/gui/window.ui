@@ -33,7 +33,7 @@
 				<!-- LOG BUTTON -->
 				<child type="end">
 					<object class="GtkToggleButton">
-						<property name="icon-name">xapp-annotations-text-symbolic</property>
+						<property name="icon-name">media-view-subtitles-symbolic</property>
 						<property name="active" bind-source="boxLog" bind-property="visible" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
@@ -69,7 +69,7 @@
 											<!-- PAGE 1 of VIEWSTACK -->
 											<object class="AdwViewStackPage" id="viewstackPage1">
 												<property name="title">Data</property>
-												<property name="icon-name">table-symbolic</property>
+												<property name="icon-name">view-list-symbolic</property>
 												<property name="child">
 													<object class="GtkScrolledWindow">
 														<property name="hexpand">true</property>
@@ -89,7 +89,7 @@
 											<!-- PAGE 2 of VIEWSTACK -->
 											<object class="AdwViewStackPage" id="viewstackPage2">
 												<property name="title">Charts</property>
-												<property name="icon-name">utilities-system-monitor-symbolic</property>
+												<property name="icon-name">computer-symbolic</property>
 												<property name="child">
 													<object class="AdvvChartChart">
 														<!--property name="label">                    This is page 2                    </property-->
@@ -101,7 +101,7 @@
 											<!-- PAGE 3 of VIEWSTACK -->
 											<object class="AdwViewStackPage" id="viewstackPage3">
 												<property name="title">Setup</property>
-												<property name="icon-name">utilities-tweak-tool-symbolic</property>
+												<property name="icon-name">preferences-system-symbolic</property>
 												<property name="child">
 													<object class="GtkLabel">
 														<property name="label">This is page 3</property>

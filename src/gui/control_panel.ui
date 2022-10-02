@@ -84,7 +84,7 @@
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Emergency Stop</property>
-								<property name="icon-name">dialog-error-symbolic</property>
+								<property name="icon-name">dialog-warning-symbolic</property>
 								<property name="activatable_widget">switchEmergency</property>
 								<child>
 									<object class="GtkSwitch" id="switchEmergency">
