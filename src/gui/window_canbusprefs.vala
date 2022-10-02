@@ -5,7 +5,8 @@
 
 extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
-extern void ucanopen_client_set_tpdo_state(bool state);
+extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
+extern void motordrive_observer_set_watch_enabled(bool isEnabled);
 
 
 namespace CanMonitor {
@@ -35,7 +36,11 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	[GtkChild]
 	private unowned Gtk.Switch switchTpdo;
 
-	private static bool _tpdoState = false;
+	[GtkChild]
+	private unowned Gtk.Switch switchWatch;
+
+	private static bool _switchTpdoState = true;
+	private static bool _switchWatchState = true;
 	
 	public WindowCanBusPrefs()
 	{
@@ -44,7 +49,8 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 
 	construct
 	{
-		switchTpdo.set_active(_tpdoState);
+		switchTpdo.set_active(_switchTpdoState);
+		switchWatch.set_active(_switchWatchState);
 
 		buttonConnect.clicked.connect(() => {
 				cansocket_connect(listCanInterface.get_string(comborowCanInterface.get_selected())
@@ -53,9 +59,24 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		buttonDisconnect.clicked.connect(cansocket_disconnect);
 
 		switchTpdo.notify["state"].connect((s,p) => {
-			ucanopen_client_set_tpdo_state(switchTpdo.state);
-			_tpdoState = switchTpdo.state;
+			ucanopen_client_set_tpdo_enabled(switchTpdo.state);
+			_switchTpdoState = switchTpdo.state;
 		});
+
+		switchWatch.notify["state"].connect((s,p) => {
+			motordrive_observer_set_watch_enabled(switchWatch.state);
+			_switchWatchState = switchWatch.state;
+		});
+	}
+
+	public static bool switchTpdoState
+	{
+		get { return _switchTpdoState; }
+	}
+
+	public static bool switchWatchState
+	{
+		get { return _switchWatchState; }
 	}
 }
 

@@ -58,7 +58,17 @@
 								<child>
 									<object class="GtkSwitch" id="switchTpdo">
 										<property name="valign">center</property>
-										<!--property name="active">false</property-->
+									</object>
+								</child>
+							</object>
+						</child>
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">Enable Watch</property>
+								<property name="activatable_widget">switchWatch</property>
+								<child>
+									<object class="GtkSwitch" id="switchWatch">
+										<property name="valign">center</property>
 									</object>
 								</child>
 							</object>

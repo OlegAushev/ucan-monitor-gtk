@@ -40,16 +40,9 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 ///
 ///
-void ucanopen_client_set_tpdo_state(bool state)
+void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 {
-	if (state)
-	{
-		g_ucanClient->enableTpdo();
-	}
-	else
-	{
-		g_ucanClient->disableTpdo();
-	}
+	g_ucanClient->setTpdoEnabled(isEnabled);
 }
 
 

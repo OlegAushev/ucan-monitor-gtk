@@ -55,7 +55,7 @@ private:
 	HeartbeatInfo m_heartbeatInfo;
 			
 	/* TPDO client --> server */
-	bool m_isTpdoEnabled;
+	bool m_isTpdoEnabled{false};
 	struct TpdoInfo
 	{
 		std::function<std::array<uint8_t, 8>(void)> callbackOnSend;
@@ -94,8 +94,7 @@ public:
 		nodeId = _nodeId;
 	}
 
-	void enableTpdo() { m_isTpdoEnabled = true; }
-	void disableTpdo() { m_isTpdoEnabled = false; }
+	void setTpdoEnabled(bool isEnabled) { m_isTpdoEnabled = isEnabled; }
 	void sendTpdo();
 };
 

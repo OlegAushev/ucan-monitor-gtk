@@ -3,9 +3,9 @@
 ///
 
 
-extern void motordrive_controller_set_power_state(bool state);
-extern void motordrive_controller_set_run_state(bool state);
-extern void motordrive_controller_set_emergency_state(bool state);
+extern void motordrive_controller_set_power_enabled(bool isEnabled);
+extern void motordrive_controller_set_run_enabled(bool isEnabled);
+extern void motordrive_controller_set_emergency_enabled(bool isEnabled);
 extern void motordrive_controller_set_torque(double valPu);
 extern void motordrive_controller_set_speed(double val);
 
@@ -39,15 +39,15 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		switchPower.notify["state"].connect((s, p) => {
-				motordrive_controller_set_power_state(switchPower.state);
+				motordrive_controller_set_power_enabled(switchPower.state);
 		});
 
 		switchRun.notify["state"].connect((s, p) => {
-				motordrive_controller_set_run_state(switchRun.state);
+				motordrive_controller_set_run_enabled(switchRun.state);
 		});
 
 		switchEmergency.notify["state"].connect((s, p) => {
-				motordrive_controller_set_emergency_state(switchEmergency.state);
+				motordrive_controller_set_emergency_enabled(switchEmergency.state);
 		});
 
 		sliderSpeed.adjustment->notify["value"].connect((s, p) => {

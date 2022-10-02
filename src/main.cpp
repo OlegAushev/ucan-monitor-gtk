@@ -18,7 +18,7 @@
 static std::thread threadMain;
 static std::promise<void> signalExitMain;
 
-
+bool g_isBackendReady = false;
 std::shared_ptr<can::Socket> g_canSocket;
 std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<motordrive::Controller> g_motordriveController;
@@ -39,7 +39,7 @@ int main_loop(std::future<void> futureExit)
 #endif
 
 	g_canSocket = std::make_shared<can::Socket>();
-	
+
 	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), g_canSocket);
 	g_ucanClient->serverNodes.insert({
 			ucanopen::ServerNode::Name::C2000,
@@ -94,6 +94,12 @@ int main_loop(std::future<void> futureExit)
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnSendPdo(ucanopen::RpdoType::RPDO1,
 			std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester), std::chrono::milliseconds(500));
 */
+
+#ifdef STD_COUT_ENABLED
+	std::cout << "[cpp] Backend is ready." << std::endl;
+#endif
+	g_isBackendReady = true;
+
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
 		

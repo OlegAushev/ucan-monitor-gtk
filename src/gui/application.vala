@@ -19,6 +19,7 @@
 
 extern int main_enter();
 extern void main_exit();
+extern bool g_isBackendReady;
 
 
 namespace CanMonitor {
@@ -48,6 +49,9 @@ public class Application : Adw.Application
 	public override void activate()
 	{
 		main_enter();
+		while (!g_isBackendReady) { /* wait */ }
+		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
+		motordrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
 
 		base.activate();
 		var win = this.active_window;

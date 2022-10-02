@@ -23,12 +23,19 @@ extern "C" {
 ///
 ///
 ///
-void motordrive_get_watch_value(const char* name, char* retval)
+void motordrive_observer_get_watch_value(const char* name, char* retval)
 {
 	g_motordriveObserver->watchValue(name, retval);
 }
 
 
+///
+///
+///
+void motordrive_observer_set_watch_enabled(bool isEnabled)
+{
+	g_motordriveObserver->setWatchEnabled(isEnabled);
+}
 
 
 

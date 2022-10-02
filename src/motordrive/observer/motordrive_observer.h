@@ -28,6 +28,7 @@ private:
 	std::map<std::string_view, std::string> m_watchData;
 	mutable std::mutex m_watchMutex;
 	std::vector<std::string_view> m_watchList;
+	volatile bool m_isWatchEnabled{false};
 	
 	/* THREADS */
 	std::thread m_threadRun;
@@ -37,14 +38,22 @@ private:
 	void sendWatchRequest()
 	{
 		static size_t i = 0;
-		m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).read("WATCH", "WATCH", m_watchList[i]);
-		i = (i + 1) % m_watchList.size();		
+		if (m_isWatchEnabled)
+		{
+			m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).read("WATCH", "WATCH", m_watchList[i]);
+			i = (i + 1) % m_watchList.size();		
+		}
 	}
 
 public:
 	Observer(std::shared_ptr<ucanopen::Client> ucanClient);
 	~Observer();
 	
+	void setWatchEnabled(bool isEnabled)
+	{
+		m_isWatchEnabled = isEnabled;
+	}
+
 	std::string watchValue(std::string_view watchName) const
 	{
 		auto it = m_watchData.find(watchName);

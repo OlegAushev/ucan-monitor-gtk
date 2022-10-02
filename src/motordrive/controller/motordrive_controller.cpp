@@ -51,11 +51,11 @@ void Controller::powerDown()
 ///
 ///
 ///
-void Controller::setRunState(bool state)
+void Controller::setRunEnabled(bool isEnabled)
 {
-	m_runState = state;
+	m_isRunEnabled = isEnabled;
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] RUN state: " << state << std::endl;
+	std::cout << "[motordrive] RUN state: " << isEnabled << std::endl;
 #endif	
 }
 
@@ -63,11 +63,11 @@ void Controller::setRunState(bool state)
 ///
 ///
 ///
-void Controller::setEmergencyState(bool state)
+void Controller::setEmergencyEnabled(bool isEnabled)
 {
-	m_emergencyState = state;
+	m_isEmergencyEnabled = isEnabled;
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] EMERGENCY state: " << state << std::endl;
+	std::cout << "[motordrive] EMERGENCY state: " << isEnabled << std::endl;
 #endif		
 }
 
@@ -104,8 +104,8 @@ std::array<uint8_t, 8> Controller::makeTpdo1()
 {
 	ucanopen::CobTpdo1 message = {};
 
-	message.run = ((m_runState) ? 1 : 0);
-	message.emergencyStop = ((m_emergencyState) ? 1 : 0);
+	message.run = ((m_isRunEnabled) ? 1 : 0);
+	message.emergencyStop = ((m_isEmergencyEnabled) ? 1 : 0);
 	
 	std::array<uint8_t, 8> ret;
 	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo1));

@@ -147,7 +147,7 @@ ODRequestStatus ServerNode::read(std::string_view category, std::string_view sub
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
-	CobSdo message = {};
+	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 	message.cs = SDO_CCS_READ;
@@ -186,7 +186,7 @@ ODRequestStatus ServerNode::write(std::string_view category, std::string_view su
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
-	CobSdo message = {};
+	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 	message.cs = SDO_CCS_WRITE;
@@ -260,7 +260,7 @@ ODRequestStatus ServerNode::write(std::string_view category, std::string_view su
 		return ODRequestStatus::REQUEST_FAIL;
 	}
 
-	CobSdo message = {};
+	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 	message.cs = SDO_CCS_WRITE;
@@ -299,7 +299,7 @@ ODRequestStatus ServerNode::exec(std::string_view category, std::string_view sub
 		return ODRequestStatus::REQUEST_NO_ACCESS;
 	}
 
-	CobSdo message = {};
+	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 

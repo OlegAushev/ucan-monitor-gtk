@@ -23,9 +23,9 @@ extern "C" {
 ///
 ///
 ///
-void motordrive_controller_set_power_state(bool state)
+void motordrive_controller_set_power_enabled(bool isEnabled)
 {
-	if (state)
+	if (isEnabled)
 	{
 		g_motordriveController->powerUp();
 	}
@@ -39,18 +39,18 @@ void motordrive_controller_set_power_state(bool state)
 ///
 ///
 ///
-void motordrive_controller_set_run_state(bool state)
+void motordrive_controller_set_run_enabled(bool isEnabled)
 {
-	g_motordriveController->setRunState(state);
+	g_motordriveController->setRunEnabled(isEnabled);
 }
 
 
 ///
 ///
 ///
-void motordrive_controller_set_emergency_state(bool state)
+void motordrive_controller_set_emergency_enabled(bool isEnabled)
 {
-	g_motordriveController->setEmergencyState(state);
+	g_motordriveController->setEmergencyEnabled(isEnabled);
 }
 
 
