@@ -30,6 +30,7 @@ app_sources = files(
 	'src/ucanopen/ucanopen_servernode/ucanopen_servernode.cpp',
 
 	'src/motordrive/controller/motordrive_controller.cpp',
+	'src/motordrive/observer/motordrive_observer.cpp',
 
 	'src/c_wrappers/c_cansocket.cpp',
 	'src/c_wrappers/c_motordrive_controller.cpp',
