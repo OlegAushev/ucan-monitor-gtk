@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 
 ################################################################################
 project(ucan-monitor VERSION 0.1)
-set(EXECUTABLE ${CMAKE_PROJECT_NAME})
 
 ################################################################################
 # Threads
@@ -29,13 +28,13 @@ add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
 # Headers and Sources
-set(PROJECT_INCLUDE_DIRECTORIES
+set(app_incdirs
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/src
 )
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
+file(GLOB_RECURSE app_sources CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/include/*.c
 	${PROJECT_SOURCE_DIR}/include/*.cpp
 	${PROJECT_SOURCE_DIR}/src/*.c
@@ -45,80 +44,81 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 ################################################################################
 # XML and UI Resources
 find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
-set(GRESOURCE_XML gresource.xml)
-set(GRESOURCE_C ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
-#message("glib-compile-resources output: " ${GRESOURCE_C})
+set(gresource_xml gresource.xml)
+set(gresource_c ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
+#message("glib-compile-resources output: " ${gresource_c})
 
-file(GLOB_RECURSE UI_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
+file(GLOB_RECURSE ui_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/src/gui/*.ui
 )
 
 add_custom_command(
-	OUTPUT ${GRESOURCE_C}
+	OUTPUT ${gresource_c}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${GRESOURCE_C} ${GRESOURCE_XML}
+	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${gresource_c} ${gresource_xml}
 	VERBATIM
-	MAIN_DEPENDENCY ${GRESOURCE_XML}
+	MAIN_DEPENDENCY ${gresource_xml}
 	DEPENDS
-		${UI_SOURCES}
+		${ui_sources}
 )
 
 add_custom_target(
 	gresource-target
-	DEPENDS ${GRESOURCE_C}
+	DEPENDS ${gresource_c}
 )
 
 ################################################################################
 # Vala Sources
-file(GLOB_RECURSE VALA_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
+file(GLOB_RECURSE vala_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/src/gui/*.vala
 )
 
-vala_precompile(VALA_C
-	${VALA_SOURCES}
+vala_precompile(vala_c
+	${vala_sources}
 PACKAGES
 	gtk4
 	libadwaita-1
 OPTIONS
-	--gresources=${PROJECT_SOURCE_DIR}/${GRESOURCE_XML}
+	--gresources=${PROJECT_SOURCE_DIR}/${gresource_xml}
 )
-#message("valac output: " ${VALA_C})
+#message("valac output: " ${vala_c})
 
 ################################################################################
 # Executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(executable ${CMAKE_PROJECT_NAME})
 
-add_executable(${EXECUTABLE}
-	${PROJECT_SOURCES}
-	${GRESOURCE_C}
-	${VALA_C}
+add_executable(${executable}
+	${app_sources}
+	${gresource_c}
+	${vala_c}
 )
 
 set_source_files_properties(
-	${GRESOURCE_C}
+	${gresource_c}
 	PROPERTIES GENERATED TRUE
 )
 
-add_dependencies(${EXECUTABLE} gresource-target)
+add_dependencies(${executable} gresource-target)
 
-target_compile_definitions(${EXECUTABLE} PRIVATE
+target_compile_definitions(${executable} PRIVATE
 	$<$<CONFIG:Debug>:DEBUG>
 	#${GTK4_CFLAGS_OTHER}
 	STD_COUT_ENABLED
 )
 
-target_include_directories(${EXECUTABLE} PRIVATE
-	${PROJECT_INCLUDE_DIRECTORIES}
+target_include_directories(${executable} PRIVATE
+	${app_incdirs}
 )
 
-target_link_libraries(${EXECUTABLE}
+target_link_libraries(${executable}
 	${GTK4_LIBRARIES}
 	Threads::Threads
 )
 
 ################################################################################
 # Compiler Options and Features
-target_compile_options(${EXECUTABLE} PRIVATE
+target_compile_options(${executable} PRIVATE
 	#$<$<CONFIG:Debug>:-Og -g3 -ggdb>
 	#$<$<CONFIG:Release>:-Og -g0>
 	-Wall
@@ -126,12 +126,12 @@ target_compile_options(${EXECUTABLE} PRIVATE
 	-Wpedantic
 )
 
-target_compile_features(${EXECUTABLE} PRIVATE
+target_compile_features(${executable} PRIVATE
 	c_std_11
 	cxx_std_20
 )
 
-target_link_options(${EXECUTABLE} PRIVATE
+target_link_options(${executable} PRIVATE
 	-Wl,--export-dynamic # sic! for signals
 )
 
