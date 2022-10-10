@@ -1,4 +1,4 @@
-# STM32 Minimal CMake project for C/C++ projects
+#
 cmake_minimum_required(VERSION 3.12)
 
 ################################################################################
@@ -6,13 +6,13 @@ project(ucan-monitor VERSION 0.1)
 set(EXECUTABLE ${CMAKE_PROJECT_NAME})
 
 ################################################################################
-# THREADS
+# Threads
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 ################################################################################
-# GTK and VALA
+# Gtk and Vala
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4 libadwaita-1)
 
@@ -28,7 +28,7 @@ link_directories(${GTK4_LIBRARY_DIRS})
 add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
-# HEADERS and SOURCES
+# Headers and Sources
 set(PROJECT_INCLUDE_DIRECTORIES
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/include
@@ -43,7 +43,7 @@ file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 )
 
 ################################################################################
-# XML and UI resources
+# XML and UI Resources
 find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
 set(GRESOURCE_XML gresource.xml)
 set(GRESOURCE_C ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
@@ -69,7 +69,7 @@ add_custom_target(
 )
 
 ################################################################################
-# VALA
+# Vala Sources
 file(GLOB_RECURSE VALA_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/src/gui/*.vala
 )
@@ -85,7 +85,7 @@ OPTIONS
 #message("valac output: " ${VALA_C})
 
 ################################################################################
-# EXECUTABLE
+# Executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(${EXECUTABLE}
@@ -117,7 +117,7 @@ target_link_libraries(${EXECUTABLE}
 )
 
 ################################################################################
-# Compiler OPTIONS and FEATURES
+# Compiler Options and Features
 target_compile_options(${EXECUTABLE} PRIVATE
 	#$<$<CONFIG:Debug>:-Og -g3 -ggdb>
 	#$<$<CONFIG:Release>:-Og -g0>
@@ -136,6 +136,7 @@ target_link_options(${EXECUTABLE} PRIVATE
 )
 
 ################################################################################
+# Misc Options
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
