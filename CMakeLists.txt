@@ -58,8 +58,7 @@ add_custom_command(
 	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${gresource_c} ${gresource_xml}
 	VERBATIM
 	MAIN_DEPENDENCY ${gresource_xml}
-	DEPENDS
-		${ui_sources}
+	DEPENDS	${ui_sources}
 )
 
 add_custom_target(
@@ -92,11 +91,6 @@ add_executable(${executable}
 	${app_sources}
 	${gresource_c}
 	${vala_c}
-)
-
-set_source_files_properties(
-	${gresource_c}
-	PROPERTIES GENERATED TRUE
 )
 
 add_dependencies(${executable} gresource-target)
