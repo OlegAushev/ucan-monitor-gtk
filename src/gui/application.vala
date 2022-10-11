@@ -17,6 +17,7 @@
  */
 
 
+extern string GIT_DESCRIBE;
 extern int main_enter();
 extern void main_exit();
 extern bool g_isBackendReady;
@@ -69,7 +70,7 @@ public class Application : Adw.Application
 		Gtk.show_about_dialog (this.active_window,
 				"program-name", "uCAN Monitor",
 				"authors", authors,
-				"version", "0.1.0");
+				"version", GIT_DESCRIBE);
 	}
 
 	private void on_preferences_action()

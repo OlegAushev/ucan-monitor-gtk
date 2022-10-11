@@ -1,8 +1,11 @@
 #
 cmake_minimum_required(VERSION 3.12)
 
-################################################################################
 project(ucan-monitor VERSION 0.1)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/check-git)
+include(CheckGit)
+CheckGitSetup()
 
 ################################################################################
 # Threads
@@ -108,6 +111,10 @@ target_include_directories(${executable} PRIVATE
 target_link_libraries(${executable}
 	${GTK4_LIBRARIES}
 	Threads::Threads
+)
+
+target_link_libraries(${executable}
+	git-version
 )
 
 ################################################################################
