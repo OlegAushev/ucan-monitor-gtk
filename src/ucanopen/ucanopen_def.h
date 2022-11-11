@@ -100,7 +100,7 @@ inline unsigned int calculateCobId(CobType cobType, unsigned int nodeId)
 }
 
 
-constexpr std::array<unsigned int, COB_TYPE_COUNT> cobDataLen = {
+constexpr std::array<unsigned int, COB_TYPE_COUNT> COB_DATA_LEN = {
 	2,	// NMT
 	0,	// SYNC
 	2,	// EMCY
@@ -414,7 +414,7 @@ inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8
 {
 	can_frame frame;
 	frame.can_id = calculateCobId(cobType, nodeId.value());
-	frame.len = cobDataLen[static_cast<size_t>(cobType)];
+	frame.len = COB_DATA_LEN[static_cast<size_t>(cobType)];
 	memcpy(frame.data, data.data(), frame.len);
 	return frame;
 }
