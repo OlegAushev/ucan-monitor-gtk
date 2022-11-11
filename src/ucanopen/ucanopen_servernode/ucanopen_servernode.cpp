@@ -19,7 +19,7 @@ namespace ucanopen {
 ///
 ///
 ///
-ServerNode::ServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary)
+IServerNode::IServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary)
 	: nodeId(t_nodeId)
 	, m_socket(t_socket)
 	, m_dictionary(t_dictionary)
@@ -32,34 +32,40 @@ ServerNode::ServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, c
 	}
 
 	m_isRpdoEnabled = false;
-
-	m_tpdoInfo.insert({TpdoType::TPDO1, {{}, std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO2, {{}, std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO3, {{}, std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO4, {{}, std::chrono::steady_clock::now()}});
-
-	m_rpdoInfo.insert({RpdoType::RPDO1, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_rpdoInfo.insert({RpdoType::RPDO2, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_rpdoInfo.insert({RpdoType::RPDO3, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_rpdoInfo.insert({RpdoType::RPDO4, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
 }
 
 
 ///
 ///
 ///
-void ServerNode::sendRpdo()
+void IServerNode::sendRpdo()
 {
 	auto now = std::chrono::steady_clock::now();
 	if (m_isRpdoEnabled)
 	{
 		for (auto& rpdo : m_rpdoInfo)
 		{
-			if (rpdo.second.callbackOnSend)
+			if (rpdo.second.period != std::chrono::milliseconds(0))
 			{
 				if (now - rpdo.second.timepoint >= rpdo.second.period)
 				{
-					m_socket->send(makeFrame(toCobType(rpdo.first), nodeId, rpdo.second.callbackOnSend()));
+					std::array<uint8_t, 8> data;
+					switch (rpdo.first)
+					{
+					case RpdoType::RPDO1:
+						data = makeRpdo1();
+						break;
+					case RpdoType::RPDO2:
+						data = makeRpdo2();
+						break;
+					case RpdoType::RPDO3:
+						data = makeRpdo3();
+						break;
+					case RpdoType::RPDO4:
+						data = makeRpdo4();
+						break;
+					}
+					m_socket->send(makeFrame(rpdo.second.id, 8, data));
 					rpdo.second.timepoint = now;
 				}
 			}
@@ -71,21 +77,36 @@ void ServerNode::sendRpdo()
 ///
 ///
 ///
-void ServerNode::onFrameReceived(can_frame frame)
+void IServerNode::onFrameReceived(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoInfo)
 	{
-		if (frame.can_id == cobId(toCobType(tpdo.first), nodeId.value()))
+		if (frame.can_id == tpdo.second.id)
 		{
+			tpdo.second.timepoint = std::chrono::steady_clock::now();
 			std::array<uint8_t, 8> data;
 			memcpy(&data, frame.data, frame.can_dlc);
-			(void) std::async(tpdo.second.callbackOnRecv, data);
-			tpdo.second.timepoint = std::chrono::steady_clock::now();
+
+			switch (tpdo.first)
+			{
+			case TpdoType::TPDO1:
+				processTpdo1(data);
+				break;
+			case TpdoType::TPDO2:
+				processTpdo2(data);
+				break;
+			case TpdoType::TPDO3:
+				processTpdo3(data);
+				break;
+			case TpdoType::TPDO4:
+				processTpdo4(data);
+				break;
+			}
 			return;
 		}
 	}
 
-	if (frame.can_id == cobId(CobType::TSDO, nodeId.value()))
+	if (frame.can_id == calculateCobId(CobType::TSDO, nodeId.value()))
 	{
 		CobSdo msg;
 		memcpy(&msg, frame.data, sizeof(CobSdo));
@@ -115,8 +136,8 @@ void ServerNode::onFrameReceived(can_frame frame)
 		default:
 			return;
 		}
-		
-		(void) std::async(callbackOnSdoRecv, type, odEntry, msg.data);
+
+		processTsdo(type, odEntry, msg.data);
 	}	
 }
 
@@ -124,7 +145,7 @@ void ServerNode::onFrameReceived(can_frame frame)
 ///
 ///
 ///
-ODRequestStatus ServerNode::read(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus IServerNode::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -163,7 +184,7 @@ ODRequestStatus ServerNode::read(std::string_view category, std::string_view sub
 ///
 ///
 ///
-ODRequestStatus ServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
+ODRequestStatus IServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -203,7 +224,7 @@ ODRequestStatus ServerNode::write(std::string_view category, std::string_view su
 ///
 ///
 ///
-ODRequestStatus ServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
+ODRequestStatus IServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -277,7 +298,7 @@ ODRequestStatus ServerNode::write(std::string_view category, std::string_view su
 ///
 ///
 ///
-ODRequestStatus ServerNode::exec(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus IServerNode::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	if (entryIt == m_dictionary.end())
@@ -323,7 +344,7 @@ ODRequestStatus ServerNode::exec(std::string_view category, std::string_view sub
 ///
 ///
 ///
-std::vector<std::string_view> ServerNode::watchEntriesList() const
+std::vector<std::string_view> IServerNode::watchEntriesList() const
 {
 	std::vector<std::string_view> list;
 	for (auto entry : m_dictionary)

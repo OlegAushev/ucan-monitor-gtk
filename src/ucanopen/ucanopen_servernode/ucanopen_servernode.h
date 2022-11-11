@@ -24,7 +24,7 @@
 
 namespace ucanopen {
 
-
+#ifdef OBSOLETE
 class ServerNode
 {
 public:
@@ -110,7 +110,7 @@ public:
 public:
 	std::vector<std::string_view> watchEntriesList() const;
 };
-
+#endif
 
 
 
@@ -132,6 +132,7 @@ private:
 private:
 	struct TpdoInfo
 	{
+		unsigned int id;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoInfo;
@@ -140,12 +141,18 @@ protected:
 	virtual void processTpdo2(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo3(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo4(std::array<uint8_t, 8> data) = 0;
+	void registerTpdo(TpdoType type)
+	{
+		unsigned int id = calculateCobId(toCobType(type), nodeId.value());
+		m_tpdoInfo.insert({type, {id, std::chrono::steady_clock::now()}});
+	}
 
 	/* RPDO server <-- client */
 private:
 	bool m_isRpdoEnabled;
 	struct RpdoInfo
 	{
+		unsigned int id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
@@ -155,12 +162,18 @@ protected:
 	virtual std::array<uint8_t, 8> makeRpdo2() = 0;
 	virtual std::array<uint8_t, 8> makeRpdo3() = 0;
 	virtual std::array<uint8_t, 8> makeRpdo4() = 0;
+	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
+	{
+		unsigned int id = calculateCobId(toCobType(type), nodeId.value());
+		m_rpdoInfo.insert({type, {id, period, std::chrono::steady_clock::now()}});
+	}
 
 	/* TSDO server --> client */
 protected:
 	virtual void processTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
 
 public:
+	IServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary);
 	void enableRpdo() { m_isRpdoEnabled = true; }
 	void disableRpdo() { m_isRpdoEnabled = false; }
 	void sendRpdo();
