@@ -10,7 +10,7 @@
  */
 
 
-#include "ucanopen/ucanopen_client.h"
+#include "ucanopen/client/ucanopen_client.h"
 
 
 extern std::shared_ptr<ucanopen::Client> g_ucanClient;

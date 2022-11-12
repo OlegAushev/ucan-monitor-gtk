@@ -24,12 +24,12 @@
 #include <iomanip>
 
 #include "cansocket/cansocket.h"
-#include "ucanopen_def.h"
-#include "ucanopen_tpdodef.h"
-#include "ucanopen_rpdodef.h"
-#include "ucanopen_servernode/ucanopen_servernode.h"
-#include "ucanopen_tester/ucanopen_tester.h"
-#include "objectdictionary/objectdictionary.h"
+#include "../ucanopen_def.h"
+#include "../ucanopen_tpdodef.h"
+#include "../ucanopen_rpdodef.h"
+#include "../server/ucanopen_server.h"
+#include "../tester/ucanopen_tester.h"
+#include "../objectdictionary/objectdictionary.h"
 
 
 namespace ucanopen {
@@ -43,7 +43,7 @@ private:
 	std::shared_ptr<can::Socket> m_canSocket;
 	NmtState m_state;
 public:
-	std::map<ServerNode::Name, ServerNode> serverNodes;
+	std::vector<std::shared_ptr<IServer>> servers;
 
 private:
 	/* HEARTBEAT */

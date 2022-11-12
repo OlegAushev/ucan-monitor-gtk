@@ -10,7 +10,7 @@
  */
 
 
-#include "ucanopen/ucanopen_client.h"
+#include "ucanopen/client/ucanopen_client.h"
 #include "motordrive/controller/motordrive_controller.h"
 #include "motordrive/observer/motordrive_observer.h"
 

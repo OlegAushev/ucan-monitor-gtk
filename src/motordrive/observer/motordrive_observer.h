@@ -13,7 +13,7 @@
 #pragma once
 
 
-#include "ucanopen/ucanopen_client.h"
+#include "ucanopen/client/ucanopen_client.h"
 
 
 namespace motordrive {

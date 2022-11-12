@@ -10,7 +10,7 @@
  */
 
 
-#include "ucanopen_servernode.h"
+#include "ucanopen_server.h"
 
 
 namespace ucanopen {
@@ -19,7 +19,7 @@ namespace ucanopen {
 ///
 ///
 ///
-IServerNode::IServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary)
+IServer::IServer(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary)
 	: nodeId(t_nodeId)
 	, m_socket(t_socket)
 	, m_dictionary(t_dictionary)
@@ -38,7 +38,7 @@ IServerNode::IServerNode(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket,
 ///
 ///
 ///
-void IServerNode::sendRpdo()
+void IServer::sendRpdo()
 {
 	auto now = std::chrono::steady_clock::now();
 	if (m_isRpdoEnabled)
@@ -77,7 +77,7 @@ void IServerNode::sendRpdo()
 ///
 ///
 ///
-void IServerNode::onFrameReceived(can_frame frame)
+void IServer::onFrameReceived(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoInfo)
 	{
@@ -145,7 +145,7 @@ void IServerNode::onFrameReceived(can_frame frame)
 ///
 ///
 ///
-ODRequestStatus IServerNode::read(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus IServer::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -184,7 +184,7 @@ ODRequestStatus IServerNode::read(std::string_view category, std::string_view su
 ///
 ///
 ///
-ODRequestStatus IServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
+ODRequestStatus IServer::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -224,7 +224,7 @@ ODRequestStatus IServerNode::write(std::string_view category, std::string_view s
 ///
 ///
 ///
-ODRequestStatus IServerNode::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
+ODRequestStatus IServer::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	
@@ -298,7 +298,7 @@ ODRequestStatus IServerNode::write(std::string_view category, std::string_view s
 ///
 ///
 ///
-ODRequestStatus IServerNode::exec(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus IServer::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = findOdEntry(category, subcategory, name);
 	if (entryIt == m_dictionary.end())
@@ -344,7 +344,7 @@ ODRequestStatus IServerNode::exec(std::string_view category, std::string_view su
 ///
 ///
 ///
-std::vector<std::string_view> IServerNode::watchEntriesList() const
+std::vector<std::string_view> IServer::watchEntriesList() const
 {
 	std::vector<std::string_view> list;
 	for (auto entry : m_dictionary)
