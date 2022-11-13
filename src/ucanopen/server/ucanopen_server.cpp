@@ -19,10 +19,10 @@ namespace ucanopen {
 ///
 ///
 ///
-IServer::IServer(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary)
-	: nodeId(t_nodeId)
-	, m_socket(t_socket)
-	, m_dictionary(t_dictionary)
+IServer::IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
+	: nodeId(nodeId_)
+	, m_socket(socket)
+	, m_dictionary(dictionary)
 {
 	for (const auto& entry : m_dictionary)
 	{

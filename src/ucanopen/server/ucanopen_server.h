@@ -81,7 +81,7 @@ protected:
 	virtual void processTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
 
 public:
-	IServer(NodeId t_nodeId, std::shared_ptr<can::Socket> t_socket, const ObjectDictionaryType& t_dictionary);
+	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
 	void enableRpdo() { m_isRpdoEnabled = true; }
 	void disableRpdo() { m_isRpdoEnabled = false; }
 	void sendRpdo();

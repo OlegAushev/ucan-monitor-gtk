@@ -11,8 +11,7 @@
 
 
 #include "ucanopen/client/ucanopen_client.h"
-#include "motordrive/controller/motordrive_controller.h"
-#include "motordrive/observer/motordrive_observer.h"
+#include "srmdrive/server/srmdrive_server.h"
 
 
 static std::thread threadMain;
@@ -21,8 +20,7 @@ static std::promise<void> signalExitMain;
 bool g_isBackendReady = false;
 std::shared_ptr<can::Socket> g_canSocket;
 std::shared_ptr<ucanopen::Client> g_ucanClient;
-std::shared_ptr<motordrive::Controller> g_motordriveController;
-std::shared_ptr<motordrive::Observer> g_motordriveObserver;
+std::shared_ptr<srmdrive::Server> g_srmdriveServer;
 
 
 /**
@@ -41,22 +39,17 @@ int main_loop(std::future<void> futureExit)
 	g_canSocket = std::make_shared<can::Socket>();
 
 	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), g_canSocket);
-	g_ucanClient->serverNodes.insert({
-			ucanopen::ServerNode::Name::C2000,
-			ucanopen::ServerNode(ucanopen::NodeId(0x01), g_canSocket, ucanopen::OBJECT_DICTIONARY)
-	});
-
-	g_motordriveController = std::make_shared<motordrive::Controller>(g_ucanClient);
-	g_motordriveObserver = std::make_shared<motordrive::Observer>(g_ucanClient);
+	g_srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), g_canSocket, srmdrive::OBJECT_DICTIONARY);
+	g_ucanClient->registerServer(g_srmdriveServer);
 
 	// define and register TPDO callbacks
-	auto callbackMakeTpdo1 = []() { return g_motordriveController->makeTpdo1(); };
-	auto callbackMakeTpdo2 = []() { return g_motordriveController->makeTpdo2(); };
+	auto callbackMakeTpdo1 = []() { return g_srmdriveServer->controller.makeTpdo1(); };
+	auto callbackMakeTpdo2 = []() { return g_srmdriveServer->controller.makeTpdo2(); };
 
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO1,
+	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO1,
 			callbackMakeTpdo1,
 			std::chrono::milliseconds(250));
-	g_ucanClient->registerCallbackOnSendPdo(ucanopen::TpdoType::TPDO2,
+	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO2,
 			callbackMakeTpdo2,
 			std::chrono::milliseconds(100));
 

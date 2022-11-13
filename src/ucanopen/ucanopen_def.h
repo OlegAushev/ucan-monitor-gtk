@@ -398,8 +398,8 @@ inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
 }
 
 
-typedef std::map<ODEntryKey, ODEntryValue> ObjectDictionaryType;
-typedef std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator> ObjectDictionaryAuxType;
+using ObjectDictionaryType = std::map<ODEntryKey, ODEntryValue>;
+using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
 
 
 /**

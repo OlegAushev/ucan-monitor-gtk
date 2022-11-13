@@ -23,7 +23,7 @@ namespace srmdrive {
 class Observer
 {
 private:
-	std::shared_ptr<ucanopen::IServer> m_driveServer;
+	ucanopen::IServer* m_driveServer;
 
 	/* WATCH */
 	std::map<std::string_view, std::string> m_watchData;
@@ -48,7 +48,7 @@ private:
 	void run(std::future<void> futureExit);
 	
 public:
-	Observer(std::shared_ptr<ucanopen::IServer> driveServer);
+	Observer(ucanopen::IServer* driveServer);
 	~Observer();
 	
 	void setWatchEnabled(bool isEnabled)

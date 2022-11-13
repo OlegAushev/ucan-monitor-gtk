@@ -13,7 +13,7 @@
 #pragma once
 
 
-#include "../ucanopen_def.h"
+#include "ucanopen/ucanopen_def.h"
 #include <string>
 #include <map>
 #include <set>
@@ -22,7 +22,7 @@
 namespace srmdrive {
 
 
-extern const std::map<ODEntryKey, ODEntryValue> OBJECT_DICTIONARY;
+extern const ucanopen::ObjectDictionaryType OBJECT_DICTIONARY;
 
 
 } // namespace srmdrive

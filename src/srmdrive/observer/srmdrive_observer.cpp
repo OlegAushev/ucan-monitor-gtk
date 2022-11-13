@@ -19,7 +19,7 @@ namespace srmdrive {
 ///
 ///
 ///
-Observer::Observer(std::shared_ptr<ucanopen::IServer> driveServer)
+Observer::Observer(ucanopen::IServer* driveServer)
 	: m_driveServer(driveServer)
 {
 	m_watchList = m_driveServer->watchEntriesList();

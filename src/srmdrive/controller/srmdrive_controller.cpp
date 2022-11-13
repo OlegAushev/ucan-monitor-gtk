@@ -19,7 +19,7 @@ namespace srmdrive {
 ///
 ///
 ///
-Controller::Controller(std::shared_ptr<ucanopen::IServer> driveServer)
+Controller::Controller(ucanopen::IServer* driveServer)
 	: m_driveServer(driveServer)
 {}
 
