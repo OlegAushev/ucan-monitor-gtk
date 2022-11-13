@@ -13,10 +13,7 @@
 #pragma once
 
 
-#include "ucanopen_def.h"
-
-
-namespace ucanopen {
+namespace motordrive {
 
 
 /* ========================================================================== */
@@ -85,6 +82,6 @@ struct CobTpdo4
 /* ========================================================================== */
 
 
-} // namespace ucanopen
+} // namespace motordrive
 
 

@@ -71,7 +71,7 @@ enum class CobType
 const size_t COB_TYPE_COUNT = 15;
 
 
-constexpr std::array<unsigned int, COB_TYPE_COUNT> COB_FUNCTION_CODES = {
+constexpr std::array<canid_t, COB_TYPE_COUNT> COB_FUNCTION_CODES = {
 	0x000,	// NMT
 	0x080,	// SYNC
 	0x080,	// EMCY
@@ -90,7 +90,7 @@ constexpr std::array<unsigned int, COB_TYPE_COUNT> COB_FUNCTION_CODES = {
 };
 
 
-inline unsigned int calculateCobId(CobType cobType, unsigned int nodeId)
+inline canid_t calculateCobId(CobType cobType, unsigned int nodeId)
 {
 	if ((cobType == CobType::NMT) || (cobType == CobType::SYNC) || (cobType == CobType::TIME))
 	{
@@ -428,7 +428,7 @@ inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8
  * @param data 
  * @return CAN frame.
  */
-inline can_frame makeFrame(unsigned int id, unsigned char len, std::array<uint8_t, 8> data)
+inline can_frame makeFrame(canid_t id, unsigned char len, std::array<uint8_t, 8> data)
 {
 	can_frame frame;
 	frame.can_id = id;

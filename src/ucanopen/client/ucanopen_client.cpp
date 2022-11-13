@@ -57,6 +57,27 @@ Client::~Client()
 ///
 ///
 ///
+void Client::registerServer(std::shared_ptr<IServer> server)
+{
+	m_servers.push_back(server);
+
+	canid_t tpdo1 = calculateCobId(CobType::TPDO1, server->nodeId.value());
+	canid_t tpdo2 = calculateCobId(CobType::TPDO2, server->nodeId.value());
+	canid_t tpdo3 = calculateCobId(CobType::TPDO3, server->nodeId.value());
+	canid_t tpdo4 = calculateCobId(CobType::TPDO4, server->nodeId.value());
+	canid_t tsdo = calculateCobId(CobType::TSDO, server->nodeId.value());
+
+	m_recvIds.insert({tpdo1, server});
+	m_recvIds.insert({tpdo2, server});
+	m_recvIds.insert({tpdo3, server});
+	m_recvIds.insert({tpdo4, server});
+	m_recvIds.insert({tsdo, server});
+}
+
+
+///
+///
+///
 void Client::run(std::future<void> futureExit)
 {
 #ifdef STD_COUT_ENABLED
@@ -76,9 +97,9 @@ void Client::run(std::future<void> futureExit)
 
 		/* TPDO */
 		sendTpdo();
-		for (auto& serverNode : serverNodes)
+		for (auto& server : m_servers)
 		{
-			serverNode.second.sendRpdo();
+			server->sendRpdo();
 		}
 
 		/* RECV */
@@ -125,9 +146,10 @@ void Client::sendTpdo()
 ///
 void Client::onFrameReceived(can_frame frame)
 {
-	for (auto& serverNode : serverNodes)
+	auto it = m_recvIds.find(frame.can_id);
+	if (it != m_recvIds.end())
 	{
-		serverNode.second.onFrameReceived(frame);
+		it->second->onFrameReceived(frame);
 	}
 }
 

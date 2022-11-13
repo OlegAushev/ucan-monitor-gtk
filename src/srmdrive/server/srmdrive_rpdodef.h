@@ -13,9 +13,6 @@
 #pragma once
 
 
-#include "ucanopen_def.h"
-
-
 namespace ucanopen {
 
 

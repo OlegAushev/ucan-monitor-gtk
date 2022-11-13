@@ -25,11 +25,8 @@
 
 #include "cansocket/cansocket.h"
 #include "../ucanopen_def.h"
-#include "../ucanopen_tpdodef.h"
-#include "../ucanopen_rpdodef.h"
 #include "../server/ucanopen_server.h"
 #include "../tester/ucanopen_tester.h"
-#include "../objectdictionary/objectdictionary.h"
 
 
 namespace ucanopen {
@@ -42,10 +39,10 @@ public:
 private:
 	std::shared_ptr<can::Socket> m_canSocket;
 	NmtState m_state;
-public:
-	std::vector<std::shared_ptr<IServer>> servers;
 
-private:
+	std::vector<std::shared_ptr<IServer>> m_servers;
+	std::map<canid_t, std::shared_ptr<IServer>> m_recvIds;
+
 	/* HEARTBEAT */
 	struct HeartbeatInfo
 	{
@@ -69,26 +66,25 @@ private:
 	std::promise<void> m_signalExitRunThread;
 	void run(std::future<void> futureExit);
 
+	void onFrameReceived(can_frame frame);
+
 public:
 	Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket);
 	~Client();
 
-private:
-	void onFrameReceived(can_frame frame);
+	void registerServer(std::shared_ptr<IServer> server);
 
-public:
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
 		m_heartbeatInfo.period = period;
 	}
 	
-	void registerCallbackOnSendPdo(TpdoType tpdoType, std::function<std::array<uint8_t, 8>(void)> callback, std::chrono::milliseconds period)
+	void registerTpdo(TpdoType tpdoType, std::function<std::array<uint8_t, 8>(void)> callback, std::chrono::milliseconds period)
 	{
 		m_tpdoInfo[tpdoType].callbackOnSend = callback;
 		m_tpdoInfo[tpdoType].period = period;
 	}
 
-public:
 	void setNodeId(NodeId _nodeId)
 	{
 		nodeId = _nodeId;
@@ -96,6 +92,7 @@ public:
 
 	void setTpdoEnabled(bool isEnabled) { m_isTpdoEnabled = isEnabled; }
 	void sendTpdo();
+
 };
 
 
