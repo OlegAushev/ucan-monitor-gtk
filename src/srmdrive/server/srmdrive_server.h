@@ -26,7 +26,18 @@ class Server : public ucanopen::IServer
 {
 private:
 
+protected:
+	virtual void processTpdo1(std::array<uint8_t, 8> data) override {}
+	virtual void processTpdo2(std::array<uint8_t, 8> data) override {}
+	virtual void processTpdo3(std::array<uint8_t, 8> data) override {}
+	virtual void processTpdo4(std::array<uint8_t, 8> data) override {}
 
+	virtual std::array<uint8_t, 8> makeRpdo1() override {}
+	virtual std::array<uint8_t, 8> makeRpdo2() override {}
+	virtual std::array<uint8_t, 8> makeRpdo3() override {}
+	virtual std::array<uint8_t, 8> makeRpdo4() override {}
+
+	virtual void processTsdo(ucanopen::SdoType, ucanopen::ObjectDictionaryType::const_iterator, ucanopen::CobSdoData) override {}
 public:
 	Controller controller;
 	Observer observer;

@@ -73,14 +73,6 @@ int main_loop(std::future<void> futureExit)
 			ucanopen::TpdoType::TPDO4,
 			callbackProcessRpdo4);*/
 
-	// define and register SDO callback
-	auto callbackProcessSdo = [](ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionaryType::const_iterator entryIt,
-			ucanopen::CobSdoData data)
-	{
-		return g_motordriveObserver->processSdo(sdoType, entryIt, data);
-	};
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvSdo(callbackProcessSdo);
 
 /*
 	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).enableRpdo();

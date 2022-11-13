@@ -1,5 +1,5 @@
 /**
- * @file c_cansocket.cpp
+ * @file cansocket.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
