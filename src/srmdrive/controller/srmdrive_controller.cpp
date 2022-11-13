@@ -10,17 +10,17 @@
  */
 
 
-#include "motordrive_controller.h"
+#include "srmdrive_controller.h"
 
 
-namespace motordrive {
+namespace srmdrive {
 
 
 ///
 ///
 ///
-Controller::Controller(std::shared_ptr<ucanopen::Client> ucanClient)
-	: m_ucanClient(ucanClient)
+Controller::Controller(std::shared_ptr<ucanopen::IServer> driveServer)
+	: m_driveServer(driveServer)
 {}
 
 
@@ -29,7 +29,7 @@ Controller::Controller(std::shared_ptr<ucanopen::Client> ucanClient)
 ///
 void Controller::powerUp()
 {
-	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).exec("DRIVE", "CONTROL", "POWERUP");
+	m_driveServer->exec("DRIVE", "CONTROL", "POWERUP");
 #ifdef STD_COUT_ENABLED
 	std::cout << "[motordrive] Power UP motor drive." << std::endl;
 #endif	
@@ -41,7 +41,7 @@ void Controller::powerUp()
 ///
 void Controller::powerDown()
 {
-	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).exec("DRIVE", "CONTROL", "POWERDOWN");
+	m_driveServer->exec("DRIVE", "CONTROL", "POWERDOWN");
 #ifdef STD_COUT_ENABLED
 	std::cout << "[motordrive] Power DOWN motor drive." << std::endl;
 #endif
@@ -93,7 +93,7 @@ void Controller::setSpeed(double val)
 #ifdef STD_COUT_ENABLED
 	std::cout << "[motordrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
 #endif
-	m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(m_speedRef));
+	m_driveServer->write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(m_speedRef));
 }
 
 
@@ -102,13 +102,13 @@ void Controller::setSpeed(double val)
 ///
 std::array<uint8_t, 8> Controller::makeTpdo1()
 {
-	ucanopen::CobTpdo1 message = {};
+	CobTpdo1 message = {};
 
 	message.run = ((m_isRunEnabled) ? 1 : 0);
 	message.emergencyStop = ((m_isEmergencyEnabled) ? 1 : 0);
 	
 	std::array<uint8_t, 8> ret;
-	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo1));
+	memcpy(ret.data(), &message, sizeof(CobTpdo1));
 	return ret;
 }
 
@@ -118,19 +118,16 @@ std::array<uint8_t, 8> Controller::makeTpdo1()
 ///
 std::array<uint8_t, 8> Controller::makeTpdo2()
 {
-	ucanopen::CobTpdo2 message = {};
+	CobTpdo2 message = {};
 
 	message.torque = ((m_torquePuRef > 0) ? m_torquePuRef * 32767 : m_torquePuRef * 32768);
 
 	std::array<uint8_t, 8> ret;
-	memcpy(ret.data(), &message, sizeof(ucanopen::CobTpdo2));
+	memcpy(ret.data(), &message, sizeof(CobTpdo2));
 	return ret;
 }
 
 
-
-
-
-}
+} // namespace srmdrive
 
 

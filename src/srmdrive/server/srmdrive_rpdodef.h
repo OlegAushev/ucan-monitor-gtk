@@ -13,7 +13,7 @@
 #pragma once
 
 
-namespace ucanopen {
+namespace srmdrive {
 
 
 /* ========================================================================== */
@@ -118,6 +118,6 @@ struct CobRpdo4
 /* ========================================================================== */
 
 
-} // namespace ucanopen
+} // namespace srmdrive
 
 

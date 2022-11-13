@@ -13,7 +13,7 @@
 #pragma once
 
 
-namespace motordrive {
+namespace srmdrive {
 
 
 /* ========================================================================== */
@@ -82,6 +82,6 @@ struct CobTpdo4
 /* ========================================================================== */
 
 
-} // namespace motordrive
+} // namespace srmdrive
 
 

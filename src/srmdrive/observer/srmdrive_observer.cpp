@@ -10,19 +10,19 @@
  */
 
 
-#include "motordrive_observer.h"
+#include "srmdrive_observer.h"
 
 
-namespace motordrive {
+namespace srmdrive {
 
 
 ///
 ///
 ///
-Observer::Observer(std::shared_ptr<ucanopen::Client> ucanClient)
-	: m_ucanClient(ucanClient)
+Observer::Observer(std::shared_ptr<ucanopen::IServer> driveServer)
+	: m_driveServer(driveServer)
 {
-	m_watchList = m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).watchEntriesList();
+	m_watchList = m_driveServer->watchEntriesList();
 	for (auto entry : m_watchList)
 	{
 		m_watchData.insert({entry, std::string{"..."}});
@@ -86,6 +86,6 @@ void Observer::processSdo(ucanopen::SdoType sdoType,
 
 
 
-} // namespace motordrive
+} // namespace srmdrive
 
 

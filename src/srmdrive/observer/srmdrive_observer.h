@@ -16,14 +16,14 @@
 #include "ucanopen/client/ucanopen_client.h"
 
 
-namespace motordrive {
+namespace srmdrive {
 
 
 
 class Observer
 {
 private:
-	std::shared_ptr<ucanopen::Client> m_ucanClient;
+	std::shared_ptr<ucanopen::IServer> m_driveServer;
 
 	/* WATCH */
 	std::map<std::string_view, std::string> m_watchData;
@@ -37,7 +37,7 @@ private:
 		static size_t i = 0;
 		if (m_isWatchEnabled)
 		{
-			m_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).read("WATCH", "WATCH", m_watchList[i]);
+			m_driveServer->read("WATCH", "WATCH", m_watchList[i]);
 			i = (i + 1) % m_watchList.size();		
 		}
 	}
@@ -48,7 +48,7 @@ private:
 	void run(std::future<void> futureExit);
 	
 public:
-	Observer(std::shared_ptr<ucanopen::Client> ucanClient);
+	Observer(std::shared_ptr<ucanopen::IServer> driveServer);
 	~Observer();
 	
 	void setWatchEnabled(bool isEnabled)
@@ -91,6 +91,6 @@ public:
 };
 
 
-} //namespace motordrive
+} //namespace srmdrive
 
 

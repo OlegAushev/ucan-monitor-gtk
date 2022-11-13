@@ -13,7 +13,7 @@
 #include "objectdictionary.h"
 
 
-namespace ucanopen {
+namespace srmdrive {
 
 
 extern const std::map<ODEntryKey, ODEntryValue> OBJECT_DICTIONARY = {	
@@ -117,6 +117,6 @@ extern const std::map<ODEntryKey, ODEntryValue> OBJECT_DICTIONARY = {
 };
 
 
-} // namespace ucanopen
+} // namespace srmdrive
 
 

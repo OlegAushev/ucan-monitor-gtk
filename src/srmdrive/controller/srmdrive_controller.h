@@ -14,16 +14,17 @@
 
 
 #include <algorithm>
-#include "ucanopen/client/ucanopen_client.h"
+#include "ucanopen/server/ucanopen_server.h"
+#include "../server/srmdrive_tpdodef.h"
 
 
-namespace motordrive {
+namespace srmdrive {
 
 
 class Controller
 {
 private:
-	std::shared_ptr<ucanopen::Client> m_ucanClient;
+	std::shared_ptr<ucanopen::IServer> m_driveServer;
 
 	bool m_isRunEnabled = false;
 	bool m_isEmergencyEnabled = false;
@@ -32,7 +33,7 @@ private:
 	float m_speedRef = 0;
 
 public:
-	Controller(std::shared_ptr<ucanopen::Client> ucanClient);
+	Controller(std::shared_ptr<ucanopen::IServer> driveServer);
 	
 	void powerUp();
 	void powerDown();
@@ -48,6 +49,6 @@ public:
 };
 
 
-} // namespace motordrive
+} // namespace srmdrive
 
 
