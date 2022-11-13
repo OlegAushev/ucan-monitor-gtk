@@ -31,7 +31,7 @@ void Controller::powerUp()
 {
 	m_driveServer->exec("DRIVE", "CONTROL", "POWERUP");
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Power UP motor drive." << std::endl;
+	std::cout << "[srmdrive] Power UP motor drive." << std::endl;
 #endif	
 }
 
@@ -43,7 +43,7 @@ void Controller::powerDown()
 {
 	m_driveServer->exec("DRIVE", "CONTROL", "POWERDOWN");
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Power DOWN motor drive." << std::endl;
+	std::cout << "[srmdrive] Power DOWN motor drive." << std::endl;
 #endif
 }
 
@@ -55,7 +55,7 @@ void Controller::setRunEnabled(bool isEnabled)
 {
 	m_isRunEnabled = isEnabled;
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] RUN state: " << isEnabled << std::endl;
+	std::cout << "[srmdrive] RUN state: " << isEnabled << std::endl;
 #endif	
 }
 
@@ -67,7 +67,7 @@ void Controller::setEmergencyEnabled(bool isEnabled)
 {
 	m_isEmergencyEnabled = isEnabled;
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] EMERGENCY state: " << isEnabled << std::endl;
+	std::cout << "[srmdrive] EMERGENCY state: " << isEnabled << std::endl;
 #endif		
 }
 
@@ -79,7 +79,7 @@ void Controller::setTorque(double valPu)
 {
 	m_torquePuRef = std::clamp(valPu, -1.0, 1.0);
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Torque reference: " << m_torquePuRef * 100.0 << "%" << std::endl;
+	std::cout << "[srmdrive] Torque reference: " << m_torquePuRef * 100.0 << "%" << std::endl;
 #endif	
 }
 
@@ -91,7 +91,7 @@ void Controller::setSpeed(double val)
 {
 	m_speedRef = val;
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
+	std::cout << "[srmdrive] Speed reference: " << m_speedRef << "rpm" << std::endl;
 #endif
 	m_driveServer->write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(m_speedRef));
 }

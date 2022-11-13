@@ -39,7 +39,7 @@ Observer::Observer(ucanopen::IServer* driveServer)
 Observer::~Observer()
 {
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Sending signal to observer aux thread to stop..." << std::endl;
+	std::cout << "[srmdrive] Sending signal to observer aux thread to stop..." << std::endl;
 #endif
 	m_signalExitRunThread.set_value();
 	m_threadRun.join();	
@@ -52,7 +52,7 @@ Observer::~Observer()
 void Observer::run(std::future<void> futureExit)
 {
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Observer aux thread has started." << std::endl;
+	std::cout << "[srmdrive] Observer aux thread has started." << std::endl;
 #endif
 
 	while (futureExit.wait_for(m_watchPeriod) == std::future_status::timeout)
@@ -61,7 +61,7 @@ void Observer::run(std::future<void> futureExit)
 	}
 
 #ifdef STD_COUT_ENABLED
-	std::cout << "[motordrive] Observer aux thread has stopped." << std::endl;
+	std::cout << "[srmdrive] Observer aux thread has stopped." << std::endl;
 #endif
 }
 
