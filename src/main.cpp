@@ -23,6 +23,8 @@ std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<srmdrive::Server> g_srmdriveServer;
 
 
+
+
 /**
  * @brief 
  * 
@@ -33,7 +35,7 @@ extern "C"
 int main_loop(std::future<void> futureExit)
 {
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cpp] Main loop thread has started. Thread id: " << std::this_thread::get_id() << std::endl;
+	std::cout << "[backend] Main loop thread has started. Thread id: " << std::this_thread::get_id() << std::endl;
 #endif
 
 	g_canSocket = std::make_shared<can::Socket>();
@@ -53,35 +55,8 @@ int main_loop(std::future<void> futureExit)
 			callbackMakeTpdo2,
 			std::chrono::milliseconds(100));
 
-	// define and register RPDO callbacks
-	ucanopen::Tester ucanTester;
-	auto callbackProcessRpdo1 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo1(data); };
-	auto callbackProcessRpdo2 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo2(data); };
-	auto callbackProcessRpdo3 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo3(data); };
-	auto callbackProcessRpdo4 = [&ucanTester](std::array<uint8_t, 8> data) { return ucanTester.processRpdo4(data); };
-
-	/*g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
-			ucanopen::TpdoType::TPDO1,
-			callbackProcessRpdo1);
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
-			ucanopen::TpdoType::TPDO2,
-			callbackProcessRpdo2);
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
-			ucanopen::TpdoType::TPDO3,
-			callbackProcessRpdo3);
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnRecvPdo(
-			ucanopen::TpdoType::TPDO4,
-			callbackProcessRpdo4);*/
-
-
-/*
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).enableRpdo();
-	g_ucanClient->serverNodes.at(ucanopen::ServerNode::Name::C2000).registerCallbackOnSendPdo(ucanopen::RpdoType::RPDO1,
-			std::bind(&ucanopen::Tester::makeTpdo1, &ucanTester), std::chrono::milliseconds(500));
-*/
-
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cpp] Backend is ready." << std::endl;
+	std::cout << "[backend] Backend is ready." << std::endl;
 #endif
 	g_isBackendReady = true;
 
@@ -91,7 +66,7 @@ int main_loop(std::future<void> futureExit)
 	}
 
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cpp] Main loop thread has stopped." << std::endl;
+	std::cout << "[backend] Main loop thread has stopped." << std::endl;
 #endif
 	return 0;
 }
@@ -106,8 +81,8 @@ extern "C"
 int main_enter()
 {
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cpp] Thread id: " << std::this_thread::get_id() << std::endl;
-	std::cout << "[cpp] Starting new thread for main loop..." << std::endl;
+	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
+	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
 #endif
 	std::future<void> futureExit = signalExitMain.get_future();
 	threadMain = std::thread(main_loop, std::move(futureExit));
@@ -123,7 +98,7 @@ extern "C"
 void main_exit()
 {
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cpp] Sending signal to main loop thread to stop..." << std::endl;
+	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;
 #endif
 	signalExitMain.set_value();
 	threadMain.join();
