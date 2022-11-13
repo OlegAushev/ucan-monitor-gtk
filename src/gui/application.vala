@@ -17,12 +17,6 @@
  */
 
 
-extern string GIT_DESCRIBE;
-extern int main_enter();
-extern void main_exit();
-extern bool g_isBackendReady;
-
-
 namespace CanMonitor {
 
 
@@ -52,8 +46,8 @@ public class Application : Adw.Application
 		main_enter();
 		while (!g_isBackendReady) { /* wait */ }
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
-		motordrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
-		motordrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
+		srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
+		srmdrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
 
 		base.activate();
 		var win = this.active_window;

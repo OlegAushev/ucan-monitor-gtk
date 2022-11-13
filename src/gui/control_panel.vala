@@ -3,13 +3,6 @@
 ///
 
 
-extern void motordrive_controller_set_power_enabled(bool isEnabled);
-extern void motordrive_controller_set_run_enabled(bool isEnabled);
-extern void motordrive_controller_set_emergency_enabled(bool isEnabled);
-extern void motordrive_controller_set_torque(double valPu);
-extern void motordrive_controller_set_speed(double val);
-
-
 namespace CanMonitor {
 
 
@@ -39,23 +32,23 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		switchPower.notify["state"].connect((s, p) => {
-				motordrive_controller_set_power_enabled(switchPower.state);
+				srmdrive_controller_set_power_enabled(switchPower.state);
 		});
 
 		switchRun.notify["state"].connect((s, p) => {
-				motordrive_controller_set_run_enabled(switchRun.state);
+				srmdrive_controller_set_run_enabled(switchRun.state);
 		});
 
 		switchEmergency.notify["state"].connect((s, p) => {
-				motordrive_controller_set_emergency_enabled(switchEmergency.state);
+				srmdrive_controller_set_emergency_enabled(switchEmergency.state);
 		});
 
 		sliderSpeed.adjustment->notify["value"].connect((s, p) => {
-				motordrive_controller_set_speed(sliderSpeed.value);
+				srmdrive_controller_set_speed(sliderSpeed.value);
 		});
 
 		sliderTorque.adjustment->notify["value"].connect((s, p) => {
-				motordrive_controller_set_torque(sliderTorque.value / 100.0);
+				srmdrive_controller_set_torque(sliderTorque.value / 100.0);
 		});
 	}
 }

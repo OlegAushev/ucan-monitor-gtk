@@ -3,13 +3,6 @@
 ///
 
 
-extern void cansocket_connect(string interface, int bitrate);
-extern void cansocket_disconnect();
-extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
-extern void motordrive_observer_set_watch_enabled(bool isEnabled);
-extern void motordrive_observer_set_watch_period(int period);
-
-
 namespace CanMonitor {
 
 
@@ -74,12 +67,12 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		});
 
 		switchWatch.notify["state"].connect((s,p) => {
-			motordrive_observer_set_watch_enabled(switchWatch.state);
+			srmdrive_observer_set_watch_enabled(switchWatch.state);
 			_switchWatchState = switchWatch.state;
 		});
 
 		comborowWatchPeriod.notify["selected"].connect((s,p) => {
-			motordrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
+			srmdrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
 			_watchPeriodSelected = comborowWatchPeriod.selected;
 		});
 	}
