@@ -1,5 +1,5 @@
 /**
- * @file motordrive_controller.cpp
+ * @file srmdrive_controller.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -102,7 +102,7 @@ void Controller::setSpeed(double val)
 ///
 std::array<uint8_t, 8> Controller::makeTpdo1()
 {
-	CobTpdo1 message = {};
+	CobTpdo1 message{};
 
 	message.run = ((m_isRunEnabled) ? 1 : 0);
 	message.emergencyStop = ((m_isEmergencyEnabled) ? 1 : 0);
@@ -118,7 +118,7 @@ std::array<uint8_t, 8> Controller::makeTpdo1()
 ///
 std::array<uint8_t, 8> Controller::makeTpdo2()
 {
-	CobTpdo2 message = {};
+	CobTpdo2 message{};
 
 	message.torque = ((m_torquePuRef > 0) ? m_torquePuRef * 32767 : m_torquePuRef * 32768);
 

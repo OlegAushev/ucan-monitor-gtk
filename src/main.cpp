@@ -44,7 +44,7 @@ int main_loop(std::future<void> futureExit)
 	g_srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), g_canSocket, srmdrive::OBJECT_DICTIONARY);
 	g_ucanClient->registerServer(g_srmdriveServer);
 
-	// define and register TPDO callbacks
+	// define and register client TPDO callbacks
 	auto callbackMakeTpdo1 = []() { return g_srmdriveServer->controller.makeTpdo1(); };
 	auto callbackMakeTpdo2 = []() { return g_srmdriveServer->controller.makeTpdo2(); };
 

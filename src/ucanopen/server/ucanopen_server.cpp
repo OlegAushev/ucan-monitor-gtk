@@ -1,5 +1,5 @@
 /**
- * @file ucanopen_servernode.cpp
+ * @file ucanopen_server.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1

@@ -14,9 +14,6 @@
 
 
 #include "ucanopen/ucanopen_def.h"
-#include <string>
-#include <map>
-#include <set>
 
 
 namespace srmdrive {

@@ -1,5 +1,5 @@
 /**
- * @file motordrive_observer.h
+ * @file srmdrive_observer.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1

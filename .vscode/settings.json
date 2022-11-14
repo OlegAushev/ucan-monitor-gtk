@@ -69,7 +69,7 @@
 		"charconv": "cpp"
 	},
 	"[Log]": {
-		"editor.fontSize": 12
+		"editor.fontSize": 14
 	},
-	"terminal.integrated.fontSize": 12,
+	"terminal.integrated.fontSize": 14,
 }

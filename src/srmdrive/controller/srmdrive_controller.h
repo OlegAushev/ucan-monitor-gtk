@@ -1,5 +1,5 @@
 /**
- * @file motordrive_controller.h
+ * @file srmdrive_controller.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1

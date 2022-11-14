@@ -1,5 +1,5 @@
 /**
- * @file ucanopen_servernode.h
+ * @file ucanopen_server.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -27,6 +27,7 @@ namespace ucanopen {
 
 class IServer
 {
+	friend class Client;
 public:
 	NodeId nodeId;
 private:
@@ -84,10 +85,7 @@ public:
 	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
 	void enableRpdo() { m_isRpdoEnabled = true; }
 	void disableRpdo() { m_isRpdoEnabled = false; }
-	void sendRpdo();
-
-	void onFrameReceived(can_frame frame);
-
+	
 	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
@@ -108,6 +106,9 @@ private:
 		}
 		return it->second;
 	}
+
+	void sendRpdo();
+	void onFrameReceived(can_frame frame);
 };
 
 

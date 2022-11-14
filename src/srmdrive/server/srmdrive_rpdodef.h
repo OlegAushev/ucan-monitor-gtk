@@ -1,5 +1,5 @@
 /**
- * @file ucanopen_rpdodef.h
+ * @file srmdrive_rpdodef.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
