@@ -13,3 +13,30 @@
 #pragma once
 
 
+#include "cansocket/cansocket.h"
+#include <map>
+
+
+namespace plaincan {
+
+
+class Device
+{
+private:
+	std::shared_ptr<can::Socket> m_socket;
+	std::map<canid_t, std::string_view> m_sendIdNameList;
+	std::map<canid_t, std::string_view> m_recvIdNameList;
+public:
+	Device(std::shared_ptr<can::Socket> socket,
+			const std::map<canid_t, std::string_view>& sendIdNameList,
+			const std::map<canid_t, std::string_view>& recvIdNameList);
+
+
+
+
+};
+
+
+}
+
+

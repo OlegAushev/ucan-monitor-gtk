@@ -51,13 +51,9 @@ public:
 	Controller controller;
 	Observer observer;
 
-	Server(ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket, const ucanopen::ObjectDictionaryType& dictionary)
-		: IServer(nodeId, socket, dictionary)
-		, controller(this)
-		, observer(this)
-	{
-
-	}
+	Server(ucanopen::NodeId nodeId,
+			std::shared_ptr<can::Socket> socket,
+			const ucanopen::ObjectDictionaryType& dictionary);
 
 };
 

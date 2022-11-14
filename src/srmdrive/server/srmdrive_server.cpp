@@ -8,3 +8,25 @@
  * @copyright Copyright (c) 2022
  * 
  */
+
+
+#include "srmdrive_server.h"
+
+
+namespace srmdrive {
+
+
+Server::Server(ucanopen::NodeId nodeId,
+		std::shared_ptr<can::Socket> socket,
+		const ucanopen::ObjectDictionaryType& dictionary)
+	: IServer(nodeId, socket, dictionary)
+	, controller(this)
+	, observer(this)
+{
+
+}
+
+
+}
+
+

@@ -108,7 +108,7 @@ private:
 	}
 
 	void sendRpdo();
-	void onFrameReceived(can_frame frame);
+	void processFrame(can_frame frame);
 };
 
 

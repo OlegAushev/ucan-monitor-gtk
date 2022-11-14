@@ -41,7 +41,7 @@ private:
 	NmtState m_state;
 
 	std::vector<std::shared_ptr<IServer>> m_servers;
-	std::map<canid_t, std::shared_ptr<IServer>> m_recvIds;
+	std::map<canid_t, std::shared_ptr<IServer>> m_recvIdServerList;
 
 	/* HEARTBEAT */
 	struct HeartbeatInfo

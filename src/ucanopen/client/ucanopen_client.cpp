@@ -67,11 +67,11 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	canid_t tpdo4 = calculateCobId(CobType::TPDO4, server->nodeId.value());
 	canid_t tsdo = calculateCobId(CobType::TSDO, server->nodeId.value());
 
-	m_recvIds.insert({tpdo1, server});
-	m_recvIds.insert({tpdo2, server});
-	m_recvIds.insert({tpdo3, server});
-	m_recvIds.insert({tpdo4, server});
-	m_recvIds.insert({tsdo, server});
+	m_recvIdServerList.insert({tpdo1, server});
+	m_recvIdServerList.insert({tpdo2, server});
+	m_recvIdServerList.insert({tpdo3, server});
+	m_recvIdServerList.insert({tpdo4, server});
+	m_recvIdServerList.insert({tsdo, server});
 }
 
 
@@ -146,10 +146,10 @@ void Client::sendTpdo()
 ///
 void Client::onFrameReceived(can_frame frame)
 {
-	auto it = m_recvIds.find(frame.can_id);
-	if (it != m_recvIds.end())
+	auto it = m_recvIdServerList.find(frame.can_id);
+	if (it != m_recvIdServerList.end())
 	{
-		it->second->onFrameReceived(frame);
+		it->second->processFrame(frame);
 	}
 }
 

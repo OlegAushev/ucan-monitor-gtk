@@ -77,7 +77,7 @@ void IServer::sendRpdo()
 ///
 ///
 ///
-void IServer::onFrameReceived(can_frame frame)
+void IServer::processFrame(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoInfo)
 	{
