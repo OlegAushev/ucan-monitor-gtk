@@ -10,6 +10,6 @@
  */
 
 
-#pragma once
+#include "plaincan_device.h"
 
 

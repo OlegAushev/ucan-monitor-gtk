@@ -15,7 +15,7 @@
 
 #include <algorithm>
 #include "ucanopen/server/ucanopen_server.h"
-#include "../server/srmdrive_tpdodef.h"
+#include "../server/srmdrive_def.h"
 
 
 namespace srmdrive {

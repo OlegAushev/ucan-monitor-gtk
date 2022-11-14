@@ -14,12 +14,15 @@
 
 
 #include "ucanopen/server/ucanopen_server.h"
-#include "objectdictionary/objectdictionary.h"
+#include "srmdrive_def.h"
 #include "../controller/srmdrive_controller.h"
 #include "../observer/srmdrive_observer.h"
 
 
 namespace srmdrive {
+
+
+extern const ucanopen::ObjectDictionaryType OBJECT_DICTIONARY;
 
 
 class Server : public ucanopen::IServer

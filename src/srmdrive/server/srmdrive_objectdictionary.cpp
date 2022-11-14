@@ -10,7 +10,7 @@
  */
 
 
-#include "objectdictionary.h"
+#include "srmdrive_server.h"
 
 
 namespace srmdrive {
