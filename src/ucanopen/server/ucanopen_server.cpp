@@ -84,6 +84,7 @@ void IServer::processFrame(can_frame frame)
 		if (frame.can_id == tpdo.second.id)
 		{
 			tpdo.second.timepoint = std::chrono::steady_clock::now();
+			tpdo.second.isOnSchedule = true;
 			std::array<uint8_t, 8> data;
 			memcpy(&data, frame.data, frame.can_dlc);
 
@@ -356,6 +357,30 @@ std::vector<std::string_view> IServer::watchEntriesList() const
 	}
 	return list;
 }
+
+
+///
+///
+///
+void IServer::checkConnection()
+{
+	bool isConnectionOk = true;
+	auto now = std::chrono::steady_clock::now();
+
+	for (auto& tpdo : m_tpdoInfo)
+	{
+		if (tpdo.second.period != std::chrono::milliseconds(0)
+				&& ((now - tpdo.second.timepoint) > tpdo.second.period))
+		{
+			tpdo.second.isOnSchedule = false;
+			isConnectionOk = false;
+		}
+	}
+
+	m_isConnectionOk = isConnectionOk;
+}
+
+
 
 
 } // namespace ucanopen

@@ -32,6 +32,7 @@ public:
 	NodeId nodeId;
 private:
 	std::shared_ptr<can::Socket> m_socket;
+	bool m_isConnectionOk{false};
 private:
 	/* OBJECT DICTIONARY */
 	const ObjectDictionaryType& m_dictionary;
@@ -42,7 +43,9 @@ private:
 	struct TpdoInfo
 	{
 		canid_t id;
+		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		bool isOnSchedule;
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoInfo;
 protected:
@@ -50,10 +53,10 @@ protected:
 	virtual void processTpdo2(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo3(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo4(std::array<uint8_t, 8> data) = 0;
-	void registerTpdo(TpdoType type)
+	void registerTpdo(TpdoType type, std::chrono::milliseconds period = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
-		m_tpdoInfo.insert({type, {id, std::chrono::steady_clock::now()}});
+		m_tpdoInfo.insert({type, {id, period, std::chrono::steady_clock::now(), false}});
 	}
 
 	/* RPDO server <-- client */
@@ -92,6 +95,7 @@ public:
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 
 	std::vector<std::string_view> watchEntriesList() const;
+	bool isConnectionOk() const { return m_isConnectionOk; }
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
@@ -109,6 +113,7 @@ private:
 
 	void sendRpdo();
 	void processFrame(can_frame frame);
+	void checkConnection();
 };
 
 

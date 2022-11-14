@@ -93,6 +93,11 @@ void Client::run(std::future<void> futureExit)
 		{
 			m_canSocket->send(makeFrame(CobType::HEARTBEAT, nodeId, {static_cast<uint8_t>(m_state)}));
 			m_heartbeatInfo.timepoint = now;
+
+			for (auto& server : m_servers)
+			{
+				server->checkConnection();
+			}
 		}
 
 		/* TPDO */
