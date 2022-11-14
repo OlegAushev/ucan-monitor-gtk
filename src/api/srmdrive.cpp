@@ -11,6 +11,7 @@
 
 
 #include <iostream>
+#include <cassert>
 #include "srmdrive/server/srmdrive_server.h"
 
 
@@ -102,5 +103,25 @@ void srmdrive_observer_set_watch_period(int period)
 
 
 }
+
+
+///
+///
+///
+bool srmdrive_is_connection_ok()
+{
+	return g_srmdriveServer->isConnectionOk();
+}
+
+
+///
+///
+///
+bool srmdrive_is_tpdo_ok(int tpdoNum)
+{
+	assert((tpdoNum >= 0) && (tpdoNum <= 3));
+	return g_srmdriveServer->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
+}
+
 
 

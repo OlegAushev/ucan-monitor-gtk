@@ -96,6 +96,7 @@ public:
 
 	std::vector<std::string_view> watchEntriesList() const;
 	bool isConnectionOk() const { return m_isConnectionOk; }
+	bool isTpdoOk(TpdoType tpdo) const { return m_tpdoInfo.at(tpdo).isOnSchedule; }
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
