@@ -39,15 +39,16 @@ private:
 	std::map<canid_t, TxMessageInfo> m_txMessageList;
 	
 	/* device <-- controller */
+	bool m_isRxEnabled{true};
 	struct RxMessageInfo
 	{
 		std::string_view name;
 		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		std::function<can_frame(void)> creator; 
+		std::function<std::vector<uint8_t>(void)> creator; 
 	};
-	std::map<canid_t, RxMessageInfo> m_rpdoList;
+	std::map<canid_t, RxMessageInfo> m_rxMessageList;
 
 public:
 	Device(std::shared_ptr<can::Socket> socket);

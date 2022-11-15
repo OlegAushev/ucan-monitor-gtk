@@ -125,18 +125,15 @@ void Client::run(std::future<void> futureExit)
 void Client::sendTpdo()
 {
 	auto now = std::chrono::steady_clock::now();
-	if (m_isTpdoEnabled)
+	if (!m_isTpdoEnabled) return;
+
+	for (auto& tpdo : m_tpdoList)
 	{
-		for (auto& tpdo : m_tpdoList)
+		if (!tpdo.second.creator) continue;
+		if (now - tpdo.second.timepoint >= tpdo.second.period)
 		{
-			if (tpdo.second.creator)
-			{
-				if (now - tpdo.second.timepoint >= tpdo.second.period)
-				{
-					m_canSocket->send(makeFrame(toCobType(tpdo.first), nodeId, tpdo.second.creator()));
-					tpdo.second.timepoint = now;
-				}
-			}
+			m_canSocket->send(makeFrame(toCobType(tpdo.first), nodeId, tpdo.second.creator()));
+			tpdo.second.timepoint = now;
 		}
 	}
 }

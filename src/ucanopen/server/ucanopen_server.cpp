@@ -41,35 +41,32 @@ IServer::IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const Obje
 void IServer::sendRpdo()
 {
 	auto now = std::chrono::steady_clock::now();
-	if (m_isRpdoEnabled)
+	
+	if (!m_isRpdoEnabled) return;
+
+	for (auto& rpdo : m_rpdoList)
 	{
-		for (auto& rpdo : m_rpdoList)
+		if (rpdo.second.period == std::chrono::milliseconds(0)) continue;
+		if (now - rpdo.second.timepoint < rpdo.second.period) continue;
+
+		std::array<uint8_t, 8> data;
+		switch (rpdo.first)
 		{
-			if (rpdo.second.period != std::chrono::milliseconds(0))
-			{
-				if (now - rpdo.second.timepoint >= rpdo.second.period)
-				{
-					std::array<uint8_t, 8> data;
-					switch (rpdo.first)
-					{
-					case RpdoType::RPDO1:
-						data = createRpdo1();
-						break;
-					case RpdoType::RPDO2:
-						data = createRpdo2();
-						break;
-					case RpdoType::RPDO3:
-						data = createRpdo3();
-						break;
-					case RpdoType::RPDO4:
-						data = createRpdo4();
-						break;
-					}
-					m_socket->send(makeFrame(rpdo.second.id, 8, data));
-					rpdo.second.timepoint = now;
-				}
-			}
+		case RpdoType::RPDO1:
+			data = createRpdo1();
+			break;
+		case RpdoType::RPDO2:
+			data = createRpdo2();
+			break;
+		case RpdoType::RPDO3:
+			data = createRpdo3();
+			break;
+		case RpdoType::RPDO4:
+			data = createRpdo4();
+			break;
 		}
+		m_socket->send(makeFrame(rpdo.second.id, 8, data));
+		rpdo.second.timepoint = now;	
 	}
 }
 
@@ -81,30 +78,29 @@ void IServer::handleFrame(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoList)
 	{
-		if (frame.can_id == tpdo.second.id)
-		{
-			tpdo.second.timepoint = std::chrono::steady_clock::now();
-			tpdo.second.isOnSchedule = true;
-			std::array<uint8_t, 8> data;
-			memcpy(&data, frame.data, frame.can_dlc);
+		if (frame.can_id != tpdo.second.id) continue;
 
-			switch (tpdo.first)
-			{
-			case TpdoType::TPDO1:
-				handleTpdo1(data);
-				break;
-			case TpdoType::TPDO2:
-				handleTpdo2(data);
-				break;
-			case TpdoType::TPDO3:
-				handleTpdo3(data);
-				break;
-			case TpdoType::TPDO4:
-				handleTpdo4(data);
-				break;
-			}
-			return;
+		tpdo.second.timepoint = std::chrono::steady_clock::now();
+		tpdo.second.isOnSchedule = true;
+		std::array<uint8_t, 8> data;
+		memcpy(&data, frame.data, frame.can_dlc);
+
+		switch (tpdo.first)
+		{
+		case TpdoType::TPDO1:
+			handleTpdo1(data);
+			break;
+		case TpdoType::TPDO2:
+			handleTpdo2(data);
+			break;
+		case TpdoType::TPDO3:
+			handleTpdo3(data);
+			break;
+		case TpdoType::TPDO4:
+			handleTpdo4(data);
+			break;
 		}
+		return;
 	}
 
 	if (frame.can_id == calculateCobId(CobType::TSDO, nodeId.value()))
