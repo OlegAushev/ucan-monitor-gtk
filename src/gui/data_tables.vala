@@ -58,8 +58,13 @@ public class DataTables : Adw.Bin
 	private unowned TableEntry entryPowerElec;
 
 	[GtkChild]
-	private unowned Gtk.Button tpdo1Indicator;
-
+	private unowned TableEntry tpdo1Indicator;
+	[GtkChild]
+	private unowned TableEntry tpdo2Indicator;
+	[GtkChild]
+	private unowned TableEntry tpdo3Indicator;
+	[GtkChild]
+	private unowned TableEntry tpdo4Indicator;
 
 
 
@@ -170,11 +175,54 @@ public class DataTables : Adw.Bin
 	{
 		if (srmdrive_is_tpdo_ok(0))
 		{
-			tpdo1Indicator.label = "ok";
+			tpdo1Indicator.entry_text = "ok";
+			tpdo1Indicator.remove_css_class("error");
+			tpdo1Indicator.add_css_class("success");
 		}
 		else
 		{
-			tpdo1Indicator.label = "bad";
+			tpdo1Indicator.entry_text = "bad";
+			tpdo1Indicator.remove_css_class("success");
+			tpdo1Indicator.add_css_class("error");
+		}
+
+		if (srmdrive_is_tpdo_ok(1))
+		{
+			tpdo2Indicator.entry_text = "ok";
+			tpdo2Indicator.remove_css_class("error");
+			tpdo2Indicator.add_css_class("success");
+		}
+		else
+		{
+			tpdo2Indicator.entry_text = "bad";
+			tpdo2Indicator.remove_css_class("success");
+			tpdo2Indicator.add_css_class("error");
+		}
+
+		if (srmdrive_is_tpdo_ok(2))
+		{
+			tpdo3Indicator.entry_text = "ok";
+			tpdo3Indicator.remove_css_class("error");
+			tpdo3Indicator.add_css_class("success");
+		}
+		else
+		{
+			tpdo3Indicator.entry_text = "bad";
+			tpdo3Indicator.remove_css_class("success");
+			tpdo3Indicator.add_css_class("error");
+		}
+
+		if (srmdrive_is_tpdo_ok(3))
+		{
+			tpdo4Indicator.entry_text = "ok";
+			tpdo4Indicator.remove_css_class("error");
+			tpdo4Indicator.add_css_class("success");
+		}
+		else
+		{
+			tpdo4Indicator.entry_text = "bad";
+			tpdo4Indicator.remove_css_class("success");
+			tpdo4Indicator.add_css_class("error");
 		}
 	}
 }

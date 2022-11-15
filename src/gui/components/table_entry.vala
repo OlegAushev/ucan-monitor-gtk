@@ -36,6 +36,22 @@ public class TableEntry : Adw.ActionRow
 		get { return _entry.max_width_chars; }
 		set { _entry.max_width_chars = value; }
 	}
+
+	public float entry_xalign
+	{
+		get { return _entry.xalign; }
+		set { _entry.xalign = value; }
+	}
+
+	public void add_css_class (string css_class)
+	{
+		_entry.add_css_class(css_class);
+	}
+
+	public void remove_css_class (string css_class)
+	{
+		_entry.remove_css_class(css_class);
+	}
 }
 
 
