@@ -57,11 +57,14 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned TableEntry entryPowerElec;
 
+	[GtkChild]
+	private unowned Gtk.Button tpdo1Indicator;
+
+
 
 
 	public DataTables()
 	{
-
 		
 	}
 
@@ -75,6 +78,7 @@ public class DataTables : Adw.Bin
 		updateSystemData();
 		updateMotorData();
 		updateInverterData();
+		updateTpdoStatus();
 		return true;
 	}
 
@@ -160,6 +164,18 @@ public class DataTables : Adw.Bin
 
 		srmdrive_observer_get_watch_value("OUT_ELEC_POWER", result);
 		entryPowerElec.entry_text = result;
+	}
+
+	public void updateTpdoStatus()
+	{
+		if (srmdrive_is_tpdo_ok(0))
+		{
+			tpdo1Indicator.label = "ok";
+		}
+		else
+		{
+			tpdo1Indicator.label = "bad";
+		}
 	}
 }
 

@@ -369,8 +369,8 @@ void IServer::checkConnection()
 
 	for (auto& tpdo : m_tpdoInfo)
 	{
-		if (tpdo.second.period != std::chrono::milliseconds(0)
-				&& ((now - tpdo.second.timepoint) > tpdo.second.period))
+		if (tpdo.second.timeout != std::chrono::milliseconds(0)
+				&& ((now - tpdo.second.timepoint) > tpdo.second.timeout))
 		{
 			tpdo.second.isOnSchedule = false;
 			isConnectionOk = false;

@@ -102,9 +102,6 @@ void srmdrive_observer_set_watch_period(int period)
 }
 
 
-}
-
-
 ///
 ///
 ///
@@ -123,5 +120,7 @@ bool srmdrive_is_tpdo_ok(int tpdoNum)
 	return g_srmdriveServer->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
 }
 
+
+}
 
 

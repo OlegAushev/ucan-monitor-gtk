@@ -27,6 +27,9 @@ extern void cansocket_disconnect();
 
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 
+extern bool srmdrive_is_connection_ok();
+extern bool srmdrive_is_tpdo_ok(int tpdoNum);
+
 extern void srmdrive_controller_set_power_enabled(bool isEnabled);
 extern void srmdrive_controller_set_run_enabled(bool isEnabled);
 extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);

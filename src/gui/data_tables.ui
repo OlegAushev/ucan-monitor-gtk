@@ -248,6 +248,19 @@
 						<property name="hexpand">false</property>
 
 						<child>
+							<object class="AdwPreferencesRow">
+								<child>
+									<object class="GtkButton" id="tpdo1Indicator">
+										<property name="label">Status</property>
+										<property name="hexpand">false</property>
+										<property name="halign">center</property>
+									</object>
+								</child>
+							</object>
+						</child>
+						
+						
+						<child>
 							<object class="TableEntry">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>

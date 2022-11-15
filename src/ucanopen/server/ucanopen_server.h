@@ -43,7 +43,7 @@ private:
 	struct TpdoInfo
 	{
 		canid_t id;
-		std::chrono::milliseconds period;
+		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		bool isOnSchedule;
 	};
@@ -53,10 +53,10 @@ protected:
 	virtual void processTpdo2(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo3(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo4(std::array<uint8_t, 8> data) = 0;
-	void registerTpdo(TpdoType type, std::chrono::milliseconds period = std::chrono::milliseconds(0))
+	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
-		m_tpdoInfo.insert({type, {id, period, std::chrono::steady_clock::now(), false}});
+		m_tpdoInfo.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
 	}
 
 	/* RPDO server <-- client */
