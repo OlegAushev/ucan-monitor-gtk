@@ -49,10 +49,10 @@ private:
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoList;
 protected:
-	virtual void processTpdo1(std::array<uint8_t, 8> data) = 0;
-	virtual void processTpdo2(std::array<uint8_t, 8> data) = 0;
-	virtual void processTpdo3(std::array<uint8_t, 8> data) = 0;
-	virtual void processTpdo4(std::array<uint8_t, 8> data) = 0;
+	virtual void handleTpdo1(std::array<uint8_t, 8> data) = 0;
+	virtual void handleTpdo2(std::array<uint8_t, 8> data) = 0;
+	virtual void handleTpdo3(std::array<uint8_t, 8> data) = 0;
+	virtual void handleTpdo4(std::array<uint8_t, 8> data) = 0;
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
@@ -70,10 +70,10 @@ private:
 	};
 	std::map<RpdoType, RpdoInfo> m_rpdoList;
 protected:
-	virtual std::array<uint8_t, 8> makeRpdo1() = 0;
-	virtual std::array<uint8_t, 8> makeRpdo2() = 0;
-	virtual std::array<uint8_t, 8> makeRpdo3() = 0;
-	virtual std::array<uint8_t, 8> makeRpdo4() = 0;
+	virtual std::array<uint8_t, 8> createRpdo1() = 0;
+	virtual std::array<uint8_t, 8> createRpdo2() = 0;
+	virtual std::array<uint8_t, 8> createRpdo3() = 0;
+	virtual std::array<uint8_t, 8> createRpdo4() = 0;
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
@@ -82,7 +82,7 @@ protected:
 
 	/* TSDO server --> client */
 protected:
-	virtual void processTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
+	virtual void handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
 
 public:
 	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
@@ -113,7 +113,7 @@ private:
 	}
 
 	void sendRpdo();
-	void processFrame(can_frame frame);
+	void handleFrame(can_frame frame);
 	void checkConnection();
 };
 

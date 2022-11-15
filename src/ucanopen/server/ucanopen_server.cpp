@@ -53,16 +53,16 @@ void IServer::sendRpdo()
 					switch (rpdo.first)
 					{
 					case RpdoType::RPDO1:
-						data = makeRpdo1();
+						data = createRpdo1();
 						break;
 					case RpdoType::RPDO2:
-						data = makeRpdo2();
+						data = createRpdo2();
 						break;
 					case RpdoType::RPDO3:
-						data = makeRpdo3();
+						data = createRpdo3();
 						break;
 					case RpdoType::RPDO4:
-						data = makeRpdo4();
+						data = createRpdo4();
 						break;
 					}
 					m_socket->send(makeFrame(rpdo.second.id, 8, data));
@@ -77,7 +77,7 @@ void IServer::sendRpdo()
 ///
 ///
 ///
-void IServer::processFrame(can_frame frame)
+void IServer::handleFrame(can_frame frame)
 {
 	for (auto& tpdo : m_tpdoList)
 	{
@@ -91,16 +91,16 @@ void IServer::processFrame(can_frame frame)
 			switch (tpdo.first)
 			{
 			case TpdoType::TPDO1:
-				processTpdo1(data);
+				handleTpdo1(data);
 				break;
 			case TpdoType::TPDO2:
-				processTpdo2(data);
+				handleTpdo2(data);
 				break;
 			case TpdoType::TPDO3:
-				processTpdo3(data);
+				handleTpdo3(data);
 				break;
 			case TpdoType::TPDO4:
-				processTpdo4(data);
+				handleTpdo4(data);
 				break;
 			}
 			return;
@@ -138,7 +138,7 @@ void IServer::processFrame(can_frame frame)
 			return;
 		}
 
-		processTsdo(type, odEntry, msg.data);
+		handleTsdo(type, odEntry, msg.data);
 	}	
 }
 

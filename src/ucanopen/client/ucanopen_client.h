@@ -55,9 +55,9 @@ private:
 	bool m_isTpdoEnabled{false};
 	struct TpdoInfo
 	{
-		std::function<std::array<uint8_t, 8>(void)> callbackOnSend;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		std::function<std::array<uint8_t, 8>(void)> creator;
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoList;
 
@@ -79,10 +79,10 @@ public:
 		m_heartbeatInfo.period = period;
 	}
 	
-	void registerTpdo(TpdoType tpdoType, std::function<std::array<uint8_t, 8>(void)> callback, std::chrono::milliseconds period)
+	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<std::array<uint8_t, 8>(void)> callback)
 	{
-		m_tpdoList[tpdoType].callbackOnSend = callback;
 		m_tpdoList[tpdoType].period = period;
+		m_tpdoList[tpdoType].creator = callback;
 	}
 
 	void setNodeId(NodeId _nodeId)

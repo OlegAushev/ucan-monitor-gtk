@@ -49,11 +49,11 @@ int main_loop(std::future<void> futureExit)
 	auto callbackMakeTpdo2 = []() { return g_srmdriveServer->controller.makeTpdo2(); };
 
 	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO1,
-			callbackMakeTpdo1,
-			std::chrono::milliseconds(250));
+			std::chrono::milliseconds(250),
+			callbackMakeTpdo1);
 	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO2,
-			callbackMakeTpdo2,
-			std::chrono::milliseconds(100));
+			std::chrono::milliseconds(100),
+			callbackMakeTpdo2);
 
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Backend is ready." << std::endl;
