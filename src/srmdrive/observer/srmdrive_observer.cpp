@@ -69,7 +69,7 @@ void Observer::run(std::future<void> futureExit)
 ///
 ///
 ///
-void Observer::processSdo(ucanopen::SdoType sdoType,
+void Observer::handleSdo(ucanopen::SdoType sdoType,
 		ucanopen::ObjectDictionaryType::const_iterator entryIt,
 		ucanopen::CobSdoData data)
 {

@@ -44,7 +44,7 @@ protected:
 			ucanopen::ObjectDictionaryType::const_iterator entryIt,
 			ucanopen::CobSdoData data) override
 	{
-		observer.processSdo(sdoType, entryIt, data);
+		observer.handleSdo(sdoType, entryIt, data);
 	}
 
 public:
