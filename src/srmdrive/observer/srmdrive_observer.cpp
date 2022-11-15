@@ -80,6 +80,10 @@ void Observer::processSdo(ucanopen::SdoType sdoType,
 		{
 			m_watchData[entryIt->second.name] = data.toString(entryIt->second.dataType);
 		}
+		else if (entryIt->second.name == "DRIVE_STATE")
+		{
+			m_watchData[entryIt->second.name] = "not impl";
+		}
 	}
 }
 

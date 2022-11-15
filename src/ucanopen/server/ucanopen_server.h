@@ -47,7 +47,7 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		bool isOnSchedule;
 	};
-	std::map<TpdoType, TpdoInfo> m_tpdoInfo;
+	std::map<TpdoType, TpdoInfo> m_tpdoList;
 protected:
 	virtual void processTpdo1(std::array<uint8_t, 8> data) = 0;
 	virtual void processTpdo2(std::array<uint8_t, 8> data) = 0;
@@ -56,7 +56,7 @@ protected:
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
-		m_tpdoInfo.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
+		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
 	}
 
 	/* RPDO server <-- client */
@@ -68,7 +68,7 @@ private:
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	std::map<RpdoType, RpdoInfo> m_rpdoInfo;
+	std::map<RpdoType, RpdoInfo> m_rpdoList;
 protected:
 	virtual std::array<uint8_t, 8> makeRpdo1() = 0;
 	virtual std::array<uint8_t, 8> makeRpdo2() = 0;
@@ -77,7 +77,7 @@ protected:
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
 		canid_t id = calculateCobId(toCobType(type), nodeId.value());
-		m_rpdoInfo.insert({type, {id, period, std::chrono::steady_clock::now()}});
+		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
 	}
 
 	/* TSDO server --> client */
@@ -96,7 +96,7 @@ public:
 
 	std::vector<std::string_view> watchEntriesList() const;
 	bool isConnectionOk() const { return m_isConnectionOk; }
-	bool isTpdoOk(TpdoType tpdo) const { return m_tpdoInfo.at(tpdo).isOnSchedule; }
+	bool isTpdoOk(TpdoType tpdo) const { return m_tpdoList.at(tpdo).isOnSchedule; }
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(

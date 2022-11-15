@@ -27,10 +27,10 @@ Client::Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket)
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
 	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
-	m_tpdoInfo.insert({TpdoType::TPDO1, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO2, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO3, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
-	m_tpdoInfo.insert({TpdoType::TPDO4, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
+	m_tpdoList.insert({TpdoType::TPDO1, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
+	m_tpdoList.insert({TpdoType::TPDO2, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
+	m_tpdoList.insert({TpdoType::TPDO3, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
+	m_tpdoList.insert({TpdoType::TPDO4, {{}, std::chrono::milliseconds(0), std::chrono::steady_clock::now()}});
 
 #ifdef STD_COUT_ENABLED
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
@@ -127,7 +127,7 @@ void Client::sendTpdo()
 	auto now = std::chrono::steady_clock::now();
 	if (m_isTpdoEnabled)
 	{
-		for (auto& tpdo : m_tpdoInfo)
+		for (auto& tpdo : m_tpdoList)
 		{
 			if (tpdo.second.callbackOnSend)
 			{

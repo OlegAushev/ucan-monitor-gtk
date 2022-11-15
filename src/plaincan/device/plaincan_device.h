@@ -24,7 +24,19 @@ class Device
 {
 private:
 	std::shared_ptr<can::Socket> m_socket;
-	std::map<canid_t, std::string_view> m_sendIdNameList;
+
+	struct TxMessageInfo
+	{
+		std::string_view name;
+		std::chrono::milliseconds timeout;
+		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		bool isOnSchedule;
+	};
+	std::map<canid_t, TxMessageInfo> m_txMessageList;
+	
+	
+	
+	
 	std::map<canid_t, std::string_view> m_recvIdNameList;
 public:
 	Device(std::shared_ptr<can::Socket> socket,

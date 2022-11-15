@@ -43,7 +43,7 @@ void IServer::sendRpdo()
 	auto now = std::chrono::steady_clock::now();
 	if (m_isRpdoEnabled)
 	{
-		for (auto& rpdo : m_rpdoInfo)
+		for (auto& rpdo : m_rpdoList)
 		{
 			if (rpdo.second.period != std::chrono::milliseconds(0))
 			{
@@ -79,7 +79,7 @@ void IServer::sendRpdo()
 ///
 void IServer::processFrame(can_frame frame)
 {
-	for (auto& tpdo : m_tpdoInfo)
+	for (auto& tpdo : m_tpdoList)
 	{
 		if (frame.can_id == tpdo.second.id)
 		{
@@ -367,7 +367,7 @@ void IServer::checkConnection()
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();
 
-	for (auto& tpdo : m_tpdoInfo)
+	for (auto& tpdo : m_tpdoList)
 	{
 		if (tpdo.second.timeout != std::chrono::milliseconds(0)
 				&& ((now - tpdo.second.timepoint) > tpdo.second.timeout))

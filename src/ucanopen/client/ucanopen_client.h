@@ -59,7 +59,7 @@ private:
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	std::map<TpdoType, TpdoInfo> m_tpdoInfo;
+	std::map<TpdoType, TpdoInfo> m_tpdoList;
 
 	/* THREADS */
 	std::thread m_threadRun;
@@ -81,8 +81,8 @@ public:
 	
 	void registerTpdo(TpdoType tpdoType, std::function<std::array<uint8_t, 8>(void)> callback, std::chrono::milliseconds period)
 	{
-		m_tpdoInfo[tpdoType].callbackOnSend = callback;
-		m_tpdoInfo[tpdoType].period = period;
+		m_tpdoList[tpdoType].callbackOnSend = callback;
+		m_tpdoList[tpdoType].period = period;
 	}
 
 	void setNodeId(NodeId _nodeId)

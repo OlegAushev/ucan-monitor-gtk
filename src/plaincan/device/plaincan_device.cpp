@@ -20,7 +20,7 @@ Device::Device(std::shared_ptr<can::Socket> socket,
 		const std::map<canid_t, std::string_view>& sendIdNameList,
 		const std::map<canid_t, std::string_view>& recvIdNameList)
 	: m_socket(socket)
-	, m_sendIdNameList(sendIdNameList)
+	//, m_sendIdNameList(sendIdNameList)
 	, m_recvIdNameList(recvIdNameList)
 {
 
