@@ -3,7 +3,9 @@ project('ucan-monitor', ['c', 'vala', 'cpp'],
 	meson_version: '>= 0.59.0',
 	default_options: [
 		'c_std=c11',
-		'cpp_std=c++20'
+		'cpp_std=c++20',
+		'warning_level=3',
+		'buildtype=release'
 	],
 )
 
