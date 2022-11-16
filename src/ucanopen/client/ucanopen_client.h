@@ -40,7 +40,7 @@ private:
 	std::shared_ptr<can::Socket> m_canSocket;
 	NmtState m_state;
 
-	std::vector<std::shared_ptr<IServer>> m_servers;
+	std::set<std::shared_ptr<IServer>> m_servers;
 	std::map<canid_t, std::shared_ptr<IServer>> m_recvIdServerList;
 
 	/* HEARTBEAT */

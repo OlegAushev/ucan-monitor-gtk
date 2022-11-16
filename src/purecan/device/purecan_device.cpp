@@ -19,7 +19,7 @@ namespace purecan {
 /// 
 ///
 ///
-Device::Device(std::shared_ptr<can::Socket> socket)
+IDevice::IDevice(std::shared_ptr<can::Socket> socket)
 	: m_socket(socket)
 {
 
@@ -29,7 +29,7 @@ Device::Device(std::shared_ptr<can::Socket> socket)
 ///
 ///
 ///
-void Device::send()
+void IDevice::send()
 {
 	auto now = std::chrono::steady_clock::now();
 
@@ -41,7 +41,7 @@ void Device::send()
 		if (now - msg.second.timepoint < msg.second.period) continue;
 
 		can_frame frame;
-		frame.can_id = msg.second.id;
+		frame.can_id = msg.first;
 		auto data = msg.second.creator();
 		memcpy(frame.data, data.data(), data.size());
 		m_socket->send(frame);
@@ -54,11 +54,11 @@ void Device::send()
 ///
 ///
 ///
-void Device::handleFrame(const can_frame& frame)
+void IDevice::handleFrame(const can_frame& frame)
 {
 	for (auto& msg : m_txMessageList)
 	{
-		if (frame.can_id != msg.second.id) continue;
+		if (frame.can_id != msg.first) continue;
 
 		msg.second.timepoint = std::chrono::steady_clock::now();
 		msg.second.isOnSchedule = true;
@@ -72,7 +72,7 @@ void Device::handleFrame(const can_frame& frame)
 ///
 ///
 ///
-void Device::checkConnection()
+void IDevice::checkConnection()
 {
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();

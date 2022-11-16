@@ -59,7 +59,7 @@ Client::~Client()
 ///
 void Client::registerServer(std::shared_ptr<IServer> server)
 {
-	m_servers.push_back(server);
+	m_servers.insert(server);
 
 	canid_t tpdo1 = calculateCobId(CobType::TPDO1, server->nodeId.value());
 	canid_t tpdo2 = calculateCobId(CobType::TPDO2, server->nodeId.value());

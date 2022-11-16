@@ -22,8 +22,9 @@
 namespace purecan {
 
 
-class Device
+class IDevice
 {
+	friend class Controller;
 private:
 	std::shared_ptr<can::Socket> m_socket;
 	bool m_isConnectionOk{false};
@@ -32,7 +33,6 @@ private:
 	struct TxMessageInfo
 	{
 		std::string_view name;
-		canid_t id;
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		bool isOnSchedule;
@@ -45,7 +45,6 @@ private:
 	struct RxMessageInfo
 	{
 		std::string_view name;
-		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<std::vector<uint8_t>(void)> creator; 
@@ -53,7 +52,7 @@ private:
 	std::map<canid_t, RxMessageInfo> m_rxMessageList;
 
 public:
-	Device(std::shared_ptr<can::Socket> socket);
+	IDevice(std::shared_ptr<can::Socket> socket);
 
 private:
 	void send();
