@@ -52,7 +52,7 @@ set(gresource_c ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
 #message("glib-compile-resources output: " ${gresource_c})
 
 file(GLOB_RECURSE ui_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
-	${PROJECT_SOURCE_DIR}/src/gui/*.ui
+	${PROJECT_SOURCE_DIR}/gui/*.ui
 )
 
 add_custom_command(
@@ -72,7 +72,7 @@ add_custom_target(
 ################################################################################
 # Vala Sources
 file(GLOB_RECURSE vala_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
-	${PROJECT_SOURCE_DIR}/src/gui/*.vala
+	${PROJECT_SOURCE_DIR}/gui/*.vala
 )
 
 vala_precompile(vala_c

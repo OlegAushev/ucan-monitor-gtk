@@ -19,7 +19,7 @@
 namespace CanMonitor {
 
 
-[GtkTemplate (ui = "/src/gui/window.ui")]
+[GtkTemplate (ui = "/gui/window.ui")]
 public class Window : Gtk.ApplicationWindow
 {
 	[GtkChild]

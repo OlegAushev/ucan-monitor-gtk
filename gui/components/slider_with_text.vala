@@ -3,7 +3,7 @@
 ///
 
 
-[GtkTemplate (ui = "/src/gui/components/slider_with_text.ui")]
+[GtkTemplate (ui = "/gui/components/slider_with_text.ui")]
 public class SliderWithText : Adw.Bin
 {
 	[GtkChild]
