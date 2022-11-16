@@ -35,18 +35,18 @@ void IDevice::send()
 
 	if (!m_isRxEnabled) return;
 
-	for (auto& msg : m_rxMessageList)
+	for (auto& [id, message] : m_rxMessageList)
 	{
-		if (msg.second.period == std::chrono::milliseconds(0)) continue;
-		if (now - msg.second.timepoint < msg.second.period) continue;
+		if (message.period == std::chrono::milliseconds(0)) continue;
+		if (now - message.timepoint < message.period) continue;
 
 		can_frame frame;
-		frame.can_id = msg.first;
-		auto data = msg.second.creator();
+		frame.can_id = id;
+		auto data = message.creator();
 		memcpy(frame.data, data.data(), data.size());
 		m_socket->send(frame);
 
-		msg.second.timepoint = now;
+		message.timepoint = now;
 	}
 }
 
@@ -56,15 +56,15 @@ void IDevice::send()
 ///
 void IDevice::handleFrame(const can_frame& frame)
 {
-	for (auto& msg : m_txMessageList)
+	for (auto& [id, message] : m_txMessageList)
 	{
-		if (frame.can_id != msg.first) continue;
+		if (frame.can_id != id) continue;
 
-		msg.second.timepoint = std::chrono::steady_clock::now();
-		msg.second.isOnSchedule = true;
+		message.timepoint = std::chrono::steady_clock::now();
+		message.isOnSchedule = true;
 		can_payload data{};
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
-		msg.second.handler(data);
+		message.handler(data);
 	}
 }
 
@@ -77,12 +77,12 @@ void IDevice::checkConnection()
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();
 
-	for (auto& msg : m_txMessageList)
+	for (auto& [id, message] : m_txMessageList)
 	{
-		if (msg.second.timeout == std::chrono::milliseconds(0)) continue;
-		if ((now - msg.second.timepoint) > msg.second.timeout)
+		if (message.timeout == std::chrono::milliseconds(0)) continue;
+		if ((now - message.timepoint) > message.timeout)
 		{
-			msg.second.isOnSchedule = false;
+			message.isOnSchedule = false;
 			isConnectionOk = false;
 		}
 	}

@@ -50,7 +50,7 @@ void Controller::registerDevice(std::shared_ptr<IDevice> device)
 {
 	m_devices.insert(device);
 
-	for (const auto& [id, msg] : device->m_txMessageList)
+	for (const auto& [id, message] : device->m_txMessageList)
 	{
 		m_recvIdDeviceList.insert({id, device});
 	}
