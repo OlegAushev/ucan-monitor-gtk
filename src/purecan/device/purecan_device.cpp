@@ -13,7 +13,7 @@
 #include "purecan_device.h"
 
 
-namespace plaincan {
+namespace purecan {
 
 
 /// 
@@ -54,16 +54,45 @@ void Device::send()
 ///
 ///
 ///
-void Device::handleFrame(can_frame frame)
+void Device::handleFrame(const can_frame& frame)
 {
-	
+	for (auto& msg : m_txMessageList)
+	{
+		if (frame.can_id != msg.second.id) continue;
+
+		msg.second.timepoint = std::chrono::steady_clock::now();
+		msg.second.isOnSchedule = true;
+		can_payload data{};
+		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
+		msg.second.handler(data);
+	}
+}
+
+
+///
+///
+///
+void Device::checkConnection()
+{
+	bool isConnectionOk = true;
+	auto now = std::chrono::steady_clock::now();
+
+	for (auto& msg : m_txMessageList)
+	{
+		if (msg.second.timeout == std::chrono::milliseconds(0)) continue;
+		if ((now - msg.second.timepoint) > msg.second.timeout)
+		{
+			msg.second.isOnSchedule = false;
+			isConnectionOk = false;
+		}
+	}
+
+	m_isConnectionOk = isConnectionOk;
 }
 
 
 
 
-
-
-}
+} // namespace purecan
 
 

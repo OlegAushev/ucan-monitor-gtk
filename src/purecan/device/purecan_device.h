@@ -14,17 +14,19 @@
 
 
 #include "cansocket/cansocket.h"
+#include "../purecan_def.h"
 #include <map>
 #include <functional>
 
 
-namespace plaincan {
+namespace purecan {
 
 
 class Device
 {
 private:
 	std::shared_ptr<can::Socket> m_socket;
+	bool m_isConnectionOk{false};
 
 	/* device --> controller */
 	struct TxMessageInfo
@@ -34,7 +36,7 @@ private:
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		bool isOnSchedule;
-		std::function<void(can_frame)> handler;
+		std::function<void(can_payload)> handler;
 	};
 	std::map<canid_t, TxMessageInfo> m_txMessageList;
 	
@@ -55,11 +57,11 @@ public:
 
 private:
 	void send();
-	void handleFrame(can_frame frame);
+	void handleFrame(const can_frame& frame);
 	void checkConnection();
 };
 
 
-}
+} // namespace purecan
 
 
