@@ -125,6 +125,7 @@ target_compile_options(${executable} PRIVATE
 	-Wall
 	-Wextra
 	-Wpedantic
+	-fdiagnostics-color=always
 )
 
 target_compile_features(${executable} PRIVATE
