@@ -1,5 +1,5 @@
 /**
- * @file plaincan_device.cpp
+ * @file purecan_device.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -10,7 +10,7 @@
  */
 
 
-#include "plaincan_device.h"
+#include "purecan_device.h"
 
 
 namespace plaincan {

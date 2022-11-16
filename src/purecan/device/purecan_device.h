@@ -1,5 +1,5 @@
 /**
- * @file plaincan_device.h
+ * @file purecan_device.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1

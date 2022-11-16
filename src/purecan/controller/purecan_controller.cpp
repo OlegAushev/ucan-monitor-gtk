@@ -1,5 +1,5 @@
 /**
- * @file plaincan_controller.h
+ * @file purecan_controller.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -10,6 +10,6 @@
  */
 
 
-#pragma once
+#include "purecan_controller.h"
 
 
