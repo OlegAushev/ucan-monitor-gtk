@@ -51,6 +51,14 @@ void Device::send()
 }
 
 
+///
+///
+///
+void Device::handleFrame(can_frame frame)
+{
+	
+}
+
 
 
 

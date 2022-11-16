@@ -98,7 +98,6 @@ public:
 
 	Error send(const can_frame& frame);
 	Error recv(can_frame& frame);
-	Error recv();
 
 private:
 	Error createSocket(const std::string& interface);

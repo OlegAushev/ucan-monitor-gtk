@@ -57,7 +57,7 @@ private:
 	{
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		std::function<std::array<uint8_t, 8>(void)> creator;
+		std::function<can_payload(void)> creator;
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoList;
 
@@ -66,7 +66,7 @@ private:
 	std::promise<void> m_signalExitRunThread;
 	void run(std::future<void> futureExit);
 
-	void onFrameReceived(can_frame frame);
+	void onFrameReceived(const can_frame& frame);
 
 public:
 	Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket);
@@ -79,7 +79,7 @@ public:
 		m_heartbeatInfo.period = period;
 	}
 	
-	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<std::array<uint8_t, 8>(void)> callback)
+	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> callback)
 	{
 		m_tpdoList[tpdoType].period = period;
 		m_tpdoList[tpdoType].creator = callback;

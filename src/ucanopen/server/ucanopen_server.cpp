@@ -49,7 +49,7 @@ void IServer::sendRpdo()
 		if (rpdo.second.period == std::chrono::milliseconds(0)) continue;
 		if (now - rpdo.second.timepoint < rpdo.second.period) continue;
 
-		std::array<uint8_t, 8> data;
+		can_payload data;
 		switch (rpdo.first)
 		{
 		case RpdoType::RPDO1:
@@ -74,7 +74,7 @@ void IServer::sendRpdo()
 ///
 ///
 ///
-void IServer::handleFrame(can_frame frame)
+void IServer::handleFrame(const can_frame& frame)
 {
 	for (auto& tpdo : m_tpdoList)
 	{
@@ -82,8 +82,8 @@ void IServer::handleFrame(can_frame frame)
 
 		tpdo.second.timepoint = std::chrono::steady_clock::now();
 		tpdo.second.isOnSchedule = true;
-		std::array<uint8_t, 8> data;
-		memcpy(&data, frame.data, frame.can_dlc);
+		can_payload data{};
+		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
 
 		switch (tpdo.first)
 		{
@@ -170,8 +170,8 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	message.subindex = entryIt->first.subindex;
 	message.cs = SDO_CCS_READ;
 	
-	std::array<uint8_t, 8> data;
-	memcpy(&data, &message, sizeof(CobSdo));
+	can_payload data;
+	memcpy(data.begin(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -210,8 +210,8 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = SDO_CCS_WRITE;
 	message.data = sdoData;
 
-	std::array<uint8_t, 8> data;
-	memcpy(&data, &message, sizeof(CobSdo));
+	can_payload data;
+	memcpy(data.begin(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -284,8 +284,8 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = SDO_CCS_WRITE;
 	message.data = sdoData;
 
-	std::array<uint8_t, 8> data;
-	memcpy(&data, &message, sizeof(CobSdo));
+	can_payload data;
+	memcpy(data.begin(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -330,8 +330,8 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 		message.cs = SDO_CCS_WRITE;
 	}
 
-	std::array<uint8_t, 8> data;
-	memcpy(&data, &message, sizeof(CobSdo));
+	can_payload data;
+	memcpy(data.begin(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;

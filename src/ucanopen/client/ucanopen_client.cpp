@@ -142,7 +142,7 @@ void Client::sendTpdo()
 ///
 ///
 ///
-void Client::onFrameReceived(can_frame frame)
+void Client::onFrameReceived(const can_frame& frame)
 {
 	auto it = m_recvIdServerList.find(frame.can_id);
 	if (it != m_recvIdServerList.end())

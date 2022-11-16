@@ -286,45 +286,6 @@ Error Socket::recv(can_frame& frame)
 }
 
 
-///
-///
-///
-Error Socket::recv()
-{
-	if (m_socket < 0)
-	{
-		return Error::SOCKET_CLOSED;
-	}
-
-	can_frame frame;
-	int nBytes;
-
-	std::lock_guard<std::mutex> lock(m_recvMutex);
-
-	do
-	{	
-		nBytes = ::recv(m_socket, &frame, sizeof(can_frame), MSG_PEEK | MSG_DONTWAIT);	// non-blocking read
-												// check if there is available CAN frame
-		if (nBytes == sizeof(can_frame))
-		{
-			nBytes = ::recv(m_socket, &frame, sizeof(can_frame), MSG_DONTWAIT);	// non-blocking read
-			if (nBytes < 0)
-			{
-				return Error::RECV_ERROR;
-			}
-
-			// TODO emit signal(frame)
-		}
-		else if (nBytes < 0 && errno != EAGAIN)	// error was caused not by absence of CAN frame
-		{
-			return Error::RECV_ERROR;
-		}
-	} while (nBytes == sizeof(can_frame));
-
-	return Error::NO_ERROR;	
-}
-
-
 } // namespace can
 
 

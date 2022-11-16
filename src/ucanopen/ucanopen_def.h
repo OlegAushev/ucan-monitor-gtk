@@ -400,6 +400,7 @@ inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
 
 using ObjectDictionaryType = std::map<ODEntryKey, ODEntryValue>;
 using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
+using can_payload = std::array<uint8_t, 8>;
 
 
 /**
@@ -410,12 +411,12 @@ using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, O
  * @param data 
  * @return CAN frame.
  */
-inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8> data)
+inline can_frame makeFrame(CobType cobType, NodeId nodeId, can_payload data)
 {
 	can_frame frame;
 	frame.can_id = calculateCobId(cobType, nodeId.value());
 	frame.len = COB_DATA_LEN[static_cast<size_t>(cobType)];
-	memcpy(frame.data, data.data(), frame.len);
+	std::copy(data.begin(), std::next(data.begin(), frame.len), frame.data);
 	return frame;
 }
 
@@ -428,12 +429,12 @@ inline can_frame makeFrame(CobType cobType, NodeId nodeId, std::array<uint8_t, 8
  * @param data 
  * @return CAN frame.
  */
-inline can_frame makeFrame(canid_t id, unsigned char len, std::array<uint8_t, 8> data)
+inline can_frame makeFrame(canid_t id, unsigned char len, can_payload data)
 {
 	can_frame frame;
 	frame.can_id = id;
 	frame.len = len;
-	memcpy(frame.data, data.data(), frame.len);
+	std::copy(data.begin(), std::next(data.begin(), frame.len), frame.data);
 	return frame;	
 }
 

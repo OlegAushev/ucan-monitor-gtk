@@ -55,7 +55,7 @@ public:
 
 private:
 	void send();
-	void processFrame(can_frame frame);
+	void handleFrame(can_frame frame);
 	void checkConnection();
 };
 
