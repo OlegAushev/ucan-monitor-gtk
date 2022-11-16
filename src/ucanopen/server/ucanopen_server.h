@@ -86,6 +86,8 @@ protected:
 
 public:
 	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
+	virtual ~IServer() = default;
+	
 	void enableRpdo() { m_isRpdoEnabled = true; }
 	void disableRpdo() { m_isRpdoEnabled = false; }
 	

@@ -176,53 +176,53 @@ public class DataTables : Adw.Bin
 		if (srmdrive_is_tpdo_ok(0))
 		{
 			tpdo1Indicator.entry_text = "ok";
-			tpdo1Indicator.remove_css_class("error");
-			tpdo1Indicator.add_css_class("success");
+			tpdo1Indicator.entry_remove_css_class("error");
+			tpdo1Indicator.entry_add_css_class("success");
 		}
 		else
 		{
 			tpdo1Indicator.entry_text = "bad";
-			tpdo1Indicator.remove_css_class("success");
-			tpdo1Indicator.add_css_class("error");
+			tpdo1Indicator.entry_remove_css_class("success");
+			tpdo1Indicator.entry_add_css_class("error");
 		}
 
 		if (srmdrive_is_tpdo_ok(1))
 		{
 			tpdo2Indicator.entry_text = "ok";
-			tpdo2Indicator.remove_css_class("error");
-			tpdo2Indicator.add_css_class("success");
+			tpdo2Indicator.entry_remove_css_class("error");
+			tpdo2Indicator.entry_add_css_class("success");
 		}
 		else
 		{
 			tpdo2Indicator.entry_text = "bad";
-			tpdo2Indicator.remove_css_class("success");
-			tpdo2Indicator.add_css_class("error");
+			tpdo2Indicator.entry_remove_css_class("success");
+			tpdo2Indicator.entry_add_css_class("error");
 		}
 
 		if (srmdrive_is_tpdo_ok(2))
 		{
 			tpdo3Indicator.entry_text = "ok";
-			tpdo3Indicator.remove_css_class("error");
-			tpdo3Indicator.add_css_class("success");
+			tpdo3Indicator.entry_remove_css_class("error");
+			tpdo3Indicator.entry_add_css_class("success");
 		}
 		else
 		{
 			tpdo3Indicator.entry_text = "bad";
-			tpdo3Indicator.remove_css_class("success");
-			tpdo3Indicator.add_css_class("error");
+			tpdo3Indicator.entry_remove_css_class("success");
+			tpdo3Indicator.entry_add_css_class("error");
 		}
 
 		if (srmdrive_is_tpdo_ok(3))
 		{
 			tpdo4Indicator.entry_text = "ok";
-			tpdo4Indicator.remove_css_class("error");
-			tpdo4Indicator.add_css_class("success");
+			tpdo4Indicator.entry_remove_css_class("error");
+			tpdo4Indicator.entry_add_css_class("success");
 		}
 		else
 		{
 			tpdo4Indicator.entry_text = "bad";
-			tpdo4Indicator.remove_css_class("success");
-			tpdo4Indicator.add_css_class("error");
+			tpdo4Indicator.entry_remove_css_class("success");
+			tpdo4Indicator.entry_add_css_class("error");
 		}
 	}
 }

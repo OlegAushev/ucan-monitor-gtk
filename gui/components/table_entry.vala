@@ -43,12 +43,12 @@ public class TableEntry : Adw.ActionRow
 		set { _entry.xalign = value; }
 	}
 
-	public void add_css_class (string css_class)
+	public void entry_add_css_class (string css_class)
 	{
 		_entry.add_css_class(css_class);
 	}
 
-	public void remove_css_class (string css_class)
+	public void entry_remove_css_class (string css_class)
 	{
 		_entry.remove_css_class(css_class);
 	}
