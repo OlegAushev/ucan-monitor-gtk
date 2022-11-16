@@ -24,11 +24,11 @@ IServer::IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const Obje
 	, m_socket(socket)
 	, m_dictionary(dictionary)
 {
-	for (const auto& entry : m_dictionary)
+	for (const auto& [key, entry] : m_dictionary)
 	{
 		m_dictionaryAux.insert({
-				{entry.second.category, entry.second.subcategory, entry.second.name},
-				m_dictionary.find(entry.first)});
+				{entry.category, entry.subcategory, entry.name},
+				m_dictionary.find(key)});
 	}
 
 	m_isRpdoEnabled = false;
@@ -44,13 +44,13 @@ void IServer::sendRpdo()
 	
 	if (!m_isRpdoEnabled) return;
 
-	for (auto& rpdo : m_rpdoList)
+	for (auto& [type, message] : m_rpdoList)
 	{
-		if (rpdo.second.period == std::chrono::milliseconds(0)) continue;
-		if (now - rpdo.second.timepoint < rpdo.second.period) continue;
+		if (message.period == std::chrono::milliseconds(0)) continue;
+		if (now - message.timepoint < message.period) continue;
 
 		can_payload data;
-		switch (rpdo.first)
+		switch (type)
 		{
 		case RpdoType::RPDO1:
 			data = createRpdo1();
@@ -65,8 +65,8 @@ void IServer::sendRpdo()
 			data = createRpdo4();
 			break;
 		}
-		m_socket->send(makeFrame(rpdo.second.id, 8, data));
-		rpdo.second.timepoint = now;	
+		m_socket->send(makeFrame(message.id, 8, data));
+		message.timepoint = now;	
 	}
 }
 
@@ -76,16 +76,16 @@ void IServer::sendRpdo()
 ///
 void IServer::handleFrame(const can_frame& frame)
 {
-	for (auto& tpdo : m_tpdoList)
+	for (auto& [type, message] : m_tpdoList)
 	{
-		if (frame.can_id != tpdo.second.id) continue;
+		if (frame.can_id != message.id) continue;
 
-		tpdo.second.timepoint = std::chrono::steady_clock::now();
-		tpdo.second.isOnSchedule = true;
+		message.timepoint = std::chrono::steady_clock::now();
+		message.isOnSchedule = true;
 		can_payload data{};
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
 
-		switch (tpdo.first)
+		switch (type)
 		{
 		case TpdoType::TPDO1:
 			handleTpdo1(data);
@@ -344,11 +344,11 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 std::vector<std::string_view> IServer::watchEntriesList() const
 {
 	std::vector<std::string_view> list;
-	for (auto entry : m_dictionary)
+	for (auto [key, entry] : m_dictionary)
 	{
-		if (entry.second.category == "WATCH")
+		if (entry.category == "WATCH")
 		{
-			list.push_back(entry.second.name);
+			list.push_back(entry.name);
 		}
 	}
 	return list;
@@ -363,12 +363,12 @@ void IServer::checkConnection()
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();
 
-	for (auto& tpdo : m_tpdoList)
+	for (auto& [type, message] : m_tpdoList)
 	{
-		if (tpdo.second.timeout != std::chrono::milliseconds(0)) continue;
-		if ((now - tpdo.second.timepoint) > tpdo.second.timeout)
+		if (message.timeout != std::chrono::milliseconds(0)) continue;
+		if ((now - message.timepoint) > message.timeout)
 		{
-			tpdo.second.isOnSchedule = false;
+			message.isOnSchedule = false;
 			isConnectionOk = false;
 		}
 	}

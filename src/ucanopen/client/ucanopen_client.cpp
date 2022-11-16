@@ -127,13 +127,13 @@ void Client::sendTpdo()
 	auto now = std::chrono::steady_clock::now();
 	if (!m_isTpdoEnabled) return;
 
-	for (auto& tpdo : m_tpdoList)
+	for (auto& [type, message] : m_tpdoList)
 	{
-		if (!tpdo.second.creator) continue;
-		if (now - tpdo.second.timepoint >= tpdo.second.period)
+		if (!message.creator) continue;
+		if (now - message.timepoint >= message.period)
 		{
-			m_canSocket->send(makeFrame(toCobType(tpdo.first), nodeId, tpdo.second.creator()));
-			tpdo.second.timepoint = now;
+			m_canSocket->send(makeFrame(toCobType(type), nodeId, message.creator()));
+			message.timepoint = now;
 		}
 	}
 }

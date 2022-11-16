@@ -88,8 +88,6 @@ void Observer::handleSdo(ucanopen::SdoType sdoType,
 }
 
 
-
-
 } // namespace srmdrive
 
 
