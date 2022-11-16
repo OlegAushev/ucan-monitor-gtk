@@ -42,14 +42,14 @@ gnome = import('gnome')
 app_sources = files(
 	'builddir/git_version.cpp',
 
-	'src/gui/application.vala',
-	'src/gui/control_panel.vala',
-	'src/gui/data_tables.vala',
-	'src/gui/main.vala',
-	'src/gui/window_canbusprefs.vala',
-	'src/gui/window.vala',
-	'src/gui/components/slider_with_text.vala',
-	'src/gui/components/table_entry.vala',
+	'gui/application.vala',
+	'gui/control_panel.vala',
+	'gui/data_tables.vala',
+	'gui/main.vala',
+	'gui/window_canbusprefs.vala',
+	'gui/window.vala',
+	'gui/components/slider_with_text.vala',
+	'gui/components/table_entry.vala',
 
 
 	'src/main.cpp',
@@ -69,7 +69,7 @@ app_sources = files(
 	'src/api/srmdrive.cpp',
 )
 
-subdir('src/gui/advvchart')
+subdir('gui/advvchart')
 
 app_sources += gnome.compile_resources('app_resources',
 	'gresource.xml',
