@@ -24,6 +24,9 @@ Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 	, m_socket(socket)
 	, m_state(NmtState::INITIALIZATION)
 {
+	m_syncInfo.period = std::chrono::milliseconds(0);
+	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
+
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
 	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
@@ -37,6 +40,7 @@ Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 #endif
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
 	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	m_state = NmtState::OPERATIONAL;
 }
 
@@ -87,6 +91,16 @@ void Client::run(std::future<void> futureExit)
 	while (futureExit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
 		auto now = std::chrono::steady_clock::now();
+
+		/* SYNC */
+		if (m_syncInfo.period != std::chrono::milliseconds(0))
+		{
+			if (now - m_syncInfo.timepoint > m_syncInfo.period)
+			{
+				m_socket->send(makeFrame(CobType::SYNC, nodeId, {}));
+				m_syncInfo.timepoint = now;
+			}
+		}
 
 		/* HEARTBEAT */
 		if (now - m_heartbeatInfo.timepoint > m_heartbeatInfo.period)

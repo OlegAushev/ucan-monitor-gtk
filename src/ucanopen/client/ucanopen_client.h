@@ -43,6 +43,15 @@ private:
 	std::set<std::shared_ptr<IServer>> m_servers;
 	std::map<canid_t, std::shared_ptr<IServer>> m_recvIdServerList;
 
+	/* SYNC */
+	struct SyncInfo
+	{
+		std::chrono::milliseconds period;
+		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
+	};
+	SyncInfo m_syncInfo;
+
+
 	/* HEARTBEAT */
 	struct HeartbeatInfo
 	{
@@ -72,7 +81,29 @@ public:
 	Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket);
 	~Client();
 
+	void setNodeId(NodeId _nodeId)
+	{
+		nodeId = _nodeId;
+	}
+	
 	void registerServer(std::shared_ptr<IServer> server);
+
+	void enableSync(std::chrono::milliseconds period)
+	{
+		m_syncInfo.period = period;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Client SYNC has been enabled, period = "
+				<< period << "." << std::endl;
+#endif		
+	}
+
+	void disableSync()
+	{
+		m_syncInfo.period = std::chrono::milliseconds(0);
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Client SYNC has been disabled." << std::endl;
+#endif		
+	}
 
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
@@ -85,14 +116,24 @@ public:
 		m_tpdoList[tpdoType].creator = callback;
 	}
 
-	void setNodeId(NodeId _nodeId)
+	void enableTpdo()
 	{
-		nodeId = _nodeId;
+		m_isTpdoEnabled = true;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Client TPDOs have been enabled." << std::endl;
+#endif
 	}
 
-	void setTpdoEnabled(bool isEnabled) { m_isTpdoEnabled = isEnabled; }
-	void sendTpdo();
+	void disableTpdo()
+	{
+		m_isTpdoEnabled = false;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Client TPDOs have been disabled." << std::endl;
+#endif
+	}
 
+private:
+	void sendTpdo();
 };
 
 

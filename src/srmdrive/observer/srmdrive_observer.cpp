@@ -30,6 +30,7 @@ Observer::Observer(ucanopen::IServer* driveServer)
 
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
 	m_threadRun = std::thread(&Observer::run, this, std::move(futureExit));
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 

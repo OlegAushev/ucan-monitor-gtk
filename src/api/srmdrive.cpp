@@ -26,14 +26,7 @@ extern "C" {
 ///
 void srmdrive_controller_set_power_enabled(bool isEnabled)
 {
-	if (isEnabled)
-	{
-		g_srmdriveServer->controller.powerUp();
-	}
-	else
-	{
-		g_srmdriveServer->controller.powerDown();
-	}
+	isEnabled ? g_srmdriveServer->controller.powerUp() : g_srmdriveServer->controller.powerDown();
 }
 
 
@@ -87,7 +80,7 @@ void srmdrive_observer_get_watch_value(const char* name, char* retval)
 ///
 void srmdrive_observer_set_watch_enabled(bool isEnabled)
 {
-	g_srmdriveServer->observer.setWatchEnabled(isEnabled);
+	isEnabled ? g_srmdriveServer->observer.enableWatch() : g_srmdriveServer->observer.disableWatch();
 }
 
 

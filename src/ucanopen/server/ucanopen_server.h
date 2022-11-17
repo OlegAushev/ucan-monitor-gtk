@@ -120,31 +120,6 @@ private:
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } // namespace ucanopen
 
 

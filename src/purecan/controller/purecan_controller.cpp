@@ -26,7 +26,8 @@ Controller::Controller(std::shared_ptr<can::Socket> socket)
 	std::cout << "[purecan] Starting aux thread..." << std::endl;
 #endif
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
-	m_threadRun = std::thread(&Controller::run, this, std::move(futureExit));	
+	m_threadRun = std::thread(&Controller::run, this, std::move(futureExit));
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 

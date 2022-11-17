@@ -42,7 +42,7 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 {
-	g_ucanClient->setTpdoEnabled(isEnabled);
+	isEnabled ? g_ucanClient->enableTpdo() : g_ucanClient->disableTpdo();
 }
 
 

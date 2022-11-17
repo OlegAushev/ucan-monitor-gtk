@@ -117,6 +117,8 @@ Error Socket::createSocket(const std::string& interface)
 ///
 Error Socket::connect(const std::string& interface, int bitrate)
 {
+	m_socket = -1;
+
 	if (!detail::interfaceList.contains(interface)
 			|| !detail::bitrateList.contains(bitrate))
 	{

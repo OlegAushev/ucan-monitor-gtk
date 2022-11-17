@@ -51,14 +51,28 @@ public:
 	Observer(ucanopen::IServer* driveServer);
 	~Observer();
 	
-	void setWatchEnabled(bool isEnabled)
+	void enableWatch()
 	{
-		m_isWatchEnabled = isEnabled;
+		m_isWatchEnabled = true;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[srmdrive] Watch requests have been enabled." << std::endl;
+#endif
+	}
+
+	void disableWatch()
+	{
+		m_isWatchEnabled = false;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[srmdrive] Watch requests have been disabled." << std::endl;
+#endif
 	}
 
 	void setWatchPeriod(std::chrono::milliseconds period)
 	{
 		m_watchPeriod = period;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[srmdrive] Watch requests period = " << period << "." << std::endl;
+#endif
 	}
 
 	std::string watchValue(std::string_view watchName) const
