@@ -24,10 +24,7 @@ public class ControlPanel : Adw.Bin
 	[GtkChild]
 	private unowned SliderWithText sliderTorque;
 
-	public ControlPanel()
-	{
-		
-	}
+	public ControlPanel() {}
 
 	construct
 	{

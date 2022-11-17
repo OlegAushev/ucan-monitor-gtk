@@ -9,15 +9,9 @@ public class TableEntry : Adw.ActionRow
 	[GtkChild]
 	private unowned Gtk.Entry _entry;
 
-	public TableEntry()
-	{
-		_entry.set_alignment(1);
-	}
+	public TableEntry() {}
 
-	construct
-	{
-		
-	}
+	construct {}
 
 	public string entry_text
 	{

@@ -7,5 +7,6 @@
 		<file>gui/window.ui</file>
 		<file>gui/components/slider_with_text.ui</file>
 		<file>gui/components/table_entry.ui</file>
+		<file>gui/components/table_boolentry.ui</file>
 	</gresource>
 </gresources>

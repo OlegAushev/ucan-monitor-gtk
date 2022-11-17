@@ -44,10 +44,7 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	private static uint _watchPeriodSelected = 3;
 	public const int watchPeriodDefault = 10;
 	
-	public WindowCanBusPrefs()
-	{
-
-	}
+	public WindowCanBusPrefs() {}
 
 	construct
 	{

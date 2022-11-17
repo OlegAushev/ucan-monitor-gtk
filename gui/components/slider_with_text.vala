@@ -18,10 +18,7 @@ public class SliderWithText : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Adjustment _adjustment;
 
-	public SliderWithText()
-	{
-
-	}
+	public SliderWithText() {}
 
 	public string title
 	{
