@@ -37,7 +37,7 @@ class Client
 public:
 	NodeId nodeId;
 private:
-	std::shared_ptr<can::Socket> m_canSocket;
+	std::shared_ptr<can::Socket> m_socket;
 	NmtState m_state;
 
 	std::set<std::shared_ptr<IServer>> m_servers;
@@ -69,7 +69,7 @@ private:
 	void onFrameReceived(const can_frame& frame);
 
 public:
-	Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket);
+	Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket);
 	~Client();
 
 	void registerServer(std::shared_ptr<IServer> server);

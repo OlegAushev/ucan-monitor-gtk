@@ -19,9 +19,9 @@ namespace ucanopen {
 ///
 ///
 ///
-Client::Client(NodeId t_nodeId, std::shared_ptr<can::Socket> t_canSocket)
-	: nodeId(t_nodeId)
-	, m_canSocket(t_canSocket)
+Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
+	: nodeId(nodeId_)
+	, m_socket(socket)
 	, m_state(NmtState::INITIALIZATION)
 {
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
@@ -91,7 +91,7 @@ void Client::run(std::future<void> futureExit)
 		/* HEARTBEAT */
 		if (now - m_heartbeatInfo.timepoint > m_heartbeatInfo.period)
 		{
-			m_canSocket->send(makeFrame(CobType::HEARTBEAT, nodeId, {static_cast<uint8_t>(m_state)}));
+			m_socket->send(makeFrame(CobType::HEARTBEAT, nodeId, {static_cast<uint8_t>(m_state)}));
 			m_heartbeatInfo.timepoint = now;
 		}
 
@@ -105,11 +105,11 @@ void Client::run(std::future<void> futureExit)
 
 		/* RECV */
 		can_frame frame;
-		can::Error recvErr = m_canSocket->recv(frame);
+		can::Error recvErr = m_socket->recv(frame);
 		while (recvErr == can::Error::NO_ERROR)
 		{
 			(void) std::async(&Client::onFrameReceived, this, frame);
-			recvErr = m_canSocket->recv(frame);
+			recvErr = m_socket->recv(frame);
 		}
 	}
 
@@ -132,7 +132,7 @@ void Client::sendTpdo()
 		if (!message.creator) continue;
 		if (now - message.timepoint >= message.period)
 		{
-			m_canSocket->send(makeFrame(toCobType(type), nodeId, message.creator()));
+			m_socket->send(makeFrame(toCobType(type), nodeId, message.creator()));
 			message.timepoint = now;
 		}
 	}
