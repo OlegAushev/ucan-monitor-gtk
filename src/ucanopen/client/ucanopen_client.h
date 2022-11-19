@@ -88,6 +88,7 @@ public:
 	
 	void registerServer(std::shared_ptr<IServer> server);
 
+	/* SYNC */
 	void enableSync(std::chrono::milliseconds period)
 	{
 		m_syncInfo.period = period;
@@ -105,15 +106,16 @@ public:
 #endif		
 	}
 
+	/* HEARTBEAT */
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
 		m_heartbeatInfo.period = period;
 	}
-	
-	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> callback)
+
+	/* TPDO */	
+	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 	{
-		m_tpdoList[tpdoType].period = period;
-		m_tpdoList[tpdoType].creator = callback;
+		m_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
 	}
 
 	void enableTpdo()
