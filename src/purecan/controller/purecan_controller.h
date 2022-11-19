@@ -31,6 +31,17 @@ private:
 	std::set<std::shared_ptr<IDevice>> m_devices;
 	std::map<canid_t, std::shared_ptr<IDevice>> m_recvIdDeviceList;
 
+	/* controller -> device */
+	bool m_isTxEnabled{true};
+	struct TxMessageInfo
+	{
+		std::string_view name;
+		std::chrono::milliseconds period;
+		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		std::function<std::vector<uint8_t>(void)> creator; 
+	};
+	std::map<canid_t, TxMessageInfo> m_txMessageList;
+
 	/* THREADS */
 	std::thread m_threadRun;
 	std::promise<void> m_signalExitRunThread;
@@ -42,6 +53,9 @@ public:
 	~Controller();
 
 	void registerDevice(std::shared_ptr<IDevice> device);
+
+	void enableTxMessages() { m_isTxEnabled = true; }
+	void disableTxMessages() { m_isTxEnabled = false; }
 };
 
 

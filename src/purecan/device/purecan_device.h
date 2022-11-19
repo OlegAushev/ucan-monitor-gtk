@@ -58,6 +58,9 @@ private:
 	void send();
 	void handleFrame(const can_frame& frame);
 	void checkConnection();
+
+	void enableRxMessages() { m_isRxEnabled = true; }
+	void disableRxMessages() { m_isRxEnabled = false; }
 };
 
 

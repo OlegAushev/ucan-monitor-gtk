@@ -69,12 +69,34 @@ void Controller::run(std::future<void> futureExit)
 
 	while (futureExit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
+		auto now = std::chrono::steady_clock::now();
+
+		/* CONTROLLER TX */
+		if (m_isTxEnabled)
+		{
+			for (auto& [id, message] : m_txMessageList)
+			{
+				if (message.period == std::chrono::milliseconds(0)) continue;
+				if (now - message.timepoint < message.period) continue;
+
+				can_frame frame;
+				frame.can_id = id;
+				auto data = message.creator();
+				memcpy(frame.data, data.data(), data.size());
+				m_socket->send(frame);
+
+				message.timepoint = now;
+			}
+		}
+
+		/* DEVICE's RX */
 		for (auto& device : m_devices)
 		{
 			device->checkConnection();
 			device->send();
 		}
 
+		/* RECV */
 		can_frame frame;
 		can::Error recvErr = m_socket->recv(frame);
 		while (recvErr == can::Error::NO_ERROR)

@@ -110,7 +110,20 @@ void Client::run(std::future<void> futureExit)
 		}
 
 		/* TPDO */
-		sendTpdo();
+		if (m_isTpdoEnabled)
+		{
+			for (auto& [type, message] : m_tpdoList)
+			{
+				if (!message.creator) continue;
+				if (now - message.timepoint >= message.period)
+				{
+					m_socket->send(makeFrame(toCobType(type), nodeId, message.creator()));
+					message.timepoint = now;
+				}
+			}
+		}
+
+		/* SERVER's RPDO */
 		for (auto& server : m_servers)
 		{
 			server->checkConnection();
@@ -130,26 +143,6 @@ void Client::run(std::future<void> futureExit)
 #ifdef STD_COUT_ENABLED
 	std::cout << "[ucanopen] Aux thread has stopped." << std::endl;
 #endif
-}
-
-
-///
-///
-///
-void Client::sendTpdo()
-{
-	auto now = std::chrono::steady_clock::now();
-	if (!m_isTpdoEnabled) return;
-
-	for (auto& [type, message] : m_tpdoList)
-	{
-		if (!message.creator) continue;
-		if (now - message.timepoint >= message.period)
-		{
-			m_socket->send(makeFrame(toCobType(type), nodeId, message.creator()));
-			message.timepoint = now;
-		}
-	}
 }
 
 

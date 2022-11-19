@@ -171,7 +171,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	message.cs = SDO_CCS_READ;
 	
 	can_payload data;
-	memcpy(data.begin(), &message, sizeof(CobSdo));
+	memcpy(data.data(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -211,7 +211,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.data = sdoData;
 
 	can_payload data;
-	memcpy(data.begin(), &message, sizeof(CobSdo));
+	memcpy(data.data(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -285,7 +285,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.data = sdoData;
 
 	can_payload data;
-	memcpy(data.begin(), &message, sizeof(CobSdo));
+	memcpy(data.data(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;
@@ -331,7 +331,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	}
 
 	can_payload data;
-	memcpy(data.begin(), &message, sizeof(CobSdo));
+	memcpy(data.data(), &message, sizeof(CobSdo));
 
 	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
 	return ODRequestStatus::REQUEST_SUCCESS;

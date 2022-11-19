@@ -131,9 +131,6 @@ public:
 		std::cout << "[ucanopen] Client TPDOs have been disabled." << std::endl;
 #endif
 	}
-
-private:
-	void sendTpdo();
 };
 
 
