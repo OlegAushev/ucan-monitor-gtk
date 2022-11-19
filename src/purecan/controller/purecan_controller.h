@@ -49,17 +49,49 @@ private:
 
 	void onFrameReceived(const can_frame& frame);
 public:
+	/**
+	 * @brief Construct a new Controller object
+	 * 
+	 * @param socket 
+	 */
 	Controller(std::shared_ptr<can::Socket> socket);
+
+	/**
+	 * @brief Destroy the Controller object
+	 * 
+	 */
 	~Controller();
 
+	/**
+	 * @brief 
+	 * 
+	 * @param device 
+	 */
 	void registerDevice(std::shared_ptr<IDevice> device);
 
+	/**
+	 * @brief 
+	 * 
+	 * @param id 
+	 * @param name 
+	 * @param period 
+	 * @param creator 
+	 */
 	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
 	{
 		m_txMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
 	}
 
+	/**
+	 * @brief 
+	 * 
+	 */
 	void enableTxMessages() { m_isTxEnabled = true; }
+	
+	/**
+	 * @brief 
+	 * 
+	 */
 	void disableTxMessages() { m_isTxEnabled = false; }
 };
 

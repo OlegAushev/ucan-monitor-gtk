@@ -78,17 +78,43 @@ private:
 	void onFrameReceived(const can_frame& frame);
 
 public:
+	/**
+	 * @brief Construct a new Client object
+	 * 
+	 * @param nodeId_ 
+	 * @param socket 
+	 */
 	Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket);
+
+	/**
+	 * @brief Destroy the Client object
+	 * 
+	 */
 	~Client();
 
+	/**
+	 * @brief Set the Node Id object
+	 * 
+	 * @param _nodeId 
+	 */
 	void setNodeId(NodeId _nodeId)
 	{
 		nodeId = _nodeId;
 	}
 	
+	/**
+	 * @brief 
+	 * 
+	 * @param server 
+	 */
 	void registerServer(std::shared_ptr<IServer> server);
 
 	/* SYNC */
+	/**
+	 * @brief 
+	 * 
+	 * @param period 
+	 */
 	void enableSync(std::chrono::milliseconds period)
 	{
 		m_syncInfo.period = period;
@@ -98,6 +124,10 @@ public:
 #endif		
 	}
 
+	/**
+	 * @brief 
+	 * 
+	 */
 	void disableSync()
 	{
 		m_syncInfo.period = std::chrono::milliseconds(0);
@@ -107,17 +137,33 @@ public:
 	}
 
 	/* HEARTBEAT */
+	/**
+	 * @brief Set the Heartbeat Period object
+	 * 
+	 * @param period 
+	 */
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
 		m_heartbeatInfo.period = period;
 	}
 
-	/* TPDO */	
+	/* TPDO */
+	/**
+	 * @brief 
+	 * 
+	 * @param tpdoType 
+	 * @param period 
+	 * @param creator 
+	 */
 	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 	{
 		m_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
 	}
 
+	/**
+	 * @brief 
+	 * 
+	 */
 	void enableTpdo()
 	{
 		m_isTpdoEnabled = true;
@@ -126,6 +172,10 @@ public:
 #endif
 	}
 
+	/**
+	 * @brief 
+	 * 
+	 */
 	void disableTpdo()
 	{
 		m_isTpdoEnabled = false;

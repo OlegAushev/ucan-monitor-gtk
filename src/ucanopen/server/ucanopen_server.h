@@ -85,19 +85,97 @@ protected:
 	virtual void handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
 
 public:
+	/**
+	 * @brief Construct a new IServer object
+	 * 
+	 * @param nodeId_ 
+	 * @param socket 
+	 * @param dictionary 
+	 */
 	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
+	
+	/**
+	 * @brief Destroy the IServer object
+	 * 
+	 */
 	virtual ~IServer() = default;
 	
+	/**
+	 * @brief 
+	 * 
+	 */
 	void enableRpdo() { m_isRpdoEnabled = true; }
+	
+	/**
+	 * @brief 
+	 * 
+	 */
 	void disableRpdo() { m_isRpdoEnabled = false; }
 	
+	/**
+	 * @brief 
+	 * 
+	 * @param category 
+	 * @param subcategory 
+	 * @param name 
+	 * @return ODRequestStatus 
+	 */
 	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
+
+	/**
+	 * @brief 
+	 * 
+	 * @param category 
+	 * @param subcategory 
+	 * @param name 
+	 * @param data 
+	 * @return ODRequestStatus 
+	 */
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
+
+	/**
+	 * @brief 
+	 * 
+	 * @param category 
+	 * @param subcategory 
+	 * @param name 
+	 * @param value 
+	 * @return ODRequestStatus 
+	 */
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
+
+	/**
+	 * @brief 
+	 * 
+	 * @param category 
+	 * @param subcategory 
+	 * @param name 
+	 * @return ODRequestStatus 
+	 */
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 
+	/**
+	 * @brief 
+	 * 
+	 * @return std::vector<std::string_view> 
+	 */
 	std::vector<std::string_view> watchEntriesList() const;
+
+	/**
+	 * @brief 
+	 * 
+	 * @return true 
+	 * @return false 
+	 */
 	bool isConnectionOk() const { return m_isConnectionOk; }
+
+	/**
+	 * @brief 
+	 * 
+	 * @param tpdo 
+	 * @return true 
+	 * @return false 
+	 */
 	bool isTpdoOk(TpdoType tpdo) const { return m_tpdoList.at(tpdo).isOnSchedule; }
 
 private:	

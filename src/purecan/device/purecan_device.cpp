@@ -91,8 +91,6 @@ void IDevice::checkConnection()
 }
 
 
-
-
 } // namespace purecan
 
 
