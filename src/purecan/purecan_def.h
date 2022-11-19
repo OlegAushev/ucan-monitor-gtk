@@ -15,12 +15,14 @@
 
 #include <cstdint>
 #include <array>
+#include <vector>
 
 
 namespace purecan {
 
 
 using can_payload = std::array<uint8_t, 8>;
+using can_payload_va = std::vector<uint8_t>;
 
 
 }

@@ -38,7 +38,7 @@ private:
 		std::string_view name;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		std::function<std::vector<uint8_t>(void)> creator; 
+		std::function<can_payload_va(void)> creator; 
 	};
 	std::map<canid_t, TxMessageInfo> m_txMessageList;
 
@@ -53,6 +53,11 @@ public:
 	~Controller();
 
 	void registerDevice(std::shared_ptr<IDevice> device);
+
+	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
+	{
+		m_txMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
+	}
 
 	void enableTxMessages() { m_isTxEnabled = true; }
 	void disableTxMessages() { m_isTxEnabled = false; }
