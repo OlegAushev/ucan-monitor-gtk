@@ -7,64 +7,64 @@
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
-	private unowned TableEntry entryUptime;
-	[GtkChild]
-	private unowned TableEntry entryState;
-	[GtkChild]
-	private unowned TableEntry entryErrors;
-	[GtkChild]
-	private unowned TableEntry entryWarnings;
-
-	[GtkChild]
-	private unowned TableEntry entrySpeed;
-	[GtkChild]
 	private unowned TableEntry entryTorque;
 	[GtkChild]
-	private unowned TableEntry entryCurrS;
+	private unowned TableEntry entryTempMotor;
 	[GtkChild]
-	private unowned TableEntry entryCurrF;
+	private unowned TableEntry entryTempBoard;
 	[GtkChild]
-	private unowned TableEntry entryCurrD;
+	private unowned TableEntry entryTempIgbt;
 	[GtkChild]
-	private unowned TableEntry entryCurrQ;
-	[GtkChild]
-	private unowned TableEntry entryGamma;
-	[GtkChild]
-	private unowned TableEntry entryTempS;
-	[GtkChild]
-	private unowned TableEntry entryTempFW;
-	[GtkChild]
-	private unowned TableEntry entryPowerMech;
+	private unowned TableEntry entryTempDriver;
 
-	[GtkChild]
-	private unowned TableEntry entryVoltDC;
-	[GtkChild]
-	private unowned TableEntry entryCurrDC;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhA;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhB;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhC;
-	[GtkChild]
-	private unowned TableEntry entryTempPhA;
-	[GtkChild]
-	private unowned TableEntry entryTempPhB;
-	[GtkChild]
-	private unowned TableEntry entryTempPhC;
-	[GtkChild]
-	private unowned TableEntry entryTempAir;
-	[GtkChild]
-	private unowned TableEntry entryPowerElec;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTorque;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrS;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrF;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrD;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrQ;
+	//  [GtkChild]
+	//  private unowned TableEntry entryGamma;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempS;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempFW;
+	//  [GtkChild]
+	//  private unowned TableEntry entryPowerMech;
 
-	[GtkChild]
-	private unowned TableBoolEntry tpdo1Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo2Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo3Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo4Indicator;
+	//  [GtkChild]
+	//  private unowned TableEntry entryVoltDC;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrDC;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrPhA;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrPhB;
+	//  [GtkChild]
+	//  private unowned TableEntry entryCurrPhC;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempPhA;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempPhB;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempPhC;
+	//  [GtkChild]
+	//  private unowned TableEntry entryTempAir;
+	//  [GtkChild]
+	//  private unowned TableEntry entryPowerElec;
+
+	//  [GtkChild]
+	//  private unowned TableBoolEntry tpdo1Indicator;
+	//  [GtkChild]
+	//  private unowned TableBoolEntry tpdo2Indicator;
+	//  [GtkChild]
+	//  private unowned TableBoolEntry tpdo3Indicator;
+	//  [GtkChild]
+	//  private unowned TableBoolEntry tpdo4Indicator;
 
 
 	public DataTables() {}
@@ -76,16 +76,15 @@ public class DataTables : Adw.Bin
 	
 	public bool update()
 	{
-		updateSystemData();
-		updateMotorData();
-		updateInverterData();
-		updateTpdoStatus();
+		updateLeafInverterData();
 		return true;
 	}
 
-	public void updateSystemData()
+	public void updateLeafInverterData()
 	{
-		string result = "";
+		char[] buf = new char[double.DTOSTR_BUF_SIZE];
+		entryTorque.entry_text = atv_leaf_inverter_get_torque().format(buf, "%.2f");
+		//string result = "";
 		//  srmdrive_observer_get_watch_value("UPTIME", result);
 		//  entryUptime.entry_text = result;
 

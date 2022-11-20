@@ -107,17 +107,14 @@ public:
 		message.clock = clock;
 		clock = (clock + 1) % 4;
 
-		purecan::can_payload_va ret(8);	
-		memcpy(ret.data(), &message, 8);
+		purecan::can_payload_va payload(8);	
+		memcpy(payload.data(), &message, 8);
 
-		uint8_t crc = calculateCrc(ret.data(), 7);
+		uint8_t crc = calculateCrc(payload.data(), 7);
 		message.crc = crc;
-		ret[7] = crc;
+		payload[7] = crc;
 
-
-
-
-		return ret;
+		return payload;
 	}
 };
 

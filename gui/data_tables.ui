@@ -13,40 +13,48 @@
 
 				<child>
 
-					<!-- SYSTEM -->
-					<object class="AdwPreferencesGroup" id="groupSystem">
+					<!-- LEAF INVERTER -->
+					<object class="AdwPreferencesGroup" id="groupLeafInverter">
 						<property name="width-request">240</property>
-						<property name="title">System</property>
+						<property name="title">Leaf Inverter</property>
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableEntry" id="entryUptime">
-								<property name="title">Uptime</property>
-								<property name="subtitle">s</property>
+							<object class="TableEntry" id="entryTorque">
+								<property name="title">Torque</property>
+								<property name="subtitle">Nm</property>
 								<property name="entry-width">80</property>
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryState">
-								<property name="title">State</property>
-								<property name="subtitle"></property>
+							<object class="TableEntry" id="entryTempMotor">
+								<property name="title">Motor Temperature</property>
+								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryErrors">
-								<property name="title">Errors</property>
-								<property name="subtitle">hex</property>
+							<object class="TableEntry" id="entryTempBoard">
+								<property name="title">Board Temperature</property>
+								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryWarnings">
-								<property name="title">Warnings</property>
-								<property name="subtitle">hex</property>
+							<object class="TableEntry" id="entryTempIgbt">
+								<property name="title">IGBT Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entryTempDriver">
+								<property name="title">Driver Temperature</property>
+								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
 								<property name="entry-chars">8</property>
 							</object>
@@ -58,7 +66,7 @@
 				<child>
 
 					<!-- MOTOR -->
-					<object class="AdwPreferencesGroup" id="groupMotor">
+					<!--object class="AdwPreferencesGroup" id="groupMotor">
 						<property name="width-request">240</property>
 						<property name="title">Motor</property>
 						<property name="hexpand">false</property>
@@ -143,14 +151,14 @@
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
-					</object>
+					</object-->
 				</child>
 
 
 				<child>
 
 					<!-- INVERTER -->
-					<object class="AdwPreferencesGroup" id="groupInverter">
+					<!--object class="AdwPreferencesGroup" id="groupInverter">
 						<property name="width-request">240</property>
 						<property name="title">Inverter</property>
 						<property name="hexpand">false</property>
@@ -235,14 +243,14 @@
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
-					</object>
+					</object-->
 				</child>
 
 
 				<child>
 					
 					<!-- TPDO1 -->
-					<object class="AdwPreferencesGroup" id="groupTpdo1">
+					<!--object class="AdwPreferencesGroup" id="groupTpdo1">
 						<property name="width-request">240</property>
 						<property name="title">TPDO1</property>
 						<property name="hexpand">false</property>
@@ -342,14 +350,14 @@
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
-					</object>
+					</object-->
 				</child>
 
 
 				<child>
 
 					<!-- TPDO2 -->
-					<object class="AdwPreferencesGroup" id="groupTpdo2">
+					<!--object class="AdwPreferencesGroup" id="groupTpdo2">
 						<property name="width-request">240</property>
 						<property name="title">TPDO2</property>
 						<property name="hexpand">false</property>
@@ -417,7 +425,7 @@
 								<property name="entry-chars">8</property>
 							</object>
 						</child>
-					</object>
+					</object-->
 				</child>
 
 
@@ -429,7 +437,7 @@
 						<child>
 
 							<!-- TPDO3 -->
-							<object class="AdwPreferencesGroup" id="groupTpdo3">
+							<!--object class="AdwPreferencesGroup" id="groupTpdo3">
 								<property name="width-request">240</property>
 								<property name="title">TPDO3</property>
 								<property name="hexpand">false</property>
@@ -481,14 +489,14 @@
 										<property name="entry-chars">8</property>
 									</object>
 								</child>
-							</object>
+							</object-->
 						</child>
 
 
 						<child>
 
 							<!-- TPDO4 -->
-							<object class="AdwPreferencesGroup" id="groupTpdo4">
+							<!--object class="AdwPreferencesGroup" id="groupTpdo4">
 								<property name="width-request">240</property>
 								<property name="title">TPDO4</property>
 								<property name="hexpand">false</property>
@@ -540,7 +548,7 @@
 										<property name="entry-chars">8</property>
 									</object>
 								</child>
-							</object>
+							</object-->
 						</child>
 					
 					

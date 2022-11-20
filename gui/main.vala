@@ -44,6 +44,8 @@ extern void atv_vcm_set_torque(double val);
 extern void atv_vcm_set_hv_power_supply(bool state);
 extern void atv_vcm_set_relay_plus_output(bool state);
 
+extern double atv_leaf_inverter_get_torque();
+
 
 int main(string[] args)
 {

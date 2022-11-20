@@ -18,6 +18,7 @@
 #include "purecan/device/purecan_device.h"
 
 #include "atv/vcm/vcm.h"
+#include "atv/leaf_inverter/leaf_inverter.h"
 
 #include "ucanopen/client/ucanopen_client.h"
 #include "srmdrive/server/srmdrive_server.h"
@@ -30,6 +31,7 @@ static std::promise<void> signalExitMain;
 bool g_isBackendReady = false;
 std::shared_ptr<can::Socket> g_canSocket;
 std::shared_ptr<purecan::Controller> g_canController;
+std::shared_ptr<atv::LeafInverter> g_leafInverter;
 
 std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<srmdrive::Server> g_srmdriveServer;
@@ -56,7 +58,10 @@ int main_loop(std::future<void> futureExit)
 
 
 	auto creatorVcmMessage = []() { return atv::VehicleControlModule::instance().createMessage0x1D4(); };
-	g_canController->registerTxMessage(0x1D4, "VCM", std::chrono::milliseconds(10), creatorVcmMessage);
+	g_canController->registerTxMessage(0x1D4, "VCM Message", std::chrono::milliseconds(10), creatorVcmMessage);
+
+	g_leafInverter = std::make_shared<atv::LeafInverter>(g_canSocket);
+	g_canController->registerDevice(g_leafInverter);
 
 
 
