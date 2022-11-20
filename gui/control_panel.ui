@@ -18,11 +18,12 @@
 						
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Power ON/OFF</property>
-								<property name="icon-name">system-shutdown-symbolic</property>
-								<property name="activatable_widget">switchPower</property>
+								<property name="title">HV Power Supply</property>
+								<property name="subtitle">VCM</property>
+								<property name="icon-name">thunderbolt-symbolic</property>
+								<property name="activatable_widget">switchHV</property>
 								<child>
-									<object class="GtkSwitch" id="switchPower">
+									<object class="GtkSwitch" id="switchHV">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>
@@ -32,11 +33,12 @@
 
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Run ON/OFF</property>
-								<property name="icon-name">media-playback-start-symbolic</property>
-								<property name="activatable_widget">switchRun</property>
+								<property name="title">Relay Output</property>
+								<property name="subtitle">VCM</property>
+								<property name="icon-name">system-shutdown-symbolic</property>
+								<property name="activatable_widget">switchRelay</property>
 								<child>
-									<object class="GtkSwitch" id="switchRun">
+									<object class="GtkSwitch" id="switchRelay">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>

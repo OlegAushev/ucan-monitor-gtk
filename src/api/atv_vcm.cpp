@@ -22,6 +22,18 @@ void atv_vcm_set_torque(double val)
 }
 
 
+void atv_vcm_set_hv_power_supply(bool state)
+{
+	atv::VehicleControlModule::instance().setHvPowerSupply(state);
+}
+
+
+void atv_vcm_set_relay_plus_output(bool state)
+{
+	atv::VehicleControlModule::instance().setRelayPlusOutput(state);
+}
+
+
 }
 
 

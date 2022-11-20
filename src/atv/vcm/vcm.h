@@ -49,7 +49,9 @@ private:
 		uint8_t crc : 8;
 	};
 
-	float m_torqueRef{0};
+	double m_torqueRef{0};
+	bool m_hvPowerSupply{false};
+	bool m_relayPlusOutput{false};
 
 private:
 	VehicleControlModule()
@@ -67,20 +69,33 @@ public:
 		return instance_;
 	}
 
-	void setTorqueRef(float val)
+	void setTorqueRef(double val)
 	{
-		m_torqueRef = std::clamp(val, 0.f, 1023.75f);
+		m_torqueRef = std::clamp(val, 0.0, 1023.75);
+	}
+
+	void setHvPowerSupply(bool state)
+	{
+		m_hvPowerSupply = state;
+	}
+
+	void setRelayPlusOutput(bool state)
+	{
+		m_relayPlusOutput = state;
 	}
 
 	purecan::can_payload_va createMessage0x1D4()
 	{
 		Message0x1D4 message{};
 
-		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.f) << 4;
+		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;
 		uint8_t torque[2];
 		memcpy(&torque, &torqueScaled, 2);
 		message.torqueRequestM = torque[1];
 		message.torqueRequestL = torque[0] >> 4;
+
+		message.statusHvPowerSupply = m_hvPowerSupply;
+		message.statusRelayPlusOutput = m_relayPlusOutput;
 
 		purecan::can_payload_va ret(8);	
 		memcpy(ret.data(), &message, 8);

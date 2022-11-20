@@ -41,6 +41,8 @@ extern void cansocket_disconnect();
 //  extern void srmdrive_observer_set_watch_period(int period);
 
 extern void atv_vcm_set_torque(double val);
+extern void atv_vcm_set_hv_power_supply(bool state);
+extern void atv_vcm_set_relay_plus_output(bool state);
 
 
 int main(string[] args)

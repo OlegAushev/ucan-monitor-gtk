@@ -10,10 +10,10 @@ namespace CanMonitor {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
-	private unowned Gtk.Switch switchPower;
+	private unowned Gtk.Switch switchHV;
 
 	[GtkChild]
-	private unowned Gtk.Switch switchRun;
+	private unowned Gtk.Switch switchRelay;
 
 	[GtkChild]
 	private unowned Gtk.Switch switchEmergency;
@@ -28,13 +28,13 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
-		//  switchPower.notify["state"].connect((s, p) => {
-		//  		srmdrive_controller_set_power_enabled(switchPower.state);
-		//  });
+		switchHV.notify["state"].connect((s, p) => {
+				atv_vcm_set_hv_power_supply(switchHV.state);
+		});
 
-		//  switchRun.notify["state"].connect((s, p) => {
-		//  		srmdrive_controller_set_run_enabled(switchRun.state);
-		//  });
+		switchRelay.notify["state"].connect((s, p) => {
+				atv_vcm_set_relay_plus_output(switchRelay.state);
+		});
 
 		//  switchEmergency.notify["state"].connect((s, p) => {
 		//  		srmdrive_controller_set_emergency_enabled(switchEmergency.state);
