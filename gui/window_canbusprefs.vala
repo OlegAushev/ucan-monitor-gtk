@@ -58,20 +58,20 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		});
 		buttonDisconnect.clicked.connect(cansocket_disconnect);
 
-		switchTpdo.notify["state"].connect((s,p) => {
-			ucanopen_client_set_tpdo_enabled(switchTpdo.state);
-			_switchTpdoState = switchTpdo.state;
-		});
+		//  switchTpdo.notify["state"].connect((s,p) => {
+		//  	ucanopen_client_set_tpdo_enabled(switchTpdo.state);
+		//  	_switchTpdoState = switchTpdo.state;
+		//  });
 
-		switchWatch.notify["state"].connect((s,p) => {
-			srmdrive_observer_set_watch_enabled(switchWatch.state);
-			_switchWatchState = switchWatch.state;
-		});
+		//  switchWatch.notify["state"].connect((s,p) => {
+		//  	srmdrive_observer_set_watch_enabled(switchWatch.state);
+		//  	_switchWatchState = switchWatch.state;
+		//  });
 
-		comborowWatchPeriod.notify["selected"].connect((s,p) => {
-			srmdrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
-			_watchPeriodSelected = comborowWatchPeriod.selected;
-		});
+		//  comborowWatchPeriod.notify["selected"].connect((s,p) => {
+		//  	srmdrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
+		//  	_watchPeriodSelected = comborowWatchPeriod.selected;
+		//  });
 	}
 
 	public static bool switchTpdoState

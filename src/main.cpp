@@ -10,8 +10,18 @@
  */
 
 
+#include <iostream>
+#include <thread>
+#include <future>
+
+#include "purecan/controller/purecan_controller.h"
+#include "purecan/device/purecan_device.h"
+
+#include "atv/vcm/vcm.h"
+
 #include "ucanopen/client/ucanopen_client.h"
 #include "srmdrive/server/srmdrive_server.h"
+
 
 
 static std::thread threadMain;
@@ -19,8 +29,10 @@ static std::promise<void> signalExitMain;
 
 bool g_isBackendReady = false;
 std::shared_ptr<can::Socket> g_canSocket;
+
 std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<srmdrive::Server> g_srmdriveServer;
+
 
 
 
@@ -40,6 +52,15 @@ int main_loop(std::future<void> futureExit)
 
 	g_canSocket = std::make_shared<can::Socket>();
 
+
+
+
+
+
+
+
+
+#ifdef OBSOLETE
 	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), g_canSocket);
 	g_srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), g_canSocket, srmdrive::OBJECT_DICTIONARY);
 	g_ucanClient->registerServer(g_srmdriveServer);
@@ -56,6 +77,7 @@ int main_loop(std::future<void> futureExit)
 			callbackMakeTpdo2);
 
 	g_ucanClient->enableSync(std::chrono::milliseconds(200));
+#endif
 
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Backend is ready." << std::endl;

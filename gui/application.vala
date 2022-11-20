@@ -45,9 +45,9 @@ public class Application : Adw.Application
 	{
 		main_enter();
 		while (!g_isBackendReady) { /* wait */ }
-		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
-		srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
-		srmdrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
+		//  ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
+		//  srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
+		//  srmdrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
 
 		base.activate();
 		var win = this.active_window;

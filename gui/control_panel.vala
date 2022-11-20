@@ -28,25 +28,25 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
-		switchPower.notify["state"].connect((s, p) => {
-				srmdrive_controller_set_power_enabled(switchPower.state);
-		});
+		//  switchPower.notify["state"].connect((s, p) => {
+		//  		srmdrive_controller_set_power_enabled(switchPower.state);
+		//  });
 
-		switchRun.notify["state"].connect((s, p) => {
-				srmdrive_controller_set_run_enabled(switchRun.state);
-		});
+		//  switchRun.notify["state"].connect((s, p) => {
+		//  		srmdrive_controller_set_run_enabled(switchRun.state);
+		//  });
 
-		switchEmergency.notify["state"].connect((s, p) => {
-				srmdrive_controller_set_emergency_enabled(switchEmergency.state);
-		});
+		//  switchEmergency.notify["state"].connect((s, p) => {
+		//  		srmdrive_controller_set_emergency_enabled(switchEmergency.state);
+		//  });
 
-		sliderSpeed.adjustment->notify["value"].connect((s, p) => {
-				srmdrive_controller_set_speed(sliderSpeed.value);
-		});
+		//  sliderSpeed.adjustment->notify["value"].connect((s, p) => {
+		//  		srmdrive_controller_set_speed(sliderSpeed.value);
+		//  });
 
-		sliderTorque.adjustment->notify["value"].connect((s, p) => {
-				srmdrive_controller_set_torque(sliderTorque.value / 100.0);
-		});
+		//  sliderTorque.adjustment->notify["value"].connect((s, p) => {
+		//  		srmdrive_controller_set_torque(sliderTorque.value / 100.0);
+		//  });
 	}
 }
 	

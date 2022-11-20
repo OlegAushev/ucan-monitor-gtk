@@ -14,6 +14,8 @@
 
 
 #include "purecan/purecan_def.h"
+#include <cstring>
+#include <algorithm>
 
 
 class VehicleControlModule
@@ -44,9 +46,41 @@ private:
 		uint8_t crc : 8;
 	};
 
+	float m_torqueRef{0};
+
+private:
+	VehicleControlModule()
+	{
+		static_assert(sizeof(Message0x1D4) == 8);
+	}
+
 public:
+	VehicleControlModule(const VehicleControlModule& other) = delete;
+	VehicleControlModule& operator=(const VehicleControlModule& other) = delete;
 
+	static VehicleControlModule& instance()
+	{
+		static VehicleControlModule instance_;
+		return instance_;
+	}
 
+	void setTorqueRef(float value)
+	{
+		m_torqueRef = std::clamp(value, 0.f, 1023.f);
+	}
 
+	purecan::can_payload_va createMessage0x1D4()
+	{
+		Message0x1D4 message{};
 
-}
+		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.f) << 4;
+		uint8_t torque[2];
+		memcpy(&torque, &torqueScaled, 2);
+		message.torqueRequestM = torque[1];
+		message.torqueRequestL = torque[0] >> 4;
+
+		purecan::can_payload_va ret(8);	
+		memcpy(ret.data(), &message, 8);
+		return ret;
+	}
+};
