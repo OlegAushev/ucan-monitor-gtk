@@ -43,6 +43,7 @@ void IDevice::send()
 		can_frame frame;
 		frame.can_id = id;
 		auto data = message.creator();
+		frame.len = data.size();
 		memcpy(frame.data, data.data(), data.size());
 		m_socket->send(frame);
 
