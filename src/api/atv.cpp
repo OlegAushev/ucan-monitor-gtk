@@ -37,11 +37,56 @@ void atv_vcm_set_relay_plus_output(bool state)
 	atv::VehicleControlModule::instance().setRelayPlusOutput(state);
 }
 
+bool atv_leaf_inverter_is_tx_ok(canid_t id)
+{
+	return g_leafInverter->isTxOk(id);
+}
 
 double atv_leaf_inverter_get_torque()
 {
 	return g_leafInverter->torqueEffective();
 }
+
+double atv_leaf_inverter_get_temp_board()
+{
+	return g_leafInverter->tempInverterComBoard();
+}
+
+double atv_leaf_inverter_get_temp_igbt()
+{
+	return g_leafInverter->tempIgbt();
+}
+
+double atv_leaf_inverter_get_temp_igbt_driver()
+{
+	return g_leafInverter->tempIgbtDriver();
+}
+
+double atv_leaf_inverter_get_temp_motor()
+{
+	return g_leafInverter->tempMotor();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

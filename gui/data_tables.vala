@@ -17,6 +17,14 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned TableEntry entryTempDriver;
 
+	[GtkChild]
+	private unowned TableBoolEntry entryResponseConnection;
+	[GtkChild]
+	private unowned TableBoolEntry entryTemperaturesConnection;
+
+
+
+
 	//  [GtkChild]
 	//  private unowned TableEntry entryTorque;
 	//  [GtkChild]
@@ -76,14 +84,35 @@ public class DataTables : Adw.Bin
 	
 	public bool update()
 	{
+		updateConnectionStatus();
 		updateLeafInverterData();
 		return true;
+	}
+
+	public void updateConnectionStatus()
+	{
+		entryResponseConnection.value = atv_leaf_inverter_is_tx_ok(0x1DA);
+		entryTemperaturesConnection.value = atv_leaf_inverter_is_tx_ok(0x55A);
 	}
 
 	public void updateLeafInverterData()
 	{
 		char[] buf = new char[double.DTOSTR_BUF_SIZE];
 		entryTorque.entry_text = atv_leaf_inverter_get_torque().format(buf, "%.2f");
+		entryTempBoard.entry_text = atv_leaf_inverter_get_temp_board().format(buf, "%.2f");
+		entryTempIgbt.entry_text = atv_leaf_inverter_get_temp_igbt().format(buf, "%.2f");
+		entryTempDriver.entry_text = atv_leaf_inverter_get_temp_igbt_driver().format(buf, "%.2f");
+		entryTempMotor.entry_text = atv_leaf_inverter_get_temp_motor().format(buf, "%.2f");
+
+
+
+
+
+
+
+
+
+
 		//string result = "";
 		//  srmdrive_observer_get_watch_value("UPTIME", result);
 		//  entryUptime.entry_text = result;
@@ -164,14 +193,6 @@ public class DataTables : Adw.Bin
 
 		//  srmdrive_observer_get_watch_value("OUT_ELEC_POWER", result);
 		//  entryPowerElec.entry_text = result;
-	}
-
-	public void updateTpdoStatus()
-	{
-		//  tpdo1Indicator.value = srmdrive_is_tpdo_ok(0);
-		//  tpdo2Indicator.value = srmdrive_is_tpdo_ok(1);
-		//  tpdo3Indicator.value = srmdrive_is_tpdo_ok(2);
-		//  tpdo4Indicator.value = srmdrive_is_tpdo_ok(3);
 	}
 }
 

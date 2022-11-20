@@ -80,7 +80,6 @@
 				<child>
 					<object class="AdwPreferencesGroup" id="groupEmergency">
 						<property name="hexpand">false</property>
-						<!--property name="title">Emergency</property-->
 						<property name="vexpand">true</property>
 						<property name="valign">end</property>
 						<child>

@@ -20,6 +20,12 @@
 						<property name="hexpand">false</property>
 
 						<child>
+							<object class="TableBoolEntry" id="entryResponseConnection">
+								<property name="title">Message 0x1DA</property>
+								<property name="subtitle"></property>
+							</object>
+						</child>
+						<child>
 							<object class="TableEntry" id="entryTorque">
 								<property name="title">Torque</property>
 								<property name="subtitle">Nm</property>
@@ -28,11 +34,9 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryTempMotor">
-								<property name="title">Motor Temperature</property>
-								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+							<object class="TableBoolEntry" id="entryTemperaturesConnection">
+								<property name="title">Message 0x55A</property>
+								<property name="subtitle"></property>
 							</object>
 						</child>
 						<child>
@@ -53,7 +57,15 @@
 						</child>
 						<child>
 							<object class="TableEntry" id="entryTempDriver">
-								<property name="title">Driver Temperature</property>
+								<property name="title">IGBT Driver Temperature</property>
+								<property name="subtitle">°C</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entryTempMotor">
+								<property name="title">Motor Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
 								<property name="entry-chars">8</property>

@@ -76,6 +76,19 @@ public:
 	 * @brief 
 	 * 
 	 * @param id 
+	 * @return true 
+	 * @return false 
+	 */
+	bool isTxOk(canid_t id)
+	{
+		if (!m_txMessageList.contains(id)) return false;
+		return m_txMessageList[id].isOnSchedule;
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 * @param id 
 	 * @param name 
 	 * @param period 
 	 * @param creator 
