@@ -38,7 +38,7 @@ private:
 		uint8_t byte4_reserved0 : 2;
 		uint8_t statusHvPowerSupply : 1;
 		uint8_t byte4_reserved1 : 3;
-		uint8_t vcmClock : 2;
+		uint8_t clock : 2;
 
 		uint8_t byte5_reserved0 : 6;
 		uint8_t statusRelayPlusOutput : 1;
@@ -88,6 +88,8 @@ public:
 	{
 		Message0x1D4 message{};
 
+		static int clock = 0;
+
 		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;
 		uint8_t torque[2];
 		memcpy(&torque, &torqueScaled, 2);
@@ -96,6 +98,9 @@ public:
 
 		message.statusHvPowerSupply = m_hvPowerSupply;
 		message.statusRelayPlusOutput = m_relayPlusOutput;
+
+		message.clock = clock;
+		clock = (clock + 1) % 4;
 
 		purecan::can_payload_va ret(8);	
 		memcpy(ret.data(), &message, 8);
