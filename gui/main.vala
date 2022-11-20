@@ -40,7 +40,7 @@ extern void cansocket_disconnect();
 //  extern void srmdrive_observer_set_watch_enabled(bool isEnabled);
 //  extern void srmdrive_observer_set_watch_period(int period);
 
-
+extern void atv_vcm_set_torque(double val);
 
 
 int main(string[] args)

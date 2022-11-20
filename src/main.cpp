@@ -29,6 +29,7 @@ static std::promise<void> signalExitMain;
 
 bool g_isBackendReady = false;
 std::shared_ptr<can::Socket> g_canSocket;
+std::shared_ptr<purecan::Controller> g_canController;
 
 std::shared_ptr<ucanopen::Client> g_ucanClient;
 std::shared_ptr<srmdrive::Server> g_srmdriveServer;
@@ -51,7 +52,11 @@ int main_loop(std::future<void> futureExit)
 #endif
 
 	g_canSocket = std::make_shared<can::Socket>();
+	g_canController = std::make_shared<purecan::Controller>(g_canSocket);
 
+
+	auto creatorVcmMessage = []() { return atv::VehicleControlModule::instance().createMessage0x1D4(); };
+	g_canController->registerTxMessage(0x1D4, "VCM", std::chrono::milliseconds(10), creatorVcmMessage);
 
 
 

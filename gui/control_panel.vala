@@ -18,8 +18,8 @@ public class ControlPanel : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Switch switchEmergency;
 
-	[GtkChild]
-	private unowned SliderWithText sliderSpeed;
+	//[GtkChild]
+	//private unowned SliderWithText sliderSpeed;
 
 	[GtkChild]
 	private unowned SliderWithText sliderTorque;
@@ -44,9 +44,9 @@ public class ControlPanel : Adw.Bin
 		//  		srmdrive_controller_set_speed(sliderSpeed.value);
 		//  });
 
-		//  sliderTorque.adjustment->notify["value"].connect((s, p) => {
-		//  		srmdrive_controller_set_torque(sliderTorque.value / 100.0);
-		//  });
+		sliderTorque.adjustment->notify["value"].connect((s, p) => {
+				atv_vcm_set_torque(sliderTorque.value);
+		});
 	}
 }
 	

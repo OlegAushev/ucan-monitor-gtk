@@ -18,6 +18,9 @@
 #include <algorithm>
 
 
+namespace atv {
+
+
 class VehicleControlModule
 {
 private:
@@ -64,9 +67,9 @@ public:
 		return instance_;
 	}
 
-	void setTorqueRef(float value)
+	void setTorqueRef(float val)
 	{
-		m_torqueRef = std::clamp(value, 0.f, 1023.f);
+		m_torqueRef = std::clamp(val, 0.f, 1023.75f);
 	}
 
 	purecan::can_payload_va createMessage0x1D4()
@@ -84,3 +87,8 @@ public:
 		return ret;
 	}
 };
+
+
+}
+
+
