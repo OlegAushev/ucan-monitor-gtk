@@ -13,6 +13,7 @@
 #pragma once
 
 
+#include "../atv_def.h"
 #include "purecan/purecan_def.h"
 #include <cstring>
 #include <algorithm>
@@ -86,9 +87,13 @@ public:
 
 	purecan::can_payload_va createMessage0x1D4()
 	{
+		static int clock = 0;
+		
 		Message0x1D4 message{};
 
-		static int clock = 0;
+		// message.byte0_reserved = 0xF7; // TODO
+		// message.byte1_reserved = 0x07; // TODO
+		// message.statusCharge = 0x30; // TODO
 
 		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;
 		uint8_t torque[2];
@@ -104,6 +109,14 @@ public:
 
 		purecan::can_payload_va ret(8);	
 		memcpy(ret.data(), &message, 8);
+
+		uint8_t crc = calculateCrc(ret.data(), 7);
+		message.crc = crc;
+		ret[7] = crc;
+
+
+
+
 		return ret;
 	}
 };
