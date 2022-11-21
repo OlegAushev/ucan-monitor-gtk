@@ -13,7 +13,9 @@
 #include "cansocket/cansocket.h"
 
 
-extern std::shared_ptr<can::Socket> g_canSocket;
+namespace global {
+extern std::shared_ptr<can::Socket> canSocket;
+}
 
 
 extern "C" {
@@ -24,12 +26,12 @@ extern "C" {
 /// 
 void cansocket_connect(const char* interface, int bitrate)
 {
-	if (g_canSocket == nullptr)
+	if (global::canSocket == nullptr)
 	{
 		return;
 	}
 
-	g_canSocket->connect(interface, bitrate);
+	global::canSocket->connect(interface, bitrate);
 }
 
 
@@ -38,12 +40,12 @@ void cansocket_connect(const char* interface, int bitrate)
 /// 
 void cansocket_disconnect()
 {
-	if (g_canSocket == nullptr)
+	if (global::canSocket == nullptr)
 	{
 		return;
 	}
 
-	g_canSocket->disconnect();
+	global::canSocket->disconnect();
 }
 
 

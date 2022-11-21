@@ -14,7 +14,9 @@
 #include "atv/leaf_inverter/leaf_inverter.h"
 
 
-extern std::shared_ptr<atv::LeafInverter> g_leafInverter;
+namespace global {
+extern std::shared_ptr<atv::LeafInverter> leafInverter;
+}
 
 
 extern "C" {
@@ -45,32 +47,32 @@ void atv_vcm_set_wakeup_state(bool state)
 
 bool atv_leaf_inverter_is_tx_ok(canid_t id)
 {
-	return g_leafInverter->isTxOk(id);
+	return global::leafInverter->isTxOk(id);
 }
 
 double atv_leaf_inverter_get_torque()
 {
-	return g_leafInverter->torqueEffective();
+	return global::leafInverter->torqueEffective();
 }
 
 double atv_leaf_inverter_get_temp_board()
 {
-	return g_leafInverter->tempInverterComBoard();
+	return global::leafInverter->tempInverterComBoard();
 }
 
 double atv_leaf_inverter_get_temp_igbt()
 {
-	return g_leafInverter->tempIgbt();
+	return global::leafInverter->tempIgbt();
 }
 
 double atv_leaf_inverter_get_temp_igbt_driver()
 {
-	return g_leafInverter->tempIgbtDriver();
+	return global::leafInverter->tempIgbtDriver();
 }
 
 double atv_leaf_inverter_get_temp_motor()
 {
-	return g_leafInverter->tempMotor();
+	return global::leafInverter->tempMotor();
 }
 
 

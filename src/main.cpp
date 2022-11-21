@@ -24,18 +24,23 @@
 #include "srmdrive/server/srmdrive_server.h"
 
 
+bool backend_isReady = false;
+
 
 static std::thread threadMain;
 static std::promise<void> signalExitMain;
 
-bool g_isBackendReady = false;
-std::shared_ptr<can::Socket> g_canSocket;
-std::shared_ptr<purecan::Controller> g_canController;
-std::shared_ptr<atv::LeafInverter> g_leafInverter;
 
-std::shared_ptr<ucanopen::Client> g_ucanClient;
-std::shared_ptr<srmdrive::Server> g_srmdriveServer;
+namespace global {
 
+std::shared_ptr<can::Socket> canSocket;
+std::shared_ptr<purecan::Controller> canController;
+std::shared_ptr<atv::LeafInverter> leafInverter;
+
+std::shared_ptr<ucanopen::Client> ucanClient;
+std::shared_ptr<srmdrive::Server> srmdriveServer;
+
+}
 
 
 
@@ -47,27 +52,27 @@ std::shared_ptr<srmdrive::Server> g_srmdriveServer;
  * @return int 
  */
 extern "C" 
-int main_loop(std::future<void> futureExit)
+int backend_main_loop(std::future<void> futureExit)
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Main loop thread has started. Thread id: " << std::this_thread::get_id() << std::endl;
 #endif
 
-	g_canSocket = std::make_shared<can::Socket>();
-	g_canController = std::make_shared<purecan::Controller>(g_canSocket);
+	global::canSocket = std::make_shared<can::Socket>();
+	global::canController = std::make_shared<purecan::Controller>(global::canSocket);
 
 
 	auto creatorVcmMessage0x1D4 = []() { return atv::VehicleControlModule::instance().createMessage0x1D4(); };
-	g_canController->registerTxMessage(0x1D4, "VCM Message 0x1D4", std::chrono::milliseconds(10), creatorVcmMessage0x1D4);
+	global::canController->registerTxMessage(0x1D4, "VCM Message 0x1D4", std::chrono::milliseconds(10), creatorVcmMessage0x1D4);
 
 	auto creatorVcmMessage0x50B = []() { return atv::VehicleControlModule::instance().createMessage0x50B(); };
-	g_canController->registerTxMessage(0x50B, "VCM Message 0x50B", std::chrono::milliseconds(100), creatorVcmMessage0x50B);
+	global::canController->registerTxMessage(0x50B, "VCM Message 0x50B", std::chrono::milliseconds(100), creatorVcmMessage0x50B);
 
 	auto creatorMessage0x355 = []() { return std::vector<uint8_t>{0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}; };
-	g_canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
+	global::canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
 
-	g_leafInverter = std::make_shared<atv::LeafInverter>(g_canSocket);
-	g_canController->registerDevice(g_leafInverter);
+	global::leafInverter = std::make_shared<atv::LeafInverter>(global::canSocket);
+	global::canController->registerDevice(global::leafInverter);
 
 
 
@@ -98,7 +103,7 @@ int main_loop(std::future<void> futureExit)
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Backend is ready." << std::endl;
 #endif
-	g_isBackendReady = true;
+	backend_isReady = true;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
@@ -118,14 +123,14 @@ int main_loop(std::future<void> futureExit)
  * @return int 
  */
 extern "C"
-int main_enter()
+int backend_main_enter()
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
 	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
 #endif
 	std::future<void> futureExit = signalExitMain.get_future();
-	threadMain = std::thread(main_loop, std::move(futureExit));
+	threadMain = std::thread(backend_main_loop, std::move(futureExit));
 	return 0;
 }
 
@@ -135,7 +140,7 @@ int main_enter()
  * 
  */
 extern "C"
-void main_exit()
+void backend_main_exit()
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;
