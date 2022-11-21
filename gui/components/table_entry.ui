@@ -2,7 +2,7 @@
 <interface>
 	<requires lib="gtk" version="4.0" />
 	<template class="TableEntry" parent="AdwActionRow">
-		<child>
+		<child type="suffix">
 			<object class="GtkEntry" id="_entry">
 				<property name="hexpand">false</property>
 				<property name="halign">end</property>

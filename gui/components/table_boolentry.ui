@@ -2,7 +2,7 @@
 <interface>
 	<requires lib="gtk" version="4.0" />
 	<template class="TableBoolEntry" parent="AdwActionRow">
-		<child>
+		<child type="suffix">
 			<object class="GtkCheckButton" id="_check">
 				<property name="can-target">false</property>
 				<style>
