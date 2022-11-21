@@ -38,13 +38,20 @@ public class Application : Adw.Application
 		this.add_action_entries (action_entries, this);
 		this.set_accels_for_action ("app.quit", {"<primary>q"});
 
-		this.shutdown.connect(main_exit);
+		this.shutdown.connect(backend.main_exit);
         }
 
 	public override void activate()
 	{
-		main_enter();
-		while (!g_isBackendReady) { /* wait */ }
+		message("[ gui ] Waiting for backend...");
+		backend.main_enter();
+		while (!backend.isReady)
+		{
+			/* wait */
+		
+		}
+		message("[ gui ] Backend is ready.");
+
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
 		srmdrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
@@ -56,6 +63,7 @@ public class Application : Adw.Application
 			win = new CanMonitor.Window (this);
 		}
 		win.present();
+		message("[ gui ] GUI is ready.");
         }
 
 	private void on_about_action()

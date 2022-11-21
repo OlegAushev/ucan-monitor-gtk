@@ -13,7 +13,9 @@
 #include "ucanopen/client/ucanopen_client.h"
 
 
-extern std::shared_ptr<ucanopen::Client> g_ucanClient;
+namespace global {
+extern std::shared_ptr<ucanopen::Client> ucanClient;
+}
 
 
 extern "C" {
@@ -24,7 +26,7 @@ extern "C" {
 ///
 unsigned int ucanopen_client_get_nodeid()
 {
-	return g_ucanClient->nodeId.value();
+	return global::ucanClient->nodeId.value();
 }
 
 
@@ -33,7 +35,7 @@ unsigned int ucanopen_client_get_nodeid()
 ///
 void ucanopen_client_set_nodeid(unsigned int nodeId)
 {
-	g_ucanClient->setNodeId(ucanopen::NodeId(nodeId));
+	global::ucanClient->setNodeId(ucanopen::NodeId(nodeId));
 }
 
 
@@ -42,7 +44,7 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 {
-	isEnabled ? g_ucanClient->enableTpdo() : g_ucanClient->disableTpdo();
+	isEnabled ? global::ucanClient->enableTpdo() : global::ucanClient->disableTpdo();
 }
 
 

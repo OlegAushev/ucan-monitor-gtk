@@ -14,14 +14,20 @@
 #include "srmdrive/server/srmdrive_server.h"
 
 
+bool backend_isReady = false;
+
+
 static std::thread threadMain;
 static std::promise<void> signalExitMain;
 
-bool g_isBackendReady = false;
-std::shared_ptr<can::Socket> g_canSocket;
-std::shared_ptr<ucanopen::Client> g_ucanClient;
-std::shared_ptr<srmdrive::Server> g_srmdriveServer;
 
+namespace global {
+
+std::shared_ptr<can::Socket> canSocket;
+std::shared_ptr<ucanopen::Client> ucanClient;
+std::shared_ptr<srmdrive::Server> srmdriveServer;
+
+}
 
 
 
@@ -32,35 +38,35 @@ std::shared_ptr<srmdrive::Server> g_srmdriveServer;
  * @return int 
  */
 extern "C" 
-int main_loop(std::future<void> futureExit)
+int backend_main_loop(std::future<void> futureExit)
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Main loop thread has started. Thread id: " << std::this_thread::get_id() << std::endl;
 #endif
 
-	g_canSocket = std::make_shared<can::Socket>();
+	global::canSocket = std::make_shared<can::Socket>();
 
-	g_ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), g_canSocket);
-	g_srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), g_canSocket, srmdrive::OBJECT_DICTIONARY);
-	g_ucanClient->registerServer(g_srmdriveServer);
+	global::ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), global::canSocket);
+	global::srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), global::canSocket, srmdrive::OBJECT_DICTIONARY);
+	global::ucanClient->registerServer(global::srmdriveServer);
 
 	// define and register client TPDO callbacks
-	auto callbackMakeTpdo1 = []() { return g_srmdriveServer->controller.makeTpdo1(); };
-	auto callbackMakeTpdo2 = []() { return g_srmdriveServer->controller.makeTpdo2(); };
+	auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };
+	auto callbackMakeTpdo2 = []() { return global::srmdriveServer->controller.makeTpdo2(); };
 
-	g_ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
+	global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
 			std::chrono::milliseconds(250),
 			callbackMakeTpdo1);
-	g_ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
+	global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
 			std::chrono::milliseconds(100),
 			callbackMakeTpdo2);
 
-	g_ucanClient->enableSync(std::chrono::milliseconds(200));
+	global::ucanClient->enableSync(std::chrono::milliseconds(200));
 
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Backend is ready." << std::endl;
 #endif
-	g_isBackendReady = true;
+	backend_isReady = true;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
@@ -80,14 +86,14 @@ int main_loop(std::future<void> futureExit)
  * @return int 
  */
 extern "C"
-int main_enter()
+int backend_main_enter()
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
 	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
 #endif
 	std::future<void> futureExit = signalExitMain.get_future();
-	threadMain = std::thread(main_loop, std::move(futureExit));
+	threadMain = std::thread(backend_main_loop, std::move(futureExit));
 	return 0;
 }
 
@@ -97,7 +103,7 @@ int main_enter()
  * 
  */
 extern "C"
-void main_exit()
+void backend_main_exit()
 {
 #ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;

@@ -18,9 +18,12 @@
 
 
 extern string GIT_DESCRIBE;
+
+namespace backend {
 extern int main_enter();
 extern void main_exit();
-extern bool g_isBackendReady;
+extern bool isReady;
+}
 
 extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
