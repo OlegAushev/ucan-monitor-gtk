@@ -128,7 +128,7 @@ void Client::run(std::future<void> futureExit)
 		/* RECV */
 		can_frame frame;
 		can::Error recvErr = m_socket->recv(frame);
-		while (recvErr == can::Error::NO_ERROR)
+		while (recvErr == can::Error::NoError)
 		{
 			(void) std::async(&Client::onFrameReceived, this, frame);
 			recvErr = m_socket->recv(frame);

@@ -44,7 +44,7 @@ Socket::Socket()
 	int shRet = system(cmd.c_str());
 	if (shRet == 0)
 	{
-		if (createSocket("can0") != Error::NO_ERROR)
+		if (createSocket("can0") != Error::NoError)
 		{
 			m_socket = -1;
 		}
@@ -73,7 +73,7 @@ Error Socket::createSocket(const std::string& interface)
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket creation failed." << std::endl;
 #endif
-		return Error::SOCKET_CREATION_FAILED;
+		return Error::SocketCreationFailed;
 	}
 
 	std::strcpy(m_ifr.ifr_name, interface.c_str());
@@ -82,7 +82,7 @@ Error Socket::createSocket(const std::string& interface)
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Interface retrieving failed." << std::endl;
 #endif
-		return Error::INTERFACE_RETRIEVING_FAILED;
+		return Error::InterfaceRetrievingFailed;
 	}
 
 	memset(&m_addr, 0, sizeof(m_addr));
@@ -99,7 +99,7 @@ Error Socket::createSocket(const std::string& interface)
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket binding failed." << std::endl;
 #endif
-		return Error::SOCKET_BINDING_FAILED;
+		return Error::SocketBindingFailed;
 	}
 
 	m_recvFd.fd = m_socket;
@@ -108,7 +108,7 @@ Error Socket::createSocket(const std::string& interface)
 #ifdef STD_COUT_ENABLED
 	std::cout << "[cansocket] Socket is created." << std::endl;
 #endif
-	return Error::NO_ERROR;
+	return Error::NoError;
 }
 
 
@@ -122,7 +122,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	if (!detail::interfaceList.contains(interface)
 			|| !detail::bitrateList.contains(bitrate))
 	{
-		return Error::INVALID_ARGUMENT;
+		return Error::InvalidArgument;
 	}
 
 	std::lock_guard<std::mutex> lock1(m_sendMutex);
@@ -132,7 +132,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	std::filesystem::path scriptPath = findScript("socketcan_enable.sh");
 	if (scriptPath.empty())
 	{
-		return Error::SCRIPT_NOT_FOUND;
+		return Error::ScriptNotFound;
 	}
 
 #ifdef STD_COUT_ENABLED
@@ -150,23 +150,23 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	switch (pkexecRet)
 	{
 	case 0:
-		error = Error::NO_ERROR;
+		error = Error::NoError;
 		break;
 	case 1:
-		error = Error::INVALID_ARGUMENT;
+		error = Error::InvalidArgument;
 		break;
 	case 2:
-		error = Error::DEVICE_NOT_FOUND;
+		error = Error::DeviceNotFound;
 		break;
 	case 3:
-		error = Error::SOCKETCAN_FAILED;
+		error = Error::SocketcanFailed;
 		break;
 	default:
-		error = Error::SCRIPT_EXEC_FAILED;
+		error = Error::ScriptExecFailed;
 		break;
 	}
 
-	if (error != Error::NO_ERROR)
+	if (error != Error::NoError)
 	{
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << std::endl;
@@ -188,7 +188,7 @@ Error Socket::disconnect()
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] No socket to close." << std::endl;
 #endif
-		return Error::NO_ERROR;
+		return Error::NoError;
 	}
 
 	std::lock_guard<std::mutex> lock1(m_sendMutex);
@@ -199,7 +199,7 @@ Error Socket::disconnect()
 #ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket closing failed." << std::endl;
 #endif
-		return Error::SOCKET_CLOSING_FAILED;
+		return Error::SocketClosingFailed;
 	}
 	else
 	{
@@ -207,7 +207,7 @@ Error Socket::disconnect()
 		std::cout << "[cansocket] Socket closed." << std::endl;
 #endif
 		m_socket = -1;
-		return Error::NO_ERROR;
+		return Error::NoError;
 	}
 }
 
@@ -237,16 +237,16 @@ Error Socket::send(const can_frame& frame)
 {
 	if (m_socket < 0)
 	{
-		return Error::SOCKET_CLOSED;
+		return Error::SocketClosed;
 	}
 
 	std::lock_guard<std::mutex> lock(m_sendMutex);
 
 	if (::write(m_socket, &frame, sizeof(can_frame)) != sizeof(can_frame))
 	{
-		return Error::SEND_ERROR;
+		return Error::SendError;
 	}
-	return Error::NO_ERROR;
+	return Error::NoError;
 }
 
 
@@ -257,31 +257,31 @@ Error Socket::recv(can_frame& frame)
 {
 	if (m_socket < 0)
 	{
-		return Error::SOCKET_CLOSED;
+		return Error::SocketClosed;
 	}
 
 	int nBytes;
 
 	std::lock_guard<std::mutex> lock(m_recvMutex);
 
-	int ret = poll(&m_recvFd, 1, RECV_TIMEOUT.count());
+	int ret = poll(&m_recvFd, 1, s_recvTimeout.count());
 	switch (ret)
 	{
 	case -1:
-		return Error::RECV_ERROR;
+		return Error::RecvError;
 		break;
 	case 0:
-		return Error::RECV_TIMEOUT;
+		return Error::RecvTimeout;
 		break;
 	default:
 		nBytes = ::read(m_socket, &frame, sizeof(can_frame));
 		if (nBytes < 0)
 		{
-			return Error::RECV_ERROR;
+			return Error::RecvError;
 		}
 		else
 		{
-			return Error::NO_ERROR;
+			return Error::NoError;
 		}
 		break;
 	}

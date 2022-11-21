@@ -37,20 +37,20 @@ namespace can {
 
 enum class Error
 {
-	NO_ERROR,
-	INVALID_ARGUMENT,
-	SCRIPT_NOT_FOUND,
-	DEVICE_NOT_FOUND,
-	SOCKETCAN_FAILED,
-	SCRIPT_EXEC_FAILED,
-	SOCKET_CREATION_FAILED,
-	SOCKET_CLOSING_FAILED,
-	SOCKET_BINDING_FAILED,
-	SOCKET_CLOSED,
-	SEND_ERROR,
-	RECV_TIMEOUT,
-	RECV_ERROR,
-	INTERFACE_RETRIEVING_FAILED,
+	NoError,
+	InvalidArgument,
+	ScriptNotFound,
+	DeviceNotFound,
+	SocketcanFailed,
+	ScriptExecFailed,
+	SocketCreationFailed,
+	SocketClosingFailed,
+	SocketBindingFailed,
+	SocketClosed,
+	SendError,
+	RecvTimeout,
+	RecvError,
+	InterfaceRetrievingFailed,
 };
 
 
@@ -82,7 +82,7 @@ private:
 	sockaddr_can m_addr;
 
 	pollfd m_recvFd;
-	static constexpr std::chrono::milliseconds RECV_TIMEOUT = std::chrono::milliseconds(1);
+	static constexpr std::chrono::milliseconds s_recvTimeout = std::chrono::milliseconds(1);
 
 	std::mutex m_sendMutex;
 	std::mutex m_recvMutex;
