@@ -318,10 +318,12 @@ struct CobSdo
 
 
 // SDO cs-codes
-const uint32_t SDO_CCS_WRITE = 1;
-const uint32_t SDO_SCS_WRITE = 3;
-const uint32_t SDO_CCS_READ = 2;
-const uint32_t SDO_SCS_READ = 2;
+namespace cs_codes {
+const uint32_t sdoCcsWrite = 1;
+const uint32_t SdoScsWrite = 3;
+const uint32_t SdoCcsRead = 2;
+const uint32_t SdoScsRead = 2;
+}
 
 
 // Received SDO types

@@ -117,7 +117,7 @@ void IServer::handleFrame(const can_frame& frame)
 		SdoType type;
 		switch (msg.cs)
 		{
-		case SDO_SCS_READ:
+		case cs_codes::SdoScsRead:
 			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
 			{
 				type = SdoType::ResponseToTask;
@@ -127,7 +127,7 @@ void IServer::handleFrame(const can_frame& frame)
 				type = SdoType::ResponseToRead;
 			}
 			break;
-		case SDO_SCS_WRITE:
+		case cs_codes::SdoScsWrite:
 			type = SdoType::ResponseToWrite;
 			break;
 		default:
@@ -168,7 +168,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = SDO_CCS_READ;
+	message.cs = cs_codes::SdoCcsRead;
 	
 	can_payload data;
 	memcpy(data.data(), &message, sizeof(CobSdo));
@@ -207,7 +207,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = SDO_CCS_WRITE;
+	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
 	can_payload data;
@@ -281,7 +281,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = SDO_CCS_WRITE;
+	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
 	can_payload data;
@@ -323,11 +323,11 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 
 	if (entryIt->second.hasReadAccess())
 	{
-		message.cs = SDO_CCS_READ;
+		message.cs = cs_codes::SdoCcsRead;
 	}
 	else if (entryIt->second.hasWriteAccess())
 	{
-		message.cs = SDO_CCS_WRITE;
+		message.cs = cs_codes::sdoCcsWrite;
 	}
 
 	can_payload data;
