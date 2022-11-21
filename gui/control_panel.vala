@@ -10,6 +10,9 @@ namespace CanMonitor {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
+	private unowned Gtk.Switch switchWakeUp;
+
+	[GtkChild]
 	private unowned Gtk.Switch switchHV;
 
 	[GtkChild]
@@ -18,9 +21,6 @@ public class ControlPanel : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Switch switchEmergency;
 
-	//[GtkChild]
-	//private unowned SliderWithText sliderSpeed;
-
 	[GtkChild]
 	private unowned SliderWithText sliderTorque;
 
@@ -28,6 +28,10 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
+		switchWakeUp.notify["state"].connect((s, p) => {
+				atv_vcm_set_wakeup_state(switchWakeUp.state);
+		});
+
 		switchHV.notify["state"].connect((s, p) => {
 				atv_vcm_set_hv_power_supply(switchHV.state);
 		});

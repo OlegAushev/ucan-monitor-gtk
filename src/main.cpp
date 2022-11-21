@@ -57,8 +57,11 @@ int main_loop(std::future<void> futureExit)
 	g_canController = std::make_shared<purecan::Controller>(g_canSocket);
 
 
-	auto creatorVcmMessage = []() { return atv::VehicleControlModule::instance().createMessage0x1D4(); };
-	g_canController->registerTxMessage(0x1D4, "VCM Message", std::chrono::milliseconds(10), creatorVcmMessage);
+	auto creatorVcmMessage0x1D4 = []() { return atv::VehicleControlModule::instance().createMessage0x1D4(); };
+	g_canController->registerTxMessage(0x1D4, "VCM Message 0x1D4", std::chrono::milliseconds(10), creatorVcmMessage0x1D4);
+
+	auto creatorVcmMessage0x50B = []() { return atv::VehicleControlModule::instance().createMessage0x50B(); };
+	g_canController->registerTxMessage(0x50B, "VCM Message 0x50B", std::chrono::milliseconds(100), creatorVcmMessage0x50B);
 
 	g_leafInverter = std::make_shared<atv::LeafInverter>(g_canSocket);
 	g_canController->registerDevice(g_leafInverter);

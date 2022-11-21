@@ -18,8 +18,23 @@
 						
 						<child>
 							<object class="AdwActionRow">
+								<property name="title">Wake Up</property>
+								<property name="subtitle">VCM, ID 0x50B</property>
+								<property name="icon-name">power-profile-balanced-symbolic</property>
+								<property name="activatable_widget">switchWakeUp</property>
+								<child>
+									<object class="GtkSwitch" id="switchWakeUp">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
+							</object>
+						</child>
+
+						<child>
+							<object class="AdwActionRow">
 								<property name="title">HV Power Supply</property>
-								<property name="subtitle">VCM</property>
+								<property name="subtitle">VCM, ID 0x1D4</property>
 								<property name="icon-name">thunderbolt-symbolic</property>
 								<property name="activatable_widget">switchHV</property>
 								<child>
@@ -34,7 +49,7 @@
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Relay Output</property>
-								<property name="subtitle">VCM</property>
+								<property name="subtitle">VCM, ID 0x1D4</property>
 								<property name="icon-name">system-shutdown-symbolic</property>
 								<property name="activatable_widget">switchRelay</property>
 								<child>

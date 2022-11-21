@@ -37,6 +37,12 @@ void atv_vcm_set_relay_plus_output(bool state)
 	atv::VehicleControlModule::instance().setRelayPlusOutput(state);
 }
 
+void atv_vcm_set_wakeup_state(bool state)
+{
+	state ? atv::VehicleControlModule::instance().setState(atv::VehicleControlModule::WakeUpSleepState::WakeUp)
+		: atv::VehicleControlModule::instance().setState(atv::VehicleControlModule::WakeUpSleepState::GoToSleep);
+}
+
 bool atv_leaf_inverter_is_tx_ok(canid_t id)
 {
 	return g_leafInverter->isTxOk(id);

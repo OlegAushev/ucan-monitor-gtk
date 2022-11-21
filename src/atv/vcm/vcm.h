@@ -24,6 +24,13 @@ namespace atv {
 
 class VehicleControlModule
 {
+public:
+	enum class WakeUpSleepState
+	{
+		GoToSleep = 0,
+		WakeUp = 3
+	};
+
 private:
 	struct Message0x1D4
 	{
@@ -74,11 +81,6 @@ private:
 	bool m_hvPowerSupply{false};
 	bool m_relayPlusOutput{false};
 
-	enum class WakeUpSleepState
-	{
-		GoToSleep = 0,
-		WakeUp = 3
-	};
 	WakeUpSleepState m_state{WakeUpSleepState::GoToSleep};
 
 private:
@@ -113,15 +115,21 @@ public:
 		m_relayPlusOutput = state;
 	}
 
+	void setState(WakeUpSleepState state)
+	{
+		m_state = state;
+	}
+
 	purecan::can_payload_va createMessage0x1D4()
 	{
 		static int clock = 0;
 		
 		Message0x1D4 message{};
 
-		// message._reserved_byte0 = 0xF7; // TODO
-		// message._reserved_byte1 = 0x07; // TODO
-		// message.statusCharge = 0x30; // TODO
+		// message._reserved_byte0 = 0xF7;	// TODO as in log
+		// message._reserved_byte1 = 0x07;	// TODO as in log
+		// message.statusCharge = 0x30; 	// TODO as in log
+		// message._reserved_byte4_0 = 0x3;	// TODO as in log
 
 		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;
 		uint8_t torque[2];
@@ -148,6 +156,8 @@ public:
 	purecan::can_payload_va createMessage0x50B()
 	{
 		Message0x50B message{};
+
+		// message._reserved_byte2_0 = 0x02;	// TODO as in log
 
 		message.cmdWakeUpSleep = static_cast<uint8_t>(m_state);
 		message.diagMuxOn = 1;
