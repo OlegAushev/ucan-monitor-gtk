@@ -19,6 +19,7 @@
 
 #include "atv/vcm/vcm.h"
 #include "atv/leaf_inverter/leaf_inverter.h"
+#include "atv/gearselector/gearselector.h"
 
 #include "ucanopen/client/ucanopen_client.h"
 #include "srmdrive/server/srmdrive_server.h"
@@ -40,6 +41,7 @@ namespace global {
 std::shared_ptr<can::Socket> canSocket;
 std::shared_ptr<purecan::Controller> canController;
 std::shared_ptr<atv::LeafInverter> leafInverter;
+std::shared_ptr<atv::GearSelector> gearSelector;
 
 std::shared_ptr<ucanopen::Client> ucanClient;
 std::shared_ptr<srmdrive::Server> srmdriveServer;
@@ -78,8 +80,8 @@ int backend_main_loop(std::future<void> futureExit)
 	global::leafInverter = std::make_shared<atv::LeafInverter>(global::canSocket);
 	global::canController->registerDevice(global::leafInverter);
 
-
-
+	global::gearSelector = std::make_shared<atv::GearSelector>(global::canSocket);
+	global::canController->registerDevice(global::gearSelector);
 
 
 

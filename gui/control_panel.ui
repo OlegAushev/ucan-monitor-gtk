@@ -64,20 +64,29 @@
 					</object>
 				</child>
 
-				<!--child>
-					<object class="SliderWithText" id="sliderSpeed">
-						<property name="title">Speed, rpm</property>
-						<property name="lower">-8000</property>
-						<property name="upper">8000</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
+				<child>
+					<object class="AdwPreferencesGroup" id="groupGear">
+						<property name="hexpand">false</property>
+						<property name="title">Gear</property>
+						<child>
+							<object class="AdwComboRow" id="comborowGear">
+								<property name="title">Gear</property>
+								<property name="icon-name">applications-system-symbolic</property>
+								<property name="model">
+									<object class="GtkStringList" id="listGear">
+										<items>
+											<item>Parking</item>
+											<item>Reverse</item>
+											<item>Neutral</item>
+											<item>Drive</item>
+										</items>
+									</object>
+								</property>
+							</object>
+						</child>
 					</object>
-				</child-->
-
+				</child>	
+				
 				<child>
 					<object class="SliderWithText" id="sliderTorque">
 						<property name="title">Torque, Nm</property>

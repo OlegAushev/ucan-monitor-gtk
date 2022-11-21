@@ -78,14 +78,14 @@ public:
 		static_assert(sizeof(Message0x1DA) == 8);
 		static_assert(sizeof(Message0x55A) == 8);
 		
-		auto handlerMessage0x1DA_ = [this](purecan::can_payload data) { this->handlerMessage0x1DA(data); };
-		registerTxMessage(0x1DA, "Inverter Response", std::chrono::milliseconds(500), handlerMessage0x1DA_);
+		auto handlerMessage0x1DA = [this](purecan::can_payload data) { this->handleMessage0x1DA(data); };
+		registerTxMessage(0x1DA, "Inverter Response", std::chrono::milliseconds(500), handlerMessage0x1DA);
 
-		auto handlerMessage0x55A_ = [this](purecan::can_payload data) { this->handlerMessage0x55A(data); };
-		registerTxMessage(0x55A, "Inverter Temperatures", std::chrono::milliseconds(500), handlerMessage0x55A_);
+		auto handlerMessage0x55A = [this](purecan::can_payload data) { this->handleMessage0x55A(data); };
+		registerTxMessage(0x55A, "Inverter Temperatures", std::chrono::milliseconds(500), handlerMessage0x55A);
 	}
 
-	void handlerMessage0x1DA(purecan::can_payload data)
+	void handleMessage0x1DA(purecan::can_payload data)
 	{
 		Message0x1DA message{};
 		memcpy(&message, data.data(), 8);
@@ -94,7 +94,7 @@ public:
 		m_torqueEffective = torqueEffective * 0.5 - 300;
 	}
 
-	void handlerMessage0x55A(purecan::can_payload data)
+	void handleMessage0x55A(purecan::can_payload data)
 	{
 		Message0x55A message{};
 		memcpy(&message, data.data(), 8);

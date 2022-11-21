@@ -25,7 +25,7 @@ namespace atv {
 class VehicleControlModule
 {
 public:
-	enum class WakeUpSleepState
+	enum class State
 	{
 		GoToSleep = 0,
 		WakeUp = 3
@@ -81,7 +81,7 @@ private:
 	bool m_hvPowerSupply{false};
 	bool m_relayPlusOutput{false};
 
-	WakeUpSleepState m_state{WakeUpSleepState::GoToSleep};
+	State m_state{State::GoToSleep};
 
 private:
 	VehicleControlModule()
@@ -115,7 +115,7 @@ public:
 		m_relayPlusOutput = state;
 	}
 
-	void setState(WakeUpSleepState state)
+	void setState(State state)
 	{
 		m_state = state;
 	}
@@ -143,8 +143,8 @@ public:
 		message.clock = clock;
 		clock = (clock + 1) % 4;
 
-		purecan::can_payload_va payload(8);	
-		memcpy(payload.data(), &message, 8);
+		purecan::can_payload_va payload(sizeof(Message0x1D4));	
+		memcpy(payload.data(), &message, sizeof(Message0x1D4));
 
 		uint8_t crc = calculateCrc(payload.data(), 7);
 		message.crc = crc;
@@ -162,8 +162,8 @@ public:
 		message.cmdWakeUpSleep = static_cast<uint8_t>(m_state);
 		message.diagMuxOn = 1;
 		
-		purecan::can_payload_va payload(7);	
-		memcpy(payload.data(), &message, 7);
+		purecan::can_payload_va payload(sizeof(Message0x50B));	
+		memcpy(payload.data(), &message, sizeof(Message0x50B));
 		return payload;
 	}
 };
