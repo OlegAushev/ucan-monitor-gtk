@@ -48,10 +48,10 @@ int main_loop(std::future<void> futureExit)
 	auto callbackMakeTpdo1 = []() { return g_srmdriveServer->controller.makeTpdo1(); };
 	auto callbackMakeTpdo2 = []() { return g_srmdriveServer->controller.makeTpdo2(); };
 
-	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO1,
+	g_ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
 			std::chrono::milliseconds(250),
 			callbackMakeTpdo1);
-	g_ucanClient->registerTpdo(ucanopen::TpdoType::TPDO2,
+	g_ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
 			std::chrono::milliseconds(100),
 			callbackMakeTpdo2);
 

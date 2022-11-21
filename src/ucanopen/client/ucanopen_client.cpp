@@ -22,7 +22,7 @@ namespace ucanopen {
 Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 	: nodeId(nodeId_)
 	, m_socket(socket)
-	, m_state(NmtState::INITIALIZATION)
+	, m_state(NmtState::Initialization)
 {
 	m_syncInfo.period = std::chrono::milliseconds(0);
 	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
@@ -36,7 +36,7 @@ Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
 	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	m_state = NmtState::OPERATIONAL;
+	m_state = NmtState::Operational;
 }
 
 
@@ -60,11 +60,11 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 {
 	m_servers.insert(server);
 
-	canid_t tpdo1 = calculateCobId(CobType::TPDO1, server->nodeId.value());
-	canid_t tpdo2 = calculateCobId(CobType::TPDO2, server->nodeId.value());
-	canid_t tpdo3 = calculateCobId(CobType::TPDO3, server->nodeId.value());
-	canid_t tpdo4 = calculateCobId(CobType::TPDO4, server->nodeId.value());
-	canid_t tsdo = calculateCobId(CobType::TSDO, server->nodeId.value());
+	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId.value());
+	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId.value());
+	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId.value());
+	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId.value());
+	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId.value());
 
 	m_recvIdServerList.insert({tpdo1, server});
 	m_recvIdServerList.insert({tpdo2, server});
@@ -92,7 +92,7 @@ void Client::run(std::future<void> futureExit)
 		{
 			if (now - m_syncInfo.timepoint > m_syncInfo.period)
 			{
-				m_socket->send(makeFrame(CobType::SYNC, nodeId, {}));
+				m_socket->send(makeFrame(CobType::Sync, nodeId, {}));
 				m_syncInfo.timepoint = now;
 			}
 		}
@@ -100,7 +100,7 @@ void Client::run(std::future<void> futureExit)
 		/* HEARTBEAT */
 		if (now - m_heartbeatInfo.timepoint > m_heartbeatInfo.period)
 		{
-			m_socket->send(makeFrame(CobType::HEARTBEAT, nodeId, {static_cast<uint8_t>(m_state)}));
+			m_socket->send(makeFrame(CobType::Heartbeat, nodeId, {static_cast<uint8_t>(m_state)}));
 			m_heartbeatInfo.timepoint = now;
 		}
 

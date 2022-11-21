@@ -41,37 +41,37 @@ public:
 
 enum class NmtState
 {
-	INITIALIZATION = 0x00,
-	STOPPED = 0x04,
-	OPERATIONAL = 0x05,
-	PRE_OPERATIONAL = 0x7F
+	Initialization = 0x00,
+	Stopped = 0x04,
+	Operational = 0x05,
+	PreOperational = 0x7F
 };
 
 
 enum class CobType
 {
-	NMT,
-	SYNC,
-	EMCY,
-	TIME,
-	TPDO1,
-	RPDO1,
-	TPDO2,
-	RPDO2,
-	TPDO3,
-	RPDO3,
-	TPDO4,
-	RPDO4,
-	TSDO,
-	RSDO,
-	HEARTBEAT
+	Nmt,
+	Sync,
+	Emcy,
+	Time,
+	Tpdo1,
+	Rpdo1,
+	Tpdo2,
+	Rpdo2,
+	Tpdo3,
+	Rpdo3,
+	Tpdo4,
+	Rpdo4,
+	Tsdo,
+	Rsdo,
+	Heartbeat
 };
 
 
-const size_t COB_TYPE_COUNT = 15;
+constexpr size_t cobTypeCount = 15;
 
 
-constexpr std::array<canid_t, COB_TYPE_COUNT> COB_FUNCTION_CODES = {
+constexpr std::array<canid_t, cobTypeCount> cobFunctionCodes = {
 	0x000,	// NMT
 	0x080,	// SYNC
 	0x080,	// EMCY
@@ -92,15 +92,15 @@ constexpr std::array<canid_t, COB_TYPE_COUNT> COB_FUNCTION_CODES = {
 
 inline canid_t calculateCobId(CobType cobType, unsigned int nodeId)
 {
-	if ((cobType == CobType::NMT) || (cobType == CobType::SYNC) || (cobType == CobType::TIME))
+	if ((cobType == CobType::Nmt) || (cobType == CobType::Sync) || (cobType == CobType::Time))
 	{
-		return COB_FUNCTION_CODES[static_cast<size_t>(cobType)];
+		return cobFunctionCodes[static_cast<size_t>(cobType)];
 	}
-	return COB_FUNCTION_CODES[static_cast<size_t>(cobType)] + nodeId;
+	return cobFunctionCodes[static_cast<size_t>(cobType)] + nodeId;
 }
 
 
-constexpr std::array<unsigned int, COB_TYPE_COUNT> COB_DATA_LEN = {
+constexpr std::array<unsigned int, cobTypeCount> COB_DATA_LEN = {
 	2,	// NMT
 	0,	// SYNC
 	2,	// EMCY
@@ -122,17 +122,17 @@ constexpr std::array<unsigned int, COB_TYPE_COUNT> COB_DATA_LEN = {
 /// TPDO type
 enum class TpdoType
 {
-	TPDO1,
-	TPDO2,
-	TPDO3,
-	TPDO4,
+	Tpdo1,
+	Tpdo2,
+	Tpdo3,
+	Tpdo4,
 };
 
 
 inline CobType toCobType(TpdoType tpdoType)
 {
 	return static_cast<CobType>(
-		static_cast<size_t>(CobType::TPDO1) + 2 * static_cast<size_t>(tpdoType)
+		static_cast<size_t>(CobType::Tpdo1) + 2 * static_cast<size_t>(tpdoType)
 	);
 }
 
@@ -140,17 +140,17 @@ inline CobType toCobType(TpdoType tpdoType)
 /// RPDO type
 enum class RpdoType
 {
-	RPDO1,
-	RPDO2,
-	RPDO3,
-	RPDO4,	
+	Rpdo1,
+	Rpdo2,
+	Rpdo3,
+	Rpdo4,	
 };
 
 
 inline CobType toCobType(RpdoType rpdoType)
 {
 	return static_cast<CobType>(
-		static_cast<size_t>(CobType::RPDO1) + 2 * static_cast<size_t>(rpdoType)
+		static_cast<size_t>(CobType::Rpdo1) + 2 * static_cast<size_t>(rpdoType)
 	);
 }
 
@@ -327,9 +327,9 @@ const uint32_t SDO_SCS_READ = 2;
 // Received SDO types
 enum SdoType
 {
-	RESPONSE_TO_READ,
-	RESPONSE_TO_WRITE,
-	RESPONSE_TO_TASK,
+	ResponseToRead,
+	ResponseToWrite,
+	ResponseToTask,
 };
 
 
@@ -442,19 +442,19 @@ inline can_frame makeFrame(canid_t id, unsigned char len, can_payload data)
 /// OD_TASK execution status
 enum ODTaskStatus
 {
-	TASK_SUCCESS = 0,
-	TASK_FAIL = 1,
-	TASK_IN_PROGRESS = 2,
-	TASK_STARTED = 3
+	Success = 0,
+	Fail = 1,
+	InProgress = 2,
+	Started = 3
 };
 
 
 /// OD request status
 enum class ODRequestStatus
 {
-	REQUEST_SUCCESS = 0,
-	REQUEST_FAIL = 1,
-	REQUEST_NO_ACCESS = 2
+	Success = 0,
+	Fail = 1,
+	NoAccess = 2
 };
 
 

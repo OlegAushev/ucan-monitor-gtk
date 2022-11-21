@@ -52,16 +52,16 @@ void IServer::sendRpdo()
 		can_payload data;
 		switch (type)
 		{
-		case RpdoType::RPDO1:
+		case RpdoType::Rpdo1:
 			data = createRpdo1();
 			break;
-		case RpdoType::RPDO2:
+		case RpdoType::Rpdo2:
 			data = createRpdo2();
 			break;
-		case RpdoType::RPDO3:
+		case RpdoType::Rpdo3:
 			data = createRpdo3();
 			break;
-		case RpdoType::RPDO4:
+		case RpdoType::Rpdo4:
 			data = createRpdo4();
 			break;
 		}
@@ -87,23 +87,23 @@ void IServer::handleFrame(const can_frame& frame)
 
 		switch (type)
 		{
-		case TpdoType::TPDO1:
+		case TpdoType::Tpdo1:
 			handleTpdo1(data);
 			break;
-		case TpdoType::TPDO2:
+		case TpdoType::Tpdo2:
 			handleTpdo2(data);
 			break;
-		case TpdoType::TPDO3:
+		case TpdoType::Tpdo3:
 			handleTpdo3(data);
 			break;
-		case TpdoType::TPDO4:
+		case TpdoType::Tpdo4:
 			handleTpdo4(data);
 			break;
 		}
 		return;
 	}
 
-	if (frame.can_id == calculateCobId(CobType::TSDO, nodeId.value()))
+	if (frame.can_id == calculateCobId(CobType::Tsdo, nodeId.value()))
 	{
 		CobSdo msg;
 		memcpy(&msg, frame.data, sizeof(CobSdo));
@@ -120,15 +120,15 @@ void IServer::handleFrame(const can_frame& frame)
 		case SDO_SCS_READ:
 			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
 			{
-				type = SdoType::RESPONSE_TO_TASK;
+				type = SdoType::ResponseToTask;
 			}
 			else
 			{
-				type = SdoType::RESPONSE_TO_READ;
+				type = SdoType::ResponseToRead;
 			}
 			break;
 		case SDO_SCS_WRITE:
-			type = SdoType::RESPONSE_TO_WRITE;
+			type = SdoType::ResponseToWrite;
 			break;
 		default:
 			return;
@@ -153,7 +153,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.hasReadAccess() == false)
 	{
@@ -162,7 +162,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::NoAccess;
 	}
 
 	CobSdo message{};
@@ -173,8 +173,8 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	can_payload data;
 	memcpy(data.data(), &message, sizeof(CobSdo));
 
-	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return ODRequestStatus::REQUEST_SUCCESS;
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	return ODRequestStatus::Success;
 }
 
 
@@ -192,7 +192,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_FAIL;;
+		return ODRequestStatus::Fail;;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
@@ -201,7 +201,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::NoAccess;
 	}
 
 	CobSdo message{};
@@ -213,8 +213,8 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	can_payload data;
 	memcpy(data.data(), &message, sizeof(CobSdo));
 
-	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return ODRequestStatus::REQUEST_SUCCESS;
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	return ODRequestStatus::Success;
 }
 
 
@@ -232,7 +232,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
@@ -241,7 +241,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::NoAccess;
 	}
 
 	CobSdoData sdoData;
@@ -254,7 +254,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 		else if (value == "FALSE" || value == "OFF" || value == "0")
 			sdoData = CobSdoData(true);
 		else
-			return ODRequestStatus::REQUEST_FAIL;
+			return ODRequestStatus::Fail;
 		break;
 	case OD_INT16:
 		sdoData = CobSdoData(int16_t(std::stoi(value)));
@@ -275,7 +275,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 		sdoData = CobSdoData(uint16_t(std::stoi(value)));
 		break;
 	default:
-		return ODRequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::Fail;
 	}
 
 	CobSdo message{};
@@ -287,8 +287,8 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	can_payload data;
 	memcpy(data.data(), &message, sizeof(CobSdo));
 
-	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return ODRequestStatus::REQUEST_SUCCESS;
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	return ODRequestStatus::Success;
 }
 
 
@@ -305,7 +305,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_FAIL;
+		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.dataType != ODEntryDataType::OD_TASK)
 	{
@@ -314,7 +314,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry." << std::endl;
 #endif
-		return ODRequestStatus::REQUEST_NO_ACCESS;
+		return ODRequestStatus::NoAccess;
 	}
 
 	CobSdo message{};
@@ -333,8 +333,8 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	can_payload data;
 	memcpy(data.data(), &message, sizeof(CobSdo));
 
-	m_socket->send(makeFrame(CobType::RSDO, nodeId, data));
-	return ODRequestStatus::REQUEST_SUCCESS;
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	return ODRequestStatus::Success;
 }
 
 

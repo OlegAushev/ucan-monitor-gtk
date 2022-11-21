@@ -23,10 +23,10 @@ Server::Server(ucanopen::NodeId nodeId,
 	, controller(this)
 	, observer(this)
 {
-	registerTpdo(ucanopen::TpdoType::TPDO1, std::chrono::milliseconds(200));
-	registerTpdo(ucanopen::TpdoType::TPDO2, std::chrono::milliseconds(1200));
-	registerTpdo(ucanopen::TpdoType::TPDO3, std::chrono::milliseconds(200));
-	registerTpdo(ucanopen::TpdoType::TPDO4, std::chrono::milliseconds(200));
+	registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
+	registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
+	registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
+	registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
 }
 
 
