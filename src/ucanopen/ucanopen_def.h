@@ -320,9 +320,9 @@ struct CobSdo
 // SDO cs-codes
 namespace cs_codes {
 const uint32_t sdoCcsWrite = 1;
-const uint32_t SdoScsWrite = 3;
-const uint32_t SdoCcsRead = 2;
-const uint32_t SdoScsRead = 2;
+const uint32_t sdoScsWrite = 3;
+const uint32_t sdoCcsRead = 2;
+const uint32_t sdoScsRead = 2;
 }
 
 
