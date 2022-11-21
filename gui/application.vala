@@ -43,13 +43,13 @@ public class Application : Adw.Application
 
 	public override void activate()
 	{
-		message("[ gui ] Waiting for backend...");
+		message("[gui] Waiting for backend...");
 		backend.main_enter();
 		while (!backend.isReady)
 		{
 			/* wait */
 		}
-		message("[ gui ] Backend is ready.");
+		message("[gui] Backend is ready.");
 
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
@@ -62,7 +62,7 @@ public class Application : Adw.Application
 			win = new CanMonitor.Window (this);
 		}
 		win.present();
-		message("[ gui ] GUI is ready.");
+		message("[gui] GUI is ready.");
         }
 
 	private void on_about_action()
