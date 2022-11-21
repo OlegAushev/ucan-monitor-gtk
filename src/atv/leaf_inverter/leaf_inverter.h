@@ -24,36 +24,43 @@ class LeafInverter : public purecan::IDevice
 private:
 	struct Message0x1DA
 	{
-		uint8_t byte0_reserved : 8;
+		uint8_t _reserved_byte0 : 8;
 
-		uint8_t byte1_reserved : 8;
+		uint8_t _reserved_byte1 : 8;
 
 		uint8_t torqueEffectiveM : 3;
-		uint8_t byte2_reserved : 5;
+		uint8_t _reserved_byte2 : 5;
 
 		uint8_t torqueEffectiveL : 8;
 
 		uint8_t outputRevolutionM : 8;
 
-		uint8_t byte5_reserved : 1;
+		uint8_t _reserved_byte5 : 1;
 		uint8_t outputRevolutionL : 7;
 
 		uint8_t clock : 2;
-		uint8_t byte6_reserved : 6;
+		uint8_t _reserved_byte6 : 6;
 
 		uint8_t crc;
 	};
 
 	struct Message0x55A
 	{
-		uint8_t byte0_reserved : 8;
+		uint8_t _reserved_byte0 : 8;
+
 		uint8_t tempInverterComBoard;
+
 		uint8_t tempIgbt;
+
 		uint8_t tempIgbtDriver;
+
 		uint8_t tempMotor;
-		uint8_t byte5_reserved : 8;
-		uint8_t byte6_reserved : 8;
-		uint8_t byte7_reserved : 8;	
+
+		uint8_t _reserved_byte5 : 8;
+
+		uint8_t _reserved_byte6 : 8;
+
+		uint8_t _reserved_byte7 : 8;	
 	};
 
 	double m_torqueEffective{0};
@@ -70,7 +77,7 @@ public:
 	{
 		static_assert(sizeof(Message0x1DA) == 8);
 		static_assert(sizeof(Message0x55A) == 8);
-
+		
 		auto handlerMessage0x1DA_ = [this](purecan::can_payload data) { this->handlerMessage0x1DA(data); };
 		registerTxMessage(0x1DA, "Inverter Response", std::chrono::milliseconds(500), handlerMessage0x1DA_);
 
