@@ -17,8 +17,12 @@
 bool backend_isReady = false;
 
 
-static std::thread threadMain;
-static std::promise<void> signalExitMain;
+namespace {
+
+std::thread threadMain;
+std::promise<void> signalExitMain;
+
+}
 
 
 namespace global {

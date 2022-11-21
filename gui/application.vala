@@ -48,7 +48,6 @@ public class Application : Adw.Application
 		while (!backend.isReady)
 		{
 			/* wait */
-		
 		}
 		message("[ gui ] Backend is ready.");
 
