@@ -63,6 +63,9 @@ int main_loop(std::future<void> futureExit)
 	auto creatorVcmMessage0x50B = []() { return atv::VehicleControlModule::instance().createMessage0x50B(); };
 	g_canController->registerTxMessage(0x50B, "VCM Message 0x50B", std::chrono::milliseconds(100), creatorVcmMessage0x50B);
 
+	auto creatorMessage0x355 = []() { return std::vector<uint8_t>{0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}; };
+	g_canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
+
 	g_leafInverter = std::make_shared<atv::LeafInverter>(g_canSocket);
 	g_canController->registerDevice(g_leafInverter);
 
