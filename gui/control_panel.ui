@@ -14,7 +14,7 @@
 				<child>
 					<object class="AdwPreferencesGroup" id="groupActions">
 						<property name="hexpand">false</property>
-						<property name="title">Actions</property>
+						<property name="title">VCM Actions</property>
 						
 						<child>
 							<object class="AdwActionRow">
@@ -67,26 +67,79 @@
 				<child>
 					<object class="AdwPreferencesGroup" id="groupGear">
 						<property name="hexpand">false</property>
-						<property name="title">Gear</property>
+						<property name="title">Gear Selector</property>
 						<child>
-							<object class="AdwComboRow" id="comborowGear">
+							<object class="AdwExpanderRow" id="expanderrowGear">
 								<property name="title">Gear</property>
 								<property name="icon-name">applications-system-symbolic</property>
-								<property name="model">
-									<object class="GtkStringList" id="listGear">
-										<items>
-											<item>Parking</item>
-											<item>Reverse</item>
-											<item>Neutral</item>
-											<item>Drive</item>
-										</items>
+								<child>
+									<object class="AdwActionRow">
+										<property name="activatable_widget">buttonParking</property>
+										<property name="title">Parking</property>
+										<child type="prefix">
+											<object class="GtkCheckButton" id="buttonParking">
+												<property name="valign">center</property>
+												<property name="active">true</property>
+											</object>
+										</child>
 									</object>
-								</property>
+								</child>
+								<child>
+									<object class="AdwActionRow">
+										<property name="activatable_widget">buttonReverse</property>
+										<property name="title">Reverse</property>
+										<child type="prefix">
+											<object class="GtkCheckButton" id="buttonReverse">
+												<property name="valign">center</property>
+												<property name="group">buttonParking</property>
+											</object>
+										</child>
+									</object>
+								</child>
+								<child>
+									<object class="AdwActionRow">
+										<property name="activatable_widget">buttonNeutral</property>
+										<property name="title">Neutral</property>
+										<child type="prefix">
+											<object class="GtkCheckButton" id="buttonNeutral">
+												<property name="valign">center</property>
+												<property name="group">buttonParking</property>
+											</object>
+										</child>
+									</object>
+								</child>
+								<child>
+									<object class="AdwActionRow">
+										<property name="activatable_widget">buttonDrive</property>
+										<property name="title">Drive</property>
+										<child type="prefix">
+											<object class="GtkCheckButton" id="buttonDrive">
+												<property name="valign">center</property>
+												<property name="group">buttonParking</property>
+											</object>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">ECO Mode</property>
+								<property name="subtitle"></property>
+								<property name="icon-name"></property>
+								<property name="activatable_widget">switchEcoMode</property>
+								<child>
+									<object class="GtkSwitch" id="switchEcoMode">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
 							</object>
 						</child>
 					</object>
-				</child>	
-				
+				</child>
+			
 				<child>
 					<object class="SliderWithText" id="sliderTorque">
 						<property name="title">Torque, Nm</property>

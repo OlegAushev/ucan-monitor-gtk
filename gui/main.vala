@@ -48,6 +48,9 @@ extern void atv_vcm_set_hv_power_supply(bool state);
 extern void atv_vcm_set_relay_plus_output(bool state);
 extern void atv_vcm_set_wakeup_state(bool state);
 
+extern void atv_gear_selector_set_gear(uint gear);
+extern void atv_gear_selector_set_ecomode(bool state);
+
 extern bool atv_leaf_inverter_is_tx_ok(uint id);
 extern double atv_leaf_inverter_get_torque();
 extern double atv_leaf_inverter_get_temp_board();

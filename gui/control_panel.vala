@@ -22,6 +22,21 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Switch switchEmergency;
 
 	[GtkChild]
+	private unowned Gtk.CheckButton buttonParking;
+
+	[GtkChild]
+	private unowned Gtk.CheckButton buttonReverse;
+
+	[GtkChild]
+	private unowned Gtk.CheckButton buttonNeutral;
+
+	[GtkChild]
+	private unowned Gtk.CheckButton buttonDrive;
+
+	[GtkChild]
+	private unowned Gtk.Switch switchEcoMode;
+
+	[GtkChild]
 	private unowned SliderWithText sliderTorque;
 
 	public ControlPanel() {}
@@ -40,13 +55,14 @@ public class ControlPanel : Adw.Bin
 				atv_vcm_set_relay_plus_output(switchRelay.state);
 		});
 
-		//  switchEmergency.notify["state"].connect((s, p) => {
-		//  		srmdrive_controller_set_emergency_enabled(switchEmergency.state);
-		//  });
+		buttonParking.toggled.connect((s) => { atv_gear_selector_set_gear(0); });
+		buttonReverse.toggled.connect((s) => { atv_gear_selector_set_gear(1); });
+		buttonNeutral.toggled.connect((s) => { atv_gear_selector_set_gear(2); });
+		buttonDrive.toggled.connect((s) => { atv_gear_selector_set_gear(3); });
 
-		//  sliderSpeed.adjustment->notify["value"].connect((s, p) => {
-		//  		srmdrive_controller_set_speed(sliderSpeed.value);
-		//  });
+		switchEcoMode.notify["state"].connect((s, p) => {
+				atv_gear_selector_set_ecomode(switchRelay.state);
+		});
 
 		sliderTorque.adjustment->notify["value"].connect((s, p) => {
 				atv_vcm_set_torque(sliderTorque.value);
