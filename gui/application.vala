@@ -47,7 +47,8 @@ public class Application : Adw.Application
 		backend.main_enter();
 		while (!backend.isReady)
 		{
-			/* wait */
+			//message("[gui] Waiting...");
+			Thread.usleep(10000);	// with empty loop Release build is not working
 		}
 		message("[gui] Backend is ready.");
 
