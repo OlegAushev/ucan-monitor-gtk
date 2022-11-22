@@ -106,9 +106,18 @@ void atv_gear_selector_set_ecomode(bool state)
 }
 
 
+void atv_gear_selector_set_car_status(bool state)
+{
+	state ? global::gearSelector->setCarStatus(atv::GearSelector::CarStatus::On)
+			: global::gearSelector->setCarStatus(atv::GearSelector::CarStatus::Off);
+}
 
 
-
+void atv_gear_selector_set_steering_wheel_status(bool state)
+{
+	state ? global::gearSelector->setSteeringWheelStatus(atv::GearSelector::SteeringWheelStatus::On)
+			: global::gearSelector->setSteeringWheelStatus(atv::GearSelector::SteeringWheelStatus::Off);
+}
 
 
 

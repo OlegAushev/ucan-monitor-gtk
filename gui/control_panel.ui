@@ -20,7 +20,7 @@
 							<object class="AdwActionRow">
 								<property name="title">Wake Up</property>
 								<property name="subtitle">VCM, ID 0x50B</property>
-								<property name="icon-name">power-profile-balanced-symbolic</property>
+								<property name="icon-name">alarm-symbolic</property>
 								<property name="activatable_widget">switchWakeUp</property>
 								<child>
 									<object class="GtkSwitch" id="switchWakeUp">
@@ -68,10 +68,41 @@
 					<object class="AdwPreferencesGroup" id="groupGear">
 						<property name="hexpand">false</property>
 						<property name="title">Gear Selector</property>
+
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">Car ON/OFF</property>
+								<property name="subtitle"></property>
+								<property name="icon-name">system-shutdown-symbolic</property>
+								<property name="activatable_widget">switchCarStatus</property>
+								<child>
+									<object class="GtkSwitch" id="switchCarStatus">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
+							</object>
+						</child>
+
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">Steering wheel ON/OFF</property>
+								<property name="subtitle"></property>
+								<property name="icon-name">system-shutdown-symbolic</property>
+								<property name="activatable_widget">switchSteeringWheelStatus</property>
+								<child>
+									<object class="GtkSwitch" id="switchSteeringWheelStatus">
+										<property name="valign">center</property>
+										<property name="active">false</property>
+									</object>
+								</child>
+							</object>
+						</child>
+
 						<child>
 							<object class="AdwExpanderRow" id="expanderrowGear">
 								<property name="title">Gear</property>
-								<property name="icon-name">applications-system-symbolic</property>
+								<property name="icon-name">system-run-symbolic</property>
 								<child>
 									<object class="AdwActionRow">
 										<property name="activatable_widget">buttonParking</property>
@@ -127,7 +158,7 @@
 							<object class="AdwActionRow">
 								<property name="title">ECO Mode</property>
 								<property name="subtitle"></property>
-								<property name="icon-name"></property>
+								<property name="icon-name">power-profile-power-saver-symbolic</property>
 								<property name="activatable_widget">switchEcoMode</property>
 								<child>
 									<object class="GtkSwitch" id="switchEcoMode">

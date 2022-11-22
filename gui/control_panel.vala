@@ -22,6 +22,12 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Switch switchEmergency;
 
 	[GtkChild]
+	private unowned Gtk.Switch switchCarStatus;
+
+	[GtkChild]
+	private unowned Gtk.Switch switchSteeringWheelStatus;
+
+	[GtkChild]
 	private unowned Gtk.CheckButton buttonParking;
 
 	[GtkChild]
@@ -53,6 +59,14 @@ public class ControlPanel : Adw.Bin
 
 		switchRelay.notify["state"].connect((s, p) => {
 				atv_vcm_set_relay_plus_output(switchRelay.state);
+		});
+
+		switchCarStatus.notify["state"].connect((s, p) => {
+				atv_gear_selector_set_car_status(switchCarStatus.state);
+		});
+
+		switchSteeringWheelStatus.notify["state"].connect((s, p) => {
+				atv_gear_selector_set_steering_wheel_status(switchSteeringWheelStatus.state);
 		});
 
 		buttonParking.toggled.connect((s) => {

@@ -34,6 +34,18 @@ public:
 		Drive = 4
 	};
 
+	enum class CarStatus
+	{
+		Off = 4,
+		On = 2//8 - no sense
+	};
+
+	enum class SteeringWheelStatus
+	{
+		Off = 0x80,
+		On = 0x10
+	};
+
 	const std::map<Gear, std::string_view> gearNames = {
 		{Gear::Parking, "Parking"},
 		{Gear::Reverse, "Reverse"},
@@ -66,6 +78,8 @@ private:
 
 	Gear m_gear{Gear::Parking};
 	bool m_isEcoModeEnabled{false};
+	CarStatus m_carStatus{CarStatus::Off};
+	SteeringWheelStatus m_steeringWheelStatus{SteeringWheelStatus::Off};
 
 public:
 	GearSelector()
@@ -89,6 +103,23 @@ public:
 #endif
 	}
 
+	void setCarStatus(CarStatus status)
+	{
+		m_carStatus = status;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[gearselector] Car status: " << (status == CarStatus::Off ? "OFF." : "ON.") << std::endl;
+#endif		
+	}
+
+	void setSteeringWheelStatus(SteeringWheelStatus status)
+	{
+		m_steeringWheelStatus = status;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[gearselector] Steering wheel status: " 
+				<< (status == SteeringWheelStatus::Off ? "OFF." : "ON.") << std::endl;
+#endif	
+	}
+
 	purecan::can_payload_va createMessage0x11A()
 	{
 		static uint8_t heartbeat = 0x55;
@@ -97,7 +128,8 @@ public:
 
 		message.gear = static_cast<uint8_t>(m_gear);
 		message.ecoSelected = m_isEcoModeEnabled;
-		message.steeringWheelButton = 0x10;	// TODO as in log
+		message.statusCarOnOff = static_cast<uint8_t>(m_carStatus);
+		message.steeringWheelButton = static_cast<uint8_t>(m_steeringWheelStatus);
 		message.heartbeat = heartbeat;
 		if (heartbeat == 0x55)
 		{
