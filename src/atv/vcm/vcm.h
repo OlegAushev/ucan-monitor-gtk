@@ -17,6 +17,7 @@
 #include "purecan/purecan_def.h"
 #include <cstring>
 #include <algorithm>
+#include <iostream>
 
 
 namespace atv {
@@ -108,16 +109,25 @@ public:
 	void setHvPowerSupply(bool state)
 	{
 		m_hvPowerSupply = state;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[vcm] HV power supply is " << (state ? "enabled." : "disabled.") << std::endl;
+#endif
 	}
 
 	void setRelayPlusOutput(bool state)
 	{
 		m_relayPlusOutput = state;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[vcm] Relay plus output is " << (state ? "enabled." : "disabled.") << std::endl;
+#endif
 	}
 
 	void setState(State state)
 	{
 		m_state = state;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[vcm] Cmd: " << (state == State::GoToSleep ? "go to sleep." : "wake up.") << std::endl;
+#endif
 	}
 
 	purecan::can_payload_va createMessage0x1D4()

@@ -77,11 +77,13 @@ int backend_main_loop(std::future<void> futureExit)
 	auto creatorMessage0x355 = []() { return std::vector<uint8_t>{0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}; };
 	global::canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
 
+	global::gearSelector = std::make_shared<atv::GearSelector>();
+	auto creatorMessage0x11A = []() { return global::gearSelector->createMessage0x11A(); };
+	global::canController->registerTxMessage(0x11A, "Selector Message 0x11A", std::chrono::milliseconds(10), creatorMessage0x11A);
+
 	global::leafInverter = std::make_shared<atv::LeafInverter>(global::canSocket);
 	global::canController->registerDevice(global::leafInverter);
 
-	global::gearSelector = std::make_shared<atv::GearSelector>(global::canSocket);
-	global::canController->registerDevice(global::gearSelector);
 
 
 

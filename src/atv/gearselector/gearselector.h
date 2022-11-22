@@ -13,13 +13,17 @@
 #pragma once
 
 
-#include "purecan/device/purecan_device.h"
+#include "purecan/purecan_def.h"
+#include <cstdint>
+#include <cstring>
+#include <map>
+#include <iostream>
 
 
 namespace atv {
 
 
-class GearSelector : public purecan::IDevice
+class GearSelector
 {
 public:
 	enum class Gear
@@ -28,6 +32,13 @@ public:
 		Reverse = 2,
 		Neutral = 3,
 		Drive = 4
+	};
+
+	const std::map<Gear, std::string_view> gearNames = {
+		{Gear::Parking, "Parking"},
+		{Gear::Reverse, "Reverse"},
+		{Gear::Neutral, "Neutral"},
+		{Gear::Drive, "Drive"}
 	};
 
 private:
@@ -57,15 +68,26 @@ private:
 	bool m_isEcoModeEnabled{false};
 
 public:
-	GearSelector(std::shared_ptr<can::Socket> socket)
-		: purecan::IDevice(socket)
+	GearSelector()
 	{
 		static_assert(sizeof(Message0x11A) == 8);
 	}
 
-	void setGear(Gear gear) { m_gear = gear; }
+	void setGear(Gear gear)
+	{
+		m_gear = gear;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[gearselector] " << gearNames.at(gear) << " is selected." << std::endl;
+#endif	
+	}
 
-	void setEcoMode(bool state) { m_isEcoModeEnabled = state; }
+	void setEcoMode(bool state)
+	{
+		m_isEcoModeEnabled = state;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[gearselector] ECO mode is " << (state ? "enabled." : "disabled.") << std::endl;
+#endif
+	}
 
 	purecan::can_payload_va createMessage0x11A()
 	{

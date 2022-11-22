@@ -55,13 +55,35 @@ public class ControlPanel : Adw.Bin
 				atv_vcm_set_relay_plus_output(switchRelay.state);
 		});
 
-		buttonParking.toggled.connect((s) => { atv_gear_selector_set_gear(0); });
-		buttonReverse.toggled.connect((s) => { atv_gear_selector_set_gear(1); });
-		buttonNeutral.toggled.connect((s) => { atv_gear_selector_set_gear(2); });
-		buttonDrive.toggled.connect((s) => { atv_gear_selector_set_gear(3); });
+		buttonParking.toggled.connect((s) => {
+			if (buttonParking.active)
+			{
+				atv_gear_selector_set_gear(0);
+			}
+		});
+		buttonReverse.toggled.connect((s) => {
+			if (buttonReverse.active)
+			{
+				atv_gear_selector_set_gear(1);
+			}
+		});
+
+		buttonNeutral.toggled.connect((s) => {
+			if (buttonNeutral.active)
+			{
+				atv_gear_selector_set_gear(2); 
+			}
+		});
+		
+		buttonDrive.toggled.connect((s) => {
+			if (buttonDrive.active)
+			{
+				atv_gear_selector_set_gear(3);
+			}
+		});
 
 		switchEcoMode.notify["state"].connect((s, p) => {
-				atv_gear_selector_set_ecomode(switchRelay.state);
+				atv_gear_selector_set_ecomode(switchEcoMode.state);
 		});
 
 		sliderTorque.adjustment->notify["value"].connect((s, p) => {
