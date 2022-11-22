@@ -43,15 +43,17 @@ extern void cansocket_disconnect();
 //  extern void srmdrive_observer_set_watch_enabled(bool isEnabled);
 //  extern void srmdrive_observer_set_watch_period(int period);
 
-extern void atv_vcm_set_torque(double val);
-extern void atv_vcm_set_hv_power_supply(bool state);
-extern void atv_vcm_set_relay_plus_output(bool state);
-extern void atv_vcm_set_wakeup_state(bool state);
+extern void atv_duplicate_log(bool setting);
+
+extern void atv_vcm_set_torque(double value);
+extern void atv_vcm_set_hv_power_supply(bool setting);
+extern void atv_vcm_set_relay_plus_output(bool setting);
+extern void atv_vcm_set_wakeup_state(bool setting);
 
 extern void atv_gear_selector_set_gear(uint gear);
-extern void atv_gear_selector_set_ecomode(bool state);
-extern void atv_gear_selector_set_car_status(bool state);
-extern void atv_gear_selector_set_steering_wheel_status(bool state);
+extern void atv_gear_selector_set_ecomode(bool setting);
+extern void atv_gear_selector_set_car_status(bool setting);
+extern void atv_gear_selector_set_steering_wheel_status(bool setting);
 
 extern bool atv_leaf_inverter_is_tx_ok(uint id);
 extern double atv_leaf_inverter_get_torque();

@@ -19,6 +19,9 @@
 namespace atv {
 
 
+inline bool isDuplicateLogEnabled = false;
+
+
 inline uint8_t calculateCrc(const uint8_t* buf, unsigned int len)
 {
 	const uint8_t poly = 0x85;	// Nissan poly value

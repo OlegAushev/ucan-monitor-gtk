@@ -17,46 +17,46 @@ public class ControlPanel : Adw.Bin
 
 	[GtkChild]
 	private unowned Gtk.Switch switchRelay;
-
-	[GtkChild]
-	private unowned Gtk.Switch switchEmergency;
-
+	
 	[GtkChild]
 	private unowned Gtk.Switch switchCarStatus;
 
 	[GtkChild]
 	private unowned Gtk.Switch switchSteeringWheelStatus;
-
+	
 	[GtkChild]
 	private unowned Gtk.CheckButton buttonParking;
-
+	
 	[GtkChild]
 	private unowned Gtk.CheckButton buttonReverse;
-
+	
 	[GtkChild]
 	private unowned Gtk.CheckButton buttonNeutral;
-
+	
 	[GtkChild]
 	private unowned Gtk.CheckButton buttonDrive;
-
+	
 	[GtkChild]
 	private unowned Gtk.Switch switchEcoMode;
-
+	
 	[GtkChild]
 	private unowned SliderWithText sliderTorque;
+	
+	[GtkChild]
+	private unowned Gtk.Switch switchDuplicateLog;
 
 	public ControlPanel() {}
-
+	
 	construct
 	{
 		switchWakeUp.notify["state"].connect((s, p) => {
-				atv_vcm_set_wakeup_state(switchWakeUp.state);
+			atv_vcm_set_wakeup_state(switchWakeUp.state);
 		});
-
+		
 		switchHV.notify["state"].connect((s, p) => {
-				atv_vcm_set_hv_power_supply(switchHV.state);
+			atv_vcm_set_hv_power_supply(switchHV.state);
 		});
-
+		
 		switchRelay.notify["state"].connect((s, p) => {
 				atv_vcm_set_relay_plus_output(switchRelay.state);
 		});
@@ -102,6 +102,10 @@ public class ControlPanel : Adw.Bin
 
 		sliderTorque.adjustment->notify["value"].connect((s, p) => {
 				atv_vcm_set_torque(sliderTorque.value);
+		});
+
+		switchDuplicateLog.notify["state"].connect((s, p) => {
+			atv_duplicate_log(switchDuplicateLog.state);
 		});
 	}
 }

@@ -192,11 +192,11 @@
 						<property name="valign">end</property>
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Emergency Stop</property>
+								<property name="title">Duplicate Log</property>
 								<property name="icon-name">dialog-warning-symbolic</property>
-								<property name="activatable_widget">switchEmergency</property>
+								<property name="activatable_widget">switchDuplicateLog</property>
 								<child>
-									<object class="GtkSwitch" id="switchEmergency">
+									<object class="GtkSwitch" id="switchDuplicateLog">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>

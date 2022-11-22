@@ -101,24 +101,24 @@ public:
 		return instance_;
 	}
 
-	void setTorqueRef(double val)
+	void setTorqueRef(double value)
 	{
-		m_torqueRef = std::clamp(val, 0.0, 1023.75);
+		m_torqueRef = std::clamp(value, 0.0, 1023.75);
 	}
 
-	void setHvPowerSupply(bool state)
+	void setHvPowerSupply(bool setting)
 	{
-		m_hvPowerSupply = state;
+		m_hvPowerSupply = setting;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[vcm] HV power supply is " << (state ? "enabled." : "disabled.") << std::endl;
+		std::cout << "[vcm] HV power supply is " << (setting ? "enabled." : "disabled.") << std::endl;
 #endif
 	}
 
-	void setRelayPlusOutput(bool state)
+	void setRelayPlusOutput(bool setting)
 	{
-		m_relayPlusOutput = state;
+		m_relayPlusOutput = setting;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[vcm] Relay plus output is " << (state ? "enabled." : "disabled.") << std::endl;
+		std::cout << "[vcm] Relay plus output is " << (setting ? "enabled." : "disabled.") << std::endl;
 #endif
 	}
 
@@ -136,10 +136,13 @@ public:
 		
 		Message0x1D4 message{};
 
-		// message._reserved_byte0 = 0xF7;	// TODO as in log
-		// message._reserved_byte1 = 0x07;	// TODO as in log
-		// message.statusCharge = 0x30; 	// TODO as in log
-		// message._reserved_byte4_0 = 0x3;	// TODO as in log
+		if (isDuplicateLogEnabled)
+		{
+			message._reserved_byte0 = 0xF7;		// TODO as in log
+			message._reserved_byte1 = 0x07;		// TODO as in log
+			message.statusCharge = 0x30;		// TODO as in log
+			message._reserved_byte4_0 = 0x3;	// TODO as in log
+		}
 
 		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;
 		uint8_t torque[2];
@@ -167,7 +170,10 @@ public:
 	{
 		Message0x50B message{};
 
-		// message._reserved_byte2_0 = 0x02;	// TODO as in log
+		if (isDuplicateLogEnabled)
+		{
+			message._reserved_byte2_0 = 0x02;	// TODO as in log
+		}
 
 		message.cmdWakeUpSleep = static_cast<uint8_t>(m_state);
 		message.diagMuxOn = 1;

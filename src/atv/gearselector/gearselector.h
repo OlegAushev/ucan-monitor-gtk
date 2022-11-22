@@ -95,11 +95,11 @@ public:
 #endif	
 	}
 
-	void setEcoMode(bool state)
+	void setEcoMode(bool setting)
 	{
-		m_isEcoModeEnabled = state;
+		m_isEcoModeEnabled = setting;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[gearselector] ECO mode is " << (state ? "enabled." : "disabled.") << std::endl;
+		std::cout << "[gearselector] ECO mode is " << (setting ? "enabled." : "disabled.") << std::endl;
 #endif
 	}
 

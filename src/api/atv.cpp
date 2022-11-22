@@ -24,26 +24,26 @@ extern std::shared_ptr<atv::GearSelector> gearSelector;
 extern "C" {
 
 
-void atv_vcm_set_torque(double val)
+void atv_vcm_set_torque(double value)
 {
-	atv::VehicleControlModule::instance().setTorqueRef(val);
+	atv::VehicleControlModule::instance().setTorqueRef(value);
 }
 
 
-void atv_vcm_set_hv_power_supply(bool state)
+void atv_vcm_set_hv_power_supply(bool setting)
 {
-	atv::VehicleControlModule::instance().setHvPowerSupply(state);
+	atv::VehicleControlModule::instance().setHvPowerSupply(setting);
 }
 
 
-void atv_vcm_set_relay_plus_output(bool state)
+void atv_vcm_set_relay_plus_output(bool setting)
 {
-	atv::VehicleControlModule::instance().setRelayPlusOutput(state);
+	atv::VehicleControlModule::instance().setRelayPlusOutput(setting);
 }
 
-void atv_vcm_set_wakeup_state(bool state)
+void atv_vcm_set_wakeup_state(bool setting)
 {
-	state ? atv::VehicleControlModule::instance().setState(atv::VehicleControlModule::State::WakeUp)
+	setting ? atv::VehicleControlModule::instance().setState(atv::VehicleControlModule::State::WakeUp)
 		: atv::VehicleControlModule::instance().setState(atv::VehicleControlModule::State::GoToSleep);
 }
 
@@ -100,27 +100,33 @@ void atv_gear_selector_set_gear(unsigned int gear)
 }
 
 
-void atv_gear_selector_set_ecomode(bool state)
+void atv_gear_selector_set_ecomode(bool setting)
 {
-	global::gearSelector->setEcoMode(state);
+	global::gearSelector->setEcoMode(setting);
 }
 
 
-void atv_gear_selector_set_car_status(bool state)
+void atv_gear_selector_set_car_status(bool setting)
 {
-	state ? global::gearSelector->setCarStatus(atv::GearSelector::CarStatus::On)
+	setting ? global::gearSelector->setCarStatus(atv::GearSelector::CarStatus::On)
 			: global::gearSelector->setCarStatus(atv::GearSelector::CarStatus::Off);
 }
 
 
-void atv_gear_selector_set_steering_wheel_status(bool state)
+void atv_gear_selector_set_steering_wheel_status(bool setting)
 {
-	state ? global::gearSelector->setSteeringWheelStatus(atv::GearSelector::SteeringWheelStatus::On)
+	setting ? global::gearSelector->setSteeringWheelStatus(atv::GearSelector::SteeringWheelStatus::On)
 			: global::gearSelector->setSteeringWheelStatus(atv::GearSelector::SteeringWheelStatus::Off);
 }
 
 
-
+void atv_duplicate_log(bool setting)
+{
+#ifdef STD_COUT_ENABLED
+	std::cout << "[atv] Duplicate log is " << (setting ? "enabled." : "disabled.") << std::endl;
+#endif
+	atv::isDuplicateLogEnabled = setting;
+}
 
 
 
