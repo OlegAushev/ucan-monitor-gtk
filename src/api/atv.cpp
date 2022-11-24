@@ -52,6 +52,11 @@ bool atv_leaf_inverter_is_tx_ok(canid_t id)
 	return global::leafInverter->isTxOk(id);
 }
 
+double atv_leaf_inverter_get_voltagedc()
+{
+	return global::leafInverter->voltageDC();
+}
+
 double atv_leaf_inverter_get_torque()
 {
 	return global::leafInverter->torqueEffective();

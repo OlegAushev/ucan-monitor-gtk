@@ -24,7 +24,7 @@ class LeafInverter : public purecan::IDevice
 private:
 	struct Message0x1DA
 	{
-		uint8_t _reserved_byte0 : 8;
+		uint8_t voltageDC : 8;
 
 		uint8_t _reserved_byte1 : 8;
 
@@ -63,6 +63,7 @@ private:
 		uint8_t _reserved_byte7 : 8;	
 	};
 
+	double m_voltageDC{0};
 	double m_torqueEffective{0};
 	double m_outputRevolution{0};
 
@@ -90,6 +91,7 @@ public:
 		Message0x1DA message{};
 		memcpy(&message, data.data(), 8);
 
+		m_voltageDC = message.voltageDC * 2.0;
 		uint16_t torqueEffective = (message.torqueEffectiveM << 8) + message.torqueEffectiveL;
 		m_torqueEffective = torqueEffective * 0.5 - 300;
 	}
@@ -105,6 +107,7 @@ public:
 		m_tempMotor = message.tempMotor * 0.5;
 	}
 
+	double voltageDC() const { return m_voltageDC; }
 	double torqueEffective() const { return m_torqueEffective; }
 	double tempInverterComBoard() const { return m_tempInverterComBoard; }
 	double tempIgbt() const { return m_tempIgbt; }

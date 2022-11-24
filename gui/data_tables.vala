@@ -7,6 +7,8 @@
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
+	private unowned TableEntry entryVoltageDC;
+	[GtkChild]
 	private unowned TableEntry entryTorque;
 	[GtkChild]
 	private unowned TableEntry entryTempMotor;
@@ -98,6 +100,7 @@ public class DataTables : Adw.Bin
 	public void updateLeafInverterData()
 	{
 		char[] buf = new char[double.DTOSTR_BUF_SIZE];
+		entryVoltageDC.entry_text = atv_leaf_inverter_get_voltagedc().format(buf, "%.2f");
 		entryTorque.entry_text = atv_leaf_inverter_get_torque().format(buf, "%.2f");
 		entryTempBoard.entry_text = atv_leaf_inverter_get_temp_board().format(buf, "%.2f");
 		entryTempIgbt.entry_text = atv_leaf_inverter_get_temp_igbt().format(buf, "%.2f");
