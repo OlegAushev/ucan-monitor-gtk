@@ -442,7 +442,7 @@ inline can_frame makeFrame(canid_t id, unsigned char len, can_payload data)
 
 
 /// OD_TASK execution status
-enum ODTaskStatus
+enum class ODTaskStatus
 {
 	Success = 0,
 	Fail = 1,
