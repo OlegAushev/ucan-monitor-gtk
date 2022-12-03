@@ -132,7 +132,7 @@ enum class TpdoType
 inline CobType toCobType(TpdoType tpdoType)
 {
 	return static_cast<CobType>(
-		static_cast<size_t>(CobType::Tpdo1) + 2 * static_cast<size_t>(tpdoType)
+		static_cast<unsigned int>(CobType::Tpdo1) + 2 * static_cast<unsigned int>(tpdoType)
 	);
 }
 
@@ -150,7 +150,7 @@ enum class RpdoType
 inline CobType toCobType(RpdoType rpdoType)
 {
 	return static_cast<CobType>(
-		static_cast<size_t>(CobType::Rpdo1) + 2 * static_cast<size_t>(rpdoType)
+		static_cast<unsigned int>(CobType::Rpdo1) + 2 * static_cast<unsigned int>(rpdoType)
 	);
 }
 
