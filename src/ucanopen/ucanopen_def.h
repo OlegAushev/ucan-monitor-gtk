@@ -42,6 +42,16 @@ inline can_payload toPayload(T message)
 }
 
 
+template <typename T>
+inline T fromPayload(can_payload payload)
+{
+	static_assert(sizeof(T) <= 8);
+	T message;
+	memcpy(&message, payload.data(), sizeof(T));
+	return message;
+}
+
+
 class NodeId
 {
 private:
