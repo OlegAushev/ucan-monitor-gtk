@@ -29,6 +29,9 @@
 namespace ucanopen {
 
 
+using can_payload = std::array<uint8_t, 8>;
+
+
 class NodeId
 {
 private:
@@ -307,12 +310,31 @@ struct CobSdo
 	uint32_t index : 16;
 	uint32_t subindex : 8;
 	CobSdoData data = {};
+
 	CobSdo() = default;
+
+	CobSdo(can_payload payload)
+	{
+		memcpy(this, payload.data(), sizeof(CobSdo));
+	}
+
+	CobSdo(const uint8_t* data)
+	{
+		memcpy(this, data, sizeof(CobSdo));
+	}
+
 	uint64_t all() const
 	{
 		uint64_t data = 0;
 		memcpy(&data, this, sizeof(CobSdo));
 		return data;
+	}
+
+	can_payload toPayload() const
+	{
+		can_payload payload;
+		memcpy(payload.data(), this, sizeof(CobSdo));
+		return payload;
 	}
 };
 
@@ -402,7 +424,6 @@ inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
 
 using ObjectDictionaryType = std::map<ODEntryKey, ODEntryValue>;
 using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
-using can_payload = std::array<uint8_t, 8>;
 
 
 /**

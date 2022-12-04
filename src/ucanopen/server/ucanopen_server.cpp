@@ -105,9 +105,8 @@ void IServer::handleFrame(const can_frame& frame)
 
 	if (frame.can_id == calculateCobId(CobType::Tsdo, nodeId.value()))
 	{
-		CobSdo msg;
-		memcpy(&msg, frame.data, sizeof(CobSdo));
-		ODEntryKey key = {msg.index, msg.subindex};
+		CobSdo message(frame.data);
+		ODEntryKey key = {message.index, message.subindex};
 		auto odEntry = m_dictionary.find(key);
 		if (odEntry == m_dictionary.end())
 		{
@@ -115,7 +114,7 @@ void IServer::handleFrame(const can_frame& frame)
 		}
 
 		SdoType type;
-		switch (msg.cs)
+		switch (message.cs)
 		{
 		case cs_codes::sdoScsRead:
 			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
@@ -134,7 +133,7 @@ void IServer::handleFrame(const can_frame& frame)
 			return;
 		}
 
-		handleTsdo(type, odEntry, msg.data);
+		handleTsdo(type, odEntry, message.data);
 	}	
 }
 
@@ -169,11 +168,8 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 	message.cs = cs_codes::sdoCcsRead;
-	
-	can_payload data;
-	memcpy(data.data(), &message, sizeof(CobSdo));
 
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -210,10 +206,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	can_payload data;
-	memcpy(data.data(), &message, sizeof(CobSdo));
-
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -284,10 +277,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	can_payload data;
-	memcpy(data.data(), &message, sizeof(CobSdo));
-
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -330,10 +320,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 		message.cs = cs_codes::sdoCcsWrite;
 	}
 
-	can_payload data;
-	memcpy(data.data(), &message, sizeof(CobSdo));
-
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, data));
+	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 

@@ -100,7 +100,7 @@ void Controller::setSpeed(double val)
 ///
 ///
 ///
-std::array<uint8_t, 8> Controller::makeTpdo1()
+ucanopen::can_payload Controller::makeTpdo1()
 {
 	CobTpdo1 message{};
 
@@ -116,7 +116,7 @@ std::array<uint8_t, 8> Controller::makeTpdo1()
 ///
 ///
 ///
-std::array<uint8_t, 8> Controller::makeTpdo2()
+ucanopen::can_payload Controller::makeTpdo2()
 {
 	CobTpdo2 message{};
 

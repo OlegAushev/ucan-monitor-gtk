@@ -44,8 +44,8 @@ public:
 	void setTorque(double valPercents);
 	void setSpeed(double val);
 
-	std::array<uint8_t, 8> makeTpdo1();
-	std::array<uint8_t, 8> makeTpdo2();
+	ucanopen::can_payload makeTpdo1();
+	ucanopen::can_payload makeTpdo2();
 };
 
 
