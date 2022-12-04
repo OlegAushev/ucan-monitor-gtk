@@ -65,7 +65,7 @@ void IServer::sendRpdo()
 			data = createRpdo4();
 			break;
 		}
-		m_socket->send(makeFrame(message.id, 8, data));
+		m_socket->send(createFrame(message.id, 8, data));
 		message.timepoint = now;	
 	}
 }
@@ -169,7 +169,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	message.subindex = entryIt->first.subindex;
 	message.cs = cs_codes::sdoCcsRead;
 
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -206,7 +206,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -277,7 +277,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -320,7 +320,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 		message.cs = cs_codes::sdoCcsWrite;
 	}
 
-	m_socket->send(makeFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 

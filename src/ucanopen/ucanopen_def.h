@@ -32,6 +32,16 @@ namespace ucanopen {
 using can_payload = std::array<uint8_t, 8>;
 
 
+template <typename T>
+inline can_payload toPayload(T message)
+{
+	static_assert(sizeof(T) <= 8);
+	can_payload payload{};
+	memcpy(payload.data(), &message, sizeof(T));
+	return payload;
+}
+
+
 class NodeId
 {
 private:
@@ -434,7 +444,7 @@ using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, O
  * @param data 
  * @return CAN frame.
  */
-inline can_frame makeFrame(CobType cobType, NodeId nodeId, can_payload data)
+inline can_frame createFrame(CobType cobType, NodeId nodeId, can_payload data)
 {
 	can_frame frame;
 	frame.can_id = calculateCobId(cobType, nodeId.value());
@@ -452,7 +462,7 @@ inline can_frame makeFrame(CobType cobType, NodeId nodeId, can_payload data)
  * @param data 
  * @return CAN frame.
  */
-inline can_frame makeFrame(canid_t id, unsigned char len, can_payload data)
+inline can_frame createFrame(canid_t id, unsigned char len, can_payload data)
 {
 	can_frame frame;
 	frame.can_id = id;

@@ -106,10 +106,8 @@ ucanopen::can_payload Controller::makeTpdo1()
 
 	message.run = ((m_isRunEnabled) ? 1 : 0);
 	message.emergencyStop = ((m_isEmergencyEnabled) ? 1 : 0);
-	
-	std::array<uint8_t, 8> ret;
-	memcpy(ret.data(), &message, sizeof(CobTpdo1));
-	return ret;
+
+	return ucanopen::toPayload(message);
 }
 
 
@@ -122,9 +120,7 @@ ucanopen::can_payload Controller::makeTpdo2()
 
 	message.torque = ((m_torquePuRef > 0) ? m_torquePuRef * 32767 : m_torquePuRef * 32768);
 
-	std::array<uint8_t, 8> ret;
-	memcpy(ret.data(), &message, sizeof(CobTpdo2));
-	return ret;
+	return ucanopen::toPayload(message);
 }
 
 
