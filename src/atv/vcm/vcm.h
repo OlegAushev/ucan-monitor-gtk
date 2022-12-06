@@ -141,8 +141,8 @@ public:
 
 		if (isDuplicateLogEnabled)
 		{
-			message._reserved_byte0 = 0x6E;//F7;		// TODO as in log
-			message._reserved_byte1 = 0x6E;//07;		// TODO as in log
+			message._reserved_byte0 = 0xF7;//6E;//F7;		// TODO as in log
+			message._reserved_byte1 = 0x07;// 6E;//07;		// TODO as in log
 			message.statusCharge = 0x01;//30;		// TODO as in log
 			
 			message._reserved_byte4_0 = 0x3;	//!!!!! TODO as in log
