@@ -133,15 +133,22 @@ public:
 	purecan::can_payload_va createMessage0x1D4()
 	{
 		static int clock = 0;
+
+		//const std::vector<int> foo = {0, 3};
+		//static size_t fooIndex = 0;
 		
 		Message0x1D4 message{};
 
 		if (isDuplicateLogEnabled)
 		{
-			message._reserved_byte0 = 0xF7;		// TODO as in log
-			message._reserved_byte1 = 0x07;		// TODO as in log
-			message.statusCharge = 0x30;		// TODO as in log
-			message._reserved_byte4_0 = 0x3;	// TODO as in log
+			message._reserved_byte0 = 0x6E;//F7;		// TODO as in log
+			message._reserved_byte1 = 0x6E;//07;		// TODO as in log
+			message.statusCharge = 0x01;//30;		// TODO as in log
+			
+			message._reserved_byte4_0 = 0x3;	//!!!!! TODO as in log
+			//message._reserved_byte4_0 = foo[fooIndex];
+			//fooIndex = (fooIndex + 1) % foo.size();
+						
 			message._reserved_byte5_0 = 0x4;	// TODO as in log
 		}
 

@@ -44,7 +44,7 @@ public:
 	enum class SteeringWheelStatus
 	{
 		Off = 0x80,
-		On = 0x10
+		On = 0x00//10
 	};
 
 	const std::map<Gear, std::string_view> gearNames = {
@@ -124,7 +124,7 @@ public:
 
 	purecan::can_payload_va createMessage0x11A()
 	{
-		static std::array<uint8_t, 4> heartbeatValues = {0x55, 0x55, 0xAA, 0xAA};
+		const std::vector<uint8_t> heartbeatValues = {0xAA};//{0x55, 0x55, 0xAA, 0xAA};
 		static size_t heartbeatIndex = 0;
 
 		static int clock = 0;
@@ -147,7 +147,7 @@ public:
 
 		if (isDuplicateLogEnabled)
 		{
-			message.clock = clock;
+			message.clock = clock; //3
 			clock = (clock + 1) % 4;
 		}
 

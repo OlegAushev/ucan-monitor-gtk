@@ -75,7 +75,7 @@ int backend_main_loop(std::future<void> futureExit)
 	global::canController->registerTxMessage(0x50B, "VCM Message 0x50B", std::chrono::milliseconds(100), creatorVcmMessage0x50B);
 
 	auto creatorMessage0x355 = []() { return std::vector<uint8_t>{0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}; };
-	global::canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
+	//global::canController->registerTxMessage(0x355, "Unknown", std::chrono::milliseconds(40), creatorMessage0x355);
 
 	global::gearSelector = std::make_shared<atv::GearSelector>();
 	auto creatorMessage0x11A = []() { return global::gearSelector->createMessage0x11A(); };
