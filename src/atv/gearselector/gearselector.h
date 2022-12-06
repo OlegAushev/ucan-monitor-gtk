@@ -14,6 +14,7 @@
 
 
 #include "purecan/purecan_def.h"
+#include "../atv_def.h"
 #include <cstdint>
 #include <cstring>
 #include <map>
@@ -67,13 +68,14 @@ private:
 
 		uint8_t heartbeat : 8;
 
-		uint8_t _reserved_byte4 : 8;
+		uint8_t _reserved_byte4 : 6;
+		uint8_t clock : 2;
 
 		uint8_t _reserved_byte5 : 8;
 
 		uint8_t multiplexor : 8;
 
-		uint8_t startupDataUnknown : 8;
+		uint8_t crc : 8;
 	};
 
 	Gear m_gear{Gear::Parking};
@@ -122,29 +124,43 @@ public:
 
 	purecan::can_payload_va createMessage0x11A()
 	{
-		static uint8_t heartbeat = 0x55;
+		static std::array<uint8_t, 4> heartbeatValues = {0x55, 0x55, 0xAA, 0xAA};
+		static size_t heartbeatIndex = 0;
+
+		static int clock = 0;
+
 		static uint8_t multiplexor = 0;
 		Message0x11A message{};
+
+		if (isDuplicateLogEnabled)
+		{
+			message._reserved_byte0 = 0xE;
+		}
 
 		message.gear = static_cast<uint8_t>(m_gear);
 		message.ecoSelected = m_isEcoModeEnabled;
 		message.statusCarOnOff = static_cast<uint8_t>(m_carStatus);
 		message.steeringWheelButton = static_cast<uint8_t>(m_steeringWheelStatus);
-		message.heartbeat = heartbeat;
-		if (heartbeat == 0x55)
+		
+		message.heartbeat = heartbeatValues[heartbeatIndex];
+		heartbeatIndex = (heartbeatIndex + 1) % heartbeatValues.size();
+
+		if (isDuplicateLogEnabled)
 		{
-			heartbeat = 0xAA;
-		}
-		else
-		{
-			heartbeat = 0x55;
+			message.clock = clock;
+			clock = (clock + 1) % 4;
 		}
 
 		message.multiplexor = multiplexor;
 		multiplexor = (multiplexor + 1) % 4;
-
+		
 		purecan::can_payload_va payload(sizeof(Message0x11A));	
 		memcpy(payload.data(), &message, sizeof(Message0x11A));
+
+		uint8_t crc = calculateCrc(payload.data(), 7);
+		message.crc = crc;
+		payload[7] = crc;
+
 		return payload;
 	}
 };
