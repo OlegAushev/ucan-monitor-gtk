@@ -62,6 +62,11 @@ double atv_leaf_inverter_get_torque()
 	return global::leafInverter->torqueEffective();
 }
 
+bool atv_leaf_inverter_has_error()
+{
+	return global::leafInverter->hasError();
+}
+
 double atv_leaf_inverter_get_temp_board()
 {
 	return global::leafInverter->tempInverterComBoard();

@@ -58,6 +58,7 @@ extern void atv_gear_selector_set_steering_wheel_status(bool setting);
 extern bool atv_leaf_inverter_is_tx_ok(uint id);
 extern double atv_leaf_inverter_get_voltagedc();
 extern double atv_leaf_inverter_get_torque();
+extern bool atv_leaf_inverter_has_error();
 extern double atv_leaf_inverter_get_temp_board();
 extern double atv_leaf_inverter_get_temp_igbt();
 extern double atv_leaf_inverter_get_temp_igbt_driver();

@@ -142,6 +142,7 @@ public:
 			message._reserved_byte1 = 0x07;		// TODO as in log
 			message.statusCharge = 0x30;		// TODO as in log
 			message._reserved_byte4_0 = 0x3;	// TODO as in log
+			message._reserved_byte5_0 = 0x4;	// TODO as in log
 		}
 
 		uint16_t torqueScaled = uint16_t(m_torqueRef * 4.0) << 4;

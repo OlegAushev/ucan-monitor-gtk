@@ -42,6 +42,12 @@
 							</object>
 						</child>
 						<child>
+							<object class="TableBoolEntry" id="entryErrorState">
+								<property name="title">Error State</property>
+								<property name="subtitle"></property>
+							</object>
+						</child>
+						<child>
 							<object class="TableBoolEntry" id="entryTemperaturesConnection">
 								<property name="title">Message 0x55A</property>
 								<property name="subtitle"></property>

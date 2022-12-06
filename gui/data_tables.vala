@@ -23,7 +23,8 @@ public class DataTables : Adw.Bin
 	private unowned TableBoolEntry entryResponseConnection;
 	[GtkChild]
 	private unowned TableBoolEntry entryTemperaturesConnection;
-
+	[GtkChild]
+	private unowned TableBoolEntry entryErrorState;
 
 
 
@@ -102,6 +103,7 @@ public class DataTables : Adw.Bin
 		char[] buf = new char[double.DTOSTR_BUF_SIZE];
 		entryVoltageDC.entry_text = atv_leaf_inverter_get_voltagedc().format(buf, "%.2f");
 		entryTorque.entry_text = atv_leaf_inverter_get_torque().format(buf, "%.2f");
+		entryErrorState.value = atv_leaf_inverter_has_error();
 		entryTempBoard.entry_text = atv_leaf_inverter_get_temp_board().format(buf, "%.2f");
 		entryTempIgbt.entry_text = atv_leaf_inverter_get_temp_igbt().format(buf, "%.2f");
 		entryTempDriver.entry_text = atv_leaf_inverter_get_temp_igbt_driver().format(buf, "%.2f");

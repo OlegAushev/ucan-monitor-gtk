@@ -39,7 +39,8 @@ private:
 		uint8_t outputRevolutionL : 7;
 
 		uint8_t clock : 2;
-		uint8_t _reserved_byte6 : 6;
+		uint8_t _reserved_byte6 : 2;
+		uint8_t error : 4;
 
 		uint8_t crc;
 	};
@@ -66,6 +67,7 @@ private:
 	double m_voltageDC{0};
 	double m_torqueEffective{0};
 	double m_outputRevolution{0};
+	bool m_hasError{false};
 
 	double m_tempInverterComBoard{0};
 	double m_tempIgbt{0};
@@ -94,6 +96,7 @@ public:
 		m_voltageDC = message.voltageDC * 2.0;
 		uint16_t torqueEffective = (message.torqueEffectiveM << 8) + message.torqueEffectiveL;
 		m_torqueEffective = torqueEffective * 0.5 - 300;
+		m_hasError = message.error & 0xB;
 	}
 
 	void handleMessage0x55A(purecan::can_payload data)
@@ -109,6 +112,7 @@ public:
 
 	double voltageDC() const { return m_voltageDC; }
 	double torqueEffective() const { return m_torqueEffective; }
+	bool hasError() const { return m_hasError; }
 	double tempInverterComBoard() const { return m_tempInverterComBoard; }
 	double tempIgbt() const { return m_tempIgbt; }
 	double tempIgbtDriver() const { return m_tempIgbtDriver; }
