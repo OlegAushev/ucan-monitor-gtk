@@ -82,7 +82,9 @@ public class Application : Adw.Application
 
 	private void on_canbus_action()
 	{
+		var win = this.active_window;
 		var win_canbus = new CanMonitor.WindowCanBusPrefs();
+		win_canbus.set_transient_for(win);
 		win_canbus.present();
 	}
 }
