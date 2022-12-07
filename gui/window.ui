@@ -45,12 +45,18 @@
 				<property name="orientation">vertical</property>
 				<child>
 					<object class="AdwFlap" id="flapMain">
+						<property name="fold-policy">never</property>
+						<property name="locked">true</property>
 						<property name="flap">controlpanel</property>
 						<property name="separator">flapMainSeparator</property>
 						<property name="content">panedMain</property>
 						<!-- FLAP -->
 						<child>
-							<object class="CanMonitorControlPanel" id="controlpanel"></object>
+							<object class="CanMonitorControlPanel" id="controlpanel">
+								<style>
+									<class name="background"/>
+								</style>
+							</object>
 						</child>
 						<!-- SEPARATOR -->
 						<child>
@@ -59,6 +65,7 @@
 						<!-- CONTENT -->
 						<child>
 							<object class="GtkPaned" id="panedMain">
+								<property name="width-request">320</property>
 								<property name="orientation">vertical</property>
 								<property name="wide-handle">false</property>
 								<property name="position">800</property>
