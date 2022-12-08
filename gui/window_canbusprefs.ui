@@ -53,7 +53,7 @@
 						<!-- ENABLE TPDO SWITCH -->
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Enable TPDOs</property>
+								<property name="title">Enable client TPDO-messages</property>
 								<property name="activatable_widget">switchTpdo</property>
 								<child>
 									<object class="GtkSwitch" id="switchTpdo">
@@ -65,7 +65,7 @@
 						<!-- ENABLE WATCH SWITCH -->
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Enable Watch</property>
+								<property name="title">Enable server watch messages</property>
 								<property name="activatable_widget">switchWatch</property>
 								<child>
 									<object class="GtkSwitch" id="switchWatch">
@@ -77,7 +77,7 @@
 						<!-- WATCH PERIOD COMBOBOX -->
 						<child>
 							<object class="AdwComboRow" id="comborowWatchPeriod">
-								<property name="title">Watch Period, ms</property>
+								<property name="title">Server watch messages period, ms</property>
 								<property name="model">
 									<object class="GtkStringList" id="listWatchPeriod">
 										<items>
