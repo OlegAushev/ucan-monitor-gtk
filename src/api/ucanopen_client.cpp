@@ -48,6 +48,26 @@ void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 }
 
 
+///
+///
+///
+void ucanopen_client_set_watch_enabled(bool isEnabled)
+{
+	isEnabled ? global::ucanClient->enableServerWatch() : global::ucanClient->disableServerWatch();
+}
+
+
+///
+///
+///
+void ucanopen_client_set_watch_period(int period)
+{
+	if (period <= 0) return;
+
+	global::ucanClient->setServerWatchPeriod(std::chrono::milliseconds(period));
+}
+
+
 }
 
 

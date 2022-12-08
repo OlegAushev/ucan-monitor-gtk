@@ -61,7 +61,7 @@ protected:
 
 	/* RPDO server <-- client */
 private:
-	bool m_isRpdoEnabled;
+	bool m_isRpdoEnabled{false};
 	struct RpdoInfo
 	{
 		canid_t id;
@@ -83,6 +83,54 @@ protected:
 	/* TSDO server --> client */
 protected:
 	virtual void handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
+
+	/* WATCH messages server <- client */
+private:
+	bool m_isWatchEnabled{false};
+	struct WatchInfo
+	{
+		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
+		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+	};
+	WatchInfo m_watchInfo;
+	std::vector<std::string_view> m_watchEntriesList;
+public:
+	/**
+	 * @brief 
+	 * 
+	 */
+	void enableWatch()
+	{
+		m_isWatchEnabled = true;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Watch requests have been enabled." << std::endl;
+#endif
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	void disableWatch()
+	{
+		m_isWatchEnabled = false;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Watch requests have been disabled." << std::endl;
+#endif
+	}
+
+	/**
+	 * @brief
+	 * 
+	 * @param period 
+	 */
+	void setWatchPeriod(std::chrono::milliseconds period)
+	{
+		m_watchInfo.period = period;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] Watch requests period = " << period << "." << std::endl;
+#endif
+	}
 
 public:
 	/**
@@ -192,7 +240,7 @@ private:
 		return it->second;
 	}
 
-	void sendRpdo();
+	void sendPeriodic();
 	void handleFrame(const can_frame& frame);
 	void checkConnection();
 };

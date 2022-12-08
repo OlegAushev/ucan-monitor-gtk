@@ -31,42 +31,54 @@ IServer::IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const Obje
 				m_dictionary.find(key)});
 	}
 
-	m_isRpdoEnabled = false;
+	m_watchEntriesList = watchEntriesList();
 }
 
 
 ///
 ///
 ///
-void IServer::sendRpdo()
+void IServer::sendPeriodic()
 {
 	auto now = std::chrono::steady_clock::now();
 	
-	if (!m_isRpdoEnabled) return;
-
-	for (auto& [type, message] : m_rpdoList)
+	if (m_isRpdoEnabled)
 	{
-		if (message.period == std::chrono::milliseconds(0)) continue;
-		if (now - message.timepoint < message.period) continue;
-
-		can_payload data;
-		switch (type)
+		for (auto& [type, message] : m_rpdoList)
 		{
-		case RpdoType::Rpdo1:
-			data = createRpdo1();
-			break;
-		case RpdoType::Rpdo2:
-			data = createRpdo2();
-			break;
-		case RpdoType::Rpdo3:
-			data = createRpdo3();
-			break;
-		case RpdoType::Rpdo4:
-			data = createRpdo4();
-			break;
+			if (message.period == std::chrono::milliseconds(0)) continue;
+			if (now - message.timepoint < message.period) continue;
+
+			can_payload data;
+			switch (type)
+			{
+			case RpdoType::Rpdo1:
+				data = createRpdo1();
+				break;
+			case RpdoType::Rpdo2:
+				data = createRpdo2();
+				break;
+			case RpdoType::Rpdo3:
+				data = createRpdo3();
+				break;
+			case RpdoType::Rpdo4:
+				data = createRpdo4();
+				break;
+			}
+			m_socket->send(createFrame(message.id, 8, data));
+			message.timepoint = now;	
 		}
-		m_socket->send(createFrame(message.id, 8, data));
-		message.timepoint = now;	
+	}
+
+	if (m_isWatchEnabled)
+	{
+		if (now - m_watchInfo.timepoint >= m_watchInfo.period)
+		{
+			static size_t i = 0;
+			read("WATCH", "WATCH", m_watchEntriesList[i]);
+			m_watchInfo.timepoint = now;
+			i = (i + 1) % m_watchEntriesList.size();
+		}
 	}
 }
 

@@ -53,8 +53,8 @@ public class Application : Adw.Application
 		message("[gui] Backend is ready.");
 
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
-		srmdrive_observer_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
-		srmdrive_observer_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
+		ucanopen_client_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
+		ucanopen_client_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
 
 		base.activate();
 		var win = this.active_window;

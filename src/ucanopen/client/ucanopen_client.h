@@ -183,6 +183,42 @@ public:
 		std::cout << "[ucanopen] Client TPDOs have been disabled." << std::endl;
 #endif
 	}
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	void enableServerWatch()
+	{
+		for (auto& server : m_servers)
+		{
+			server->enableWatch();
+		}
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	void disableServerWatch()
+	{
+		for (auto& server : m_servers)
+		{
+			server->disableWatch();
+		}
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	void setServerWatchPeriod(std::chrono::milliseconds period)
+	{
+		for (auto& server : m_servers)
+		{
+			server->setWatchPeriod(period);
+		}
+	}
 };
 
 

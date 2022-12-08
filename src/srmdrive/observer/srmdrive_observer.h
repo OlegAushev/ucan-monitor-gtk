@@ -29,19 +29,7 @@ private:
 	std::map<std::string_view, std::string> m_watchData;
 	mutable std::mutex m_watchMutex;
 	std::vector<std::string_view> m_watchList;
-	volatile bool m_isWatchEnabled{false};
-	std::chrono::milliseconds m_watchPeriod{std::chrono::milliseconds(10)};
 	
-	void sendWatchRequest()
-	{
-		static size_t i = 0;
-		if (m_isWatchEnabled)
-		{
-			m_driveServer->read("WATCH", "WATCH", m_watchList[i]);
-			i = (i + 1) % m_watchList.size();		
-		}
-	}
-
 	/* THREADS */
 	std::thread m_threadRun;
 	std::promise<void> m_signalExitRunThread;
@@ -51,30 +39,6 @@ public:
 	Observer(ucanopen::IServer* driveServer);
 	~Observer();
 	
-	void enableWatch()
-	{
-		m_isWatchEnabled = true;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[srmdrive] Watch requests have been enabled." << std::endl;
-#endif
-	}
-
-	void disableWatch()
-	{
-		m_isWatchEnabled = false;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[srmdrive] Watch requests have been disabled." << std::endl;
-#endif
-	}
-
-	void setWatchPeriod(std::chrono::milliseconds period)
-	{
-		m_watchPeriod = period;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[srmdrive] Watch requests period = " << period << "." << std::endl;
-#endif
-	}
-
 	std::string watchValue(std::string_view watchName) const
 	{
 		auto it = m_watchData.find(watchName);

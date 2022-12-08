@@ -80,26 +80,6 @@ void srmdrive_observer_get_watch_value(const char* name, char* retval)
 ///
 ///
 ///
-void srmdrive_observer_set_watch_enabled(bool isEnabled)
-{
-	isEnabled ? global::srmdriveServer->observer.enableWatch() : global::srmdriveServer->observer.disableWatch();
-}
-
-
-///
-///
-///
-void srmdrive_observer_set_watch_period(int period)
-{
-	if (period <= 0) return;
-
-	global::srmdriveServer->observer.setWatchPeriod(std::chrono::milliseconds(period));
-}
-
-
-///
-///
-///
 bool srmdrive_is_connection_ok()
 {
 	return global::srmdriveServer->isConnectionOk();

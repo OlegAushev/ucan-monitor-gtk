@@ -64,12 +64,12 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		});
 
 		switchWatch.notify["state"].connect((s,p) => {
-			srmdrive_observer_set_watch_enabled(switchWatch.state);
+			ucanopen_client_set_watch_enabled(switchWatch.state);
 			_switchWatchState = switchWatch.state;
 		});
 
 		comborowWatchPeriod.notify["selected"].connect((s,p) => {
-			srmdrive_observer_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
+			ucanopen_client_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
 			_watchPeriodSelected = comborowWatchPeriod.selected;
 		});
 	}

@@ -56,11 +56,6 @@ void Observer::run(std::future<void> futureExit)
 	std::cout << "[srmdrive] Observer aux thread has started." << std::endl;
 #endif
 
-	while (futureExit.wait_for(m_watchPeriod) == std::future_status::timeout)
-	{
-		sendWatchRequest();
-	}
-
 #ifdef STD_COUT_ENABLED
 	std::cout << "[srmdrive] Observer aux thread has stopped." << std::endl;
 #endif

@@ -122,7 +122,7 @@ void Client::run(std::future<void> futureExit)
 		for (auto& server : m_servers)
 		{
 			server->checkConnection();
-			server->sendRpdo();
+			server->sendPeriodic();
 		}
 
 		/* RECV */
