@@ -51,7 +51,7 @@ int backend_main_loop(std::future<void> futureExit)
 	global::canSocket = std::make_shared<can::Socket>();
 
 	global::ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), global::canSocket);
-	global::srmdriveServer = std::make_shared<srmdrive::Server>(ucanopen::NodeId(0x01), global::canSocket, srmdrive::OBJECT_DICTIONARY);
+	global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
 	global::ucanClient->registerServer(global::srmdriveServer);
 
 	// define and register client TPDO callbacks

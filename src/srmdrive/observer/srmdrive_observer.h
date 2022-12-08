@@ -29,15 +29,9 @@ private:
 	std::map<std::string_view, std::string> m_watchData;
 	mutable std::mutex m_watchMutex;
 	std::vector<std::string_view> m_watchList;
-	
-	/* THREADS */
-	std::thread m_threadRun;
-	std::promise<void> m_signalExitRunThread;
-	void run(std::future<void> futureExit);
-	
+		
 public:
 	Observer(ucanopen::IServer* driveServer);
-	~Observer();
 	
 	std::string watchValue(std::string_view watchName) const
 	{

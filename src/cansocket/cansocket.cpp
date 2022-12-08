@@ -39,7 +39,7 @@ Socket::Socket()
 	/* RUN SCRIPT */
 	std::string cmd = "sh " + scriptPath.string() + " " + "can0";
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] System cmd: " << cmd << std::endl;
+	std::cout << "[cansocket] Execute system command: " << cmd << std::endl;
 #endif
 	int shRet = system(cmd.c_str());
 	if (shRet == 0)
@@ -142,7 +142,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	/* RUN SCRIPT */
 	std::string cmd = "pkexec sh " + scriptPath.string() + " " + interface + " " + std::to_string(bitrate);
 #ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] System cmd: " << cmd << std::endl;
+	std::cout << "[cansocket] Execute system command: " << cmd << std::endl;
 #endif
 	int pkexecRet = system(cmd.c_str());
 	Error error;

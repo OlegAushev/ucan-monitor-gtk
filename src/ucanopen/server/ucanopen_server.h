@@ -28,6 +28,8 @@ namespace ucanopen {
 class IServer
 {
 	friend class Client;
+private:
+	std::string m_name{"unnamed"};
 public:
 	NodeId nodeId;
 private:
@@ -103,7 +105,7 @@ public:
 	{
 		m_isWatchEnabled = true;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Watch requests have been enabled." << std::endl;
+		std::cout << "[ucanopen] " << m_name << " server: watch requests have been enabled." << std::endl;
 #endif
 	}
 
@@ -115,7 +117,7 @@ public:
 	{
 		m_isWatchEnabled = false;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Watch requests have been disabled." << std::endl;
+		std::cout << "[ucanopen] " << m_name << " server: watch requests have been disabled." << std::endl;
 #endif
 	}
 
@@ -128,7 +130,7 @@ public:
 	{
 		m_watchInfo.period = period;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Watch requests period = " << period << "." << std::endl;
+		std::cout << "[ucanopen] " << m_name << " server: watch requests period = " << period << "." << std::endl;
 #endif
 	}
 
@@ -140,7 +142,7 @@ public:
 	 * @param socket 
 	 * @param dictionary 
 	 */
-	IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
+	IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
 	
 	/**
 	 * @brief Destroy the IServer object
@@ -152,13 +154,25 @@ public:
 	 * @brief 
 	 * 
 	 */
-	void enableRpdo() { m_isRpdoEnabled = true; }
+	void enableRpdo()
+	{
+		m_isRpdoEnabled = true;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] " << m_name << " server: RPDO messages have been enabled." << std::endl;
+#endif
+	}
 	
 	/**
 	 * @brief 
 	 * 
 	 */
-	void disableRpdo() { m_isRpdoEnabled = false; }
+	void disableRpdo() 
+	{
+		m_isRpdoEnabled = false;
+#ifdef STD_COUT_ENABLED
+		std::cout << "[ucanopen] " << m_name << " server: RPDO messages have been disabled." << std::endl;
+#endif
+	}
 	
 	/**
 	 * @brief 

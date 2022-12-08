@@ -22,7 +22,7 @@
 namespace srmdrive {
 
 
-extern const ucanopen::ObjectDictionaryType OBJECT_DICTIONARY;
+extern const ucanopen::ObjectDictionaryType objectDictionary;
 
 
 class Server : public ucanopen::IServer
@@ -51,7 +51,8 @@ public:
 	Controller controller;
 	Observer observer;
 
-	Server(ucanopen::NodeId nodeId,
+	Server(const std::string& name,
+			ucanopen::NodeId nodeId,
 			std::shared_ptr<can::Socket> socket,
 			const ucanopen::ObjectDictionaryType& dictionary);
 

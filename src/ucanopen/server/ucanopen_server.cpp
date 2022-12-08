@@ -19,8 +19,9 @@ namespace ucanopen {
 ///
 ///
 ///
-IServer::IServer(NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
-	: nodeId(nodeId_)
+IServer::IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
+	: m_name(name)
+	, nodeId(nodeId_)
 	, m_socket(socket)
 	, m_dictionary(dictionary)
 {
@@ -160,7 +161,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	if (entryIt == m_dictionary.end())
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot read "
+		std::cout << "[ucanopen] " << m_name << " server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
@@ -169,7 +170,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	else if (entryIt->second.hasReadAccess() == false)
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot read "
+		std::cout << "[ucanopen] " << m_name << " server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
@@ -196,7 +197,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	if (entryIt == m_dictionary.end())
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot write "
+		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
@@ -205,7 +206,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot write "
+		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
@@ -233,7 +234,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	if (entryIt == m_dictionary.end())
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot write "
+		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
@@ -242,7 +243,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot write "
+		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
 #endif
@@ -303,7 +304,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	if (entryIt == m_dictionary.end())
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot execute "
+		std::cout << "[ucanopen] " << m_name << " server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
 #endif
@@ -312,7 +313,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	else if (entryIt->second.dataType != ODEntryDataType::OD_TASK)
 	{
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Cannot execute "
+		std::cout << "[ucanopen] " << m_name << " server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry." << std::endl;
 #endif

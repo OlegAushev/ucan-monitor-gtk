@@ -119,7 +119,7 @@ public:
 	{
 		m_syncInfo.period = period;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client SYNC has been enabled, period = "
+		std::cout << "[ucanopen] Client SYNC message has been enabled, period = "
 				<< period << "." << std::endl;
 #endif		
 	}
@@ -132,7 +132,7 @@ public:
 	{
 		m_syncInfo.period = std::chrono::milliseconds(0);
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client SYNC has been disabled." << std::endl;
+		std::cout << "[ucanopen] Client SYNC message has been disabled." << std::endl;
 #endif		
 	}
 
@@ -168,7 +168,7 @@ public:
 	{
 		m_isTpdoEnabled = true;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client TPDOs have been enabled." << std::endl;
+		std::cout << "[ucanopen] Client TPDO messages have been enabled." << std::endl;
 #endif
 	}
 
@@ -180,7 +180,7 @@ public:
 	{
 		m_isTpdoEnabled = false;
 #ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client TPDOs have been disabled." << std::endl;
+		std::cout << "[ucanopen] Client TPDO messages have been disabled." << std::endl;
 #endif
 	}
 

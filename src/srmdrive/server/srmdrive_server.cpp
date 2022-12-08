@@ -16,10 +16,11 @@
 namespace srmdrive {
 
 
-Server::Server(ucanopen::NodeId nodeId,
+Server::Server(const std::string& name,
+		ucanopen::NodeId nodeId,
 		std::shared_ptr<can::Socket> socket,
 		const ucanopen::ObjectDictionaryType& dictionary)
-	: IServer(nodeId, socket, dictionary)
+	: IServer(name, nodeId, socket, dictionary)
 	, controller(this)
 	, observer(this)
 {

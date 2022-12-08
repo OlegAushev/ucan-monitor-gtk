@@ -27,38 +27,6 @@ Observer::Observer(ucanopen::IServer* driveServer)
 	{
 		m_watchData.insert({entry, std::string{"..."}});
 	}
-
-	std::future<void> futureExit = m_signalExitRunThread.get_future();
-	m_threadRun = std::thread(&Observer::run, this, std::move(futureExit));
-	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-}
-
-
-///
-///
-///
-Observer::~Observer()
-{
-#ifdef STD_COUT_ENABLED
-	std::cout << "[srmdrive] Sending signal to observer aux thread to stop..." << std::endl;
-#endif
-	m_signalExitRunThread.set_value();
-	m_threadRun.join();	
-}
-
-
-///
-///
-///
-void Observer::run(std::future<void> futureExit)
-{
-#ifdef STD_COUT_ENABLED
-	std::cout << "[srmdrive] Observer aux thread has started." << std::endl;
-#endif
-
-#ifdef STD_COUT_ENABLED
-	std::cout << "[srmdrive] Observer aux thread has stopped." << std::endl;
-#endif
 }
 
 
