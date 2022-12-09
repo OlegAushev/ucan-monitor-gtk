@@ -149,6 +149,16 @@ public:
 	 * 
 	 */
 	virtual ~IServer() = default;
+
+	/**
+	 * @brief Returns server name.
+	 * 
+	 * @return std::string_view 
+	 */
+	std::string_view name() const
+	{
+		return m_name;
+	}
 	
 	/**
 	 * @brief 

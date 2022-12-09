@@ -71,6 +71,10 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	m_recvIdServerList.insert({tpdo3, server});
 	m_recvIdServerList.insert({tpdo4, server});
 	m_recvIdServerList.insert({tsdo, server});
+
+#ifdef STD_COUT_ENABLED
+	std::cout << "[ucanopen] " << server->name() << " server has been added to client ." << std::endl;
+#endif
 }
 
 
