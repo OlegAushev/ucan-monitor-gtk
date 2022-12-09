@@ -117,11 +117,9 @@ public:
 	 */
 	void enableSync(std::chrono::milliseconds period)
 	{
+		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << period << ")... ";	
 		m_syncInfo.period = period;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client SYNC message has been enabled, period = "
-				<< period << "." << std::endl;
-#endif		
+		std::cout << "done." << std::endl;
 	}
 
 	/**
@@ -130,10 +128,9 @@ public:
 	 */
 	void disableSync()
 	{
+		std::cout << "[ucanopen] Disabling client SYNC messages... ";	
 		m_syncInfo.period = std::chrono::milliseconds(0);
-#ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client SYNC message has been disabled." << std::endl;
-#endif		
+		std::cout << "done." << std::endl;
 	}
 
 	/* HEARTBEAT */
@@ -166,10 +163,9 @@ public:
 	 */
 	void enableTpdo()
 	{
+		std::cout << "[ucanopen] Enabling client TPDO messages... ";
 		m_isTpdoEnabled = true;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client TPDO messages have been enabled." << std::endl;
-#endif
+		std::cout << "done." << std::endl;
 	}
 
 	/**
@@ -178,10 +174,9 @@ public:
 	 */
 	void disableTpdo()
 	{
+		std::cout << "[ucanopen] Disabling client TPDO messages... ";
 		m_isTpdoEnabled = false;
-#ifdef STD_COUT_ENABLED
-		std::cout << "[ucanopen] Client TPDO messages have been disabled." << std::endl;
-#endif
+		std::cout << "done." << std::endl;
 	}
 
 	/**

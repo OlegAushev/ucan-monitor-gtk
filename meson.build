@@ -51,6 +51,7 @@ app_sources = files(
 	'gui/window_canbusprefs.vala',
 	'gui/window.vala',
 	'gui/components/slider_with_text.vala',
+	'gui/components/table_boolentry.vala',
 	'gui/components/table_entry.vala',
 
 
@@ -91,7 +92,7 @@ app_deps = [
 executable('ucan-monitor', app_sources,
 	include_directories: app_incdirs,
 	dependencies: app_deps, export_dynamic: true,
-	cpp_args : '-DSTD_COUT_ENABLED',
+	#cpp_args : '-DSTD_COUT_ENABLED',
 )
 
 

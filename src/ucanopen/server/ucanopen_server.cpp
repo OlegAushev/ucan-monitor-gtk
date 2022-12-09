@@ -160,20 +160,16 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	
 	if (entryIt == m_dictionary.end())
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-#endif
 		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.hasReadAccess() == false)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-#endif
 		return ODRequestStatus::NoAccess;
 	}
 
@@ -196,20 +192,16 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	
 	if (entryIt == m_dictionary.end())
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-#endif
 		return ODRequestStatus::Fail;;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-#endif
 		return ODRequestStatus::NoAccess;
 	}
 
@@ -233,20 +225,16 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	
 	if (entryIt == m_dictionary.end())
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-#endif
 		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.hasWriteAccess() == false)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-#endif
 		return ODRequestStatus::NoAccess;
 	}
 
@@ -303,20 +291,16 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	auto entryIt = findOdEntry(category, subcategory, name);
 	if (entryIt == m_dictionary.end())
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-#endif
 		return ODRequestStatus::Fail;
 	}
 	else if (entryIt->second.dataType != ODEntryDataType::OD_TASK)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[ucanopen] " << m_name << " server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry." << std::endl;
-#endif
 		return ODRequestStatus::NoAccess;
 	}
 

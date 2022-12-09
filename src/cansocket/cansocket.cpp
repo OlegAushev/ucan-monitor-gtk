@@ -23,24 +23,19 @@ Socket::Socket()
 {
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
+	std::cout << "[cansocket] Searching for SocketCAN checking script... ";
 	std::filesystem::path scriptPath = findScript("socketcan_check.sh");
 	if (scriptPath.empty())
 	{
-#ifdef STD_COUT_ENABLED
-		std::cout << "[cansocket] Warning: SocketCAN checking script not found." << std::endl;
-#endif
+		std::cout << "WARNING: not found." << std::endl;
 		return;
 	}
-
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] SocketCAN checking script found: " << scriptPath << std::endl;
-#endif
+	std::cout << "found: " << scriptPath << std::endl;
 
 	/* RUN SCRIPT */
 	std::string cmd = "sh " + scriptPath.string() + " " + "can0";
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] Execute system command: " << cmd << std::endl;
-#endif
+	std::cout << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"" << std::endl;
+
 	int shRet = system(cmd.c_str());
 	if (shRet == 0)
 	{
@@ -67,21 +62,18 @@ Socket::~Socket()
 Error Socket::createSocket(const std::string& interface)
 {
 	/* CREATE SOCKET */
+	std::cout << "[cansocket] Creating socket..." << std::endl;
 	m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (m_socket < 0)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket creation failed." << std::endl;
-#endif
 		return Error::SocketCreationFailed;
 	}
 
 	std::strcpy(m_ifr.ifr_name, interface.c_str());
 	if (ioctl(m_socket, SIOCGIFINDEX, &m_ifr) < 0)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Interface retrieving failed." << std::endl;
-#endif
 		return Error::InterfaceRetrievingFailed;
 	}
 
@@ -96,18 +88,14 @@ Error Socket::createSocket(const std::string& interface)
 
 	if (bind(m_socket, (sockaddr*)&m_addr, sizeof(m_addr)) < 0)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket binding failed." << std::endl;
-#endif
 		return Error::SocketBindingFailed;
 	}
 
 	m_recvFd.fd = m_socket;
 	m_recvFd.events = POLLIN;
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] Socket is created." << std::endl;
-#endif
+	std::cout << "[cansocket] Socket created." << std::endl;
 	return Error::NoError;
 }
 
@@ -129,21 +117,19 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	std::lock_guard<std::mutex> lock2(m_recvMutex);
 
 	/* FIND SCRIPT */
+	std::cout << "[cansocket] Searching for SocketCAN enabling script... ";
 	std::filesystem::path scriptPath = findScript("socketcan_enable.sh");
 	if (scriptPath.empty())
 	{
+		std::cout << "ERROR: not found." << std::endl;
 		return Error::ScriptNotFound;
 	}
-
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] SocketCAN interface enabling script found: " << scriptPath << std::endl;
-#endif
+	std::cout << "found: " << scriptPath << std::endl;
 
 	/* RUN SCRIPT */
 	std::string cmd = "pkexec sh " + scriptPath.string() + " " + interface + " " + std::to_string(bitrate);
-#ifdef STD_COUT_ENABLED
-	std::cout << "[cansocket] Execute system command: " << cmd << std::endl;
-#endif
+	std::cout << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"" << std::endl;
+
 	int pkexecRet = system(cmd.c_str());
 	Error error;
 
@@ -168,9 +154,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 
 	if (error != Error::NoError)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << std::endl;
-#endif
 		return error;
 	}
 
@@ -185,9 +169,7 @@ Error Socket::disconnect()
 {
 	if (m_socket < 0)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] No socket to close." << std::endl;
-#endif
 		return Error::NoError;
 	}
 
@@ -196,16 +178,12 @@ Error Socket::disconnect()
 
 	if (close(m_socket) < 0)
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket closing failed." << std::endl;
-#endif
 		return Error::SocketClosingFailed;
 	}
 	else
 	{
-#ifdef STD_COUT_ENABLED
 		std::cout << "[cansocket] Socket closed." << std::endl;
-#endif
 		m_socket = -1;
 		return Error::NoError;
 	}

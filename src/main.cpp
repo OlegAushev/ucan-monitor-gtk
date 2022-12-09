@@ -44,9 +44,7 @@ std::shared_ptr<srmdrive::Server> srmdriveServer;
 extern "C" 
 int backend_main_loop(std::future<void> futureExit)
 {
-#ifdef STD_COUT_ENABLED
-	std::cout << "[backend] Main loop thread has started. Thread id: " << std::this_thread::get_id() << std::endl;
-#endif
+	std::cout << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << std::endl;
 
 	global::canSocket = std::make_shared<can::Socket>();
 
@@ -67,9 +65,8 @@ int backend_main_loop(std::future<void> futureExit)
 
 	global::ucanClient->enableSync(std::chrono::milliseconds(200));
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[backend] Backend is ready." << std::endl;
-#endif
+
+	std::cout << "[backend] Backend ready." << std::endl;
 	backend_isReady = true;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
@@ -77,9 +74,7 @@ int backend_main_loop(std::future<void> futureExit)
 		
 	}
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[backend] Main loop thread has stopped." << std::endl;
-#endif
+	std::cout << "[backend] Main loop thread stopped." << std::endl;
 	return 0;
 }
 
@@ -92,10 +87,9 @@ int backend_main_loop(std::future<void> futureExit)
 extern "C"
 int backend_main_enter()
 {
-#ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
 	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
-#endif
+
 	std::future<void> futureExit = signalExitMain.get_future();
 	threadMain = std::thread(backend_main_loop, std::move(futureExit));
 	return 0;
@@ -109,9 +103,8 @@ int backend_main_enter()
 extern "C"
 void backend_main_exit()
 {
-#ifdef STD_COUT_ENABLED
 	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;
-#endif
+
 	signalExitMain.set_value();
 	threadMain.join();
 }

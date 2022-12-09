@@ -22,9 +22,8 @@ namespace purecan {
 Controller::Controller(std::shared_ptr<can::Socket> socket)
 	: m_socket(socket)
 {
-#ifdef STD_COUT_ENABLED
 	std::cout << "[purecan] Starting aux thread..." << std::endl;
-#endif
+
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
 	m_threadRun = std::thread(&Controller::run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -36,9 +35,8 @@ Controller::Controller(std::shared_ptr<can::Socket> socket)
 ///
 Controller::~Controller()
 {
-#ifdef STD_COUT_ENABLED
 	std::cout << "[purecan] Sending signal to aux thread to stop..." << std::endl;
-#endif
+
 	m_signalExitRunThread.set_value();
 	m_threadRun.join();	
 }
@@ -63,9 +61,7 @@ void Controller::registerDevice(std::shared_ptr<IDevice> device)
 ///
 void Controller::run(std::future<void> futureExit)
 {
-#ifdef STD_COUT_ENABLED
-	std::cout << "[purecan] Aux thread has started." << std::endl;
-#endif
+	std::cout << "[purecan] Aux thread started." << std::endl;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
@@ -107,9 +103,7 @@ void Controller::run(std::future<void> futureExit)
 		}
 	}
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[purecan] Aux thread has stopped." << std::endl;
-#endif
+	std::cout << "[purecan] Aux thread stopped." << std::endl;
 }
 
 

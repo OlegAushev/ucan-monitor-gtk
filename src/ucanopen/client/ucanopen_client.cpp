@@ -30,9 +30,8 @@ Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
 	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
-#ifdef STD_COUT_ENABLED
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
-#endif
+
 	std::future<void> futureExit = m_signalExitRunThread.get_future();
 	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -45,9 +44,7 @@ Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
 ///
 Client::~Client()
 {
-#ifdef STD_COUT_ENABLED
 	std::cout << "[ucanopen] Sending signal to aux thread to stop..." << std::endl;
-#endif
 	m_signalExitRunThread.set_value();
 	m_threadRun.join();
 }
@@ -58,6 +55,8 @@ Client::~Client()
 ///
 void Client::registerServer(std::shared_ptr<IServer> server)
 {
+	std::cout << "[ucanopen] Adding " << server->name() << " server to client... ";
+
 	m_servers.insert(server);
 
 	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId.value());
@@ -72,9 +71,7 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	m_recvIdServerList.insert({tpdo4, server});
 	m_recvIdServerList.insert({tsdo, server});
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[ucanopen] " << server->name() << " server has been added to client ." << std::endl;
-#endif
+	std::cout << "done." << std::endl;
 }
 
 
@@ -83,9 +80,7 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 ///
 void Client::run(std::future<void> futureExit)
 {
-#ifdef STD_COUT_ENABLED
-	std::cout << "[ucanopen] Aux thread has started." << std::endl;
-#endif
+	std::cout << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << std::endl;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
@@ -139,9 +134,7 @@ void Client::run(std::future<void> futureExit)
 		}
 	}
 
-#ifdef STD_COUT_ENABLED
-	std::cout << "[ucanopen] Aux thread has stopped." << std::endl;
-#endif
+	std::cout << "[ucanopen] Aux thread stopped." << std::endl;
 }
 
 

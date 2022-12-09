@@ -101,7 +101,6 @@ add_dependencies(${executable} gresource-target)
 target_compile_definitions(${executable} PRIVATE
 	$<$<CONFIG:Debug>:DEBUG>
 	#${GTK4_CFLAGS_OTHER}
-	STD_COUT_ENABLED
 )
 
 target_include_directories(${executable} PRIVATE
