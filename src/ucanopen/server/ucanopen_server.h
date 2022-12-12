@@ -70,7 +70,6 @@ private:
 	bool m_isRpdoEnabled{false};
 	struct RpdoInfo
 	{
-		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
@@ -82,8 +81,7 @@ protected:
 	virtual can_payload createRpdo4() = 0;
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
-		canid_t id = calculateCobId(toCobType(type), m_nodeId.value());
-		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
+		m_rpdoList.insert({type, {period, std::chrono::steady_clock::now()}});
 	}
 
 	/* TSDO server --> client */

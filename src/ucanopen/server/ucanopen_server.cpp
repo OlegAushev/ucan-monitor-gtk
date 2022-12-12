@@ -71,7 +71,7 @@ void IServer::sendPeriodic()
 				data = createRpdo4();
 				break;
 			}
-			m_socket->send(createFrame(message.id, 8, data));
+			m_socket->send(createFrame(toCobType(type), m_nodeId, data));
 			message.timepoint = now;	
 		}
 	}
