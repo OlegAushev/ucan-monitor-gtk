@@ -19,9 +19,9 @@ namespace ucanopen {
 ///
 ///
 ///
-IServer::IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
+IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
 	: m_name(name)
-	, nodeId(nodeId_)
+	, m_nodeId(nodeId)
 	, m_socket(socket)
 	, m_dictionary(dictionary)
 {
@@ -121,7 +121,7 @@ void IServer::handleFrame(const can_frame& frame)
 		return;
 	}
 
-	if (frame.can_id == calculateCobId(CobType::Tsdo, nodeId.value()))
+	if (frame.can_id == calculateCobId(CobType::Tsdo, m_nodeId.value()))
 	{
 		CobSdo message(frame.data);
 		ODEntryKey key = {message.index, message.subindex};
@@ -183,7 +183,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 	message.subindex = entryIt->first.subindex;
 	message.cs = cs_codes::sdoCcsRead;
 
-	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, m_nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -216,7 +216,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, m_nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -283,7 +283,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	message.cs = cs_codes::sdoCcsWrite;
 	message.data = sdoData;
 
-	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, m_nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 
@@ -322,7 +322,7 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 		message.cs = cs_codes::sdoCcsWrite;
 	}
 
-	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
+	m_socket->send(createFrame(CobType::Rsdo, m_nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
 

@@ -35,9 +35,7 @@ public:
 
 private:
 	std::string m_name{"unnamed"};
-public:
-	NodeId nodeId;
-private:
+	NodeId m_nodeId;
 	std::shared_ptr<can::Socket> m_socket;
 	bool m_isConnectionOk{false};
 
@@ -63,7 +61,7 @@ protected:
 	virtual void handleTpdo4(can_payload data) = 0;
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
-		canid_t id = calculateCobId(toCobType(type), nodeId.value());
+		canid_t id = calculateCobId(toCobType(type), m_nodeId.value());
 		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
 	}
 
@@ -84,7 +82,7 @@ protected:
 	virtual can_payload createRpdo4() = 0;
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
-		canid_t id = calculateCobId(toCobType(type), nodeId.value());
+		canid_t id = calculateCobId(toCobType(type), m_nodeId.value());
 		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
 	}
 
@@ -161,6 +159,16 @@ public:
 	std::string_view name() const
 	{
 		return m_name;
+	}
+
+	/**
+	 * @brief Returns server node ID.
+	 * 
+	 * @return NodeId 
+	 */
+	NodeId nodeId() const
+	{
+		return m_nodeId;
 	}
 	
 	/**
