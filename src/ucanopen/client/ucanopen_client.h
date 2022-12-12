@@ -34,9 +34,8 @@ namespace ucanopen {
 
 class Client
 {
-public:
-	NodeId nodeId;
 private:
+	NodeId m_nodeId;
 	std::shared_ptr<can::Socket> m_socket;
 	NmtState m_state;
 
@@ -93,15 +92,30 @@ public:
 	~Client();
 
 	/**
-	 * @brief Set the Node Id object
+	 * @brief Returns client node ID.
+	 * 
+	 * @return NodeId 
+	 */
+	NodeId nodeId() const
+	{
+		return m_nodeId;
+	}
+
+	/**
+	 * @brief Sets client node ID.
 	 * 
 	 * @param nodeId_ 
 	 */
-	void setNodeId(NodeId nodeId_)
+	void setNodeId(NodeId nodeId)
 	{
-		nodeId = nodeId_;
-		std::cout << "[ucanopen] Client ID changed to " << nodeId_.value()
-				<< " (0x" << std::hex << nodeId_.value() << std::dec << ")" << std::endl;
+		if (nodeId.value() < 1 || nodeId.value() > 127)
+		{
+			std::cout << "[ucanopen] WARNING: invalid client id." << std::endl;
+			return;
+		}
+		m_nodeId = nodeId;
+		std::cout << "[ucanopen] Client ID changed to " << m_nodeId.value()
+				<< " (0x" << std::hex << m_nodeId.value() << std::dec << ")" << std::endl;
 	}
 	
 	/**

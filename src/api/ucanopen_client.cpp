@@ -26,7 +26,7 @@ extern "C" {
 ///
 unsigned int ucanopen_client_get_nodeid()
 {
-	return global::ucanClient->nodeId.value();
+	return global::ucanClient->nodeId().value();
 }
 
 

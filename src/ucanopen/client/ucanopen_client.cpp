@@ -19,8 +19,8 @@ namespace ucanopen {
 ///
 ///
 ///
-Client::Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket)
-	: nodeId(nodeId_)
+Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
+	: m_nodeId(nodeId)
 	, m_socket(socket)
 	, m_state(NmtState::Initialization)
 {
@@ -91,7 +91,7 @@ void Client::run(std::future<void> futureExit)
 		{
 			if (now - m_syncInfo.timepoint > m_syncInfo.period)
 			{
-				m_socket->send(createFrame(CobType::Sync, nodeId, {}));
+				m_socket->send(createFrame(CobType::Sync, m_nodeId, {}));
 				m_syncInfo.timepoint = now;
 			}
 		}
@@ -99,7 +99,7 @@ void Client::run(std::future<void> futureExit)
 		/* HEARTBEAT */
 		if (now - m_heartbeatInfo.timepoint > m_heartbeatInfo.period)
 		{
-			m_socket->send(createFrame(CobType::Heartbeat, nodeId, {static_cast<uint8_t>(m_state)}));
+			m_socket->send(createFrame(CobType::Heartbeat, m_nodeId, {static_cast<uint8_t>(m_state)}));
 			m_heartbeatInfo.timepoint = now;
 		}
 
@@ -111,7 +111,7 @@ void Client::run(std::future<void> futureExit)
 				if (!message.creator) continue;
 				if (now - message.timepoint >= message.period)
 				{
-					m_socket->send(createFrame(toCobType(type), nodeId, message.creator()));
+					m_socket->send(createFrame(toCobType(type), m_nodeId, message.creator()));
 					message.timepoint = now;
 				}
 			}
