@@ -201,7 +201,7 @@ enum ODEntryDataType
 	OD_FLOAT32,
 	OD_ENUM16,
 	OD_TASK,
-	OD_STRING
+	OD_STRING_4CHARS
 };
 
 
@@ -302,7 +302,7 @@ public:
 			return std::to_string(u16());
 		case ucanopen::OD_TASK:
 			return std::string();
-		case ucanopen::OD_STRING:
+		case ucanopen::OD_STRING_4CHARS:
 			{
 				uint32_t strRaw = u32();
 				char cstr[5];
