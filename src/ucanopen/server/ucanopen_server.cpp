@@ -27,12 +27,17 @@ IServer::IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::S
 {
 	for (const auto& [key, entry] : m_dictionary)
 	{
+		// create aux dictionary for faster search by {category, subcategory, name}
 		m_dictionaryAux.insert({
 				{entry.category, entry.subcategory, entry.name},
 				m_dictionary.find(key)});
-	}
 
-	m_watchEntriesList = watchEntriesList();
+		// create watch entries list
+		if (entry.category == watchCategory)
+		{
+			m_watchEntriesList.push_back(entry.name);
+		}
+	}
 }
 
 
@@ -76,7 +81,7 @@ void IServer::sendPeriodic()
 		if (now - m_watchInfo.timepoint >= m_watchInfo.period)
 		{
 			static size_t i = 0;
-			read("WATCH", "WATCH", m_watchEntriesList[i]);
+			read(watchCategory, watchSubcategory, m_watchEntriesList[i]);
 			m_watchInfo.timepoint = now;
 			i = (i + 1) % m_watchEntriesList.size();
 		}
@@ -319,23 +324,6 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 
 	m_socket->send(createFrame(CobType::Rsdo, nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
-}
-
-
-///
-///
-///
-std::vector<std::string_view> IServer::watchEntriesList() const
-{
-	std::vector<std::string_view> list;
-	for (auto [key, entry] : m_dictionary)
-	{
-		if (entry.category == "WATCH")
-		{
-			list.push_back(entry.name);
-		}
-	}
-	return list;
 }
 
 

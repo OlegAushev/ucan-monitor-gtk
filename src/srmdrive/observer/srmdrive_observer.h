@@ -28,7 +28,6 @@ private:
 	/* WATCH */
 	std::map<std::string_view, std::string> m_watchData;
 	mutable std::mutex m_watchMutex;
-	std::vector<std::string_view> m_watchList;
 		
 public:
 	Observer(ucanopen::IServer* driveServer);

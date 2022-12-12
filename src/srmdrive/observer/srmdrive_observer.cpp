@@ -22,8 +22,7 @@ namespace srmdrive {
 Observer::Observer(ucanopen::IServer* driveServer)
 	: m_driveServer(driveServer)
 {
-	m_watchList = m_driveServer->watchEntriesList();
-	for (auto entry : m_watchList)
+	for (auto entry : m_driveServer->watchEntriesList())
 	{
 		m_watchData.insert({entry, std::string{"..."}});
 	}
@@ -37,7 +36,7 @@ void Observer::handleSdo(ucanopen::SdoType sdoType,
 		ucanopen::ObjectDictionaryType::const_iterator entryIt,
 		ucanopen::CobSdoData data)
 {
-	if (entryIt->second.category == "WATCH")
+	if (entryIt->second.category == m_driveServer->watchCategory)
 	{
 		auto dataType = entryIt->second.dataType;
 		if (dataType != ucanopen::ODEntryDataType::OD_ENUM16)

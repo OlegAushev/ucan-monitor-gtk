@@ -28,6 +28,11 @@ namespace ucanopen {
 class IServer
 {
 	friend class Client;
+public:
+	static constexpr std::string_view watchCategory = "WATCH";
+	static constexpr std::string_view watchSubcategory = "WATCH";
+	static constexpr std::string_view confSubcategory = "conf";
+
 private:
 	std::string m_name{"unnamed"};
 public:
@@ -35,6 +40,7 @@ public:
 private:
 	std::shared_ptr<can::Socket> m_socket;
 	bool m_isConnectionOk{false};
+
 private:
 	/* OBJECT DICTIONARY */
 	const ObjectDictionaryType& m_dictionary;
@@ -226,7 +232,10 @@ public:
 	 * 
 	 * @return std::vector<std::string_view> 
 	 */
-	std::vector<std::string_view> watchEntriesList() const;
+	std::vector<std::string_view> watchEntriesList() const
+	{
+		return m_watchEntriesList;
+	}
 
 	/**
 	 * @brief 
