@@ -113,13 +113,13 @@ constexpr std::array<canid_t, cobTypeCount> cobFunctionCodes = {
 };
 
 
-inline canid_t calculateCobId(CobType cobType, unsigned int nodeId)
+inline canid_t calculateCobId(CobType cobType, NodeId nodeId)
 {
 	if ((cobType == CobType::Nmt) || (cobType == CobType::Sync) || (cobType == CobType::Time))
 	{
 		return cobFunctionCodes[static_cast<size_t>(cobType)];
 	}
-	return cobFunctionCodes[static_cast<size_t>(cobType)] + nodeId;
+	return cobFunctionCodes[static_cast<size_t>(cobType)] + nodeId.value();
 }
 
 
@@ -457,7 +457,7 @@ using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, O
 inline can_frame createFrame(CobType cobType, NodeId nodeId, can_payload data)
 {
 	can_frame frame;
-	frame.can_id = calculateCobId(cobType, nodeId.value());
+	frame.can_id = calculateCobId(cobType, nodeId);
 	frame.len = COB_DATA_LEN[static_cast<size_t>(cobType)];
 	std::copy(data.begin(), std::next(data.begin(), frame.len), frame.data);
 	return frame;

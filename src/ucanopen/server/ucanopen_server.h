@@ -61,7 +61,7 @@ protected:
 	virtual void handleTpdo4(can_payload data) = 0;
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
-		canid_t id = calculateCobId(toCobType(type), m_nodeId.value());
+		canid_t id = calculateCobId(toCobType(type), m_nodeId);
 		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
 	}
 
@@ -70,6 +70,7 @@ private:
 	bool m_isRpdoEnabled{false};
 	struct RpdoInfo
 	{
+		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
@@ -81,7 +82,8 @@ protected:
 	virtual can_payload createRpdo4() = 0;
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
-		m_rpdoList.insert({type, {period, std::chrono::steady_clock::now()}});
+		canid_t id = calculateCobId(toCobType(type), m_nodeId);
+		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
 	}
 
 	/* TSDO server --> client */
@@ -168,7 +170,7 @@ public:
 	{
 		return m_nodeId;
 	}
-	
+
 	/**
 	 * @brief 
 	 * 
@@ -277,6 +279,13 @@ private:
 	void sendPeriodic();
 	void handleFrame(const can_frame& frame);
 	void checkConnection();
+
+	/**
+	 * @brief Sets server node ID.
+	 * 
+	 * @param nodeId 
+	 */
+	void setNodeId(NodeId nodeId);
 };
 
 

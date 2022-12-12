@@ -113,6 +113,7 @@ public:
 			std::cout << "[ucanopen] WARNING: invalid client id." << std::endl;
 			return;
 		}
+		
 		m_nodeId = nodeId;
 		std::cout << "[ucanopen] Client ID changed to " << m_nodeId.value()
 				<< " (0x" << std::hex << m_nodeId.value() << std::dec << ")" << std::endl;

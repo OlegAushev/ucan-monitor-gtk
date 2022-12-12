@@ -59,11 +59,11 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 
 	m_servers.insert(server);
 
-	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId().value());
-	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId().value());
-	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId().value());
-	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId().value());
-	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId().value());
+	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
+	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());
+	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId());
+	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId());
+	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
 
 	m_recvIdServerList.insert({tpdo1, server});
 	m_recvIdServerList.insert({tpdo2, server});

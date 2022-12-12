@@ -44,6 +44,29 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 ///
 ///
 ///
+void IServer::setNodeId(NodeId nodeId)
+{
+	if (nodeId.value() < 1 || nodeId.value() > 127)
+	{
+		std::cout << "[ucanopen] WARNING: invalid server id." << std::endl;
+		return;
+	}
+
+	m_nodeId = nodeId;
+	for (auto& [type, message] : m_rpdoList)
+	{
+		message.id = calculateCobId(toCobType(type), m_nodeId);
+	}
+	for (auto& [type, message] : m_tpdoList)
+	{
+		message.id = calculateCobId(toCobType(type), m_nodeId);
+	}
+}
+
+
+///
+///
+///
 void IServer::sendPeriodic()
 {
 	auto now = std::chrono::steady_clock::now();
@@ -71,7 +94,7 @@ void IServer::sendPeriodic()
 				data = createRpdo4();
 				break;
 			}
-			m_socket->send(createFrame(toCobType(type), m_nodeId, data));
+			m_socket->send(createFrame(message.id, 8, data));
 			message.timepoint = now;	
 		}
 	}
@@ -121,37 +144,37 @@ void IServer::handleFrame(const can_frame& frame)
 		return;
 	}
 
-	if (frame.can_id == calculateCobId(CobType::Tsdo, m_nodeId.value()))
+	if (frame.can_id == calculateCobId(CobType::Tsdo, m_nodeId))
 	{
-		CobSdo message(frame.data);
-		ODEntryKey key = {message.index, message.subindex};
+		CobSdo sdoMessage(frame.data);
+		ODEntryKey key = {sdoMessage.index, sdoMessage.subindex};
 		auto odEntry = m_dictionary.find(key);
 		if (odEntry == m_dictionary.end())
 		{
 			return;
 		}
 
-		SdoType type;
-		switch (message.cs)
+		SdoType sdoType;
+		switch (sdoMessage.cs)
 		{
 		case cs_codes::sdoScsRead:
 			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
 			{
-				type = SdoType::ResponseToTask;
+				sdoType = SdoType::ResponseToTask;
 			}
 			else
 			{
-				type = SdoType::ResponseToRead;
+				sdoType = SdoType::ResponseToRead;
 			}
 			break;
 		case cs_codes::sdoScsWrite:
-			type = SdoType::ResponseToWrite;
+			sdoType = SdoType::ResponseToWrite;
 			break;
 		default:
 			return;
 		}
 
-		handleTsdo(type, odEntry, message.data);
+		handleTsdo(sdoType, odEntry, sdoMessage.data);
 	}	
 }
 
