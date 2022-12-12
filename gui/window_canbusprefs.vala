@@ -102,6 +102,16 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		});
 	}
 
+	public static uint clientId
+	{
+		get { return _clientId; }
+	}
+
+	public static uint serverId
+	{
+		get { return _serverId; }
+	}
+
 	public static bool switchTpdoState
 	{
 		get { return _switchTpdoState; }

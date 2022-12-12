@@ -95,11 +95,13 @@ public:
 	/**
 	 * @brief Set the Node Id object
 	 * 
-	 * @param _nodeId 
+	 * @param nodeId_ 
 	 */
-	void setNodeId(NodeId _nodeId)
+	void setNodeId(NodeId nodeId_)
 	{
-		nodeId = _nodeId;
+		nodeId = nodeId_;
+		std::cout << "[ucanopen] Client ID changed to " << nodeId_.value()
+				<< " (0x" << std::hex << nodeId_.value() << std::dec << ")" << std::endl;
 	}
 	
 	/**

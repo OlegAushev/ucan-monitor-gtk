@@ -50,11 +50,13 @@ public class Application : Adw.Application
 			//message("[gui] Waiting...");
 			Thread.usleep(10000);	// with empty loop Release build is not working
 		}
-		message("[gui] Backend is ready.");
-
+		
+		message("[gui] Configuring backend...");
+		ucanopen_client_set_nodeid(WindowCanBusPrefs.clientId);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		ucanopen_client_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
 		ucanopen_client_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
+		message("[gui] Backend is ready.");
 
 		base.activate();
 		var win = this.active_window;
