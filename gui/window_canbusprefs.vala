@@ -28,6 +28,18 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	private unowned Gtk.StringList listCanBitrate;
 
 	[GtkChild]
+	private unowned Gtk.SpinButton spinbuttonClientId;
+
+	[GtkChild]
+	private unowned Gtk.Adjustment adjustmentClientId;
+
+	[GtkChild]
+	private unowned Gtk.SpinButton spinbuttonServerId;
+
+	[GtkChild]
+	private unowned Gtk.Adjustment adjustmentServerId;
+
+	[GtkChild]
 	private unowned Gtk.Switch switchTpdo;
 
 	[GtkChild]
@@ -39,6 +51,9 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	[GtkChild]
 	private unowned Gtk.StringList listWatchPeriod;
 
+	private static uint _clientId = 2;
+	private static uint _serverId = 1;
+
 	private static bool _switchTpdoState = true;
 	private static bool _switchWatchState = true;
 	private static uint _watchPeriodSelected = 3;
@@ -48,15 +63,28 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 
 	construct
 	{
-		switchTpdo.set_active(_switchTpdoState);
-		switchWatch.set_active(_switchWatchState);
-		comborowWatchPeriod.set_selected(_watchPeriodSelected);
+		adjustmentClientId.value = _clientId;
+		adjustmentServerId.value = _serverId;
+
+		switchTpdo.active = _switchTpdoState;
+		switchWatch.active = _switchWatchState;
+		comborowWatchPeriod.selected = _watchPeriodSelected;
 
 		buttonConnect.clicked.connect(() => {
 			cansocket_connect(listCanInterface.get_string(comborowCanInterface.selected)
 					, int.parse(listCanBitrate.get_string(comborowCanBitrate.selected)));
 		});
 		buttonDisconnect.clicked.connect(cansocket_disconnect);
+
+		adjustmentClientId.value_changed.connect(() => {
+			ucanopen_client_set_nodeid((uint)adjustmentClientId.value);
+			_clientId = (uint)adjustmentClientId.value;
+		});
+
+		adjustmentServerId.value_changed.connect(() => {
+			message("Server Id changed");
+			_serverId = (uint)adjustmentServerId.value;
+		});
 
 		switchTpdo.notify["state"].connect((s,p) => {
 			ucanopen_client_set_tpdo_enabled(switchTpdo.state);

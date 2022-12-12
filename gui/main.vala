@@ -31,6 +31,7 @@ extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 
 // ucanopen
+extern void ucanopen_client_set_nodeid(uint nodeId);
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
