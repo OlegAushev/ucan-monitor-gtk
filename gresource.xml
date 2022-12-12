@@ -2,7 +2,7 @@
 <gresources>
 	<gresource prefix="/">
 		<file>gui/control_panel.ui</file>
-		<file>gui/data_tables.ui</file>
+		<file>gui/srmdrive_data_tables.ui</file>
 		<file>gui/window_canbusprefs.ui</file>
 		<file>gui/window.ui</file>
 		<file>gui/components/slider_with_text.ui</file>

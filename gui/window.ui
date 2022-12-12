@@ -84,7 +84,7 @@
 														<property name="hscrollbar-policy">automatic</property>
 														<property name="vscrollbar-policy">automatic</property>
 														<child>
-															<object class="DataTables" id="dataTables">
+															<object class="SrmdriveDataTables" id="dataTables">
 																
 															</object>
 														</child>

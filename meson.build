@@ -46,7 +46,7 @@ app_sources = files(
 
 	'gui/application.vala',
 	'gui/control_panel.vala',
-	'gui/data_tables.vala',
+	'gui/srmdrive_data_tables.vala',
 	'gui/main.vala',
 	'gui/window_canbusprefs.vala',
 	'gui/window.vala',

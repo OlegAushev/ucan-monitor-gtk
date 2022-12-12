@@ -19,28 +19,30 @@
 
 extern string GIT_DESCRIBE;
 
+// core backend
 namespace backend {
 extern int main_enter();
 extern void main_exit();
 extern bool isReady;
 }
 
+// cansocket
 extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 
+// ucanopen
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
 
+// srmdrive
 extern bool srmdrive_is_connection_ok();
 extern bool srmdrive_is_tpdo_ok(int tpdoNum);
-
 extern void srmdrive_controller_set_power_enabled(bool isEnabled);
 extern void srmdrive_controller_set_run_enabled(bool isEnabled);
 extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);
 extern void srmdrive_controller_set_torque(double valPu);
 extern void srmdrive_controller_set_speed(double val);
-
 extern void srmdrive_observer_get_watch_value(string name, string value);
 
 

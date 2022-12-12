@@ -3,8 +3,8 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/data_tables.ui")]
-public class DataTables : Adw.Bin
+[GtkTemplate (ui = "/gui/srmdrive_data_tables.ui")]
+public class SrmdriveDataTables : Adw.Bin
 {
 	[GtkChild]
 	private unowned TableEntry entryUptime;
@@ -67,7 +67,7 @@ public class DataTables : Adw.Bin
 	private unowned TableBoolEntry tpdo4Indicator;
 
 
-	public DataTables() {}
+	public SrmdriveDataTables() {}
 
 	construct
 	{
