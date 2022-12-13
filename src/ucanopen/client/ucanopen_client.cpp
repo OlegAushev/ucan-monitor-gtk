@@ -53,9 +53,35 @@ Client::~Client()
 ///
 ///
 ///
+void Client::setNodeId(NodeId nodeId)
+{
+	std::cout << "[ucanopen] Setting client ID = " << nodeId.value()
+			<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
+
+	if (!nodeId.isValid())
+	{
+		std::cout << "failed: invalid ID." << std::endl;
+		return;
+	}
+
+	if (!isFree(nodeId))
+	{
+		std::cout << "failed: already occupied ID." << std::endl;
+		return;
+	}
+	
+	m_nodeId = nodeId;
+	std::cout << "done." << std::endl;
+}
+
+
+///
+///
+///
 void Client::registerServer(std::shared_ptr<IServer> server)
 {
-	std::cout << "[ucanopen] Adding '" << server->name() << "' server to client... ";
+	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
+			<< std::hex << server->nodeId().value() << std::dec << " to client... ";
 
 	auto itServerSameName = std::find_if(m_servers.begin(), m_servers.end(), 
 		[server](const auto& s)
@@ -71,12 +97,18 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	auto itServerSameId = std::find_if(m_servers.begin(), m_servers.end(), 
 		[server](const auto& s)
 		{
-			return server->nodeId().value() == s->nodeId().value();				
+			return server->nodeId() == s->nodeId();				
 		});
 	if (itServerSameId != m_servers.end())
 	{
 		std::cout << "failed: server with ID 0x" << std::hex << server->nodeId().value() << std::dec
 				<< " already added to client."  << std::endl;
+		return;
+	}
+
+	if (server->nodeId() == m_nodeId)
+	{
+		std::cout << "failed: client has the same ID 0x" << std::hex << server->nodeId().value() << std::dec << std::endl;
 		return;
 	}
 
@@ -92,12 +124,18 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 ///
 void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 {
-	std::cout << "[ucanopen] Changing '" << name << "' server ID to " << nodeId.value()
+	std::cout << "[ucanopen] Setting '" << name << "' server ID = " << nodeId.value()
 				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
 
 	if (!nodeId.isValid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
+		return;
+	}
+
+	if (!isFree(nodeId))
+	{
+		std::cout << "failed: already occupied ID." << std::endl;
 		return;
 	}
 
@@ -225,6 +263,28 @@ void Client::calculateRecvId(std::shared_ptr<IServer> server)
 	m_recvIdServerList.insert({tpdo3, server});
 	m_recvIdServerList.insert({tpdo4, server});
 	m_recvIdServerList.insert({tsdo, server});
+}
+
+
+///
+///
+///
+bool Client::isFree(NodeId nodeId) const
+{
+	if (nodeId == m_nodeId)
+	{
+		return false;
+	}
+
+	for (const auto& server : m_servers)
+	{
+		if (nodeId == server->nodeId())
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 

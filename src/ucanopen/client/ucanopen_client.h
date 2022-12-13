@@ -106,20 +106,7 @@ public:
 	 * 
 	 * @param nodeId_ 
 	 */
-	void setNodeId(NodeId nodeId)
-	{
-		std::cout << "[ucanopen] Changing client ID to " << nodeId.value()
-				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
-
-		if (!nodeId.isValid())
-		{
-			std::cout << "failed: invalid ID." << std::endl;
-			return;
-		}
-		
-		m_nodeId = nodeId;
-		std::cout << "done." << std::endl;
-	}
+	void setNodeId(NodeId nodeId);
 	
 	/**
 	 * @brief 
@@ -244,6 +231,7 @@ public:
 
 protected:
 	void calculateRecvId(std::shared_ptr<IServer> server);
+	bool isFree(NodeId nodeId) const;
 };
 
 

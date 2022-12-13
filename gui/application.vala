@@ -57,7 +57,7 @@ public class Application : Adw.Application
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		ucanopen_client_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
 		ucanopen_client_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
-		message("[gui] Backend is ready.");
+		message("[gui] Backend ready.");
 
 		base.activate();
 		var win = this.active_window;
@@ -66,7 +66,7 @@ public class Application : Adw.Application
 			win = new CanMonitor.Window (this);
 		}
 		win.present();
-		message("[gui] GUI is ready.");
+		message("[gui] GUI ready.");
         }
 
 	private void on_about_action()

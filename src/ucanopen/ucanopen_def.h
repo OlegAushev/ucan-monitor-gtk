@@ -63,6 +63,9 @@ public:
 };
 
 
+inline bool operator==(const NodeId& lhs, const NodeId& rhs) { return lhs.value() == rhs.value(); }
+
+
 enum class NmtState
 {
 	Initialization = 0x00,
