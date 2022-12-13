@@ -42,6 +42,15 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 ///
 ///
+void ucanopen_client_set_serverid(const char* name ,unsigned int nodeId)
+{
+	global::ucanClient->setServerNodeId(name, ucanopen::NodeId(nodeId));
+}
+
+
+///
+///
+///
 void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 {
 	isEnabled ? global::ucanClient->enableTpdo() : global::ucanClient->disableTpdo();

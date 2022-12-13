@@ -55,21 +55,79 @@ Client::~Client()
 ///
 void Client::registerServer(std::shared_ptr<IServer> server)
 {
-	std::cout << "[ucanopen] Adding " << server->name() << " server to client... ";
+	std::cout << "[ucanopen] Adding '" << server->name() << "' server to client... ";
+
+	auto itSameServerName = std::find_if(m_servers.begin(), m_servers.end(), 
+		[server](const auto& s)
+		{
+			return server->name() == s->name();				
+		});
+	if (itSameServerName != m_servers.end())
+	{
+		std::cout << "failed: server with that name already added to client." << std::endl;
+		return;
+	}
+
+	auto itSameServerId = std::find_if(m_servers.begin(), m_servers.end(), 
+		[server](const auto& s)
+		{
+			return server->nodeId().value() == s->nodeId().value();				
+		});
+	if (itSameServerId != m_servers.end())
+	{
+		std::cout << "failed: server with ID 0x" << std::hex << server->nodeId().value() << std::dec
+				<< " already added to client."  << std::endl;
+		return;
+	}
 
 	m_servers.insert(server);
+	calculateRecvId(server);
 
-	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
-	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());
-	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId());
-	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId());
-	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
+	std::cout << "done." << std::endl;
+}
 
-	m_recvIdServerList.insert({tpdo1, server});
-	m_recvIdServerList.insert({tpdo2, server});
-	m_recvIdServerList.insert({tpdo3, server});
-	m_recvIdServerList.insert({tpdo4, server});
-	m_recvIdServerList.insert({tsdo, server});
+
+///
+///
+///
+void Client::setServerNodeId(std::string_view name, NodeId nodeId)
+{
+	std::cout << "[ucanopen] Changing '" << name << "' server ID to " << nodeId.value()
+				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
+
+	if (nodeId.value() < 1 || nodeId.value() > 127)
+	{
+		std::cout << "failed: invalid ID." << std::endl;
+		return;
+	}
+
+	auto itServer = std::find_if(m_servers.begin(), m_servers.end(),
+		[name](const auto& s)
+		{
+			return s->name() == name;
+		});
+	if (itServer == m_servers.end())
+	{
+		std::cout << "failed: no such server found." << std::endl;
+		return;
+	}
+
+	(*itServer)->setNodeId(nodeId);
+
+	// erase outdated elements from [id; server] map
+	for (auto it = m_recvIdServerList.begin(); it != m_recvIdServerList.end();)
+	{
+		if (it->second->name() == name)
+		{
+			it = m_recvIdServerList.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	calculateRecvId(*itServer);
 
 	std::cout << "done." << std::endl;
 }
@@ -148,6 +206,25 @@ void Client::onFrameReceived(const can_frame& frame)
 	{
 		it->second->handleFrame(frame);
 	}
+}
+
+
+///
+///
+///
+void Client::calculateRecvId(std::shared_ptr<IServer> server)
+{
+	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
+	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());
+	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId());
+	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId());
+	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
+
+	m_recvIdServerList.insert({tpdo1, server});
+	m_recvIdServerList.insert({tpdo2, server});
+	m_recvIdServerList.insert({tpdo3, server});
+	m_recvIdServerList.insert({tpdo4, server});
+	m_recvIdServerList.insert({tsdo, server});
 }
 
 

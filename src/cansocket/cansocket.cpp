@@ -66,14 +66,14 @@ Error Socket::createSocket(const std::string& interface)
 	m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (m_socket < 0)
 	{
-		std::cout << "[cansocket] Socket creation failed." << std::endl;
+		std::cout << "[cansocket] ERROR: socket creation failed." << std::endl;
 		return Error::SocketCreationFailed;
 	}
 
 	std::strcpy(m_ifr.ifr_name, interface.c_str());
 	if (ioctl(m_socket, SIOCGIFINDEX, &m_ifr) < 0)
 	{
-		std::cout << "[cansocket] Interface retrieving failed." << std::endl;
+		std::cout << "[cansocket] ERROR: interface retrieving failed." << std::endl;
 		return Error::InterfaceRetrievingFailed;
 	}
 
@@ -88,7 +88,7 @@ Error Socket::createSocket(const std::string& interface)
 
 	if (bind(m_socket, (sockaddr*)&m_addr, sizeof(m_addr)) < 0)
 	{
-		std::cout << "[cansocket] Socket binding failed." << std::endl;
+		std::cout << "[cansocket] ERROR: socket binding failed." << std::endl;
 		return Error::SocketBindingFailed;
 	}
 
@@ -178,7 +178,7 @@ Error Socket::disconnect()
 
 	if (close(m_socket) < 0)
 	{
-		std::cout << "[cansocket] Socket closing failed." << std::endl;
+		std::cout << "[cansocket] ERROR: socket closing failed." << std::endl;
 		return Error::SocketClosingFailed;
 	}
 	else

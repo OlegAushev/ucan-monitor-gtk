@@ -108,15 +108,17 @@ public:
 	 */
 	void setNodeId(NodeId nodeId)
 	{
+		std::cout << "[ucanopen] Changing client ID to " << nodeId.value()
+				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
+
 		if (nodeId.value() < 1 || nodeId.value() > 127)
 		{
-			std::cout << "[ucanopen] WARNING: invalid client id." << std::endl;
+			std::cout << "failed: invalid ID." << std::endl;
 			return;
 		}
 		
 		m_nodeId = nodeId;
-		std::cout << "[ucanopen] Client ID changed to " << m_nodeId.value()
-				<< " (0x" << std::hex << m_nodeId.value() << std::dec << ")" << std::endl;
+		std::cout << "done." << std::endl;
 	}
 	
 	/**
@@ -125,6 +127,14 @@ public:
 	 * @param server 
 	 */
 	void registerServer(std::shared_ptr<IServer> server);
+
+	/**
+	 * @brief Set the Server Node Id object
+	 * 
+	 * @param name 
+	 * @param nodeId 
+	 */
+	void setServerNodeId(std::string_view name, NodeId nodeId);
 
 	/* SYNC */
 	/**
@@ -231,6 +241,9 @@ public:
 			server->setWatchPeriod(period);
 		}
 	}
+
+protected:
+	void calculateRecvId(std::shared_ptr<IServer> server);
 };
 
 

@@ -46,11 +46,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 ///
 void IServer::setNodeId(NodeId nodeId)
 {
-	if (nodeId.value() < 1 || nodeId.value() > 127)
-	{
-		std::cout << "[ucanopen] WARNING: invalid server id." << std::endl;
-		return;
-	}
+	if (nodeId.value() < 1 || nodeId.value() > 127) return;
 
 	m_nodeId = nodeId;
 	for (auto& [type, message] : m_rpdoList)

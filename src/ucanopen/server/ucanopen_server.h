@@ -107,7 +107,7 @@ public:
 	 */
 	void enableWatch()
 	{
-		std::cout << "[ucanopen] Enabling " << m_name << " server watch requests... ";
+		std::cout << "[ucanopen] Enabling '" << m_name << "' server watch requests... ";
 		m_isWatchEnabled = true;
 		std::cout << "done." << std::endl;
 	}
@@ -118,7 +118,7 @@ public:
 	 */
 	void disableWatch()
 	{
-		std::cout << "[ucanopen] Disabling " << m_name << " server watch requests... ";
+		std::cout << "[ucanopen] Disabling '" << m_name << "' server watch requests... ";
 		m_isWatchEnabled = false;
 		std::cout << "done." << std::endl;
 	}
@@ -130,7 +130,7 @@ public:
 	 */
 	void setWatchPeriod(std::chrono::milliseconds period)
 	{
-		std::cout << "[ucanopen] Setting " << m_name << " server watch requests period = " << period << "... ";
+		std::cout << "[ucanopen] Setting '" << m_name << "' server watch requests period = " << period << "... ";
 		m_watchInfo.period = period;
 		std::cout << "done." << std::endl;
 	}
@@ -177,7 +177,7 @@ public:
 	 */
 	void enableRpdo()
 	{
-		std::cout << "[ucanopen] Enabling " << m_name << " server RPDO messages... ";
+		std::cout << "[ucanopen] Enabling '" << m_name << "' server RPDO messages... ";
 		m_isRpdoEnabled = true;
 		std::cout << "done." << std::endl;
 	}
@@ -188,7 +188,7 @@ public:
 	 */
 	void disableRpdo() 
 	{
-		std::cout << "[ucanopen] Disabling " << m_name << " server RPDO messages... ";
+		std::cout << "[ucanopen] Disabling '" << m_name << "' server RPDO messages... ";
 		m_isRpdoEnabled = false;
 		std::cout << "done." << std::endl;
 	}

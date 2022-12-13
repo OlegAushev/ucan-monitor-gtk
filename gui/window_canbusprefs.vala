@@ -82,7 +82,7 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		});
 
 		adjustmentServerId.value_changed.connect(() => {
-			message("Server Id changed");
+			ucanopen_client_set_serverid("SRM Drive", (uint)adjustmentServerId.value);
 			_serverId = (uint)adjustmentServerId.value;
 		});
 
