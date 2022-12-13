@@ -256,12 +256,14 @@ void Client::calculateRecvId(std::shared_ptr<IServer> server)
 	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId());
 	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId());
 	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
+	canid_t heartbeat = calculateCobId(CobType::Heartbeat, server->nodeId());
 
 	m_recvIdServerList.insert({tpdo1, server});
 	m_recvIdServerList.insert({tpdo2, server});
 	m_recvIdServerList.insert({tpdo3, server});
 	m_recvIdServerList.insert({tpdo4, server});
 	m_recvIdServerList.insert({tsdo, server});
+	m_recvIdServerList.insert({heartbeat, server});
 }
 
 

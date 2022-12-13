@@ -89,6 +89,29 @@ bool srmdrive_is_heartbeat_ok()
 ///
 ///
 ///
+void srmdrive_get_nmt_state(char* retval)
+{
+	switch (global::srmdriveServer->nmtState())
+	{
+	case ucanopen::NmtState::Initialization:
+		strcpy(retval, "init");
+		break;
+	case ucanopen::NmtState::Stopped:
+		strcpy(retval, "stopped");
+		break;
+	case ucanopen::NmtState::Operational:
+		strcpy(retval, "op");
+		break;
+	case ucanopen::NmtState::PreOperational:
+		strcpy(retval, "preop");
+		break;
+	}
+}
+
+
+///
+///
+///
 bool srmdrive_is_tpdo_ok(int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));

@@ -20,6 +20,15 @@
 						<property name="hexpand">false</property>
 
 						<child>
+							<object class="TableEntry" id="heartbeatIndicator">
+								<property name="title">Network State</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+
+						<child>
 							<object class="TableEntry" id="entryUptime">
 								<property name="title">Uptime</property>
 								<property name="subtitle">s</property>

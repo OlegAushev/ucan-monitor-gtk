@@ -262,8 +262,16 @@ public:
 	 */
 	bool isHeartbeatOk() const
 	{
-		return (std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout;
+		return ((std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout)
+				&& (m_heartbeatInfo.nmtState == NmtState::Operational);
 	}
+
+	/**
+	 * @brief 
+	 * 
+	 * @return NmtState 
+	 */
+	NmtState nmtState() const { return m_heartbeatInfo.nmtState; }
 
 	/**
 	 * @brief 

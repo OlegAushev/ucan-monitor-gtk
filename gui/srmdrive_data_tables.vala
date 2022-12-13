@@ -58,6 +58,8 @@ public class SrmdriveDataTables : Adw.Bin
 	private unowned TableEntry entryPowerElec;
 
 	[GtkChild]
+	private unowned TableEntry heartbeatIndicator;
+	[GtkChild]
 	private unowned TableBoolEntry tpdo1Indicator;
 	[GtkChild]
 	private unowned TableBoolEntry tpdo2Indicator;
@@ -79,7 +81,7 @@ public class SrmdriveDataTables : Adw.Bin
 		updateSystemData();
 		updateMotorData();
 		updateInverterData();
-		updateTpdoStatus();
+		updateConnectionStatus();
 		return true;
 	}
 
@@ -167,8 +169,22 @@ public class SrmdriveDataTables : Adw.Bin
 		entryPowerElec.entry_text = result;
 	}
 
-	public void updateTpdoStatus()
+	public void updateConnectionStatus()
 	{
+		if (!srmdrive_is_heartbeat_ok())
+		{
+			heartbeatIndicator.entry_remove_css_class("success");
+			heartbeatIndicator.entry_add_css_class("error");
+		}
+		else
+		{
+			heartbeatIndicator.entry_remove_css_class("error");
+			heartbeatIndicator.entry_add_css_class("success");
+			string nmtState = "";
+			srmdrive_get_nmt_state(nmtState);
+			heartbeatIndicator.entry_text = nmtState;
+		}
+
 		tpdo1Indicator.value = srmdrive_is_tpdo_ok(0);
 		tpdo2Indicator.value = srmdrive_is_tpdo_ok(1);
 		tpdo3Indicator.value = srmdrive_is_tpdo_ok(2);

@@ -40,6 +40,7 @@ extern void ucanopen_client_set_watch_period(int period);
 
 // srmdrive
 extern bool srmdrive_is_heartbeat_ok();
+extern void srmdrive_get_nmt_state(string state);
 extern bool srmdrive_is_tpdo_ok(int tpdoNum);
 extern void srmdrive_controller_set_power_enabled(bool isEnabled);
 extern void srmdrive_controller_set_run_enabled(bool isEnabled);
