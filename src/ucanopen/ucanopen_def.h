@@ -59,6 +59,7 @@ private:
 public:
 	explicit NodeId(unsigned int value) : m_value(value) {}
 	unsigned int value() const { return m_value; }
+	bool isValid() const { return (m_value >= 1) && (m_value <= 127); }
 };
 
 

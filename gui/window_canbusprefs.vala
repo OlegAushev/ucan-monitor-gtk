@@ -77,13 +77,27 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 		buttonDisconnect.clicked.connect(cansocket_disconnect);
 
 		adjustmentClientId.value_changed.connect(() => {
-			ucanopen_client_set_nodeid((uint)adjustmentClientId.value);
-			_clientId = (uint)adjustmentClientId.value;
+			if (adjustmentClientId.value == adjustmentServerId.value)
+			{
+				adjustmentClientId.value = _clientId;
+			}
+			else
+			{
+				ucanopen_client_set_nodeid((uint)adjustmentClientId.value);
+				_clientId = (uint)adjustmentClientId.value;
+			}
 		});
 
 		adjustmentServerId.value_changed.connect(() => {
-			ucanopen_client_set_serverid("SRM Drive", (uint)adjustmentServerId.value);
-			_serverId = (uint)adjustmentServerId.value;
+			if (adjustmentServerId.value == adjustmentClientId.value)
+			{
+				adjustmentServerId.value = _serverId;
+			}
+			else
+			{
+				ucanopen_client_set_serverid(backend.ucanopenServer, (uint)adjustmentServerId.value);
+				_serverId = (uint)adjustmentServerId.value;
+			}
 		});
 
 		switchTpdo.notify["state"].connect((s,p) => {

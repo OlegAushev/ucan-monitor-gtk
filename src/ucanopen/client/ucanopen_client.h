@@ -111,7 +111,7 @@ public:
 		std::cout << "[ucanopen] Changing client ID to " << nodeId.value()
 				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
 
-		if (nodeId.value() < 1 || nodeId.value() > 127)
+		if (!nodeId.isValid())
 		{
 			std::cout << "failed: invalid ID." << std::endl;
 			return;

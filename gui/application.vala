@@ -53,7 +53,7 @@ public class Application : Adw.Application
 		
 		message("[gui] Configuring backend...");
 		ucanopen_client_set_nodeid(WindowCanBusPrefs.clientId);
-		ucanopen_client_set_serverid("SRM Drive", WindowCanBusPrefs.serverId);
+		ucanopen_client_set_serverid(backend.ucanopenServer, WindowCanBusPrefs.serverId);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
 		ucanopen_client_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
 		ucanopen_client_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);

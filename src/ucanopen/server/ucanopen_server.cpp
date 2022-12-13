@@ -46,7 +46,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 ///
 void IServer::setNodeId(NodeId nodeId)
 {
-	if (nodeId.value() < 1 || nodeId.value() > 127) return;
+	if (!nodeId.isValid()) return;
 
 	m_nodeId = nodeId;
 	for (auto& [type, message] : m_rpdoList)

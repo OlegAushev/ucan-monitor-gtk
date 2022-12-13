@@ -15,6 +15,7 @@
 
 
 bool backend_isReady = false;
+const char* backend_ucanopenServer = "SRM Drive";
 
 
 namespace {

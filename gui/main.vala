@@ -24,6 +24,7 @@ namespace backend {
 extern int main_enter();
 extern void main_exit();
 extern bool isReady;
+extern string ucanopenServer;
 }
 
 // cansocket

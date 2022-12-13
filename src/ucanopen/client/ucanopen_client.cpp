@@ -57,23 +57,23 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 {
 	std::cout << "[ucanopen] Adding '" << server->name() << "' server to client... ";
 
-	auto itSameServerName = std::find_if(m_servers.begin(), m_servers.end(), 
+	auto itServerSameName = std::find_if(m_servers.begin(), m_servers.end(), 
 		[server](const auto& s)
 		{
 			return server->name() == s->name();				
 		});
-	if (itSameServerName != m_servers.end())
+	if (itServerSameName != m_servers.end())
 	{
 		std::cout << "failed: server with that name already added to client." << std::endl;
 		return;
 	}
 
-	auto itSameServerId = std::find_if(m_servers.begin(), m_servers.end(), 
+	auto itServerSameId = std::find_if(m_servers.begin(), m_servers.end(), 
 		[server](const auto& s)
 		{
 			return server->nodeId().value() == s->nodeId().value();				
 		});
-	if (itSameServerId != m_servers.end())
+	if (itServerSameId != m_servers.end())
 	{
 		std::cout << "failed: server with ID 0x" << std::hex << server->nodeId().value() << std::dec
 				<< " already added to client."  << std::endl;
@@ -95,7 +95,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 	std::cout << "[ucanopen] Changing '" << name << "' server ID to " << nodeId.value()
 				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
 
-	if (nodeId.value() < 1 || nodeId.value() > 127)
+	if (!nodeId.isValid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
 		return;
