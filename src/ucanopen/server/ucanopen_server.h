@@ -37,12 +37,22 @@ private:
 	std::string m_name{"unnamed"};
 	NodeId m_nodeId;
 	std::shared_ptr<can::Socket> m_socket;
-	bool m_isConnectionOk{false};
 
 private:
 	/* OBJECT DICTIONARY */
 	const ObjectDictionaryType& m_dictionary;
 	ObjectDictionaryAuxType m_dictionaryAux;
+
+	/* HEARTBEAT server --> client */
+private:
+	struct HeartbeatInfo
+	{
+		canid_t id;
+		std::chrono::milliseconds timeout;
+		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		NmtState nmtState;
+	};
+	HeartbeatInfo m_heartbeatInfo;
 
 	/* TPDO server --> client */
 private:
@@ -51,7 +61,6 @@ private:
 		canid_t id;
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		bool isOnSchedule;
 	};
 	std::map<TpdoType, TpdoInfo> m_tpdoList;
 protected:
@@ -62,7 +71,7 @@ protected:
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), m_nodeId);
-		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), false}});
+		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
 	}
 
 	/* RPDO server <-- client */
@@ -251,7 +260,10 @@ public:
 	 * @return true 
 	 * @return false 
 	 */
-	bool isConnectionOk() const { return m_isConnectionOk; }
+	bool isHeartbeatOk() const
+	{
+		return (std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout;
+	}
 
 	/**
 	 * @brief 
@@ -260,7 +272,11 @@ public:
 	 * @return true 
 	 * @return false 
 	 */
-	bool isTpdoOk(TpdoType tpdo) const { return m_tpdoList.at(tpdo).isOnSchedule; }
+	bool isTpdoOk(TpdoType tpdo) const
+	{
+		if (!m_tpdoList.contains(tpdo)) return false;
+		return (std::chrono::steady_clock::now() - m_tpdoList.at(tpdo).timepoint) <= m_tpdoList.at(tpdo).timeout;
+	}
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
@@ -278,7 +294,6 @@ private:
 
 	void sendPeriodic();
 	void handleFrame(const can_frame& frame);
-	void checkConnection();
 
 	/**
 	 * @brief Sets server node ID.

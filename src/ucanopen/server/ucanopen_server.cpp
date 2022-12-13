@@ -38,6 +38,13 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 			m_watchEntriesList.push_back(entry.name);
 		}
 	}
+
+	m_heartbeatInfo = {
+		.id = calculateCobId(CobType::Heartbeat, m_nodeId),
+		.timeout = std::chrono::milliseconds(2000),
+		.timepoint = std::chrono::steady_clock::now(),
+		.nmtState = NmtState::Stopped
+	};
 }
 
 
@@ -49,14 +56,18 @@ void IServer::setNodeId(NodeId nodeId)
 	if (!nodeId.isValid()) return;
 
 	m_nodeId = nodeId;
+
 	for (auto& [type, message] : m_rpdoList)
 	{
 		message.id = calculateCobId(toCobType(type), m_nodeId);
 	}
+
 	for (auto& [type, message] : m_tpdoList)
 	{
 		message.id = calculateCobId(toCobType(type), m_nodeId);
 	}
+
+	m_heartbeatInfo.id = calculateCobId(CobType::Heartbeat, m_nodeId);	
 }
 
 
@@ -118,7 +129,6 @@ void IServer::handleFrame(const can_frame& frame)
 		if (frame.can_id != message.id) continue;
 
 		message.timepoint = std::chrono::steady_clock::now();
-		message.isOnSchedule = true;
 		can_payload data{};
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
 
@@ -171,6 +181,11 @@ void IServer::handleFrame(const can_frame& frame)
 		}
 
 		handleTsdo(sdoType, odEntry, sdoMessage.data);
+	}
+	else if (frame.can_id == m_heartbeatInfo.id)
+	{
+		m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
+		m_heartbeatInfo.nmtState = static_cast<NmtState>(frame.data[0]);
 	}	
 }
 
@@ -344,30 +359,6 @@ ODRequestStatus IServer::exec(std::string_view category, std::string_view subcat
 	m_socket->send(createFrame(CobType::Rsdo, m_nodeId, message.toPayload()));
 	return ODRequestStatus::Success;
 }
-
-
-///
-///
-///
-void IServer::checkConnection()
-{
-	bool isConnectionOk = true;
-	auto now = std::chrono::steady_clock::now();
-
-	for (auto& [type, message] : m_tpdoList)
-	{
-		if (message.timeout == std::chrono::milliseconds(0)) continue;
-		if ((now - message.timepoint) > message.timeout)
-		{
-			message.isOnSchedule = false;
-			isConnectionOk = false;
-		}
-	}
-
-	m_isConnectionOk = isConnectionOk;
-}
-
-
 
 
 } // namespace ucanopen

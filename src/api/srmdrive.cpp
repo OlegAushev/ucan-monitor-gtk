@@ -80,9 +80,9 @@ void srmdrive_observer_get_watch_value(const char* name, char* retval)
 ///
 ///
 ///
-bool srmdrive_is_connection_ok()
+bool srmdrive_is_heartbeat_ok()
 {
-	return global::srmdriveServer->isConnectionOk();
+	return global::srmdriveServer->isHeartbeatOk();
 }
 
 

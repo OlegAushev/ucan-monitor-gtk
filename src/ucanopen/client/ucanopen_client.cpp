@@ -216,7 +216,6 @@ void Client::run(std::future<void> futureExit)
 		/* SERVER's RPDO */
 		for (auto& server : m_servers)
 		{
-			server->checkConnection();
 			server->sendPeriodic();
 		}
 
