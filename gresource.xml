@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/">
+		<file>gui/components/spinbuttonscale.ui</file>
+		<file>gui/components/tableentry.ui</file>
+		<file>gui/components/tableboolentry.ui</file>
 		<file>gui/srmdrive_controlpanel.ui</file>
 		<file>gui/srmdrive_datatables.ui</file>
 		<file>gui/window_canbuspreferences.ui</file>
 		<file>gui/window.ui</file>
-		<file>gui/components/spinbuttonscale.ui</file>
-		<file>gui/components/tableentry.ui</file>
-		<file>gui/components/tableboolentry.ui</file>
 	</gresource>
 </gresources>

@@ -44,15 +44,16 @@ gnome = import('gnome')
 app_sources = files(
 	'builddir/git_version.cpp',
 
+	'gui/components/spinbuttonscale.vala',
+	'gui/components/tableboolentry.vala',
+	'gui/components/tableentry.vala',
+	
 	'gui/application.vala',
 	'gui/main.vala',
 	'gui/srmdrive_controlpanel.vala',
 	'gui/srmdrive_datatables.vala',
 	'gui/window_canbuspreferences.vala',
 	'gui/window.vala',
-	'gui/components/spinbuttonscale.vala',
-	'gui/components/tableboolentry.vala',
-	'gui/components/tableentry.vala',
 
 
 	'src/main.cpp',
