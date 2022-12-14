@@ -22,7 +22,7 @@ namespace srmdrive {
 /**
  * @brief
  */
-struct CobRpdo1
+struct CobTpdo1
 {
 	uint16_t statusRun : 1;		// bit 0
 	uint16_t statusFault : 1;	// bit 1
@@ -35,21 +35,14 @@ struct CobRpdo1
 	int8_t power : 8;
 	uint8_t voltageDC : 8;
 	uint8_t currentF : 8;
-	CobRpdo1() = default;
-	CobRpdo1(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobRpdo1)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobRpdo1));
-		return data;
-	}
+	CobTpdo1() = default;
 };
 
 
 /**
  * @brief
  */
-struct CobRpdo2
+struct CobTpdo2
 {
 	uint8_t tempMotorS : 8;
 	uint8_t reserved1 : 8;
@@ -60,21 +53,14 @@ struct CobRpdo2
 	uint8_t tempHeatsink : 8;
 	uint8_t tepmCaseAir : 8;
 	uint8_t reserved3 : 8;
-	CobRpdo2() = default;
-	CobRpdo2(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobRpdo2)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobRpdo2));
-		return data;
-	}
+	CobTpdo2() = default;
 };
 
 
 /**
  * @brief
  */
-struct CobRpdo3
+struct CobTpdo3
 {
 	uint8_t voltagePosHousing : 8;
 	uint8_t voltageNegHousing : 8;
@@ -85,37 +71,23 @@ struct CobRpdo3
 	uint16_t reserved1 : 3;
 	uint16_t driveReference : 1;
 	int8_t currentDC : 8;
-	uint32_t syslogInfo : 32;
-	CobRpdo3() = default;
-	CobRpdo3(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobRpdo3)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobRpdo3));
-		return data;
-	}
+	uint32_t syslogMessageId : 32;
+	CobTpdo3() = default;
 };
 
 
 /**
  * @brief
  */
-struct CobRpdo4
+struct CobTpdo4
 {
 	uint32_t errors : 32;
 	uint32_t warnings : 32;
-	CobRpdo4() = default;
-	CobRpdo4(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobRpdo4)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobRpdo4));
-		return data;
-	}
+	CobTpdo4() = default;
 };
 
 
-struct CobTpdo1
+struct CobRpdo1
 {
 	uint16_t run : 1;
 	uint32_t reserved1 : 31;
@@ -123,56 +95,50 @@ struct CobTpdo1
 	uint16_t reserved2 : 1;
 	uint16_t braking : 1;
 	uint32_t reserved3 : 29;
-	CobTpdo1() = default;
-	CobTpdo1(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo1)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobTpdo1));
-		return data;
-	}
+	CobRpdo1() = default;
 };
 
 
-struct CobTpdo2
+struct CobRpdo2
 {
 	int8_t torqueObsolete : 8;
 	uint8_t reserved1 : 8;
 	int16_t torque : 16;
 	uint32_t reserved2 : 32;
-	CobTpdo2() = default;
-	CobTpdo2(uint64_t rawMsg) { memcpy(this, &rawMsg, sizeof(CobTpdo2)); }
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobTpdo2));
-		return data;
-	}
+	CobRpdo2() = default;
 };
 
 
-struct CobTpdo3
+struct CobRpdo3
 {
 	uint64_t data;
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobTpdo3));
-		return data;
-	}
 };
 
 
-struct CobTpdo4
+struct CobRpdo4
 {
 	uint64_t data;
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobTpdo4));
-		return data;
-	}
 };
+
+
+inline const std::vector<std::string_view> syslogMessages = {
+	"No message",
+	"[ INFO ] Device boot - success",
+	"[ INFO ] Device is busy",
+	"[ INFO ] Device is resetting...",
+	"[ INFO ] Read configs from EEPROM - success",
+	"[ FAIL ] Read configs from EEPROM - fail",
+	"[ INFO ] Reset configs - success",
+	"[ FAIL ] Reset configs - fail",
+	"[ INFO ] Apply configs - success",
+	"[ FAIL ] Apply configs - fail",
+	"[ INFO ] Position sensor calibration - success",
+	"[ FAIL ] Position sensor calibration - fail",
+	"[ INFO ] Write calibration data to EEPROM - success",
+	"[ FAIL ] Write calibration data to EEPROM - fail",
+	"[ FAIL } Operation cannot be performed"	
+};
+
 
 }
 

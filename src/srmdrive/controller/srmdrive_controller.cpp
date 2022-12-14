@@ -90,7 +90,7 @@ void Controller::setSpeed(double val)
 ///
 ucanopen::can_payload Controller::makeTpdo1()
 {
-	CobTpdo1 message{};
+	CobRpdo1 message{};
 
 	message.run = ((m_isRunEnabled) ? 1 : 0);
 	message.emergencyStop = ((m_isEmergencyEnabled) ? 1 : 0);
@@ -104,7 +104,7 @@ ucanopen::can_payload Controller::makeTpdo1()
 ///
 ucanopen::can_payload Controller::makeTpdo2()
 {
-	CobTpdo2 message{};
+	CobRpdo2 message{};
 
 	message.torque = ((m_torquePuRef > 0) ? m_torquePuRef * 32767 : m_torquePuRef * 32768);
 

@@ -17,6 +17,7 @@
 #include "srmdrive_def.h"
 #include "../controller/srmdrive_controller.h"
 #include "../observer/srmdrive_observer.h"
+#include "logger/logger.h"
 
 
 namespace srmdrive {
@@ -32,7 +33,7 @@ private:
 protected:
 	virtual void handleTpdo1(ucanopen::can_payload data) override final {}
 	virtual void handleTpdo2(ucanopen::can_payload data) override final {}
-	virtual void handleTpdo3(ucanopen::can_payload data) override final {}
+	virtual void handleTpdo3(ucanopen::can_payload data) override final;
 	virtual void handleTpdo4(ucanopen::can_payload data) override final {}
 
 	virtual ucanopen::can_payload createRpdo1() override final { return {}; }

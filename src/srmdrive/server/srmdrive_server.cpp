@@ -16,6 +16,9 @@
 namespace srmdrive {
 
 
+///
+///
+///
 Server::Server(const std::string& name,
 		ucanopen::NodeId nodeId,
 		std::shared_ptr<can::Socket> socket,
@@ -28,6 +31,19 @@ Server::Server(const std::string& name,
 	registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
 	registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
 	registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
+}
+
+
+///
+///
+///
+void Server::handleTpdo3(ucanopen::can_payload data)
+{
+	CobTpdo3 message = ucanopen::fromPayload<CobTpdo3>(data);
+	if ((message.syslogMessageId != 0) && (message.syslogMessageId < syslogMessages.size()))
+	{
+		Logger::instance().add(std::string(syslogMessages[message.syslogMessageId]));
+	}
 }
 
 
