@@ -45,14 +45,14 @@ app_sources = files(
 	'builddir/git_version.cpp',
 
 	'gui/application.vala',
-	'gui/control_panel.vala',
-	'gui/srmdrive_data_tables.vala',
 	'gui/main.vala',
-	'gui/window_canbusprefs.vala',
+	'gui/srmdrive_controlpanel.vala',
+	'gui/srmdrive_datatables.vala',
+	'gui/window_canbuspreferences.vala',
 	'gui/window.vala',
-	'gui/components/slider_with_text.vala',
-	'gui/components/table_boolentry.vala',
-	'gui/components/table_entry.vala',
+	'gui/components/spinbuttonscale.vala',
+	'gui/components/tableboolentry.vala',
+	'gui/components/tableentry.vala',
 
 
 	'src/main.cpp',

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="CanMonitorControlPanel" parent="AdwBin">
+	<template class="SrmdriveControlPanel" parent="AdwBin">
 		<child>
 			<object class="GtkBox">
 				<property name="margin-start">10</property>
@@ -48,7 +48,7 @@
 				</child>
 
 				<child>
-					<object class="SliderWithText" id="sliderSpeed">
+					<object class="SpinButtonScale" id="sliderSpeed">
 						<property name="title">Speed, rpm</property>
 						<property name="lower">-8000</property>
 						<property name="upper">8000</property>
@@ -62,7 +62,7 @@
 				</child>
 
 				<child>
-					<object class="SliderWithText" id="sliderTorque">
+					<object class="SpinButtonScale" id="sliderTorque">
 						<property name="title">Torque, %</property>
 						<property name="lower">-100</property>
 						<property name="upper">100</property>

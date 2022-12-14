@@ -3,8 +3,11 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/srmdrive_data_tables.ui")]
-public class SrmdriveDataTables : Adw.Bin
+namespace Srmdrive {
+
+
+[GtkTemplate (ui = "/gui/srmdrive_datatables.ui")]
+public class DataTables : Adw.Bin
 {
 	[GtkChild]
 	private unowned TableEntry entryUptime;
@@ -69,7 +72,7 @@ public class SrmdriveDataTables : Adw.Bin
 	private unowned TableBoolEntry tpdo4Indicator;
 
 
-	public SrmdriveDataTables() {}
+	public DataTables() {}
 
 	construct
 	{
@@ -190,6 +193,9 @@ public class SrmdriveDataTables : Adw.Bin
 		tpdo3Indicator.value = srmdrive_is_tpdo_ok(2);
 		tpdo4Indicator.value = srmdrive_is_tpdo_ok(3);
 	}
+}
+
+
 }
 
 

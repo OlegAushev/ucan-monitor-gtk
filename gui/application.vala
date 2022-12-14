@@ -52,11 +52,11 @@ public class Application : Adw.Application
 		}
 		
 		message("[gui] Configuring backend...");
-		ucanopen_client_set_nodeid(WindowCanBusPrefs.clientId);
-		ucanopen_client_set_serverid(backend.ucanopenServer, WindowCanBusPrefs.serverId);
-		ucanopen_client_set_tpdo_enabled(WindowCanBusPrefs.switchTpdoState);
-		ucanopen_client_set_watch_enabled(WindowCanBusPrefs.switchWatchState);
-		ucanopen_client_set_watch_period(WindowCanBusPrefs.watchPeriodDefault);
+		ucanopen_client_set_nodeid(WindowCanBusPreferences.clientId);
+		ucanopen_client_set_serverid(backend.ucanopenServer, WindowCanBusPreferences.serverId);
+		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.switchTpdoState);
+		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.switchWatchState);
+		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriodDefault);
 		message("[gui] Backend ready.");
 
 		base.activate();
@@ -86,7 +86,7 @@ public class Application : Adw.Application
 	private void on_canbus_action()
 	{
 		var win = this.active_window;
-		var win_canbus = new CanMonitor.WindowCanBusPrefs();
+		var win_canbus = new CanMonitor.WindowCanBusPreferences();
 		win_canbus.set_transient_for(win);
 		win_canbus.present();
 	}

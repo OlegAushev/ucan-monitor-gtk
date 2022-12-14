@@ -3,7 +3,7 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/table_boolentry.ui")]
+[GtkTemplate (ui = "/gui/components/tableboolentry.ui")]
 public class TableBoolEntry : Adw.ActionRow
 {
 	[GtkChild]

@@ -6,8 +6,8 @@
 namespace CanMonitor {
 
 
-[GtkTemplate (ui = "/gui/window_canbusprefs.ui")]
-public class WindowCanBusPrefs : Adw.PreferencesWindow
+[GtkTemplate (ui = "/gui/window_canbuspreferences.ui")]
+public class WindowCanBusPreferences : Adw.PreferencesWindow
 {
 	[GtkChild]
 	private unowned Gtk.Button buttonConnect; 
@@ -59,7 +59,7 @@ public class WindowCanBusPrefs : Adw.PreferencesWindow
 	private static uint _watchPeriodSelected = 3;
 	public const int watchPeriodDefault = 10;
 	
-	public WindowCanBusPrefs() {}
+	public WindowCanBusPreferences() {}
 
 	construct
 	{

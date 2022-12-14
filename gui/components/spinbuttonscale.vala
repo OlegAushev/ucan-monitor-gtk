@@ -3,8 +3,8 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/slider_with_text.ui")]
-public class SliderWithText : Adw.Bin
+[GtkTemplate (ui = "/gui/components/spinbuttonscale.ui")]
+public class SpinButtonScale : Adw.Bin
 {
 	[GtkChild]
 	private unowned Adw.PreferencesGroup _group;
@@ -18,7 +18,7 @@ public class SliderWithText : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Adjustment _adjustment;
 
-	public SliderWithText() {}
+	public SpinButtonScale() {}
 
 	public string title
 	{

@@ -52,7 +52,7 @@
 						<property name="content">panedMain</property>
 						<!-- FLAP -->
 						<child>
-							<object class="CanMonitorControlPanel" id="controlpanel">
+							<object class="SrmdriveControlPanel" id="controlpanel">
 								<style>
 									<class name="background"/>
 								</style>

@@ -3,10 +3,10 @@
 ///
 
 
-namespace CanMonitor {
+namespace Srmdrive {
 
 
-[GtkTemplate (ui = "/gui/control_panel.ui")]
+[GtkTemplate (ui = "/gui/srmdrive_controlpanel.ui")]
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
@@ -19,10 +19,10 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Switch switchEmergency;
 
 	[GtkChild]
-	private unowned SliderWithText sliderSpeed;
+	private unowned SpinButtonScale sliderSpeed;
 
 	[GtkChild]
-	private unowned SliderWithText sliderTorque;
+	private unowned SpinButtonScale sliderTorque;
 
 	public ControlPanel() {}
 

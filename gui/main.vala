@@ -38,6 +38,9 @@ extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
 
+// logger
+extern bool logger_get_message(char* ret);
+
 // srmdrive
 extern bool srmdrive_is_heartbeat_ok();
 extern void srmdrive_get_nmt_state(string state);
