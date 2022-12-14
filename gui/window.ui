@@ -34,7 +34,7 @@
 				<child type="end">
 					<object class="GtkToggleButton">
 						<property name="icon-name">media-view-subtitles-symbolic</property>
-						<property name="active" bind-source="boxLog" bind-property="visible" bind-flags="sync-create|bidirectional"/>
+						<property name="active" bind-source="logTextView" bind-property="visible" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
 			</object>
@@ -119,24 +119,10 @@
 									</object>
 								</child>
 
-
+								
 								<child>
-									<object class="GtkBox" id="boxLog">
-										<property name="hexpand">true</property>
-										<property name="vexpand">false</property>
-										<child>
-											<object class="GtkScrolledWindow">
-												<property name="hexpand">true</property>
-												<property name="vexpand">false</property>
-												<property name="hscrollbar-policy">automatic</property>
-												<property name="vscrollbar-policy">automatic</property>
-												<child>
-													<object class="GtkTextView">
-														
-													</object>
-												</child>
-											</object>
-										</child>
+									<object class="LogTextView" id="logTextView">
+
 									</object>
 								</child>
 

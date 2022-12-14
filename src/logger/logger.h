@@ -56,21 +56,3 @@ public:
 };
 
 
-extern "C" {
-
-
-inline bool logger_get_message(char* ret)
-{
-	std::string message = Logger::instance().pop();
-	if (message.empty())
-	{
-		return false;
-	}
-	strcpy(ret, message.c_str());
-	return true;
-} 
-
-
-}
-
-

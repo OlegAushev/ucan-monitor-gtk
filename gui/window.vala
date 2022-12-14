@@ -25,7 +25,7 @@ public class Window : Gtk.ApplicationWindow
 	[GtkChild]
 	public unowned Srmdrive.DataTables dataTables;
 
-	public Window (Gtk.Application app)
+	public Window(Gtk.Application app)
 	{
 		Object (application: app);
 	}

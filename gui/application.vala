@@ -35,8 +35,8 @@ public class Application : Adw.Application
 			{"canbus", this.on_canbus_action},
 			{"quit", this.quit}
 		};
-		this.add_action_entries (action_entries, this);
-		this.set_accels_for_action ("app.quit", {"<primary>q"});
+		this.add_action_entries(action_entries, this);
+		this.set_accels_for_action("app.quit", {"<primary>q"});
 
 		this.shutdown.connect(backend.main_exit);
         }
@@ -63,7 +63,7 @@ public class Application : Adw.Application
 		var win = this.active_window;
 		if (win == null)
 		{
-			win = new CanMonitor.Window (this);
+			win = new CanMonitor.Window(this);
 		}
 		win.present();
 		message("[gui] GUI ready.");

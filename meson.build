@@ -44,6 +44,7 @@ gnome = import('gnome')
 app_sources = files(
 	'builddir/git_version.cpp',
 
+	'gui/components/logtextview.vala',
 	'gui/components/spinbuttonscale.vala',
 	'gui/components/tableboolentry.vala',
 	'gui/components/tableentry.vala',

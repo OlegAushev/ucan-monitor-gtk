@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="LogTextView" parent="AdwBin">
+		<property name="hexpand">true</property>
+		<property name="vexpand">false</property>
+		<child>
+			<object class="GtkScrolledWindow">
+				<property name="hexpand">true</property>
+				<property name="vexpand">false</property>
+				<property name="hscrollbar-policy">automatic</property>
+				<property name="vscrollbar-policy">automatic</property>
+				<child>
+					<object class="GtkTextView" id="_textview">
+						<property name="editable">false</property>
+						<property name="cursor_visible">false</property>
+						<property name="monospace">true</property>
+						<!--property name="sensitive">false</property-->
+					</object>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>
