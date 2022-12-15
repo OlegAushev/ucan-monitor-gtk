@@ -19,18 +19,24 @@ public class LogTextView : Adw.Bin
 		_textview.buffer = _textbuffer;
 		Timeout.add(100, update);
 	}
-
+	uint i = 0;
 	public bool update()
 	{
 		string message = string.nfill(128, '\0');;
 		if (logger_get_message(message, 128))
 		{
+			Gtk.TextIter endIter;
+			_textbuffer.get_end_iter(out endIter);
+
 			_textview.editable = true;
-			_textview.insert_at_cursor(" > ");
-			_textview.insert_at_cursor(message);
-			_textview.insert_at_cursor("\n");
+			_textbuffer.insert(ref endIter, " > ", 3);
+			_textbuffer.insert(ref endIter, message, (int)message.length);
+			_textbuffer.insert(ref endIter, "\n", 1);
 			_textview.editable = false;
+			
+			_textview.scroll_to_iter(endIter, 0, false, 0, 0);
 		}
+
 		return true;
 	}
 }
