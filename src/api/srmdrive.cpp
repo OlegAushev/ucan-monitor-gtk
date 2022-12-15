@@ -71,9 +71,9 @@ void srmdrive_controller_set_speed(double val)
 ///
 ///
 ///
-void srmdrive_observer_get_watch_value(const char* name, char* retval)
+void srmdrive_observer_get_watch_value(const char* name, char* buf, size_t len)
 {
-	global::srmdriveServer->observer.watchValue(name, retval);
+	global::srmdriveServer->observer.watchValue(name, buf, len);
 }
 
 

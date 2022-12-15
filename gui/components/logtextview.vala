@@ -22,8 +22,8 @@ public class LogTextView : Adw.Bin
 
 	public bool update()
 	{
-		string message = "                                                                  ";
-		if (logger_get_message(message))
+		string message = string.nfill(128, '\0');;
+		if (logger_get_message(message, 128))
 		{
 			_textview.editable = true;
 			_textview.insert_at_cursor(" > ");

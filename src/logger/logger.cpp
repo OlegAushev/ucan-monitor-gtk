@@ -16,14 +16,14 @@
 extern "C" {
 
 
-bool logger_get_message(char* ret)
+bool logger_get_message(char* buf, size_t len)
 {
 	std::string message = Logger::instance().pop();
 	if (message.empty())
 	{
 		return false;
 	}
-	strcpy(ret, message.c_str());
+	strncpy(buf, message.c_str(), len);
 	return true;
 } 
 

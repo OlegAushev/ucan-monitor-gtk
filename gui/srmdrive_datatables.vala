@@ -90,86 +90,86 @@ public class DataTables : Adw.Bin
 
 	public void updateSystemData()
 	{
-		string result = "";
-		srmdrive_observer_get_watch_value("UPTIME", result);
-		entryUptime.entry_text = result;
+		string entryText = string.nfill(16, '\0');
+		srmdrive_observer_get_watch_value("UPTIME", entryText, 16);
+		entryUptime.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("DRIVE_STATE", result);
-		entryState.entry_text = result;
+		srmdrive_observer_get_watch_value("DRIVE_STATE", entryText, 16);
+		entryState.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("FAULTS", result);
-		entryErrors.entry_text = result;
+		srmdrive_observer_get_watch_value("FAULTS", entryText, 16);
+		entryErrors.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("WARNINGS", result);
-		entryWarnings.entry_text = result;
+		srmdrive_observer_get_watch_value("WARNINGS", entryText, 16);
+		entryWarnings.entry_text = entryText;
 	}
 
 	public void updateMotorData()
 	{
-		string result = "";
-		srmdrive_observer_get_watch_value("SPEED_RPM", result);
-		entrySpeed.entry_text = result;
+		string entryText = string.nfill(16, '\0');
+		srmdrive_observer_get_watch_value("SPEED_RPM", entryText, 16);
+		entrySpeed.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("TORQUE", result);
-		entryTorque.entry_text = result;
+		srmdrive_observer_get_watch_value("TORQUE", entryText, 16);
+		entryTorque.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("STATOR_CURRENT", result);
-		entryCurrS.entry_text = result;
+		srmdrive_observer_get_watch_value("STATOR_CURRENT", entryText, 16);
+		entryCurrS.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("FIELD_CURRENT", result);
-		entryCurrF.entry_text = result;
+		srmdrive_observer_get_watch_value("FIELD_CURRENT", entryText, 16);
+		entryCurrF.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("D_CURRENT", result);
-		entryCurrD.entry_text = result;
+		srmdrive_observer_get_watch_value("D_CURRENT", entryText, 16);
+		entryCurrD.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("Q_CURRENT", result);
-		entryCurrQ.entry_text = result;
+		srmdrive_observer_get_watch_value("Q_CURRENT", entryText, 16);
+		entryCurrQ.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("GAMMA_ANGLE_DEG", result);
-		entryGamma.entry_text = result;
+		srmdrive_observer_get_watch_value("GAMMA_ANGLE_DEG", entryText, 16);
+		entryGamma.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("MOTOR_S_TEMP", result);
-		entryTempS.entry_text = result;
+		srmdrive_observer_get_watch_value("MOTOR_S_TEMP", entryText, 16);
+		entryTempS.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("MOTOR_FW_TEMP", result);
-		entryTempFW.entry_text = result;
+		srmdrive_observer_get_watch_value("MOTOR_FW_TEMP", entryText, 16);
+		entryTempFW.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("MECH_POWER", result);
-		entryPowerMech.entry_text = result;
+		srmdrive_observer_get_watch_value("MECH_POWER", entryText, 16);
+		entryPowerMech.entry_text = entryText;
 	}
 
 	public void updateInverterData()
 	{
-		string result = "";
-		srmdrive_observer_get_watch_value("DC_VOLTAGE", result);
-		entryVoltDC.entry_text = result;
+		string entryText = string.nfill(16, '\0');
+		srmdrive_observer_get_watch_value("DC_VOLTAGE", entryText, 16);
+		entryVoltDC.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("DC_CURRENT", result);
-		entryCurrDC.entry_text = result;
+		srmdrive_observer_get_watch_value("DC_CURRENT", entryText, 16);
+		entryCurrDC.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHA_CURRENT", result);
-		entryCurrPhA.entry_text = result;
+		srmdrive_observer_get_watch_value("PHA_CURRENT", entryText, 16);
+		entryCurrPhA.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHB_CURRENT", result);
-		entryCurrPhB.entry_text = result;
+		srmdrive_observer_get_watch_value("PHB_CURRENT", entryText, 16);
+		entryCurrPhB.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHC_CURRENT", result);
-		entryCurrPhC.entry_text = result;
+		srmdrive_observer_get_watch_value("PHC_CURRENT", entryText, 16);
+		entryCurrPhC.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHA_TEMP", result);
-		entryTempPhA.entry_text = result;
+		srmdrive_observer_get_watch_value("PHA_TEMP", entryText, 16);
+		entryTempPhA.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHB_TEMP", result);
-		entryTempPhB.entry_text = result;
+		srmdrive_observer_get_watch_value("PHB_TEMP", entryText, 16);
+		entryTempPhB.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("PHC_TEMP", result);
-		entryTempPhC.entry_text = result;
+		srmdrive_observer_get_watch_value("PHC_TEMP", entryText, 16);
+		entryTempPhC.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("CASE_TEMP", result);
-		entryTempAir.entry_text = result;
+		srmdrive_observer_get_watch_value("CASE_TEMP", entryText, 16);
+		entryTempAir.entry_text = entryText;
 
-		srmdrive_observer_get_watch_value("OUT_ELEC_POWER", result);
-		entryPowerElec.entry_text = result;
+		srmdrive_observer_get_watch_value("OUT_ELEC_POWER", entryText, 16);
+		entryPowerElec.entry_text = entryText;
 	}
 
 	public void updateConnectionStatus()

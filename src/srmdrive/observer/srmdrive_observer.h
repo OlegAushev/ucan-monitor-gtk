@@ -42,17 +42,17 @@ public:
 		return it->second;
 	}
 
-	void watchValue(std::string_view watchName, char* retval) const
+	void watchValue(std::string_view watchName, char* buf, size_t len) const
 	{
 		auto it = m_watchData.find(watchName);
 		if (it == m_watchData.end())
 		{
 			const char* str = "n/a";
-			std::strcpy(retval, str);
+			std::strncpy(buf, str, len);
 			return;
 		}
 		std::lock_guard<std::mutex> lock(m_watchMutex);
-		std::strcpy(retval, it->second.c_str());
+		std::strncpy(buf, it->second.c_str(), len);
 	}
 
 	void handleSdo(ucanopen::SdoType sdoType,

@@ -39,7 +39,7 @@ extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
 
 // logger
-extern bool logger_get_message(char* ret);
+extern bool logger_get_message(string buf, size_t len);
 
 // srmdrive
 extern bool srmdrive_is_heartbeat_ok();
@@ -50,7 +50,7 @@ extern void srmdrive_controller_set_run_enabled(bool isEnabled);
 extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);
 extern void srmdrive_controller_set_torque(double valPu);
 extern void srmdrive_controller_set_speed(double val);
-extern void srmdrive_observer_get_watch_value(string name, string value);
+extern void srmdrive_observer_get_watch_value(string name, string buf, size_t len);
 
 
 
