@@ -6,7 +6,7 @@
 namespace SrmDrive {
 
 
-[GtkTemplate (ui = "/gui/srmdrive_controlpanel.ui")]
+[GtkTemplate (ui = "/gui/srmdrive/srmdrive_controlpanel.ui")]
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]

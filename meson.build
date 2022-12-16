@@ -49,12 +49,15 @@ app_sources = files(
 	'gui/components/tableboolentry.vala',
 	'gui/components/tableentry.vala',
 
+	'gui/srmdrive/srmdrive_controlpanel.vala',
+	'gui/srmdrive/srmdrive_datatables.vala',
+
 	'gui/template/template_widget.vala',
+
+	'gui/ucanopen/ucanopen_serverconfiguration.vala',
 	
 	'gui/application.vala',
 	'gui/main.vala',
-	'gui/srmdrive_controlpanel.vala',
-	'gui/srmdrive_datatables.vala',
 	'gui/window_canbuspreferences.vala',
 	'gui/window.vala',
 

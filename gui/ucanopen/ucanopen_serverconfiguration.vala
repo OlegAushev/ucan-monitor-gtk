@@ -6,7 +6,7 @@
 namespace UCanOpen {
 
 
-[GtkTemplate (ui = "/gui/ucanopen_serverconfiguration.ui")]
+[GtkTemplate (ui = "/gui/ucanopen/ucanopen_serverconfiguration.ui")]
 public class ServerConfiguration : Adw.Bin
 {
 	public ServerConfiguration() {}

@@ -5,7 +5,7 @@
 		<child>
 			<object class="GtkLabel">
 				<property name="label">This is template widget</property>
-			</object>	
+			</object>
 		</child>
 	</template>
 </interface>
