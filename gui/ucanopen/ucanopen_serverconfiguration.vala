@@ -10,12 +10,21 @@ namespace UCanOpen {
 public class ServerConfiguration : Adw.Bin
 {
 	[GtkChild]
-	private unowned Adw.ComboRow comborowSubcategory; 
+	private unowned Adw.ComboRow comborowCategory;
+	[GtkChild]
+	private unowned Adw.ComboRow comborowEntry;
 
 	private const size_t _categoriesCountMax = 32;
 	private const size_t _categoriesLenMax = 32;
 	private string _categories[_categoriesCountMax];
-	Gtk.StringList _modelSubcategory;
+	private size_t _categoriesCount;
+	Gtk.StringList _modelCategory;
+
+	private const size_t _entriesCountMax = 32;
+	private const size_t _entriesLenMax = 32;
+	private string _entries[_entriesCountMax];
+	private size_t _entriesCount;
+	Gtk.StringList _modelEntry;
 
 
 
@@ -28,14 +37,44 @@ public class ServerConfiguration : Adw.Bin
 			_categories[i] = string.nfill(_categoriesLenMax, '\0');
 		}
 
-		size_t categoriesCount = ucanopen_server_get_conf_categories(backend.ucanopenServer, _categories, _categoriesCountMax, _categoriesLenMax);
-		_modelSubcategory = new Gtk.StringList(null);
-		for (size_t i = 0; i < categoriesCount; ++i)
+		for (size_t i = 0; i < _entriesCountMax; ++i)
 		{
-			_modelSubcategory.append(_categories[i]);
+			_entries[i] = string.nfill(_entriesLenMax, '\0');
 		}
 
-		comborowSubcategory.set_model(_modelSubcategory);
+		_modelCategory = new Gtk.StringList(null);
+		comborowCategory.set_model(_modelCategory);
+		_modelEntry = new Gtk.StringList(null);
+		comborowEntry.set_model(_modelEntry);
+
+
+		size_t _categoriesCount = ucanopen_server_get_conf_categories(backend.ucanopenServer,
+				_categories, _categoriesCountMax, _categoriesLenMax);
+		for (size_t i = 0; i < _categoriesCount; ++i)
+		{
+			_modelCategory.append(_categories[i]);
+		}
+
+		size_t _entriesCount = ucanopen_server_get_conf_entries(backend.ucanopenServer,
+				_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
+		for (size_t i = 0; i < _entriesCount; ++i)
+		{
+			_modelEntry.append(_entries[i]);
+		}
+
+		comborowCategory.notify["selected"].connect((s,p) => {
+			for (size_t i = 0; i < _entriesCount; ++i)
+			{
+				_modelEntry.remove(0);
+			}
+
+			_entriesCount = ucanopen_server_get_conf_entries(backend.ucanopenServer,
+					_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
+			for (size_t i = 0; i < _entriesCount; ++i)
+			{
+				_modelEntry.append(_entries[i]);
+			}	
+		});
 	}
 }
 

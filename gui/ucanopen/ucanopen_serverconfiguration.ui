@@ -9,30 +9,14 @@
 						<property name="title">Configuration</property>
 						
 						<child>
-							<object class="AdwComboRow" id="comborowSubcategory">
+							<object class="AdwComboRow" id="comborowCategory">
 								<property name="title">Category</property>
-								<!--property name="model">
-									<object class="GtkStringList" id="listCanInterface">
-										<items>
-											<item>can0</item>
-											<item>can1</item>
-										</items>
-									</object>
-								</property-->
 							</object>
 						</child>
 
 						<child>
-							<object class="AdwComboRow" id="comborowName">
-								<property name="title">Name</property>
-								<property name="model">
-									<object class="GtkStringList" id="listCanInterface2">
-										<items>
-											<item>can0</item>
-											<item>can1</item>
-										</items>
-									</object>
-								</property>
+							<object class="AdwComboRow" id="comborowEntry">
+								<property name="title">Entry</property>
 							</object>
 						</child>
 

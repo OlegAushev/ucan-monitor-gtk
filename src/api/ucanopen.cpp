@@ -97,6 +97,30 @@ size_t ucanopen_server_get_conf_categories(const char* name, char** buf, size_t 
 }
 
 
+///
+///
+///
+size_t ucanopen_server_get_conf_entries(const char* name, const char* category, char** buf, size_t size, size_t len)
+{
+	auto entries = global::ucanClient->server(name)->confEntriesList().at(category);
+	size_t ret = entries.size();
+	if (ret >= size)
+	{
+		return 0;
+	}
+	
+	size_t i = 0;
+	for (auto entry : entries)
+	{
+		strncpy(buf[i++], entry.data(), len);
+	}
+
+	return ret;
+}
+
+
+
+
 }
 
 
