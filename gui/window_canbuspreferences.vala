@@ -10,7 +10,7 @@ namespace CanMonitor {
 public class WindowCanBusPreferences : Adw.PreferencesWindow
 {
 	[GtkChild]
-	private unowned Gtk.Button buttonConnect; 
+	private unowned Gtk.Button buttonConnect;
 
 	[GtkChild]
 	private unowned Gtk.Button buttonDisconnect;

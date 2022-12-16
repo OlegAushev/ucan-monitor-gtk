@@ -37,6 +37,7 @@ extern void ucanopen_client_set_serverid(string name ,uint nodeId);
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
+extern size_t ucanopen_server_get_conf_categories(string name, char** buf, size_t size, size_t len);
 
 // logger
 extern bool logger_get_message(string buf, size_t len);

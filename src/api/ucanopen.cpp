@@ -72,8 +72,28 @@ void ucanopen_client_set_watch_enabled(bool isEnabled)
 void ucanopen_client_set_watch_period(int period)
 {
 	if (period <= 0) return;
-
 	global::ucanClient->setServerWatchPeriod(std::chrono::milliseconds(period));
+}
+
+
+///
+///
+///
+size_t ucanopen_server_get_conf_categories(const char* name, char** buf, size_t size, size_t len)
+{
+	size_t ret = global::ucanClient->server(name)->confEntriesList().size();
+	if (ret >= size)
+	{
+		return 0;
+	}
+
+	size_t i = 0;
+	for (auto [category, names] : global::ucanClient->server(name)->confEntriesList())
+	{
+		strncpy(buf[i++], category.data(), len);
+	}
+
+	return ret;
 }
 
 

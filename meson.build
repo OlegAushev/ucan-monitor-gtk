@@ -77,8 +77,8 @@ app_sources = files(
 	'src/srmdrive/observer/srmdrive_observer.cpp',
 
 	'src/api/cansocket.cpp',
-	'src/api/ucanopen_client.cpp',
 	'src/api/srmdrive.cpp',
+	'src/api/ucanopen.cpp',
 )
 
 subdir('gui/advvchart')

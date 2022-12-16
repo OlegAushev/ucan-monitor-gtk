@@ -3,8 +3,41 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="UCanOpenServerConfiguration" parent="AdwBin">
 		<child>
-			<object class="GtkLabel">
-				<property name="label">This is ucanopen widget</property>
+			<object class="AdwPreferencesPage">
+				<child>
+					<object class="AdwPreferencesGroup">
+						<property name="title">Configuration</property>
+						
+						<child>
+							<object class="AdwComboRow" id="comborowSubcategory">
+								<property name="title">Category</property>
+								<!--property name="model">
+									<object class="GtkStringList" id="listCanInterface">
+										<items>
+											<item>can0</item>
+											<item>can1</item>
+										</items>
+									</object>
+								</property-->
+							</object>
+						</child>
+
+						<child>
+							<object class="AdwComboRow" id="comborowName">
+								<property name="title">Name</property>
+								<property name="model">
+									<object class="GtkStringList" id="listCanInterface2">
+										<items>
+											<item>can0</item>
+											<item>can1</item>
+										</items>
+									</object>
+								</property>
+							</object>
+						</child>
+
+					</object>
+				</child>
 			</object>
 		</child>
 	</template>

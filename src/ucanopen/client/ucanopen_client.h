@@ -116,6 +116,26 @@ public:
 	void registerServer(std::shared_ptr<IServer> server);
 
 	/**
+	 * @brief Returns pointer to server
+	 * 
+	 * @param name 
+	 * @return std::shared_ptr<IServer> 
+	 */
+	std::shared_ptr<IServer> server(std::string_view name)
+	{
+		auto itServer = std::find_if(m_servers.begin(), m_servers.end(),
+			[name](const auto& s)
+			{
+				return s->name() == name;
+			});
+		if (itServer == m_servers.end())
+		{
+			return nullptr;
+		}
+		return *itServer;
+	}
+
+	/**
 	 * @brief Set the Server Node Id object
 	 * 
 	 * @param name 
