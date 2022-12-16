@@ -37,6 +37,12 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 		{
 			m_watchEntriesList.push_back(entry.name);
 		}
+
+		// create conf entries list
+		if (entry.category == confCategory)
+		{
+			m_confEntriesList[entry.subcategory].push_back(entry.name);
+		}
 	}
 
 	m_heartbeatInfo = {

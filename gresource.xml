@@ -5,8 +5,10 @@
 		<file>gui/components/spinbuttonscale.ui</file>
 		<file>gui/components/tableentry.ui</file>
 		<file>gui/components/tableboolentry.ui</file>
+		<file>gui/template/template_widget.ui</file>
 		<file>gui/srmdrive_controlpanel.ui</file>
 		<file>gui/srmdrive_datatables.ui</file>
+		<file>gui/ucanopen_serverconfiguration.ui</file>
 		<file>gui/window_canbuspreferences.ui</file>
 		<file>gui/window.ui</file>
 	</gresource>

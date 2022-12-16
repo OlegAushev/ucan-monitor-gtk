@@ -31,7 +31,7 @@ class IServer
 public:
 	static constexpr std::string_view watchCategory = "WATCH";
 	static constexpr std::string_view watchSubcategory = "WATCH";
-	static constexpr std::string_view confSubcategory = "conf";
+	static constexpr std::string_view confCategory = "CONFIG";
 
 private:
 	std::string m_name{"unnamed"};
@@ -144,6 +144,30 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
+	/**
+	 * @brief 
+	 * 
+	 * @return std::vector<std::string_view> 
+	 */
+	std::vector<std::string_view> watchEntriesList() const
+	{
+		return m_watchEntriesList;
+	}
+
+	/* CONFIGURATION entries */
+private:
+	std::map<std::string_view, std::vector<std::string_view>> m_confEntriesList;
+public:
+	/**
+	 * @brief 
+	 * 
+	 * @return std::map<std::string_view, std::vector<std::string_view>> 
+	 */
+	std::map<std::string_view, std::vector<std::string_view>> confEntriesList() const
+	{
+		return m_confEntriesList;
+	}
+
 public:
 	/**
 	 * @brief Construct a new IServer object
@@ -243,16 +267,6 @@ public:
 	 * @return ODRequestStatus 
 	 */
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
-
-	/**
-	 * @brief 
-	 * 
-	 * @return std::vector<std::string_view> 
-	 */
-	std::vector<std::string_view> watchEntriesList() const
-	{
-		return m_watchEntriesList;
-	}
 
 	/**
 	 * @brief 

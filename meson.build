@@ -48,6 +48,8 @@ app_sources = files(
 	'gui/components/spinbuttonscale.vala',
 	'gui/components/tableboolentry.vala',
 	'gui/components/tableentry.vala',
+
+	'gui/template/template_widget.vala',
 	
 	'gui/application.vala',
 	'gui/main.vala',
@@ -60,6 +62,8 @@ app_sources = files(
 	'src/main.cpp',
 
 	'src/cansocket/cansocket.cpp',
+
+	'src/logger/logger.cpp',
 
 	'src/ucanopen/client/ucanopen_client.cpp',
 	'src/ucanopen/server/ucanopen_server.cpp',

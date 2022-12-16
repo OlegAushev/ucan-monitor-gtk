@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="SrmdriveDataTables" parent="AdwBin">
+	<template class="SrmDriveDataTables" parent="AdwBin">
 		<child>
 			<object class="GtkBox">
 				<property name="margin-start">10</property>
@@ -562,17 +562,4 @@
 			</object>
 		</child>
 	</template>
-
-
-
-
-	
-
-
-
-
-
-
-
-
 </interface>

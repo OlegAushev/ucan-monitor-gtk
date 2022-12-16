@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="TemplateWidget" parent="AdwBin">
+		<child>
+			<object class="GtkLabel">
+				<property name="label">This is template widget</property>
+			</object>	
+		</child>
+	</template>
+</interface>

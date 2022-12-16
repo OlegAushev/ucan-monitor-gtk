@@ -3,7 +3,7 @@
 ///
 
 
-namespace Srmdrive {
+namespace SrmDrive {
 
 
 [GtkTemplate (ui = "/gui/srmdrive_datatables.ui")]
