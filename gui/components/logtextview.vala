@@ -17,6 +17,9 @@ public class LogTextView : Adw.Bin
 	{
 		_textbuffer = new Gtk.TextBuffer(null);
 		_textview.buffer = _textbuffer;
+
+		_textbuffer.create_tag("green_on_black", "foreground", "green", "background", "black", null);
+
 		Timeout.add(100, update);
 	}
 	uint i = 0;
@@ -29,7 +32,7 @@ public class LogTextView : Adw.Bin
 			_textbuffer.get_end_iter(out endIter);
 
 			_textview.editable = true;
-			_textbuffer.insert(ref endIter, " > ", 3);
+			_textbuffer.insert_with_tags_by_name(ref endIter, " > ", 3, "green_on_black");
 			_textbuffer.insert(ref endIter, message, (int)message.length);
 			_textbuffer.insert(ref endIter, "\n", 1);
 			_textview.editable = false;
