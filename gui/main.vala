@@ -20,11 +20,17 @@
 extern string GIT_DESCRIBE;
 
 // core backend
-namespace backend {
+namespace Backend {
+
 extern int main_enter();
 extern void main_exit();
 extern bool isReady;
-extern string ucanopenServer;
+
+namespace Ucanopen {
+extern string server;
+extern string serverConfCategory;
+}
+
 }
 
 // cansocket
@@ -33,16 +39,17 @@ extern void cansocket_disconnect();
 
 // ucanopen
 extern void ucanopen_client_set_nodeid(uint nodeId);
-extern void ucanopen_client_set_serverid(string name ,uint nodeId);
+extern void ucanopen_client_set_serverid(string serverName ,uint nodeId);
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
-extern void ucanopen_server_get_watch_value(string name, string watch, char* buf, size_t len);
-extern size_t ucanopen_server_get_conf_categories(string name, char** buf, size_t size, size_t len);
-extern size_t ucanopen_server_get_conf_entries(string name, string category, char** buf, size_t size, size_t len);
-extern bool ucanopen_server_is_heartbeat_ok(string name);
-extern void ucanopen_server_get_nmt_state(string name, char* buf, size_t len);
-extern bool ucanopen_server_is_tpdo_ok(string name, int tpdoNum);
+extern void ucanopen_server_get_watch_value(string serverName, string watch, char* buf, size_t len);
+extern size_t ucanopen_server_get_conf_categories(string serverName, char** buf, size_t size, size_t len);
+extern size_t ucanopen_server_get_conf_entries(string serverName, string category, char** buf, size_t size, size_t len);
+extern bool ucanopen_server_is_heartbeat_ok(string serverName);
+extern void ucanopen_server_get_nmt_state(string serverName, char* buf, size_t len);
+extern bool ucanopen_server_is_tpdo_ok(string serverName, int tpdoNum);
+extern void ucanopen_server_read(string serverName, string category, string subcategory, string name);
 
 // logger
 extern bool logger_get_message(string buf, size_t len);

@@ -3,7 +3,7 @@
 ///
 
 
-namespace UCanOpen {
+namespace Ucanopen {
 
 
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_serverconfiguration.ui")]
@@ -13,6 +13,8 @@ public class ServerConfiguration : Adw.Bin
 	private unowned Adw.ComboRow comborowCategory;
 	[GtkChild]
 	private unowned Adw.ComboRow comborowEntry;
+	[GtkChild]
+	private unowned Gtk.Button buttonRead;
 
 	private const size_t _categoriesCountMax = 32;
 	private const size_t _categoriesLenMax = 32;
@@ -48,14 +50,14 @@ public class ServerConfiguration : Adw.Bin
 		comborowEntry.set_model(_modelEntry);
 
 
-		size_t _categoriesCount = ucanopen_server_get_conf_categories(backend.ucanopenServer,
+		size_t _categoriesCount = ucanopen_server_get_conf_categories(Backend.Ucanopen.server,
 				_categories, _categoriesCountMax, _categoriesLenMax);
 		for (size_t i = 0; i < _categoriesCount; ++i)
 		{
 			_modelCategory.append(_categories[i]);
 		}
 
-		size_t _entriesCount = ucanopen_server_get_conf_entries(backend.ucanopenServer,
+		size_t _entriesCount = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
 				_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
 		for (size_t i = 0; i < _entriesCount; ++i)
 		{
@@ -68,12 +70,17 @@ public class ServerConfiguration : Adw.Bin
 				_modelEntry.remove(0);
 			}
 
-			_entriesCount = ucanopen_server_get_conf_entries(backend.ucanopenServer,
+			_entriesCount = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
 					_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
 			for (size_t i = 0; i < _entriesCount; ++i)
 			{
 				_modelEntry.append(_entries[i]);
 			}	
+		});
+
+		buttonRead.clicked.connect(() => {
+			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
+					_categories[comborowCategory.selected], _entries[comborowEntry.selected]);
 		});
 	}
 }

@@ -38,14 +38,14 @@ public class Application : Adw.Application
 		this.add_action_entries(action_entries, this);
 		this.set_accels_for_action("app.quit", {"<primary>q"});
 
-		this.shutdown.connect(backend.main_exit);
+		this.shutdown.connect(Backend.main_exit);
         }
 
 	public override void activate()
 	{
 		message("[gui] Waiting for backend...");
-		backend.main_enter();
-		while (!backend.isReady)
+		Backend.main_enter();
+		while (!Backend.isReady)
 		{
 			//message("[gui] Waiting...");
 			Thread.usleep(10000);	// with empty loop Release build is not working
@@ -53,7 +53,7 @@ public class Application : Adw.Application
 		
 		message("[gui] Configuring backend...");
 		ucanopen_client_set_nodeid(WindowCanBusPreferences.clientId);
-		ucanopen_client_set_serverid(backend.ucanopenServer, WindowCanBusPreferences.serverId);
+		ucanopen_client_set_serverid(Backend.Ucanopen.server, WindowCanBusPreferences.serverId);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.switchTpdoState);
 		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.switchWatchState);
 		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriodDefault);

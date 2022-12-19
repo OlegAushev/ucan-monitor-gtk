@@ -95,7 +95,7 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 			}
 			else
 			{
-				ucanopen_client_set_serverid(backend.ucanopenServer, (uint)adjustmentServerId.value);
+				ucanopen_client_set_serverid(Backend.Ucanopen.server, (uint)adjustmentServerId.value);
 				_serverId = (uint)adjustmentServerId.value;
 			}
 		});

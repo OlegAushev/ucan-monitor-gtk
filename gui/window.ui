@@ -113,7 +113,7 @@
 													<!--object class="GtkLabel">
 														<property name="label">This is page 3</property>
 													</object-->
-													<object class = "UCanOpenServerConfiguration">
+													<object class = "UcanopenServerConfiguration">
 
 													</object>
 												</property>

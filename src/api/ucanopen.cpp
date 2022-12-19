@@ -43,9 +43,9 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 ///
 ///
-void ucanopen_client_set_serverid(const char* name ,unsigned int nodeId)
+void ucanopen_client_set_serverid(const char* serverName ,unsigned int nodeId)
 {
-	global::ucanClient->setServerNodeId(name, ucanopen::NodeId(nodeId));
+	global::ucanClient->setServerNodeId(serverName, ucanopen::NodeId(nodeId));
 }
 
 
@@ -80,25 +80,25 @@ void ucanopen_client_set_watch_period(int period)
 ///
 ///
 ///
-void ucanopen_server_get_watch_value(const char* name, const char* watch, char* buf, size_t len)
+void ucanopen_server_get_watch_value(const char* serverName, const char* watchName, char* buf, size_t len)
 {
-	global::ucanClient->server(name)->watchValue(watch, buf, len);
+	global::ucanClient->server(serverName)->watchValue(watchName, buf, len);
 }
 
 
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_categories(const char* name, char** buf, size_t size, size_t len)
+size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, size_t size, size_t len)
 {
-	size_t ret = global::ucanClient->server(name)->confEntriesList().size();
+	size_t ret = global::ucanClient->server(serverName)->confEntriesList().size();
 	if (ret >= size)
 	{
 		return 0;
 	}
 
 	size_t i = 0;
-	for (auto [category, names] : global::ucanClient->server(name)->confEntriesList())
+	for (auto [category, names] : global::ucanClient->server(serverName)->confEntriesList())
 	{
 		strncpy(buf[i++], category.data(), len);
 	}
@@ -110,9 +110,9 @@ size_t ucanopen_server_get_conf_categories(const char* name, char** buf, size_t 
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_entries(const char* name, const char* category, char** buf, size_t size, size_t len)
+size_t ucanopen_server_get_conf_entries(const char* serverName, const char* category, char** buf, size_t size, size_t len)
 {
-	auto entries = global::ucanClient->server(name)->confEntriesList().at(category);
+	auto entries = global::ucanClient->server(serverName)->confEntriesList().at(category);
 	size_t ret = entries.size();
 	if (ret >= size)
 	{
@@ -132,18 +132,18 @@ size_t ucanopen_server_get_conf_entries(const char* name, const char* category, 
 ///
 ///
 ///
-bool ucanopen_server_is_heartbeat_ok(const char* name)
+bool ucanopen_server_is_heartbeat_ok(const char* serverName)
 {
-	return global::ucanClient->server(name)->isHeartbeatOk();
+	return global::ucanClient->server(serverName)->isHeartbeatOk();
 }
 
 
 ///
 ///
 ///
-void ucanopen_server_get_nmt_state(const char* name, char* buf, size_t len)
+void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len)
 {
-	switch (global::ucanClient->server(name)->nmtState())
+	switch (global::ucanClient->server(serverName)->nmtState())
 	{
 	case ucanopen::NmtState::Initialization:
 		strncpy(buf, "init", len);
@@ -164,10 +164,19 @@ void ucanopen_server_get_nmt_state(const char* name, char* buf, size_t len)
 ///
 ///
 ///
-bool ucanopen_server_is_tpdo_ok(const char* name, int tpdoNum)
+bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return global::ucanClient->server(name)->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
+	return global::ucanClient->server(serverName)->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
+}
+
+
+///
+///
+///
+void ucanopen_server_read(const char* serverName, const char* category, const char* subcategory, const char* name)
+{
+	global::ucanClient->server(serverName)->read(category, subcategory, name);
 }
 
 

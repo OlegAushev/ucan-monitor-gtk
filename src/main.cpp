@@ -15,7 +15,8 @@
 
 
 bool backend_isReady = false;
-const char* backend_ucanopenServer = "SRM Drive";
+const char* backend_ucanopen_server = "SRM Drive";
+const char* backend_ucanopen_serverConfCategory = ucanopen::IServer::confCategory.data();
 
 
 namespace {
