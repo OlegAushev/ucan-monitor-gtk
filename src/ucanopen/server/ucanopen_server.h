@@ -109,6 +109,10 @@ private:
 	};
 	WatchInfo m_watchInfo;
 	std::vector<std::string_view> m_watchEntriesList;
+	mutable std::mutex m_watchMutex;
+protected:
+	std::map<std::string_view, std::string> m_watchData;
+
 public:
 	/**
 	 * @brief 
@@ -152,6 +156,42 @@ public:
 	std::vector<std::string_view> watchEntriesList() const
 	{
 		return m_watchEntriesList;
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 * @param watchName 
+	 * @return std::string 
+	 */
+	std::string watchValue(std::string_view watchName) const
+	{
+		auto it = m_watchData.find(watchName);
+		if (it == m_watchData.end())
+		{
+			return "n/a";
+		}
+		return it->second;
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 * @param watchName 
+	 * @param buf 
+	 * @param len 
+	 */
+	void watchValue(std::string_view watchName, char* buf, size_t len) const
+	{
+		auto it = m_watchData.find(watchName);
+		if (it == m_watchData.end())
+		{
+			const char* str = "n/a";
+			std::strncpy(buf, str, len);
+			return;
+		}
+		std::lock_guard<std::mutex> lock(m_watchMutex);
+		std::strncpy(buf, it->second.c_str(), len);
 	}
 
 	/* CONFIGURATION entries */

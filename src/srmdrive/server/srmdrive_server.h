@@ -16,7 +16,6 @@
 #include "ucanopen/server/ucanopen_server.h"
 #include "srmdrive_def.h"
 #include "../controller/srmdrive_controller.h"
-#include "../observer/srmdrive_observer.h"
 #include "logger/logger.h"
 
 
@@ -43,14 +42,10 @@ protected:
 
 	virtual void handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionaryType::const_iterator entryIt,
-			ucanopen::CobSdoData data) override final
-	{
-		observer.handleSdo(sdoType, entryIt, data);
-	}
+			ucanopen::CobSdoData data) override final;
 
 public:
 	Controller controller;
-	Observer observer;
 
 	Server(const std::string& name,
 			ucanopen::NodeId nodeId,

@@ -32,10 +32,11 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 				{entry.category, entry.subcategory, entry.name},
 				m_dictionary.find(key)});
 
-		// create watch entries list
+		// create watch entries list and data map
 		if (entry.category == watchCategory)
 		{
 			m_watchEntriesList.push_back(entry.name);
+			m_watchData.insert({entry.name, "......"});
 		}
 
 		// create conf entries list
@@ -185,7 +186,18 @@ void IServer::handleFrame(const can_frame& frame)
 		default:
 			return;
 		}
+		
+		// handle watch data
+		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::ResponseToRead))
+		{
+			if (odEntry->second.dataType != OD_ENUM16)
+			{
+				std::lock_guard<std::mutex> lock(m_watchMutex);
+				m_watchData[odEntry->second.name] = sdoMessage.data.toString(odEntry->second.dataType);
+			}
+		}
 
+		// server-specific TSDO handling
 		handleTsdo(sdoType, odEntry, sdoMessage.data);
 	}
 	else if (frame.can_id == m_heartbeatInfo.id)

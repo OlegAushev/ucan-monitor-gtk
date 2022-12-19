@@ -79,6 +79,15 @@ void ucanopen_client_set_watch_period(int period)
 ///
 ///
 ///
+void ucanopen_server_get_watch_value(const char* name, const char* watch, char* buf, size_t len)
+{
+	global::ucanClient->server(name)->watchValue(watch, buf, len);
+}
+
+
+///
+///
+///
 size_t ucanopen_server_get_conf_categories(const char* name, char** buf, size_t size, size_t len)
 {
 	size_t ret = global::ucanClient->server(name)->confEntriesList().size();
@@ -117,8 +126,6 @@ size_t ucanopen_server_get_conf_entries(const char* name, const char* category, 
 
 	return ret;
 }
-
-
 
 
 }

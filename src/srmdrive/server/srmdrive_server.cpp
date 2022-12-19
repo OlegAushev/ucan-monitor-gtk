@@ -25,12 +25,28 @@ Server::Server(const std::string& name,
 		const ucanopen::ObjectDictionaryType& dictionary)
 	: IServer(name, nodeId, socket, dictionary)
 	, controller(this)
-	, observer(this)
 {
 	registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
 	registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
 	registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
 	registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
+}
+
+
+///
+///
+///
+void Server::handleTsdo(ucanopen::SdoType sdoType,
+			ucanopen::ObjectDictionaryType::const_iterator entryIt,
+			ucanopen::CobSdoData data)
+{
+	if (entryIt->second.category == watchCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
+	{
+		if (entryIt->second.name == "DRIVE_STATE")
+		{
+			m_watchData[entryIt->second.name] = "not impl";
+		}
+	}
 }
 
 

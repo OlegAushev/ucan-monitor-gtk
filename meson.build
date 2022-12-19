@@ -74,7 +74,6 @@ app_sources = files(
 	'src/srmdrive/server/srmdrive_server.cpp',
 	'src/srmdrive/server/srmdrive_objectdictionary.cpp',
 	'src/srmdrive/controller/srmdrive_controller.cpp',
-	'src/srmdrive/observer/srmdrive_observer.cpp',
 
 	'src/api/cansocket.cpp',
 	'src/api/srmdrive.cpp',
