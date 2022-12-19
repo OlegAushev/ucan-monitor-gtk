@@ -53,6 +53,18 @@ private:
 		NmtState nmtState;
 	};
 	HeartbeatInfo m_heartbeatInfo;
+public:
+	/**
+	 * @brief 
+	 * 
+	 * @return true 
+	 * @return false 
+	 */
+	bool isHeartbeatOk() const
+	{
+		return ((std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout)
+				&& (m_heartbeatInfo.nmtState == NmtState::Operational);
+	}
 
 	/* TPDO server --> client */
 private:
@@ -72,6 +84,19 @@ protected:
 	{
 		canid_t id = calculateCobId(toCobType(type), m_nodeId);
 		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
+	}
+public:
+	/**
+	 * @brief 
+	 * 
+	 * @param tpdo 
+	 * @return true 
+	 * @return false 
+	 */
+	bool isTpdoOk(TpdoType tpdo) const
+	{
+		if (!m_tpdoList.contains(tpdo)) return false;
+		return (std::chrono::steady_clock::now() - m_tpdoList.at(tpdo).timepoint) <= m_tpdoList.at(tpdo).timeout;
 	}
 
 	/* RPDO server <-- client */
@@ -94,6 +119,28 @@ protected:
 		canid_t id = calculateCobId(toCobType(type), m_nodeId);
 		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
 	}
+public:
+	/**
+	 * @brief 
+	 * 
+	 */
+	void enableRpdo()
+	{
+		std::cout << "[ucanopen] Enabling '" << m_name << "' server RPDO messages... ";
+		m_isRpdoEnabled = true;
+		std::cout << "done." << std::endl;
+	}
+	
+	/**
+	 * @brief 
+	 * 
+	 */
+	void disableRpdo() 
+	{
+		std::cout << "[ucanopen] Disabling '" << m_name << "' server RPDO messages... ";
+		m_isRpdoEnabled = false;
+		std::cout << "done." << std::endl;
+	}
 
 	/* TSDO server --> client */
 protected:
@@ -112,7 +159,6 @@ private:
 	mutable std::mutex m_watchMutex;
 protected:
 	std::map<std::string_view, std::string> m_watchData;
-
 public:
 	/**
 	 * @brief 
@@ -243,28 +289,6 @@ public:
 	{
 		return m_nodeId;
 	}
-
-	/**
-	 * @brief 
-	 * 
-	 */
-	void enableRpdo()
-	{
-		std::cout << "[ucanopen] Enabling '" << m_name << "' server RPDO messages... ";
-		m_isRpdoEnabled = true;
-		std::cout << "done." << std::endl;
-	}
-	
-	/**
-	 * @brief 
-	 * 
-	 */
-	void disableRpdo() 
-	{
-		std::cout << "[ucanopen] Disabling '" << m_name << "' server RPDO messages... ";
-		m_isRpdoEnabled = false;
-		std::cout << "done." << std::endl;
-	}
 	
 	/**
 	 * @brief 
@@ -311,34 +335,9 @@ public:
 	/**
 	 * @brief 
 	 * 
-	 * @return true 
-	 * @return false 
-	 */
-	bool isHeartbeatOk() const
-	{
-		return ((std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout)
-				&& (m_heartbeatInfo.nmtState == NmtState::Operational);
-	}
-
-	/**
-	 * @brief 
-	 * 
 	 * @return NmtState 
 	 */
 	NmtState nmtState() const { return m_heartbeatInfo.nmtState; }
-
-	/**
-	 * @brief 
-	 * 
-	 * @param tpdo 
-	 * @return true 
-	 * @return false 
-	 */
-	bool isTpdoOk(TpdoType tpdo) const
-	{
-		if (!m_tpdoList.contains(tpdo)) return false;
-		return (std::chrono::steady_clock::now() - m_tpdoList.at(tpdo).timepoint) <= m_tpdoList.at(tpdo).timeout;
-	}
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(

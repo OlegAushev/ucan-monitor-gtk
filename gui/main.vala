@@ -40,20 +40,19 @@ extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string name, string watch, char* buf, size_t len);
 extern size_t ucanopen_server_get_conf_categories(string name, char** buf, size_t size, size_t len);
 extern size_t ucanopen_server_get_conf_entries(string name, string category, char** buf, size_t size, size_t len);
+extern bool ucanopen_server_is_heartbeat_ok(string name);
+extern void ucanopen_server_get_nmt_state(string name, char* buf, size_t len);
+extern bool ucanopen_server_is_tpdo_ok(string name, int tpdoNum);
 
 // logger
 extern bool logger_get_message(string buf, size_t len);
 
 // srmdrive
-extern bool srmdrive_is_heartbeat_ok();
-extern void srmdrive_get_nmt_state(string state);
-extern bool srmdrive_is_tpdo_ok(int tpdoNum);
 extern void srmdrive_controller_set_power_enabled(bool isEnabled);
 extern void srmdrive_controller_set_run_enabled(bool isEnabled);
 extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);
 extern void srmdrive_controller_set_torque(double valPu);
 extern void srmdrive_controller_set_speed(double val);
-extern void srmdrive_observer_get_watch_value(string name, string buf, size_t len);
 
 
 

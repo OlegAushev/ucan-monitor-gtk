@@ -174,24 +174,25 @@ public class DataTables : Adw.Bin
 
 	public void updateConnectionStatus()
 	{
-		if (!srmdrive_is_heartbeat_ok())
+		if (!ucanopen_server_is_heartbeat_ok(backend.ucanopenServer))
 		{
 			heartbeatIndicator.entry_remove_css_class("success");
 			heartbeatIndicator.entry_add_css_class("error");
+			heartbeatIndicator.entry_text = "no HB";
 		}
 		else
 		{
 			heartbeatIndicator.entry_remove_css_class("error");
 			heartbeatIndicator.entry_add_css_class("success");
-			string nmtState = "";
-			srmdrive_get_nmt_state(nmtState);
+			string nmtState = string.nfill(16, '\0');
+			ucanopen_server_get_nmt_state(backend.ucanopenServer, nmtState, 16);
 			heartbeatIndicator.entry_text = nmtState;
 		}
 
-		tpdo1Indicator.value = srmdrive_is_tpdo_ok(0);
-		tpdo2Indicator.value = srmdrive_is_tpdo_ok(1);
-		tpdo3Indicator.value = srmdrive_is_tpdo_ok(2);
-		tpdo4Indicator.value = srmdrive_is_tpdo_ok(3);
+		tpdo1Indicator.value = ucanopen_server_is_tpdo_ok(backend.ucanopenServer, 0);
+		tpdo2Indicator.value = ucanopen_server_is_tpdo_ok(backend.ucanopenServer, 1);
+		tpdo3Indicator.value = ucanopen_server_is_tpdo_ok(backend.ucanopenServer, 2);
+		tpdo4Indicator.value = ucanopen_server_is_tpdo_ok(backend.ucanopenServer, 3);
 	}
 }
 

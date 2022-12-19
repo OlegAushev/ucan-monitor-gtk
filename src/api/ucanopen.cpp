@@ -11,6 +11,7 @@
 
 
 #include "ucanopen/client/ucanopen_client.h"
+#include <cassert>
 
 
 namespace global {
@@ -125,6 +126,48 @@ size_t ucanopen_server_get_conf_entries(const char* name, const char* category, 
 	}
 
 	return ret;
+}
+
+
+///
+///
+///
+bool ucanopen_server_is_heartbeat_ok(const char* name)
+{
+	return global::ucanClient->server(name)->isHeartbeatOk();
+}
+
+
+///
+///
+///
+void ucanopen_server_get_nmt_state(const char* name, char* buf, size_t len)
+{
+	switch (global::ucanClient->server(name)->nmtState())
+	{
+	case ucanopen::NmtState::Initialization:
+		strncpy(buf, "init", len);
+		break;
+	case ucanopen::NmtState::Stopped:
+		strncpy(buf, "stopped", len);
+		break;
+	case ucanopen::NmtState::Operational:
+		strncpy(buf, "op", len);
+		break;
+	case ucanopen::NmtState::PreOperational:
+		strncpy(buf, "preop", len);
+		break;
+	}
+}
+
+
+///
+///
+///
+bool ucanopen_server_is_tpdo_ok(const char* name, int tpdoNum)
+{
+	assert((tpdoNum >= 0) && (tpdoNum <= 3));
+	return global::ucanClient->server(name)->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
 }
 
 
