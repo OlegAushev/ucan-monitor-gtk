@@ -47,6 +47,13 @@ void Server::handleTsdo(ucanopen::SdoType sdoType,
 			m_watchData[entryIt->second.name] = "not impl";
 		}
 	}
+	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToRead)
+	{
+		std::stringstream sstr;
+		sstr << entryIt->second.subcategory << "::" << entryIt->second.name
+				<< " = " << data.toString(entryIt->second.dataType);
+		Logger::instance().add(sstr.str());
+	}
 }
 
 

@@ -27,11 +27,19 @@
 							</object>
 						</child>
 
-						<!--child>
-							<object class="AdwActionRow">
-								<property name="title">Entry</property>
+						<child>
+							<object class="AdwEntryRow">
+								<property name="title">Value</property>
+
+								<child type="suffix">
+									<object class="GtkButton" id="buttonwrite">
+										<property name="label">Write</property>
+										<property name="halign">center</property>
+										<property name="valign">center</property>
+									</object>
+								</child>
 							</object>
-						</child-->
+						</child>
 
 					</object>
 				</child>
