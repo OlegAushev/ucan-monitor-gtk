@@ -28,11 +28,12 @@
 						</child>
 
 						<child>
-							<object class="AdwEntryRow">
+							<object class="AdwEntryRow" id="entryrowValue">
 								<property name="title">Value</property>
+								<property name="input-purpose">number</property>
 
 								<child type="suffix">
-									<object class="GtkButton" id="buttonwrite">
+									<object class="GtkButton" id="buttonWrite">
 										<property name="label">Write</property>
 										<property name="halign">center</property>
 										<property name="valign">center</property>

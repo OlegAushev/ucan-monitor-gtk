@@ -180,6 +180,15 @@ void ucanopen_server_read(const char* serverName, const char* category, const ch
 }
 
 
+///
+///
+///
+void ucanopen_server_write(const char* serverName, const char* category, const char* subcategory, const char* name, const char* value)
+{
+	global::ucanClient->server(serverName)->write(category, subcategory, name, std::string(value));
+}
+
+
 }
 
 

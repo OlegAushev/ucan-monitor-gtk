@@ -15,6 +15,10 @@ public class ServerConfiguration : Adw.Bin
 	private unowned Adw.ComboRow comborowEntry;
 	[GtkChild]
 	private unowned Gtk.Button buttonRead;
+	[GtkChild]
+	private unowned Adw.EntryRow entryrowValue;
+	[GtkChild]
+	private unowned Gtk.Button buttonWrite;
 
 	private const size_t _categoriesCountMax = 32;
 	private const size_t _categoriesLenMax = 32;
@@ -81,6 +85,16 @@ public class ServerConfiguration : Adw.Bin
 		buttonRead.clicked.connect(() => {
 			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
 					_categories[comborowCategory.selected], _entries[comborowEntry.selected]);
+		});
+
+		entryrowValue.insert_text.connect(() => {
+			
+		});
+
+		buttonWrite.clicked.connect(() => {
+			ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
+					_categories[comborowCategory.selected], _entries[comborowEntry.selected],
+					entryrowValue.text);
 		});
 	}
 }

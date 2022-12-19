@@ -300,9 +300,9 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 	switch (entryIt->second.dataType)
 	{
 	case OD_BOOL:
-		if (value == "TRUE" || value == "ON" || value == "1")
+		if (value == "TRUE" || value == "true" || value == "ON" || value == "on" || value == "1")
 			sdoData = CobSdoData(true);
-		else if (value == "FALSE" || value == "OFF" || value == "0")
+		else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
 			sdoData = CobSdoData(true);
 		else
 			return ODRequestStatus::Fail;

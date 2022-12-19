@@ -50,6 +50,7 @@ extern bool ucanopen_server_is_heartbeat_ok(string serverName);
 extern void ucanopen_server_get_nmt_state(string serverName, char* buf, size_t len);
 extern bool ucanopen_server_is_tpdo_ok(string serverName, int tpdoNum);
 extern void ucanopen_server_read(string serverName, string category, string subcategory, string name);
+extern void ucanopen_server_write(string serverName, string category, string subcategory, string name, string value);
 
 // logger
 extern bool logger_get_message(string buf, size_t len);
