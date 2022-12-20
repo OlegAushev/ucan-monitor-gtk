@@ -59,6 +59,8 @@ public class Application : Adw.Application
 		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriodDefault);
 		message("[gui] Backend ready.");
 
+		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));
+
 		base.activate();
 		var win = this.active_window;
 		if (win == null)

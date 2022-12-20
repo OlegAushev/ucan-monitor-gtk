@@ -92,9 +92,23 @@ public class ServerConfiguration : Adw.Bin
 		});
 
 		buttonWrite.clicked.connect(() => {
-			ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
-					_categories[comborowCategory.selected], _entries[comborowEntry.selected],
-					entryrowValue.text);
+			float val;
+			bool isNumber = float.try_parse(entryrowValue.text, out val);
+			if (isNumber && entryrowValue.text.length != 0)
+			{
+				message(val.to_string());
+				message("ok");
+				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
+						_categories[comborowCategory.selected], _entries[comborowEntry.selected],
+						entryrowValue.text);
+			}
+			else
+			{
+				//toastOverlay.add_toast();
+				message("bad");
+			}
+
+			
 		});
 	}
 }

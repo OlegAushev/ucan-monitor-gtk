@@ -292,7 +292,7 @@ public:
 			return std::to_string(u32());
 		case ucanopen::OD_FLOAT32:
 			{
-				std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::scientific;
+				std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
 				std::array<char, 16> buf;
 				if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
 						ec == std::errc())
