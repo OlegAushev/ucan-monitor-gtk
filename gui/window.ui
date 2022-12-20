@@ -125,7 +125,7 @@
 								
 								<child>
 									<object class="LogTextView" id="logTextView">
-
+										<property name="visible">false</property>
 									</object>
 								</child>
 
