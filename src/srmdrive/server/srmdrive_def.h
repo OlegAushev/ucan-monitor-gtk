@@ -15,6 +15,7 @@
 
 #include <cstdint>
 #include <cstring>
+#include <vector>
 
 
 namespace srmdrive {
@@ -123,20 +124,20 @@ struct CobRpdo4
 
 inline const std::vector<std::string_view> syslogMessages = {
 	"No message",
-	"[ INFO ] Device boot - success",
-	"[ INFO ] Device is busy",
-	"[ INFO ] Device is resetting...",
-	"[ INFO ] Read configs from EEPROM - success",
-	"[ FAIL ] Read configs from EEPROM - fail",
-	"[ INFO ] Reset configs - success",
-	"[ FAIL ] Reset configs - fail",
-	"[ INFO ] Apply configs - success",
-	"[ FAIL ] Apply configs - fail",
-	"[ INFO ] Position sensor calibration - success",
-	"[ FAIL ] Position sensor calibration - fail",
-	"[ INFO ] Write calibration data to EEPROM - success",
-	"[ FAIL ] Write calibration data to EEPROM - fail",
-	"[ FAIL } Operation cannot be performed"	
+	"[syslog] Device boot - success.",
+	"[syslog] Device is busy.",
+	"[syslog] Reset device...",
+	"[syslog] Read configs from EEPROM - success.",
+	"[syslog] Read configs from EEPROM - fail.",
+	"[syslog] Reset configs - success.",
+	"[syslog] Reset configs - fail.",
+	"[syslog] Apply configs - success.",
+	"[syslog] Apply configs - fail.",
+	"[syslog] Position sensor calibration - success.",
+	"[syslog] Position sensor calibration - fail.",
+	"[syslog] Write calibration data to EEPROM - success.",
+	"[syslog] Write calibration data to EEPROM - fail.",
+	"[syslog] Operation cannot be performed."	
 };
 
 
