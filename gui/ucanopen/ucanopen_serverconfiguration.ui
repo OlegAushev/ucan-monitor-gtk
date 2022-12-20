@@ -3,48 +3,56 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="UcanopenServerConfiguration" parent="AdwBin">
 		<child>
-			<object class="AdwPreferencesPage">
-				<child>
-					<object class="AdwPreferencesGroup">
-						<property name="title">Configuration</property>
-						
-						<child>
-							<object class="AdwComboRow" id="comborowCategory">
-								<property name="title">Category</property>
-							</object>
-						</child>
+			<object class="AdwToastOverlay" id="toastOverlay">
+				<property name="child">
 
+
+					<object class="AdwPreferencesPage">
 						<child>
-							<object class="AdwComboRow" id="comborowEntry">
-								<property name="title">Entry</property>
-								<child type="suffix">
-									<object class="GtkButton" id="buttonRead">
-										<property name="label">Read</property>
-										<property name="halign">center</property>
-										<property name="valign">center</property>
+							<object class="AdwPreferencesGroup">
+								<property name="title">Configuration</property>
+								
+								<child>
+									<object class="AdwComboRow" id="comborowCategory">
+										<property name="title">Category</property>
 									</object>
 								</child>
-							</object>
-						</child>
 
-						<child>
-							<object class="AdwEntryRow" id="entryrowValue">
-								<property name="title">Value</property>
-								<property name="input-purpose">number</property>
-
-								<child type="suffix">
-									<object class="GtkButton" id="buttonWrite">
-										<property name="label">Write</property>
-										<property name="halign">center</property>
-										<property name="valign">center</property>
+								<child>
+									<object class="AdwComboRow" id="comborowEntry">
+										<property name="title">Entry</property>
+										<child type="suffix">
+											<object class="GtkButton" id="buttonRead">
+												<property name="label">Read</property>
+												<property name="halign">center</property>
+												<property name="valign">center</property>
+											</object>
+										</child>
 									</object>
 								</child>
+
+								<child>
+									<object class="AdwEntryRow" id="entryrowValue">
+										<property name="title">Value</property>
+										<property name="input-purpose">number</property>
+
+										<child type="suffix">
+											<object class="GtkButton" id="buttonWrite">
+												<property name="label">Write</property>
+												<property name="halign">center</property>
+												<property name="valign">center</property>
+											</object>
+										</child>
+									</object>
+								</child>
+
 							</object>
 						</child>
-
 					</object>
-				</child>
+
+				</property>
 			</object>
+
 		</child>
 	</template>
 </interface>
