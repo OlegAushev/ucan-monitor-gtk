@@ -50,8 +50,15 @@ void Server::handleTsdo(ucanopen::SdoType sdoType,
 	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToRead)
 	{
 		std::stringstream sstr;
-		sstr << "[read] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << confCategory << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " = " << data.toString(entryIt->second.dataType);
+		Logger::instance().add(sstr.str());
+	}
+	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
+	{
+		std::stringstream sstr;
+		sstr << "[" << confCategory << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
+				<< " updated.";
 		Logger::instance().add(sstr.str());
 	}
 }

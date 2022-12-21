@@ -98,7 +98,6 @@ public class ServerConfiguration : Adw.Bin
 			bool isNumber = float.try_parse(entryrowValue.text, out val);
 			if (isNumber && entryrowValue.text.length != 0)
 			{
-				message(val.to_string());;
 				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
 						_categories[comborowCategory.selected], _entries[comborowEntry.selected],
 						entryrowValue.text);
@@ -106,10 +105,10 @@ public class ServerConfiguration : Adw.Bin
 			else
 			{
 				string message = string.join(null, "Bad value: ", entryrowValue.text);
-				toastOverlay.add_toast(new Adw.Toast(message));
+				Adw.Toast toast = new Adw.Toast(message);
+				toast.timeout = 1;
+				toastOverlay.add_toast(toast);
 			}
-
-			
 		});
 	}
 }
