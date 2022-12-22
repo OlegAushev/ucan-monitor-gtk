@@ -24,13 +24,13 @@ namespace srmdrive {
 class Controller
 {
 private:
-	ucanopen::IServer* m_driveServer;
+	ucanopen::IServer* _driveServer;
 
-	bool m_isRunEnabled = false;
-	bool m_isEmergencyEnabled = false;
+	bool _isRunEnabled = false;
+	bool _isEmergencyEnabled = false;
 
-	float m_torquePuRef = 0;
-	float m_speedRef = 0;
+	float _torquePuRef = 0;
+	float _speedRef = 0;
 
 public:
 	Controller(ucanopen::IServer* driveServer);
