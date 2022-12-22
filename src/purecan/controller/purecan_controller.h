@@ -27,12 +27,12 @@ namespace purecan {
 class Controller
 {
 private:
-	std::shared_ptr<can::Socket> m_socket;
-	std::set<std::shared_ptr<IDevice>> m_devices;
-	std::map<canid_t, std::shared_ptr<IDevice>> m_recvIdDeviceList;
+	std::shared_ptr<can::Socket> _socket;
+	std::set<std::shared_ptr<IDevice>> _devices;
+	std::map<canid_t, std::shared_ptr<IDevice>> _recvIdDeviceList;
 
 	/* controller -> device */
-	bool m_isTxEnabled{true};
+	bool _isTxEnabled{true};
 	struct TxMessageInfo
 	{
 		std::string_view name;
@@ -40,11 +40,11 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload_va(void)> creator; 
 	};
-	std::map<canid_t, TxMessageInfo> m_txMessageList;
+	std::map<canid_t, TxMessageInfo> _txMessageList;
 
 	/* THREADS */
-	std::thread m_threadRun;
-	std::promise<void> m_signalExitRunThread;
+	std::thread _threadRun;
+	std::promise<void> _signalExitRunThread;
 	void run(std::future<void> futureExit);
 
 	void onFrameReceived(const can_frame& frame);
@@ -79,20 +79,20 @@ public:
 	 */
 	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
 	{
-		m_txMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
+		_txMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
 	}
 
 	/**
 	 * @brief 
 	 * 
 	 */
-	void enableTxMessages() { m_isTxEnabled = true; }
+	void enableTxMessages() { _isTxEnabled = true; }
 	
 	/**
 	 * @brief 
 	 * 
 	 */
-	void disableTxMessages() { m_isTxEnabled = false; }
+	void disableTxMessages() { _isTxEnabled = false; }
 };
 
 

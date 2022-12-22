@@ -26,8 +26,8 @@ class IDevice
 {
 	friend class Controller;
 private:
-	std::shared_ptr<can::Socket> m_socket;
-	bool m_isConnectionOk{false};
+	std::shared_ptr<can::Socket> _socket;
+	bool _isConnectionOk{false};
 
 	/* device --> controller */
 	struct TxMessageInfo
@@ -38,10 +38,10 @@ private:
 		bool isOnSchedule;
 		std::function<void(can_payload)> handler;
 	};
-	std::map<canid_t, TxMessageInfo> m_txMessageList;
+	std::map<canid_t, TxMessageInfo> _txMessageList;
 	
 	/* device <-- controller */
-	bool m_isRxEnabled{true};
+	bool _isRxEnabled{true};
 	struct RxMessageInfo
 	{
 		std::string_view name;
@@ -49,7 +49,7 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload_va(void)> creator; 
 	};
-	std::map<canid_t, RxMessageInfo> m_rxMessageList;
+	std::map<canid_t, RxMessageInfo> _rxMessageList;
 
 public:
 	/**
@@ -69,7 +69,7 @@ public:
 	 */
 	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
 	{
-		m_txMessageList.insert({id, {name, timeout, std::chrono::steady_clock::now() ,false, handler}});
+		_txMessageList.insert({id, {name, timeout, std::chrono::steady_clock::now() ,false, handler}});
 	}
 
 	/**
@@ -82,20 +82,20 @@ public:
 	 */
 	void registerRxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
 	{
-		m_rxMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
+		_rxMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
 	}
 
 	/**
 	 * @brief 
 	 * 
 	 */
-	void enableRxMessages() { m_isRxEnabled = true; }
+	void enableRxMessages() { _isRxEnabled = true; }
 
 	/**
 	 * @brief 
 	 * 
 	 */
-	void disableRxMessages() { m_isRxEnabled = false; }
+	void disableRxMessages() { _isRxEnabled = false; }
 
 private:
 	void send();

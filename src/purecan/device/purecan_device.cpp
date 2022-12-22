@@ -20,7 +20,7 @@ namespace purecan {
 ///
 ///
 IDevice::IDevice(std::shared_ptr<can::Socket> socket)
-	: m_socket(socket)
+	: _socket(socket)
 {
 
 }
@@ -33,9 +33,9 @@ void IDevice::send()
 {
 	auto now = std::chrono::steady_clock::now();
 
-	if (!m_isRxEnabled) return;
+	if (!_isRxEnabled) return;
 
-	for (auto& [id, message] : m_rxMessageList)
+	for (auto& [id, message] : _rxMessageList)
 	{
 		if (message.period == std::chrono::milliseconds(0)) continue;
 		if (now - message.timepoint < message.period) continue;
@@ -45,7 +45,7 @@ void IDevice::send()
 		auto data = message.creator();
 		frame.len = data.size();
 		memcpy(frame.data, data.data(), data.size());
-		m_socket->send(frame);
+		_socket->send(frame);
 
 		message.timepoint = now;
 	}
@@ -57,7 +57,7 @@ void IDevice::send()
 ///
 void IDevice::handleFrame(const can_frame& frame)
 {
-	for (auto& [id, message] : m_txMessageList)
+	for (auto& [id, message] : _txMessageList)
 	{
 		if (frame.can_id != id) continue;
 
@@ -78,7 +78,7 @@ void IDevice::checkConnection()
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();
 
-	for (auto& [id, message] : m_txMessageList)
+	for (auto& [id, message] : _txMessageList)
 	{
 		if (message.timeout == std::chrono::milliseconds(0)) continue;
 		if ((now - message.timepoint) > message.timeout)
@@ -88,7 +88,7 @@ void IDevice::checkConnection()
 		}
 	}
 
-	m_isConnectionOk = isConnectionOk;
+	_isConnectionOk = isConnectionOk;
 }
 
 
