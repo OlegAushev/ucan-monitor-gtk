@@ -26,16 +26,16 @@ namespace ucanopen {
 class Tester
 {
 private:
-	std::chrono::time_point<std::chrono::steady_clock> m_initTimepoint;
+	std::chrono::time_point<std::chrono::steady_clock> _initTimepoint;
 public:
 	Tester()
 	{
-		m_initTimepoint = std::chrono::steady_clock::now();
+		_initTimepoint = std::chrono::steady_clock::now();
 	}
 
 	auto timestamp()
 	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - m_initTimepoint).count();
+		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _initTimepoint).count();
 	}
 
 	std::array<uint8_t, 8> makeTpdo1()

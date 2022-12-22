@@ -56,11 +56,11 @@ inline T fromPayload(can_payload payload)
 class NodeId
 {
 private:
-	unsigned int m_value;
+	unsigned int _value;
 public:
-	explicit NodeId(unsigned int value) : m_value(value) {}
-	unsigned int value() const { return m_value; }
-	bool isValid() const { return (m_value >= 1) && (m_value <= 127); }
+	explicit NodeId(unsigned int value) : _value(value) {}
+	unsigned int value() const { return _value; }
+	bool isValid() const { return (_value >= 1) && (_value <= 127); }
 };
 
 
@@ -226,53 +226,53 @@ enum ODEntryAccessRight
 class CobSdoData
 {
 private:
-	uint32_t m_data = 0;
+	uint32_t _data = 0;
 public:
 	CobSdoData() = default;
-	CobSdoData(bool val) { memcpy(&m_data, &val, sizeof(val)); }
-	CobSdoData(int16_t val) { memcpy(&m_data, &val, sizeof(val)); }
-	CobSdoData(int32_t val) { memcpy(&m_data, &val, sizeof(m_data)); }
-	CobSdoData(uint16_t val) { memcpy(&m_data, &val, sizeof(val)); }
-	CobSdoData(uint32_t val) { memcpy(&m_data, &val, sizeof(m_data)); }
-	CobSdoData(float val) { memcpy(&m_data, &val, sizeof(m_data)); }
+	CobSdoData(bool val) { memcpy(&_data, &val, sizeof(val)); }
+	CobSdoData(int16_t val) { memcpy(&_data, &val, sizeof(val)); }
+	CobSdoData(int32_t val) { memcpy(&_data, &val, sizeof(_data)); }
+	CobSdoData(uint16_t val) { memcpy(&_data, &val, sizeof(val)); }
+	CobSdoData(uint32_t val) { memcpy(&_data, &val, sizeof(_data)); }
+	CobSdoData(float val) { memcpy(&_data, &val, sizeof(_data)); }
 
 	bool bool32() const
 	{
-		return m_data;
+		return _data;
 	}
 
 	int16_t i16() const
 	{
 		int16_t val;
-		memcpy(&val, &m_data, sizeof(int16_t));
+		memcpy(&val, &_data, sizeof(int16_t));
 		return val;
 	}
 
 	int32_t i32() const
 	{
 		int32_t val;
-		memcpy(&val, &m_data, sizeof(int32_t));
+		memcpy(&val, &_data, sizeof(int32_t));
 		return val;
 	}
 
 	uint16_t u16() const
 	{ 
 		uint16_t val;
-		memcpy(&val, &m_data, sizeof(uint16_t));
+		memcpy(&val, &_data, sizeof(uint16_t));
 		return val;
 	}
 
 	uint32_t u32() const
 	{ 
 		uint32_t val;
-		memcpy(&val, &m_data, sizeof(uint32_t));
+		memcpy(&val, &_data, sizeof(uint32_t));
 		return val;
 	}
 	
 	float f32() const
 	{ 
 		float val;
-		memcpy(&val, &m_data, sizeof(float));
+		memcpy(&val, &_data, sizeof(float));
 		return val;
 	}
 

@@ -44,7 +44,7 @@ void Server::handleTsdo(ucanopen::SdoType sdoType,
 	{
 		if (entryIt->second.name == "DRIVE_STATE" && data.u32() < driveStates.size())
 		{
-			m_watchData[entryIt->second.name] = driveStates[data.u32()];
+			_watchData[entryIt->second.name] = driveStates[data.u32()];
 		}
 	}
 	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToRead)

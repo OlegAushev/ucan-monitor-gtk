@@ -20,22 +20,22 @@ namespace ucanopen {
 ///
 ///
 Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
-	: m_nodeId(nodeId)
-	, m_socket(socket)
-	, m_state(NmtState::Initialization)
+	: _nodeId(nodeId)
+	, _socket(socket)
+	, _state(NmtState::Initialization)
 {
-	m_syncInfo.period = std::chrono::milliseconds(0);
-	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
+	_syncInfo.period = std::chrono::milliseconds(0);
+	_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
-	m_heartbeatInfo.period = std::chrono::milliseconds(1000);
-	m_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
+	_heartbeatInfo.period = std::chrono::milliseconds(1000);
+	_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
 
-	std::future<void> futureExit = m_signalExitRunThread.get_future();
-	m_threadRun = std::thread(&Client::run, this, std::move(futureExit));
+	std::future<void> futureExit = _signalExitRunThread.get_future();
+	_threadRun = std::thread(&Client::run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	m_state = NmtState::Operational;
+	_state = NmtState::Operational;
 }
 
 
@@ -45,8 +45,8 @@ Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
 Client::~Client()
 {
 	std::cout << "[ucanopen] Sending signal to aux thread to stop..." << std::endl;
-	m_signalExitRunThread.set_value();
-	m_threadRun.join();
+	_signalExitRunThread.set_value();
+	_threadRun.join();
 }
 
 
@@ -70,7 +70,7 @@ void Client::setNodeId(NodeId nodeId)
 		return;
 	}
 	
-	m_nodeId = nodeId;
+	_nodeId = nodeId;
 	std::cout << "done." << std::endl;
 }
 
@@ -83,36 +83,36 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
 			<< std::hex << server->nodeId().value() << std::dec << " to client... ";
 
-	auto itServerSameName = std::find_if(m_servers.begin(), m_servers.end(), 
+	auto itServerSameName = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
 		{
 			return server->name() == s->name();				
 		});
-	if (itServerSameName != m_servers.end())
+	if (itServerSameName != _servers.end())
 	{
 		std::cout << "failed: server with that name already added to client." << std::endl;
 		return;
 	}
 
-	auto itServerSameId = std::find_if(m_servers.begin(), m_servers.end(), 
+	auto itServerSameId = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
 		{
 			return server->nodeId() == s->nodeId();				
 		});
-	if (itServerSameId != m_servers.end())
+	if (itServerSameId != _servers.end())
 	{
 		std::cout << "failed: server with ID 0x" << std::hex << server->nodeId().value() << std::dec
 				<< " already added to client."  << std::endl;
 		return;
 	}
 
-	if (server->nodeId() == m_nodeId)
+	if (server->nodeId() == _nodeId)
 	{
 		std::cout << "failed: client has the same ID 0x" << std::hex << server->nodeId().value() << std::dec << std::endl;
 		return;
 	}
 
-	m_servers.insert(server);
+	_servers.insert(server);
 	calculateRecvId(server);
 
 	std::cout << "done." << std::endl;
@@ -139,12 +139,12 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		return;
 	}
 
-	auto itServer = std::find_if(m_servers.begin(), m_servers.end(),
+	auto itServer = std::find_if(_servers.begin(), _servers.end(),
 		[name](const auto& s)
 		{
 			return s->name() == name;
 		});
-	if (itServer == m_servers.end())
+	if (itServer == _servers.end())
 	{
 		std::cout << "failed: no such server found." << std::endl;
 		return;
@@ -153,11 +153,11 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 	(*itServer)->setNodeId(nodeId);
 
 	// erase outdated elements from [id; server] map
-	for (auto it = m_recvIdServerList.begin(); it != m_recvIdServerList.end();)
+	for (auto it = _recvIdServerList.begin(); it != _recvIdServerList.end();)
 	{
 		if (it->second->name() == name)
 		{
-			it = m_recvIdServerList.erase(it);
+			it = _recvIdServerList.erase(it);
 		}
 		else
 		{
@@ -183,49 +183,49 @@ void Client::run(std::future<void> futureExit)
 		auto now = std::chrono::steady_clock::now();
 
 		/* SYNC */
-		if (m_syncInfo.period != std::chrono::milliseconds(0))
+		if (_syncInfo.period != std::chrono::milliseconds(0))
 		{
-			if (now - m_syncInfo.timepoint > m_syncInfo.period)
+			if (now - _syncInfo.timepoint > _syncInfo.period)
 			{
-				m_socket->send(createFrame(CobType::Sync, m_nodeId, {}));
-				m_syncInfo.timepoint = now;
+				_socket->send(createFrame(CobType::Sync, _nodeId, {}));
+				_syncInfo.timepoint = now;
 			}
 		}
 
 		/* HEARTBEAT */
-		if (now - m_heartbeatInfo.timepoint > m_heartbeatInfo.period)
+		if (now - _heartbeatInfo.timepoint > _heartbeatInfo.period)
 		{
-			m_socket->send(createFrame(CobType::Heartbeat, m_nodeId, {static_cast<uint8_t>(m_state)}));
-			m_heartbeatInfo.timepoint = now;
+			_socket->send(createFrame(CobType::Heartbeat, _nodeId, {static_cast<uint8_t>(_state)}));
+			_heartbeatInfo.timepoint = now;
 		}
 
 		/* TPDO */
-		if (m_isTpdoEnabled)
+		if (_isTpdoEnabled)
 		{
-			for (auto& [type, message] : m_tpdoList)
+			for (auto& [type, message] : _tpdoList)
 			{
 				if (!message.creator) continue;
 				if (now - message.timepoint >= message.period)
 				{
-					m_socket->send(createFrame(toCobType(type), m_nodeId, message.creator()));
+					_socket->send(createFrame(toCobType(type), _nodeId, message.creator()));
 					message.timepoint = now;
 				}
 			}
 		}
 
 		/* SERVER's RPDO */
-		for (auto& server : m_servers)
+		for (auto& server : _servers)
 		{
 			server->sendPeriodic();
 		}
 
 		/* RECV */
 		can_frame frame;
-		can::Error recvErr = m_socket->recv(frame);
+		can::Error recvErr = _socket->recv(frame);
 		while (recvErr == can::Error::NoError)
 		{
 			(void) std::async(&Client::onFrameReceived, this, frame);
-			recvErr = m_socket->recv(frame);
+			recvErr = _socket->recv(frame);
 		}
 	}
 
@@ -238,8 +238,8 @@ void Client::run(std::future<void> futureExit)
 ///
 void Client::onFrameReceived(const can_frame& frame)
 {
-	auto it = m_recvIdServerList.find(frame.can_id);
-	if (it != m_recvIdServerList.end())
+	auto it = _recvIdServerList.find(frame.can_id);
+	if (it != _recvIdServerList.end())
 	{
 		it->second->handleFrame(frame);
 	}
@@ -258,12 +258,12 @@ void Client::calculateRecvId(std::shared_ptr<IServer> server)
 	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
 	canid_t heartbeat = calculateCobId(CobType::Heartbeat, server->nodeId());
 
-	m_recvIdServerList.insert({tpdo1, server});
-	m_recvIdServerList.insert({tpdo2, server});
-	m_recvIdServerList.insert({tpdo3, server});
-	m_recvIdServerList.insert({tpdo4, server});
-	m_recvIdServerList.insert({tsdo, server});
-	m_recvIdServerList.insert({heartbeat, server});
+	_recvIdServerList.insert({tpdo1, server});
+	_recvIdServerList.insert({tpdo2, server});
+	_recvIdServerList.insert({tpdo3, server});
+	_recvIdServerList.insert({tpdo4, server});
+	_recvIdServerList.insert({tsdo, server});
+	_recvIdServerList.insert({heartbeat, server});
 }
 
 
@@ -272,12 +272,12 @@ void Client::calculateRecvId(std::shared_ptr<IServer> server)
 ///
 bool Client::isFree(NodeId nodeId) const
 {
-	if (nodeId == m_nodeId)
+	if (nodeId == _nodeId)
 	{
 		return false;
 	}
 
-	for (const auto& server : m_servers)
+	for (const auto& server : _servers)
 	{
 		if (nodeId == server->nodeId())
 		{

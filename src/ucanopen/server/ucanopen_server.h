@@ -34,14 +34,14 @@ public:
 	static constexpr std::string_view confCategory = "CONFIG";
 
 private:
-	std::string m_name{"unnamed"};
-	NodeId m_nodeId;
-	std::shared_ptr<can::Socket> m_socket;
+	std::string _name{"unnamed"};
+	NodeId _nodeId;
+	std::shared_ptr<can::Socket> _socket;
 
 private:
 	/* OBJECT DICTIONARY */
-	const ObjectDictionaryType& m_dictionary;
-	ObjectDictionaryAuxType m_dictionaryAux;
+	const ObjectDictionaryType& _dictionary;
+	ObjectDictionaryAuxType _dictionaryAux;
 
 	/* HEARTBEAT server --> client */
 private:
@@ -52,7 +52,7 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		NmtState nmtState;
 	};
-	HeartbeatInfo m_heartbeatInfo;
+	HeartbeatInfo _heartbeatInfo;
 public:
 	/**
 	 * @brief 
@@ -62,8 +62,8 @@ public:
 	 */
 	bool isHeartbeatOk() const
 	{
-		return ((std::chrono::steady_clock::now() - m_heartbeatInfo.timepoint) <= m_heartbeatInfo.timeout)
-				&& (m_heartbeatInfo.nmtState == NmtState::Operational);
+		return ((std::chrono::steady_clock::now() - _heartbeatInfo.timepoint) <= _heartbeatInfo.timeout)
+				&& (_heartbeatInfo.nmtState == NmtState::Operational);
 	}
 
 	/* TPDO server --> client */
@@ -74,7 +74,7 @@ private:
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	std::map<TpdoType, TpdoInfo> m_tpdoList;
+	std::map<TpdoType, TpdoInfo> _tpdoList;
 protected:
 	virtual void handleTpdo1(can_payload data) = 0;
 	virtual void handleTpdo2(can_payload data) = 0;
@@ -82,8 +82,8 @@ protected:
 	virtual void handleTpdo4(can_payload data) = 0;
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
-		canid_t id = calculateCobId(toCobType(type), m_nodeId);
-		m_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
+		canid_t id = calculateCobId(toCobType(type), _nodeId);
+		_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
 	}
 public:
 	/**
@@ -95,20 +95,20 @@ public:
 	 */
 	bool isTpdoOk(TpdoType tpdo) const
 	{
-		if (!m_tpdoList.contains(tpdo)) return false;
-		return (std::chrono::steady_clock::now() - m_tpdoList.at(tpdo).timepoint) <= m_tpdoList.at(tpdo).timeout;
+		if (!_tpdoList.contains(tpdo)) return false;
+		return (std::chrono::steady_clock::now() - _tpdoList.at(tpdo).timepoint) <= _tpdoList.at(tpdo).timeout;
 	}
 
 	/* RPDO server <-- client */
 private:
-	bool m_isRpdoEnabled{false};
+	bool _isRpdoEnabled{false};
 	struct RpdoInfo
 	{
 		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	std::map<RpdoType, RpdoInfo> m_rpdoList;
+	std::map<RpdoType, RpdoInfo> _rpdoList;
 protected:
 	virtual can_payload createRpdo1() = 0;
 	virtual can_payload createRpdo2() = 0;
@@ -116,8 +116,8 @@ protected:
 	virtual can_payload createRpdo4() = 0;
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
-		canid_t id = calculateCobId(toCobType(type), m_nodeId);
-		m_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
+		canid_t id = calculateCobId(toCobType(type), _nodeId);
+		_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
 	}
 public:
 	/**
@@ -126,8 +126,8 @@ public:
 	 */
 	void enableRpdo()
 	{
-		std::cout << "[ucanopen] Enabling '" << m_name << "' server RPDO messages... ";
-		m_isRpdoEnabled = true;
+		std::cout << "[ucanopen] Enabling '" << _name << "' server RPDO messages... ";
+		_isRpdoEnabled = true;
 		std::cout << "done." << std::endl;
 	}
 	
@@ -137,8 +137,8 @@ public:
 	 */
 	void disableRpdo() 
 	{
-		std::cout << "[ucanopen] Disabling '" << m_name << "' server RPDO messages... ";
-		m_isRpdoEnabled = false;
+		std::cout << "[ucanopen] Disabling '" << _name << "' server RPDO messages... ";
+		_isRpdoEnabled = false;
 		std::cout << "done." << std::endl;
 	}
 
@@ -148,17 +148,17 @@ protected:
 
 	/* WATCH messages server <- client */
 private:
-	bool m_isWatchEnabled{false};
+	bool _isWatchEnabled{false};
 	struct WatchInfo
 	{
 		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	WatchInfo m_watchInfo;
-	std::vector<std::string_view> m_watchEntriesList;
-	mutable std::mutex m_watchMutex;
+	WatchInfo _watchInfo;
+	std::vector<std::string_view> _watchEntriesList;
+	mutable std::mutex _watchMutex;
 protected:
-	std::map<std::string_view, std::string> m_watchData;
+	std::map<std::string_view, std::string> _watchData;
 public:
 	/**
 	 * @brief 
@@ -166,8 +166,8 @@ public:
 	 */
 	void enableWatch()
 	{
-		std::cout << "[ucanopen] Enabling '" << m_name << "' server watch requests... ";
-		m_isWatchEnabled = true;
+		std::cout << "[ucanopen] Enabling '" << _name << "' server watch requests... ";
+		_isWatchEnabled = true;
 		std::cout << "done." << std::endl;
 	}
 
@@ -177,8 +177,8 @@ public:
 	 */
 	void disableWatch()
 	{
-		std::cout << "[ucanopen] Disabling '" << m_name << "' server watch requests... ";
-		m_isWatchEnabled = false;
+		std::cout << "[ucanopen] Disabling '" << _name << "' server watch requests... ";
+		_isWatchEnabled = false;
 		std::cout << "done." << std::endl;
 	}
 
@@ -189,8 +189,8 @@ public:
 	 */
 	void setWatchPeriod(std::chrono::milliseconds period)
 	{
-		std::cout << "[ucanopen] Setting '" << m_name << "' server watch requests period = " << period << "... ";
-		m_watchInfo.period = period;
+		std::cout << "[ucanopen] Setting '" << _name << "' server watch requests period = " << period << "... ";
+		_watchInfo.period = period;
 		std::cout << "done." << std::endl;
 	}
 
@@ -201,7 +201,7 @@ public:
 	 */
 	std::vector<std::string_view> watchEntriesList() const
 	{
-		return m_watchEntriesList;
+		return _watchEntriesList;
 	}
 
 	/**
@@ -212,8 +212,8 @@ public:
 	 */
 	std::string watchValue(std::string_view watchName) const
 	{
-		auto it = m_watchData.find(watchName);
-		if (it == m_watchData.end())
+		auto it = _watchData.find(watchName);
+		if (it == _watchData.end())
 		{
 			return "n/a";
 		}
@@ -229,20 +229,20 @@ public:
 	 */
 	void watchValue(std::string_view watchName, char* buf, size_t len) const
 	{
-		auto it = m_watchData.find(watchName);
-		if (it == m_watchData.end())
+		auto it = _watchData.find(watchName);
+		if (it == _watchData.end())
 		{
 			const char* str = "n/a";
 			std::strncpy(buf, str, len);
 			return;
 		}
-		std::lock_guard<std::mutex> lock(m_watchMutex);
+		std::lock_guard<std::mutex> lock(_watchMutex);
 		std::strncpy(buf, it->second.c_str(), len);
 	}
 
 	/* CONFIGURATION entries */
 private:
-	std::map<std::string_view, std::vector<std::string_view>> m_confEntriesList;
+	std::map<std::string_view, std::vector<std::string_view>> _confEntriesList;
 public:
 	/**
 	 * @brief 
@@ -251,7 +251,7 @@ public:
 	 */
 	std::map<std::string_view, std::vector<std::string_view>> confEntriesList() const
 	{
-		return m_confEntriesList;
+		return _confEntriesList;
 	}
 
 public:
@@ -277,7 +277,7 @@ public:
 	 */
 	std::string_view name() const
 	{
-		return m_name;
+		return _name;
 	}
 
 	/**
@@ -287,7 +287,7 @@ public:
 	 */
 	NodeId nodeId() const
 	{
-		return m_nodeId;
+		return _nodeId;
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public:
 	 * 
 	 * @return NmtState 
 	 */
-	NmtState nmtState() const { return m_heartbeatInfo.nmtState; }
+	NmtState nmtState() const { return _heartbeatInfo.nmtState; }
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
@@ -345,10 +345,10 @@ private:
 		std::string_view subcategory,
 		std::string_view name)
 	{
-		auto it = m_dictionaryAux.find({category, subcategory, name});
-		if (it == m_dictionaryAux.end())
+		auto it = _dictionaryAux.find({category, subcategory, name});
+		if (it == _dictionaryAux.end())
 		{
-			return m_dictionary.end();
+			return _dictionary.end();
 		}
 		return it->second;
 	}

@@ -35,12 +35,12 @@ namespace ucanopen {
 class Client
 {
 private:
-	NodeId m_nodeId;
-	std::shared_ptr<can::Socket> m_socket;
-	NmtState m_state;
+	NodeId _nodeId;
+	std::shared_ptr<can::Socket> _socket;
+	NmtState _state;
 
-	std::set<std::shared_ptr<IServer>> m_servers;
-	std::map<canid_t, std::shared_ptr<IServer>> m_recvIdServerList;
+	std::set<std::shared_ptr<IServer>> _servers;
+	std::map<canid_t, std::shared_ptr<IServer>> _recvIdServerList;
 
 	/* SYNC */
 	struct SyncInfo
@@ -48,7 +48,7 @@ private:
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
 	};
-	SyncInfo m_syncInfo;
+	SyncInfo _syncInfo;
 
 
 	/* HEARTBEAT */
@@ -57,21 +57,21 @@ private:
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	HeartbeatInfo m_heartbeatInfo;
+	HeartbeatInfo _heartbeatInfo;
 			
 	/* TPDO client --> server */
-	bool m_isTpdoEnabled{false};
+	bool _isTpdoEnabled{false};
 	struct TpdoInfo
 	{
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload(void)> creator;
 	};
-	std::map<TpdoType, TpdoInfo> m_tpdoList;
+	std::map<TpdoType, TpdoInfo> _tpdoList;
 
 	/* THREADS */
-	std::thread m_threadRun;
-	std::promise<void> m_signalExitRunThread;
+	std::thread _threadRun;
+	std::promise<void> _signalExitRunThread;
 	void run(std::future<void> futureExit);
 
 	void onFrameReceived(const can_frame& frame);
@@ -98,7 +98,7 @@ public:
 	 */
 	NodeId nodeId() const
 	{
-		return m_nodeId;
+		return _nodeId;
 	}
 
 	/**
@@ -123,12 +123,12 @@ public:
 	 */
 	std::shared_ptr<IServer> server(std::string_view name)
 	{
-		auto itServer = std::find_if(m_servers.begin(), m_servers.end(),
+		auto itServer = std::find_if(_servers.begin(), _servers.end(),
 			[name](const auto& s)
 			{
 				return s->name() == name;
 			});
-		if (itServer == m_servers.end())
+		if (itServer == _servers.end())
 		{
 			return nullptr;
 		}
@@ -152,7 +152,7 @@ public:
 	void enableSync(std::chrono::milliseconds period)
 	{
 		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << period << ")... ";	
-		m_syncInfo.period = period;
+		_syncInfo.period = period;
 		std::cout << "done." << std::endl;
 	}
 
@@ -163,7 +163,7 @@ public:
 	void disableSync()
 	{
 		std::cout << "[ucanopen] Disabling client SYNC messages... ";	
-		m_syncInfo.period = std::chrono::milliseconds(0);
+		_syncInfo.period = std::chrono::milliseconds(0);
 		std::cout << "done." << std::endl;
 	}
 
@@ -175,7 +175,7 @@ public:
 	 */
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
-		m_heartbeatInfo.period = period;
+		_heartbeatInfo.period = period;
 	}
 
 	/* TPDO */
@@ -188,7 +188,7 @@ public:
 	 */
 	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 	{
-		m_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
+		_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
 	}
 
 	/**
@@ -198,7 +198,7 @@ public:
 	void enableTpdo()
 	{
 		std::cout << "[ucanopen] Enabling client TPDO messages... ";
-		m_isTpdoEnabled = true;
+		_isTpdoEnabled = true;
 		std::cout << "done." << std::endl;
 	}
 
@@ -209,7 +209,7 @@ public:
 	void disableTpdo()
 	{
 		std::cout << "[ucanopen] Disabling client TPDO messages... ";
-		m_isTpdoEnabled = false;
+		_isTpdoEnabled = false;
 		std::cout << "done." << std::endl;
 	}
 
@@ -219,7 +219,7 @@ public:
 	 */
 	void enableServerWatch()
 	{
-		for (auto& server : m_servers)
+		for (auto& server : _servers)
 		{
 			server->enableWatch();
 		}
@@ -231,7 +231,7 @@ public:
 	 */
 	void disableServerWatch()
 	{
-		for (auto& server : m_servers)
+		for (auto& server : _servers)
 		{
 			server->disableWatch();
 		}
@@ -243,7 +243,7 @@ public:
 	 */
 	void setServerWatchPeriod(std::chrono::milliseconds period)
 	{
-		for (auto& server : m_servers)
+		for (auto& server : _servers)
 		{
 			server->setWatchPeriod(period);
 		}
