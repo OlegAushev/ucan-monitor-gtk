@@ -41,7 +41,7 @@ Socket::Socket()
 	{
 		if (createSocket("can0") != Error::NoError)
 		{
-			m_socket = -1;
+			_socket = -1;
 		}
 	}
 }
@@ -63,37 +63,37 @@ Error Socket::createSocket(const std::string& interface)
 {
 	/* CREATE SOCKET */
 	std::cout << "[cansocket] Creating socket..." << std::endl;
-	m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-	if (m_socket < 0)
+	_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+	if (_socket < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket creation failed." << std::endl;
 		return Error::SocketCreationFailed;
 	}
 
-	std::strcpy(m_ifr.ifr_name, interface.c_str());
-	if (ioctl(m_socket, SIOCGIFINDEX, &m_ifr) < 0)
+	std::strcpy(_ifr.ifr_name, interface.c_str());
+	if (ioctl(_socket, SIOCGIFINDEX, &_ifr) < 0)
 	{
 		std::cout << "[cansocket] ERROR: interface retrieving failed." << std::endl;
 		return Error::InterfaceRetrievingFailed;
 	}
 
-	memset(&m_addr, 0, sizeof(m_addr));
-	m_addr.can_family = AF_CAN;
-	m_addr.can_ifindex = m_ifr.ifr_ifindex;
+	memset(&_addr, 0, sizeof(_addr));
+	_addr.can_family = AF_CAN;
+	_addr.can_ifindex = _ifr.ifr_ifindex;
 
 	can_filter filter[1];
 	filter[0].can_id = 0;
 	filter[0].can_mask = 0x000;
-	setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, filter, sizeof(can_filter));
+	setsockopt(_socket, SOL_CAN_RAW, CAN_RAW_FILTER, filter, sizeof(can_filter));
 
-	if (bind(m_socket, (sockaddr*)&m_addr, sizeof(m_addr)) < 0)
+	if (bind(_socket, (sockaddr*)&_addr, sizeof(_addr)) < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket binding failed." << std::endl;
 		return Error::SocketBindingFailed;
 	}
 
-	m_recvFd.fd = m_socket;
-	m_recvFd.events = POLLIN;
+	_recvFd.fd = _socket;
+	_recvFd.events = POLLIN;
 
 	std::cout << "[cansocket] Socket created." << std::endl;
 	return Error::NoError;
@@ -105,7 +105,7 @@ Error Socket::createSocket(const std::string& interface)
 ///
 Error Socket::connect(const std::string& interface, int bitrate)
 {
-	m_socket = -1;
+	_socket = -1;
 
 	if (!detail::interfaceList.contains(interface)
 			|| !detail::bitrateList.contains(bitrate))
@@ -113,8 +113,8 @@ Error Socket::connect(const std::string& interface, int bitrate)
 		return Error::InvalidArgument;
 	}
 
-	std::lock_guard<std::mutex> lock1(m_sendMutex);
-	std::lock_guard<std::mutex> lock2(m_recvMutex);
+	std::lock_guard<std::mutex> lock1(_sendMutex);
+	std::lock_guard<std::mutex> lock2(_recvMutex);
 
 	/* FIND SCRIPT */
 	std::cout << "[cansocket] Searching for SocketCAN enabling script... ";
@@ -167,16 +167,16 @@ Error Socket::connect(const std::string& interface, int bitrate)
 ///
 Error Socket::disconnect()
 {
-	if (m_socket < 0)
+	if (_socket < 0)
 	{
 		std::cout << "[cansocket] No socket to close." << std::endl;
 		return Error::NoError;
 	}
 
-	std::lock_guard<std::mutex> lock1(m_sendMutex);
-	std::lock_guard<std::mutex> lock2(m_recvMutex);
+	std::lock_guard<std::mutex> lock1(_sendMutex);
+	std::lock_guard<std::mutex> lock2(_recvMutex);
 
-	if (close(m_socket) < 0)
+	if (close(_socket) < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket closing failed." << std::endl;
 		return Error::SocketClosingFailed;
@@ -184,7 +184,7 @@ Error Socket::disconnect()
 	else
 	{
 		std::cout << "[cansocket] Socket closed." << std::endl;
-		m_socket = -1;
+		_socket = -1;
 		return Error::NoError;
 	}
 }
@@ -213,14 +213,14 @@ std::filesystem::path Socket::findScript(std::filesystem::path name)
 ///
 Error Socket::send(const can_frame& frame)
 {
-	if (m_socket < 0)
+	if (_socket < 0)
 	{
 		return Error::SocketClosed;
 	}
 
-	std::lock_guard<std::mutex> lock(m_sendMutex);
+	std::lock_guard<std::mutex> lock(_sendMutex);
 
-	if (::write(m_socket, &frame, sizeof(can_frame)) != sizeof(can_frame))
+	if (::write(_socket, &frame, sizeof(can_frame)) != sizeof(can_frame))
 	{
 		return Error::SendError;
 	}
@@ -233,16 +233,16 @@ Error Socket::send(const can_frame& frame)
 ///
 Error Socket::recv(can_frame& frame)
 {
-	if (m_socket < 0)
+	if (_socket < 0)
 	{
 		return Error::SocketClosed;
 	}
 
 	int nBytes;
 
-	std::lock_guard<std::mutex> lock(m_recvMutex);
+	std::lock_guard<std::mutex> lock(_recvMutex);
 
-	int ret = poll(&m_recvFd, 1, s_recvTimeout.count());
+	int ret = poll(&_recvFd, 1, _recvTimeout.count());
 	switch (ret)
 	{
 	case -1:
@@ -252,7 +252,7 @@ Error Socket::recv(can_frame& frame)
 		return Error::RecvTimeout;
 		break;
 	default:
-		nBytes = ::read(m_socket, &frame, sizeof(can_frame));
+		nBytes = ::read(_socket, &frame, sizeof(can_frame));
 		if (nBytes < 0)
 		{
 			return Error::RecvError;

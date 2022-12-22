@@ -77,15 +77,15 @@ const std::set<std::filesystem::path> scriptsLocationList = {
 class Socket
 {
 private:
-	int m_socket{-1};
-	ifreq m_ifr;
-	sockaddr_can m_addr;
+	int _socket{-1};
+	ifreq _ifr;
+	sockaddr_can _addr;
 
-	pollfd m_recvFd;
-	static constexpr std::chrono::milliseconds s_recvTimeout = std::chrono::milliseconds(1);
+	pollfd _recvFd;
+	static constexpr std::chrono::milliseconds _recvTimeout = std::chrono::milliseconds(1);
 
-	std::mutex m_sendMutex;
-	std::mutex m_recvMutex;
+	std::mutex _sendMutex;
+	std::mutex _recvMutex;
 
 public:
 	Socket();
