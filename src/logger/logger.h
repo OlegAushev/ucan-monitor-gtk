@@ -22,8 +22,8 @@
 class Logger final
 {
 private:
-	std::deque<std::string> m_messages;
-	std::mutex m_mutex;
+	std::deque<std::string> _messages;
+	std::mutex _mutex;
 
 	Logger() = default;
 public:
@@ -38,19 +38,19 @@ public:
 
 	void add(std::string message)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-		m_messages.push_back(message);
+		std::lock_guard<std::mutex> lock(_mutex);
+		_messages.push_back(message);
 	}
 
 	std::string pop()
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-		if (m_messages.empty())
+		std::lock_guard<std::mutex> lock(_mutex);
+		if (_messages.empty())
 		{
 			return std::string{};
 		}
-		std::string message = m_messages.front();
-		m_messages.pop_front();
+		std::string message = _messages.front();
+		_messages.pop_front();
 		return message;
 	}
 };
