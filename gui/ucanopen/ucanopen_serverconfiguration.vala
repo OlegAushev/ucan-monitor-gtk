@@ -111,11 +111,31 @@ public class ServerConfiguration : Adw.Bin
 		});
 
 		buttonApply.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "APPLY PARAMETERS");
+			Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+					"Warning!",
+					"All configuration parameters will be applied.");
+			dialog.add_response("cancel", "Cancel");
+			dialog.add_response("continue", "Continue");
+			dialog.set_response_appearance("cancel", DESTRUCTIVE);
+			dialog.set_response_appearance("continue", SUGGESTED);
+			dialog.response["continue"].connect(() => {
+				ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "APPLY PARAMETERS");
+			});
+			dialog.present();	
 		});
 
 		buttonReset.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET PARAMETERS");
+			Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+					"Warning!",
+					"All configuration parameters will be reset to default values.");
+			dialog.add_response("cancel", "Cancel");
+			dialog.add_response("continue", "Continue");
+			dialog.set_response_appearance("cancel", DESTRUCTIVE);
+			dialog.set_response_appearance("continue", SUGGESTED);
+			dialog.response["continue"].connect(() => {
+				ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET PARAMETERS");
+			});
+			dialog.present();		
 		});
 	}
 }

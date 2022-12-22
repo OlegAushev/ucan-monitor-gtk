@@ -47,20 +47,8 @@
 
 						<child>
 							<object class="AdwActionRow">
-								<!-- CONNECT BUTTON -->
-								<child type="prefix">
-									<object class="GtkButton" id="buttonConnect">
-										<property name="label">Connect</property>
-										<property name="halign">center</property>
-										<property name="valign">center</property>
-										<property name="width-request">140</property>
-										<style>
-											<class name="suggested-action"/>
-										</style>
-									</object>
-								</child>
 								<!-- DISCONNECT BUTTON -->
-								<child type="suffix">
+								<child type="prefix">
 									<object class="GtkButton" id="buttonDisconnect">
 										<property name="label">Disconnect</property>
 										<property name="halign">center</property>
@@ -70,6 +58,18 @@
 											<class name="destructive-action"/>
 										</style>
 									</object>
+								</child>
+								<!-- CONNECT BUTTON -->
+								<child type="suffix">
+									<object class="GtkButton" id="buttonConnect">
+										<property name="label">Connect</property>
+										<property name="halign">center</property>
+										<property name="valign">center</property>
+										<property name="width-request">140</property>
+										<style>
+											<class name="suggested-action"/>
+										</style>
+									</object>					
 								</child>
 							</object>
 						</child>
