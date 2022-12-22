@@ -36,7 +36,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 		if (entry.category == watchCategory)
 		{
 			m_watchEntriesList.push_back(entry.name);
-			m_watchData.insert({entry.name, "......"});
+			m_watchData.insert({entry.name, "..."});
 		}
 
 		// create conf entries list

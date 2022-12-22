@@ -47,16 +47,24 @@
 					<object class="AdwFlap" id="flapMain">
 						<property name="fold-policy">never</property>
 						<property name="locked">true</property>
-						<property name="flap">controlpanel</property>
+						<property name="flap">controlpanelWindow</property>
 						<property name="separator">flapMainSeparator</property>
 						<property name="content">panedMain</property>
 						<!-- FLAP -->
 						<child>
-							<object class="SrmDriveControlPanel" id="controlpanel">
-								<style>
-									<class name="background"/>
-								</style>
-							</object>
+							<object class="GtkScrolledWindow" id="controlpanelWindow">
+								<property name="hexpand">false</property>
+								<property name="vexpand">true</property>
+								<property name="hscrollbar-policy">never</property>
+								<property name="vscrollbar-policy">automatic</property>
+								<child>
+									<object class="SrmDriveControlPanel" id="controlpanel">
+										<style>
+											<class name="background"/>
+										</style>
+									</object>
+								</child>
+							</object>	
 						</child>
 						<!-- SEPARATOR -->
 						<child>
@@ -110,11 +118,7 @@
 												<property name="title">Setup</property>
 												<property name="icon-name">preferences-system-symbolic</property>
 												<property name="child">
-													<!--object class="GtkLabel">
-														<property name="label">This is page 3</property>
-													</object-->
 													<object class = "UcanopenServerConfiguration">
-
 													</object>
 												</property>
 											</object>
