@@ -16,6 +16,8 @@
 #include <cstdint>
 #include <cstring>
 #include <vector>
+#include <string_view>
+#include <string>
 
 
 namespace srmdrive {
@@ -139,6 +141,22 @@ inline const std::vector<std::string_view> syslogMessages = {
 	"[syslog] Write calibration data to EEPROM - fail.",
 	"[syslog] Operation cannot be performed."	
 };
+
+
+inline const std::vector<std::string> driveStates = {
+	"standby",
+	"idle",
+	"pwrup",
+	"ready",
+	"prep",
+	"start",
+	"run",
+	"stop",
+	"pwrdown",
+	"cal pwrup",
+	"cal",
+	"eval",
+} ;
 
 
 }

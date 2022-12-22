@@ -193,6 +193,15 @@ void ucanopen_server_write(const char* serverName, const char* category, const c
 }
 
 
+///
+///
+///
+void ucanopen_server_exec(const char* serverName, const char* category, const char* subcategory, const char* name)
+{
+	global::ucanClient->server(serverName)->exec(category, subcategory, name);
+}
+
+
 }
 
 

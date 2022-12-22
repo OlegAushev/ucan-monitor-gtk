@@ -3,10 +3,10 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorWindowCanBusPreferences" parent="AdwPreferencesWindow">
 		<property name="title">CAN Bus Preferences</property>
-		<property name="width-request">300</property>
-		<property name="height-request">700</property>
-		<property name="default-width">300</property>
-		<property name="default-height">700</property>
+		<property name="width-request">320</property>
+		<property name="height-request">640</property>
+		<property name="default-width">320</property>
+		<property name="default-height">640</property>
 		<property name="search-enabled">False</property>	
 		<child>
 			<object class="AdwPreferencesPage">
@@ -44,6 +44,36 @@
 								</property>
 							</object>
 						</child>
+
+						<child>
+							<object class="AdwActionRow">
+								<!-- CONNECT BUTTON -->
+								<child type="prefix">
+									<object class="GtkButton" id="buttonConnect">
+										<property name="label">Connect</property>
+										<property name="halign">center</property>
+										<property name="valign">center</property>
+										<property name="width-request">140</property>
+										<style>
+											<class name="suggested-action"/>
+										</style>
+									</object>
+								</child>
+								<!-- DISCONNECT BUTTON -->
+								<child type="suffix">
+									<object class="GtkButton" id="buttonDisconnect">
+										<property name="label">Disconnect</property>
+										<property name="halign">center</property>
+										<property name="valign">center</property>
+										<property name="width-request">140</property>
+										<style>
+											<class name="destructive-action"/>
+										</style>
+									</object>
+								</child>
+							</object>
+						</child>
+
 					</object>
 				</child>
 
@@ -95,8 +125,6 @@
 								</child>
 							</object>
 						</child>
-
-
 						<!-- ENABLE TPDO SWITCH -->
 						<child>
 							<object class="AdwActionRow">
@@ -138,35 +166,6 @@
 										</items>
 									</object>
 								</property>
-							</object>
-						</child>
-					</object>
-				</child>
-
-				<child>
-					<object class="AdwPreferencesGroup">
-						<child>
-							<object class="GtkBox">
-								<property name="orientation">vertical</property>
-								<property name="spacing">10</property>
-								<!-- CONNECT BUTTON -->
-								<child>
-									<object class="GtkButton" id="buttonConnect">
-										<property name="label">Connect</property>
-										<style>
-											<class name="suggested-action"/>
-										</style>
-									</object>
-								</child>						
-								<!-- DISCONNECT BUTTON -->
-								<child>
-									<object class="GtkButton" id="buttonDisconnect">
-										<property name="label">Disconnect</property>
-										<style>
-											<class name="destructive-action"/>
-										</style>
-									</object>
-								</child>
 							</object>
 						</child>
 					</object>

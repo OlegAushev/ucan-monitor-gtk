@@ -21,19 +21,23 @@ public class ServerConfiguration : Adw.Bin
 	private unowned Adw.EntryRow entryrowValue;
 	[GtkChild]
 	private unowned Gtk.Button buttonWrite;
+	[GtkChild]
+	private unowned Gtk.Button buttonApply;
+	[GtkChild]
+	private unowned Gtk.Button buttonReset;
+
 
 	private const size_t _categoriesCountMax = 32;
 	private const size_t _categoriesLenMax = 32;
 	private string _categories[_categoriesCountMax];
 	private size_t _categoriesCount;
-	Gtk.StringList _modelCategory;
+	Gtk.StringList _categoriesModel;
 
 	private const size_t _entriesCountMax = 32;
 	private const size_t _entriesLenMax = 32;
 	private string _entries[_entriesCountMax];
 	private size_t _entriesCount;
-	Gtk.StringList _modelEntry;
-
+	Gtk.StringList _entriesModel;
 
 
 	public ServerConfiguration() {}
@@ -50,47 +54,42 @@ public class ServerConfiguration : Adw.Bin
 			_entries[i] = string.nfill(_entriesLenMax, '\0');
 		}
 
-		_modelCategory = new Gtk.StringList(null);
-		comborowCategory.set_model(_modelCategory);
-		_modelEntry = new Gtk.StringList(null);
-		comborowEntry.set_model(_modelEntry);
-
+		_categoriesModel = new Gtk.StringList(null);
+		comborowCategory.set_model(_categoriesModel);
+		_entriesModel = new Gtk.StringList(null);
+		comborowEntry.set_model(_entriesModel);
 
 		size_t _categoriesCount = ucanopen_server_get_conf_categories(Backend.Ucanopen.server,
 				_categories, _categoriesCountMax, _categoriesLenMax);
 		for (size_t i = 0; i < _categoriesCount; ++i)
 		{
-			_modelCategory.append(_categories[i]);
+			_categoriesModel.append(_categories[i]);
 		}
 
 		size_t _entriesCount = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
 				_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
 		for (size_t i = 0; i < _entriesCount; ++i)
 		{
-			_modelEntry.append(_entries[i]);
+			_entriesModel.append(_entries[i]);
 		}
 
 		comborowCategory.notify["selected"].connect((s,p) => {
 			for (size_t i = 0; i < _entriesCount; ++i)
 			{
-				_modelEntry.remove(0);
+				_entriesModel.remove(0);
 			}
 
 			_entriesCount = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
 					_categories[comborowCategory.selected], _entries, _entriesCountMax, _entriesLenMax);
 			for (size_t i = 0; i < _entriesCount; ++i)
 			{
-				_modelEntry.append(_entries[i]);
+				_entriesModel.append(_entries[i]);
 			}	
 		});
 
 		buttonRead.clicked.connect(() => {
 			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
 					_categories[comborowCategory.selected], _entries[comborowEntry.selected]);
-		});
-
-		entryrowValue.insert_text.connect(() => {
-			
 		});
 
 		buttonWrite.clicked.connect(() => {
@@ -109,6 +108,14 @@ public class ServerConfiguration : Adw.Bin
 				toast.timeout = 1;
 				toastOverlay.add_toast(toast);
 			}
+		});
+
+		buttonApply.clicked.connect(() => {
+			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "APPLY PARAMETERS");
+		});
+
+		buttonReset.clicked.connect(() => {
+			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET PARAMETERS");
 		});
 	}
 }

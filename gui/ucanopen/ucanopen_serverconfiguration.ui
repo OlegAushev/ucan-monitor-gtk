@@ -15,12 +15,14 @@
 								<child>
 									<object class="AdwComboRow" id="comborowCategory">
 										<property name="title">Category</property>
+										<property name="width-request">400</property>
 									</object>
 								</child>
 
 								<child>
 									<object class="AdwComboRow" id="comborowEntry">
 										<property name="title">Entry</property>
+										<property name="width-request">400</property>
 										<child type="suffix">
 											<object class="GtkButton" id="buttonRead">
 												<property name="label">Read</property>
@@ -41,6 +43,34 @@
 												<property name="label">Write</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
+											</object>
+										</child>
+									</object>
+								</child>
+
+								<child>
+									<object class="AdwActionRow">
+										<child type="prefix">
+											<object class="GtkButton" id="buttonApply">
+												<property name="label">Apply</property>
+												<property name="halign">center</property>
+												<property name="valign">center</property>
+												<property name="width-request">200</property>
+												<style>
+													<class name="suggested-action"/>
+												</style>
+											</object>
+										</child>
+
+										<child type="suffix">
+											<object class="GtkButton" id="buttonReset">
+												<property name="label">Reset All to Default</property>
+												<property name="halign">center</property>
+												<property name="valign">center</property>
+												<property name="width-request">200</property>
+												<style>
+													<class name="destructive-action"/>
+												</style>
 											</object>
 										</child>
 									</object>
