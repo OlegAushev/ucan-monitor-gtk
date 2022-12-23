@@ -113,7 +113,7 @@ void IServer::_sendPeriodic()
 		}
 	}
 
-	if (_isWatchEnabled)
+	if (_isWatchEnabled && !_watchEntriesList.empty())
 	{
 		if (now - _watchInfo.timepoint >= _watchInfo.period)
 		{

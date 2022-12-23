@@ -61,6 +61,12 @@ public class ServerConfiguration : Adw.Bin
 
 		size_t _categoriesCount = ucanopen_server_get_conf_categories(Backend.Ucanopen.server,
 				_categories, _categoriesCountMax, _categoriesLenMax);
+
+		if (_categoriesCount == 0)
+		{
+			return;
+		}
+
 		for (size_t i = 0; i < _categoriesCount; ++i)
 		{
 			_categoriesModel.append(_categories[i]);
