@@ -12,11 +12,11 @@
 
 #include "ucanopen/client/ucanopen_client.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
-#include "ucanopen_devices/bmsmain21/server/bmsmain21_server.h"
+#include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
 
 
 bool backend_isReady = false;
-const char* backend_ucanopen_server = "SRM Drive";
+const char* backend_ucanopen_server = "BMS Main";
 const char* backend_ucanopen_serverConfCategory = ucanopen::IServer::confCategory.data();
 
 
@@ -33,7 +33,7 @@ namespace global {
 std::shared_ptr<can::Socket> canSocket;
 std::shared_ptr<ucanopen::Client> ucanClient;
 std::shared_ptr<srmdrive::Server> srmdriveServer;
-std::shared_ptr<bmsmain21::Server> bmsmain21Server;
+std::shared_ptr<bmsmain::Server> bmsmainServer;
 
 }
 
@@ -56,8 +56,8 @@ int backend_main_loop(std::future<void> futureExit)
 	global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
 	global::ucanClient->registerServer(global::srmdriveServer);
 
-	global::bmsmain21Server = std::make_shared<bmsmain21::Server>("BMS Main 2.x", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
-	global::ucanClient->registerServer(global::bmsmain21Server);
+	global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
+	global::ucanClient->registerServer(global::bmsmainServer);
 	
 	// define and register client TPDO callbacks
 	auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };

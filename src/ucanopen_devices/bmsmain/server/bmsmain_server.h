@@ -1,5 +1,5 @@
 /**
- * @file bmsmain21_server.h
+ * @file bmsmain_server.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -14,10 +14,10 @@
 
 
 #include "ucanopen/server/ucanopen_server.h"
-#include "bmsmain21_def.h"
+#include "bmsmain_def.h"
 
 
-namespace bmsmain21 {
+namespace bmsmain {
 
 
 class Server : public ucanopen::IServer

@@ -23,7 +23,7 @@ namespace CanMonitor {
 public class Window : Gtk.ApplicationWindow
 {
 	[GtkChild]
-	public unowned SrmDrive.DataTables dataTables;
+	public unowned BmsMain.DataTables dataTables;
 
 	public Window(Gtk.Application app)
 	{

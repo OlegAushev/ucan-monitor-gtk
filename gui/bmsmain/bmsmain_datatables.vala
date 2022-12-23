@@ -3,10 +3,10 @@
 ///
 
 
-namespace BmsMain21 {
+namespace BmsMain {
 
 
-[GtkTemplate (ui = "/gui/bmsmain21/bmsmain21_datatables.ui")]
+[GtkTemplate (ui = "/gui/bmsmain/bmsmain_datatables.ui")]
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
@@ -42,11 +42,11 @@ public class DataTables : Adw.Bin
 
 	public void updateTpdo1Data()
 	{
-		entryVoltage.entry_text = bmsmain21_tpdo1_get_voltage().to_string();
-		entryCurrent.entry_text = bmsmain21_tpdo1_get_current().to_string();
-		entryTempMin.entry_text = bmsmain21_tpdo1_get_temp_min().to_string();
-		entryTempMax.entry_text = bmsmain21_tpdo1_get_temp_max().to_string();
-		entryCharge.entry_text = bmsmain21_tpdo1_get_charge().to_string();
+		entryVoltage.entry_text = bmsmain_tpdo1_get_voltage().to_string();
+		entryCurrent.entry_text = bmsmain_tpdo1_get_current().to_string();
+		entryTempMin.entry_text = bmsmain_tpdo1_get_temp_min().to_string();
+		entryTempMax.entry_text = bmsmain_tpdo1_get_temp_max().to_string();
+		entryCharge.entry_text = bmsmain_tpdo1_get_charge().to_string();
 
 		//string entryText = string.nfill(16, '\0');
 		/*ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);

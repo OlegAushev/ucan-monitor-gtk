@@ -1,5 +1,5 @@
 /**
- * @file bmsmain21_server.cpp
+ * @file bmsmain_server.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -10,10 +10,10 @@
  */
 
 
-#include "bmsmain21_server.h"
+#include "bmsmain_server.h"
 
 
-namespace bmsmain21 {
+namespace bmsmain {
 
 
 ///

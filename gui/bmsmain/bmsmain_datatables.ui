@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="BmsMain21DataTables" parent="AdwBin">
+	<template class="BmsMainDataTables" parent="AdwBin">
 		<child>
 			<object class="GtkBox">
 				<property name="margin-start">10</property>
@@ -13,7 +13,7 @@
 
 				<child>
 
-					<!-- BMS Main 2.1 -->
+					<!-- BMS Main -->
 					<object class="AdwPreferencesGroup" id="groupTpdo1">
 						<property name="width-request">240</property>
 						<property name="title">System</property>

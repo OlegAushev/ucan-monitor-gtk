@@ -1,5 +1,5 @@
 /**
- * @file bmsmain21_def.h
+ * @file bmsmain_def.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -16,7 +16,7 @@
 #include <cstdint>
 
 
-namespace bmsmain21 {
+namespace bmsmain {
 
 
 /**
