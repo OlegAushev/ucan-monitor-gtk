@@ -10,133 +10,152 @@ namespace CanMonitor {
 public class WindowCanBusPreferences : Adw.PreferencesWindow
 {
 	[GtkChild]
-	private unowned Gtk.Button buttonConnect;
+	private unowned Adw.ComboRow comborow_can_interface;
+	[GtkChild]
+	private unowned Gtk.StringList list_can_interface;
 
 	[GtkChild]
-	private unowned Gtk.Button buttonDisconnect;
+	private unowned Adw.ComboRow comborow_can_bitrate;
+	[GtkChild]
+	private unowned Gtk.StringList list_can_bitrate;
+	
+	[GtkChild]
+	private unowned Gtk.Button button_connect;
+	[GtkChild]
+	private unowned Gtk.Button button_disconnect;
 
 	[GtkChild]
-	private unowned Adw.ComboRow comborowCanInterface;
+	private unowned Gtk.Adjustment adjustment_client_id;
+	[GtkChild]
+	private unowned Gtk.Adjustment adjustment_server_id;
 
 	[GtkChild]
-	private unowned Adw.ComboRow comborowCanBitrate;
+	private unowned Gtk.Switch switch_tpdo;
 
 	[GtkChild]
-	private unowned Gtk.StringList listCanInterface;
+	private unowned Adw.ExpanderRow expanderrow_sync;
+	[GtkChild]
+	private unowned Gtk.Adjustment adjustment_sync_period;
 
 	[GtkChild]
-	private unowned Gtk.StringList listCanBitrate;
-
+	private unowned Adw.ExpanderRow expanderrow_watch;
 	[GtkChild]
-	private unowned Gtk.SpinButton spinbuttonClientId;
+	private unowned Gtk.Adjustment adjustment_watch_period;
 
-	[GtkChild]
-	private unowned Gtk.Adjustment adjustmentClientId;
+	private static uint _client_id = 2;
+	private static uint _server_id = 1;
 
-	[GtkChild]
-	private unowned Gtk.SpinButton spinbuttonServerId;
-
-	[GtkChild]
-	private unowned Gtk.Adjustment adjustmentServerId;
-
-	[GtkChild]
-	private unowned Gtk.Switch switchTpdo;
-
-	[GtkChild]
-	private unowned Adw.ExpanderRow expanderrowWatch;
-
-	[GtkChild]
-	private unowned Gtk.Adjustment adjustmentWatchPeriod;
-
-	private static uint _clientId = 2;
-	private static uint _serverId = 1;
-
-	private static bool _switchTpdoState = true;
-	private static bool _switchWatchState = true;
-	private static int _watchPeriod = 10;
+	private static bool _tpdo_state = true;
+	private static bool _sync_state = true;
+	private static int _sync_period = 200;
+	private static bool _watch_state = true;
+	private static int _watch_period = 10;
 	
 	public WindowCanBusPreferences() {}
 
 	construct
 	{
-		adjustmentClientId.value = _clientId;
-		adjustmentServerId.value = _serverId;
+		adjustment_client_id.value = _client_id;
+		adjustment_server_id.value = _server_id;
 
-		switchTpdo.active = _switchTpdoState;
+		switch_tpdo.active = _tpdo_state;
 
-		expanderrowWatch.enable_expansion = _switchWatchState;
-		adjustmentWatchPeriod.value = _watchPeriod;
+		expanderrow_sync.enable_expansion = _sync_state;
+		adjustment_sync_period.value = _sync_period;
+
+		expanderrow_watch.enable_expansion = _watch_state;
+		adjustment_watch_period.value = _watch_period;
 
 		// SIGNALS
-		buttonConnect.clicked.connect(() => {
-			cansocket_connect(listCanInterface.get_string(comborowCanInterface.selected)
-					, int.parse(listCanBitrate.get_string(comborowCanBitrate.selected)));
+		button_connect.clicked.connect(() => {
+			cansocket_connect(list_can_interface.get_string(comborow_can_interface.selected)
+					, int.parse(list_can_bitrate.get_string(comborow_can_bitrate.selected)));
 		});
-		buttonDisconnect.clicked.connect(cansocket_disconnect);
+		button_disconnect.clicked.connect(cansocket_disconnect);
 
-		adjustmentClientId.value_changed.connect(() => {
-			if (adjustmentClientId.value == adjustmentServerId.value)
+		adjustment_client_id.value_changed.connect(() => {
+			if (adjustment_client_id.value == adjustment_server_id.value)
 			{
-				adjustmentClientId.value = _clientId;
+				adjustment_client_id.value = _client_id;
 			}
 			else
 			{
-				ucanopen_client_set_nodeid((uint)adjustmentClientId.value);
-				_clientId = (uint)adjustmentClientId.value;
+				ucanopen_client_set_nodeid((uint)adjustment_client_id.value);
+				_client_id = (uint)adjustment_client_id.value;
 			}
 		});
 
-		adjustmentServerId.value_changed.connect(() => {
-			if (adjustmentServerId.value == adjustmentClientId.value)
+		adjustment_server_id.value_changed.connect(() => {
+			if (adjustment_server_id.value == adjustment_client_id.value)
 			{
-				adjustmentServerId.value = _serverId;
+				adjustment_server_id.value = _server_id;
 			}
 			else
 			{
-				ucanopen_client_set_serverid(Backend.Ucanopen.server, (uint)adjustmentServerId.value);
-				_serverId = (uint)adjustmentServerId.value;
+				ucanopen_client_set_serverid(Backend.Ucanopen.server, (uint)adjustment_server_id.value);
+				_server_id = (uint)adjustment_server_id.value;
 			}
 		});
 
-		switchTpdo.notify["state"].connect((s,p) => {
-			ucanopen_client_set_tpdo_enabled(switchTpdo.state);
-			_switchTpdoState = switchTpdo.state;
+		switch_tpdo.notify["state"].connect((s,p) => {
+			ucanopen_client_set_tpdo_enabled(switch_tpdo.state);
+			_tpdo_state = switch_tpdo.state;
 		});
 
-		expanderrowWatch.notify["enable-expansion"].connect((s,p) => {
-			ucanopen_client_set_watch_enabled(expanderrowWatch.enable_expansion);
-			_switchWatchState = expanderrowWatch.enable_expansion;
+		expanderrow_sync.notify["enable-expansion"].connect((s,p) => {
+			ucanopen_client_set_sync_enabled(expanderrow_sync.enable_expansion);
+			_sync_state = expanderrow_sync.enable_expansion;
 		});
 
-		adjustmentWatchPeriod.value_changed.connect(() => {
-			ucanopen_client_set_watch_period((int)adjustmentWatchPeriod.value);
-			_watchPeriod = (int)adjustmentWatchPeriod.value;
+		adjustment_sync_period.value_changed.connect(() => {
+			ucanopen_client_set_sync_period((int)adjustment_sync_period.value);
+			_sync_period = (int)adjustment_sync_period.value;
+		});
+
+		expanderrow_watch.notify["enable-expansion"].connect((s,p) => {
+			ucanopen_client_set_watch_enabled(expanderrow_watch.enable_expansion);
+			_watch_state = expanderrow_watch.enable_expansion;
+		});
+
+		adjustment_watch_period.value_changed.connect(() => {
+			ucanopen_client_set_watch_period((int)adjustment_watch_period.value);
+			_watch_period = (int)adjustment_watch_period.value;
 		});
 	}
 
-	public static uint clientId
+	public static uint client_id
 	{
-		get { return _clientId; }
+		get { return _client_id; }
 	}
 
-	public static uint serverId
+	public static uint server_id
 	{
-		get { return _serverId; }
+		get { return _server_id; }
 	}
 
-	public static bool switchTpdoState
+	public static bool tpdo_state
 	{
-		get { return _switchTpdoState; }
+		get { return _tpdo_state; }
 	}
 
-	public static bool switchWatchState
+	public static bool sync_state
 	{
-		get { return _switchWatchState; }
+		get { return _sync_state; }
 	}
 
-	public static int watchPeriod
+	public static int sync_period
 	{
-		get { return _watchPeriod; }
+		get { return _sync_period; }
+	}
+
+	public static bool watch_state
+	{
+		get { return _watch_state; }
+	}
+
+	public static int watch_period
+	{
+		get { return _watch_period; }
 	}
 }
 

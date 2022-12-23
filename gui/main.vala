@@ -41,6 +41,8 @@ extern void cansocket_disconnect();
 extern void ucanopen_client_set_nodeid(uint nodeId);
 extern void ucanopen_client_set_serverid(string serverName ,uint nodeId);
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
+extern void ucanopen_client_set_sync_enabled(bool isEnabled);
+extern void ucanopen_client_set_sync_period(int period);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string serverName, string watch, char* buf, size_t len);

@@ -166,7 +166,7 @@ public:
 	 */
 	void enableWatch()
 	{
-		std::cout << "[ucanopen] Enabling '" << _name << "' server watch requests... ";
+		std::cout << "[ucanopen] Enabling '" << _name << "' server watch requests (period = " << _watchInfo.period << ")... ";
 		_isWatchEnabled = true;
 		std::cout << "done." << std::endl;
 	}

@@ -45,8 +45,8 @@ private:
 	/* SYNC */
 	struct SyncInfo
 	{
-		bool isEnabled;
-		std::chrono::milliseconds period;
+		bool isEnabled{false};
+		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
 	};
 	SyncInfo _syncInfo;
@@ -55,7 +55,7 @@ private:
 	/* HEARTBEAT */
 	struct HeartbeatInfo
 	{
-		std::chrono::milliseconds period;
+		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
 	HeartbeatInfo _heartbeatInfo;

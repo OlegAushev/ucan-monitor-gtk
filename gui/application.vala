@@ -52,11 +52,13 @@ public class Application : Adw.Application
 		}
 		
 		message("[gui] Configuring backend...");
-		ucanopen_client_set_nodeid(WindowCanBusPreferences.clientId);
-		ucanopen_client_set_serverid(Backend.Ucanopen.server, WindowCanBusPreferences.serverId);
-		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.switchTpdoState);
-		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.switchWatchState);
-		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriod);
+		ucanopen_client_set_nodeid(WindowCanBusPreferences.client_id);
+		ucanopen_client_set_serverid(Backend.Ucanopen.server, WindowCanBusPreferences.server_id);
+		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.tpdo_state);
+		ucanopen_client_set_sync_period(WindowCanBusPreferences.sync_period);
+		ucanopen_client_set_sync_enabled(WindowCanBusPreferences.sync_state);
+		ucanopen_client_set_watch_period(WindowCanBusPreferences.watch_period);
+		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.watch_state);
 		message("[gui] Backend ready.");
 
 		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));

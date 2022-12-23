@@ -62,9 +62,6 @@ void ucanopen_client_set_sync_enabled(bool isEnabled)
 ///
 ///
 ///
-///
-///
-///
 void ucanopen_client_set_sync_period(int period)
 {
 	if (period <= 0) return;

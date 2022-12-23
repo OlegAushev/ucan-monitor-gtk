@@ -92,7 +92,7 @@
 														<property name="hscrollbar-policy">automatic</property>
 														<property name="vscrollbar-policy">automatic</property>
 														<child>
-															<object class="BmsMainDataTables" id="dataTables">
+															<object class="SrmDriveDataTables" id="dataTables">
 																
 															</object>
 														</child>

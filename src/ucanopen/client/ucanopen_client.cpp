@@ -24,11 +24,7 @@ Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	, _socket(socket)
 	, _state(NmtState::Initialization)
 {
-	_syncInfo.isEnabled = false;
-	_syncInfo.period = std::chrono::milliseconds(1000);
 	_syncInfo.timepoint = std::chrono::steady_clock::now();
-
-	_heartbeatInfo.period = std::chrono::milliseconds(1000);
 	_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
 
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
