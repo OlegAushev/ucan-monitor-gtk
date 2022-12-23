@@ -53,6 +53,28 @@ void ucanopen_client_set_serverid(const char* serverName ,unsigned int nodeId)
 ///
 ///
 ///
+void ucanopen_client_set_sync_enabled(bool isEnabled)
+{
+	isEnabled ? global::ucanClient->enableSync() : global::ucanClient->disableSync();
+}
+
+
+///
+///
+///
+///
+///
+///
+void ucanopen_client_set_sync_period(int period)
+{
+	if (period <= 0) return;
+	global::ucanClient->setSyncPeriod(std::chrono::milliseconds(period));
+}
+
+
+///
+///
+///
 void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 {
 	isEnabled ? global::ucanClient->enableTpdo() : global::ucanClient->disableTpdo();

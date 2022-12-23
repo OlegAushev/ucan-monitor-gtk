@@ -43,21 +43,17 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	private unowned Gtk.Switch switchTpdo;
 
 	[GtkChild]
-	private unowned Gtk.Switch switchWatch;
+	private unowned Adw.ExpanderRow expanderrowWatch;
 
 	[GtkChild]
-	private unowned Adw.ComboRow comborowWatchPeriod;
-
-	[GtkChild]
-	private unowned Gtk.StringList listWatchPeriod;
+	private unowned Gtk.Adjustment adjustmentWatchPeriod;
 
 	private static uint _clientId = 2;
 	private static uint _serverId = 1;
 
 	private static bool _switchTpdoState = true;
 	private static bool _switchWatchState = true;
-	private static uint _watchPeriodSelected = 3;
-	public const int watchPeriodDefault = 10;
+	private static int _watchPeriod = 10;
 	
 	public WindowCanBusPreferences() {}
 
@@ -67,9 +63,11 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 		adjustmentServerId.value = _serverId;
 
 		switchTpdo.active = _switchTpdoState;
-		switchWatch.active = _switchWatchState;
-		comborowWatchPeriod.selected = _watchPeriodSelected;
 
+		expanderrowWatch.enable_expansion = _switchWatchState;
+		adjustmentWatchPeriod.value = _watchPeriod;
+
+		// SIGNALS
 		buttonConnect.clicked.connect(() => {
 			cansocket_connect(listCanInterface.get_string(comborowCanInterface.selected)
 					, int.parse(listCanBitrate.get_string(comborowCanBitrate.selected)));
@@ -105,14 +103,14 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 			_switchTpdoState = switchTpdo.state;
 		});
 
-		switchWatch.notify["state"].connect((s,p) => {
-			ucanopen_client_set_watch_enabled(switchWatch.state);
-			_switchWatchState = switchWatch.state;
+		expanderrowWatch.notify["enable-expansion"].connect((s,p) => {
+			ucanopen_client_set_watch_enabled(expanderrowWatch.enable_expansion);
+			_switchWatchState = expanderrowWatch.enable_expansion;
 		});
 
-		comborowWatchPeriod.notify["selected"].connect((s,p) => {
-			ucanopen_client_set_watch_period(int.parse(listWatchPeriod.get_string(comborowWatchPeriod.selected)));
-			_watchPeriodSelected = comborowWatchPeriod.selected;
+		adjustmentWatchPeriod.value_changed.connect(() => {
+			ucanopen_client_set_watch_period((int)adjustmentWatchPeriod.value);
+			_watchPeriod = (int)adjustmentWatchPeriod.value;
 		});
 	}
 
@@ -134,6 +132,11 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	public static bool switchWatchState
 	{
 		get { return _switchWatchState; }
+	}
+
+	public static int watchPeriod
+	{
+		get { return _watchPeriod; }
 	}
 }
 

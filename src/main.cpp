@@ -70,9 +70,6 @@ int backend_main_loop(std::future<void> futureExit)
 			std::chrono::milliseconds(100),
 			callbackMakeTpdo2);
 
-	global::ucanClient->enableSync(std::chrono::milliseconds(200));
-
-
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_isReady = true;
 

@@ -125,7 +125,7 @@
 								</child>
 							</object>
 						</child>
-						<!-- ENABLE TPDO SWITCH -->
+						<!-- TPDO -->
 						<child>
 							<object class="AdwActionRow">
 								<property name="title">Enable client TPDO-messages</property>
@@ -137,35 +137,33 @@
 								</child>
 							</object>
 						</child>
-						<!-- ENABLE WATCH SWITCH -->
+						<!-- WATCH -->
 						<child>
-							<object class="AdwActionRow">
-								<property name="title">Enable server watch messages</property>
-								<property name="activatable_widget">switchWatch</property>
+							<object class="AdwExpanderRow" id="expanderrowWatch">
+								<property name="title">Server watch messages</property>
+								<property name="show-enable-switch">true</property>
 								<child>
-									<object class="GtkSwitch" id="switchWatch">
-										<property name="valign">center</property>
+									<object class="AdwActionRow">
+										<property name="title">Period, ms</property>
+										<child>
+											<object class="GtkSpinButton" id="spinbuttonWatchPeriod">
+												<property name="halign">start</property>
+												<property name="valign">center</property>
+												<property name="adjustment">
+													<object class="GtkAdjustment" id="adjustmentWatchPeriod">
+														<property name="lower">1</property>
+														<property name="upper">1000</property>
+														<property name="value">1</property>
+														<property name="step-increment">1</property>
+													</object>
+												</property>
+												<property name="wrap">true</property>
+												<property name="climb-rate">1</property>
+												<property name="numeric">true</property>
+											</object>
+										</child>
 									</object>
 								</child>
-							</object>
-						</child>
-						<!-- WATCH PERIOD COMBOBOX -->
-						<child>
-							<object class="AdwComboRow" id="comborowWatchPeriod">
-								<property name="title">Server watch messages period, ms</property>
-								<property name="model">
-									<object class="GtkStringList" id="listWatchPeriod">
-										<items>
-											<item>1</item>
-											<item>2</item>
-											<item>5</item>
-											<item>10</item>
-											<item>20</item>
-											<item>50</item>
-											<item>100</item>
-										</items>
-									</object>
-								</property>
 							</object>
 						</child>
 					</object>

@@ -56,7 +56,7 @@ public class Application : Adw.Application
 		ucanopen_client_set_serverid(Backend.Ucanopen.server, WindowCanBusPreferences.serverId);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.switchTpdoState);
 		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.switchWatchState);
-		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriodDefault);
+		ucanopen_client_set_watch_period(WindowCanBusPreferences.watchPeriod);
 		message("[gui] Backend ready.");
 
 		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));

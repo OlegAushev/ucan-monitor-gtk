@@ -45,6 +45,7 @@ private:
 	/* SYNC */
 	struct SyncInfo
 	{
+		bool isEnabled;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
 	};
@@ -149,10 +150,10 @@ public:
 	 * 
 	 * @param period 
 	 */
-	void enableSync(std::chrono::milliseconds period)
+	void enableSync()
 	{
-		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << period << ")... ";	
-		_syncInfo.period = period;
+		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << _syncInfo.period << ")... ";	
+		_syncInfo.isEnabled = true;
 		std::cout << "done." << std::endl;
 	}
 
@@ -162,8 +163,19 @@ public:
 	 */
 	void disableSync()
 	{
-		std::cout << "[ucanopen] Disabling client SYNC messages... ";	
-		_syncInfo.period = std::chrono::milliseconds(0);
+		std::cout << "[ucanopen] Disabling client SYNC messages... ";
+		_syncInfo.isEnabled = false;
+		std::cout << "done." << std::endl;
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	void setSyncPeriod(std::chrono::milliseconds period)
+	{
+		std::cout << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
+		_syncInfo.period = period;
 		std::cout << "done." << std::endl;
 	}
 
