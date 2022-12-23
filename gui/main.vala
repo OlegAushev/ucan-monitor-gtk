@@ -63,6 +63,12 @@ extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);
 extern void srmdrive_controller_set_torque(double valPu);
 extern void srmdrive_controller_set_speed(double val);
 
+/// bmsmain21
+extern double bmsmain21_tpdo1_get_voltage();
+extern double bmsmain21_tpdo1_get_current();
+extern double bmsmain21_tpdo1_get_charge();
+extern double bmsmain21_tpdo1_get_temp_max();
+extern double bmsmain21_tpdo1_get_temp_min();
 
 
 

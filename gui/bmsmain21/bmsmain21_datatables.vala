@@ -3,73 +3,27 @@
 ///
 
 
-namespace Bmsmain21 {
+namespace BmsMain21 {
 
 
 [GtkTemplate (ui = "/gui/bmsmain21/bmsmain21_datatables.ui")]
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
-	private unowned TableEntry entryUptime;
+	private unowned TableEntry entryCurrent;
 	[GtkChild]
-	private unowned TableEntry entryState;
+	private unowned TableEntry entryTempMin;
 	[GtkChild]
-	private unowned TableEntry entryErrors;
+	private unowned TableEntry entryTempMax;
 	[GtkChild]
-	private unowned TableEntry entryWarnings;
-
+	private unowned TableEntry entryCharge;
 	[GtkChild]
-	private unowned TableEntry entrySpeed;
-	[GtkChild]
-	private unowned TableEntry entryTorque;
-	[GtkChild]
-	private unowned TableEntry entryCurrS;
-	[GtkChild]
-	private unowned TableEntry entryCurrF;
-	[GtkChild]
-	private unowned TableEntry entryCurrD;
-	[GtkChild]
-	private unowned TableEntry entryCurrQ;
-	[GtkChild]
-	private unowned TableEntry entryGamma;
-	[GtkChild]
-	private unowned TableEntry entryTempS;
-	[GtkChild]
-	private unowned TableEntry entryTempFW;
-	[GtkChild]
-	private unowned TableEntry entryPowerMech;
-
-	[GtkChild]
-	private unowned TableEntry entryVoltDC;
-	[GtkChild]
-	private unowned TableEntry entryCurrDC;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhA;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhB;
-	[GtkChild]
-	private unowned TableEntry entryCurrPhC;
-	[GtkChild]
-	private unowned TableEntry entryTempPhA;
-	[GtkChild]
-	private unowned TableEntry entryTempPhB;
-	[GtkChild]
-	private unowned TableEntry entryTempPhC;
-	[GtkChild]
-	private unowned TableEntry entryTempAir;
-	[GtkChild]
-	private unowned TableEntry entryPowerElec;
+	private unowned TableEntry entryVoltage;
 
 	[GtkChild]
 	private unowned TableEntry heartbeatIndicator;
 	[GtkChild]
 	private unowned TableBoolEntry tpdo1Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo2Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo3Indicator;
-	[GtkChild]
-	private unowned TableBoolEntry tpdo4Indicator;
 
 
 	public DataTables() {}
@@ -81,17 +35,21 @@ public class DataTables : Adw.Bin
 	
 	public bool update()
 	{
-		updateSystemData();
-		updateMotorData();
-		updateInverterData();
+		updateTpdo1Data();
 		updateConnectionStatus();
 		return true;
 	}
 
-	public void updateSystemData()
+	public void updateTpdo1Data()
 	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);
+		entryVoltage.entry_text = bmsmain21_tpdo1_get_voltage().to_string();
+		entryCurrent.entry_text = bmsmain21_tpdo1_get_current().to_string();
+		entryTempMin.entry_text = bmsmain21_tpdo1_get_temp_min().to_string();
+		entryTempMax.entry_text = bmsmain21_tpdo1_get_temp_max().to_string();
+		entryCharge.entry_text = bmsmain21_tpdo1_get_charge().to_string();
+
+		//string entryText = string.nfill(16, '\0');
+		/*ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);
 		entryUptime.entry_text = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DRIVE_STATE", entryText, 16);
@@ -101,75 +59,7 @@ public class DataTables : Adw.Bin
 		entryErrors.entry_text = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", entryText, 16);
-		entryWarnings.entry_text = entryText;
-	}
-
-	public void updateMotorData()
-	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "SPEED_RPM", entryText, 16);
-		entrySpeed.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "TORQUE", entryText, 16);
-		entryTorque.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "STATOR_CURRENT", entryText, 16);
-		entryCurrS.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FIELD_CURRENT", entryText, 16);
-		entryCurrF.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "D_CURRENT", entryText, 16);
-		entryCurrD.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "Q_CURRENT", entryText, 16);
-		entryCurrQ.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "GAMMA_ANGLE_DEG", entryText, 16);
-		entryGamma.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_S_TEMP", entryText, 16);
-		entryTempS.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_FW_TEMP", entryText, 16);
-		entryTempFW.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MECH_POWER", entryText, 16);
-		entryPowerMech.entry_text = entryText;
-	}
-
-	public void updateInverterData()
-	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_VOLTAGE", entryText, 16);
-		entryVoltDC.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_CURRENT", entryText, 16);
-		entryCurrDC.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_CURRENT", entryText, 16);
-		entryCurrPhA.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_CURRENT", entryText, 16);
-		entryCurrPhB.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_CURRENT", entryText, 16);
-		entryCurrPhC.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_TEMP", entryText, 16);
-		entryTempPhA.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_TEMP", entryText, 16);
-		entryTempPhB.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_TEMP", entryText, 16);
-		entryTempPhC.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "CASE_TEMP", entryText, 16);
-		entryTempAir.entry_text = entryText;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "OUT_ELEC_POWER", entryText, 16);
-		entryPowerElec.entry_text = entryText;
+		entryWarnings.entry_text = entryText;*/
 	}
 
 	public void updateConnectionStatus()
@@ -190,9 +80,6 @@ public class DataTables : Adw.Bin
 		}
 
 		tpdo1Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
-		tpdo2Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
-		tpdo3Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
-		tpdo4Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
 	}
 }
 

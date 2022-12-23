@@ -49,6 +49,12 @@ public:
 			ucanopen::NodeId nodeId,
 			std::shared_ptr<can::Socket> socket,
 			const ucanopen::ObjectDictionaryType& dictionary);
+
+	double current() const { return _current; }
+	double voltage() const { return _voltage; }
+	unsigned int charge() const { return _charge; }
+	double tempMin() const { return _tempMin; }
+	double tempMax() const { return _tempMax; }
 };
 
 

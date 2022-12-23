@@ -1,5 +1,5 @@
 /**
- * @file c_srmdrive.cpp
+ * @file srmdrive.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
