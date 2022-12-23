@@ -26,17 +26,17 @@ extern const ucanopen::ObjectDictionaryType objectDictionary;
 class Server : public ucanopen::IServer
 {
 protected:
-	virtual void handleTpdo1(ucanopen::can_payload data) override final {}
-	virtual void handleTpdo2(ucanopen::can_payload data) override final {}
-	virtual void handleTpdo3(ucanopen::can_payload data) override final {}
-	virtual void handleTpdo4(ucanopen::can_payload data) override final {}
+	virtual void _handleTpdo1(ucanopen::can_payload data) override final {}
+	virtual void _handleTpdo2(ucanopen::can_payload data) override final {}
+	virtual void _handleTpdo3(ucanopen::can_payload data) override final {}
+	virtual void _handleTpdo4(ucanopen::can_payload data) override final {}
 
-	virtual ucanopen::can_payload createRpdo1() override final { return {}; }
-	virtual ucanopen::can_payload createRpdo2() override final { return {}; }
-	virtual ucanopen::can_payload createRpdo3() override final { return {}; }
-	virtual ucanopen::can_payload createRpdo4() override final { return {}; }
+	virtual ucanopen::can_payload _createRpdo1() override final { return {}; }
+	virtual ucanopen::can_payload _createRpdo2() override final { return {}; }
+	virtual ucanopen::can_payload _createRpdo3() override final { return {}; }
+	virtual ucanopen::can_payload _createRpdo4() override final { return {}; }
 
-	virtual void handleTsdo(ucanopen::SdoType sdoType,
+	virtual void _handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionaryType::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final
 	{

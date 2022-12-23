@@ -26,17 +26,17 @@ Server::Server(const std::string& name,
 	: IServer(name, nodeId, socket, dictionary)
 	, controller(this)
 {
-	registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
-	registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
-	registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
-	registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
+	_registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
+	_registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
+	_registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
+	_registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
 }
 
 
 ///
 ///
 ///
-void Server::handleTsdo(ucanopen::SdoType sdoType,
+void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionaryType::const_iterator entryIt,
 			ucanopen::CobSdoData data)
 {
@@ -67,7 +67,7 @@ void Server::handleTsdo(ucanopen::SdoType sdoType,
 ///
 ///
 ///
-void Server::handleTpdo3(ucanopen::can_payload data)
+void Server::_handleTpdo3(ucanopen::can_payload data)
 {
 	CobTpdo3 message = ucanopen::fromPayload<CobTpdo3>(data);
 	if ((message.syslogMessageId != 0) && (message.syslogMessageId < syslogMessages.size()))

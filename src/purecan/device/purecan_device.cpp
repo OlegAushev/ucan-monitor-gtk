@@ -29,7 +29,7 @@ IDevice::IDevice(std::shared_ptr<can::Socket> socket)
 ///
 ///
 ///
-void IDevice::send()
+void IDevice::_send()
 {
 	auto now = std::chrono::steady_clock::now();
 
@@ -55,7 +55,7 @@ void IDevice::send()
 ///
 ///
 ///
-void IDevice::handleFrame(const can_frame& frame)
+void IDevice::_handleFrame(const can_frame& frame)
 {
 	for (auto& [id, message] : _txMessageList)
 	{
@@ -73,7 +73,7 @@ void IDevice::handleFrame(const can_frame& frame)
 ///
 ///
 ///
-void IDevice::checkConnection()
+void IDevice::_checkConnection()
 {
 	bool isConnectionOk = true;
 	auto now = std::chrono::steady_clock::now();

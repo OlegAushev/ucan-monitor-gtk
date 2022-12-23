@@ -33,7 +33,7 @@ Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
 
 	std::future<void> futureExit = _signalExitRunThread.get_future();
-	_threadRun = std::thread(&Client::run, this, std::move(futureExit));
+	_threadRun = std::thread(&Client::_run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	_state = NmtState::Operational;
 }
@@ -64,7 +64,7 @@ void Client::setNodeId(NodeId nodeId)
 		return;
 	}
 
-	if (!isFree(nodeId))
+	if (!_isFree(nodeId))
 	{
 		std::cout << "failed: already occupied ID." << std::endl;
 		return;
@@ -113,7 +113,7 @@ void Client::registerServer(std::shared_ptr<IServer> server)
 	}
 
 	_servers.insert(server);
-	calculateRecvId(server);
+	_calculateRecvId(server);
 
 	std::cout << "done." << std::endl;
 }
@@ -133,7 +133,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		return;
 	}
 
-	if (!isFree(nodeId))
+	if (!_isFree(nodeId))
 	{
 		std::cout << "failed: already occupied ID." << std::endl;
 		return;
@@ -150,7 +150,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		return;
 	}
 
-	(*itServer)->setNodeId(nodeId);
+	(*itServer)->_setNodeId(nodeId);
 
 	// erase outdated elements from [id; server] map
 	for (auto it = _recvIdServerList.begin(); it != _recvIdServerList.end();)
@@ -165,7 +165,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		}
 	}
 
-	calculateRecvId(*itServer);
+	_calculateRecvId(*itServer);
 
 	std::cout << "done." << std::endl;
 }
@@ -174,7 +174,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 ///
 ///
 ///
-void Client::run(std::future<void> futureExit)
+void Client::_run(std::future<void> futureExit)
 {
 	std::cout << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << std::endl;
 
@@ -216,7 +216,7 @@ void Client::run(std::future<void> futureExit)
 		/* SERVER's RPDO */
 		for (auto& server : _servers)
 		{
-			server->sendPeriodic();
+			server->_sendPeriodic();
 		}
 
 		/* RECV */
@@ -224,7 +224,7 @@ void Client::run(std::future<void> futureExit)
 		can::Error recvErr = _socket->recv(frame);
 		while (recvErr == can::Error::NoError)
 		{
-			(void) std::async(&Client::onFrameReceived, this, frame);
+			(void) std::async(&Client::_onFrameReceived, this, frame);
 			recvErr = _socket->recv(frame);
 		}
 	}
@@ -236,12 +236,12 @@ void Client::run(std::future<void> futureExit)
 ///
 ///
 ///
-void Client::onFrameReceived(const can_frame& frame)
+void Client::_onFrameReceived(const can_frame& frame)
 {
 	auto it = _recvIdServerList.find(frame.can_id);
 	if (it != _recvIdServerList.end())
 	{
-		it->second->handleFrame(frame);
+		it->second->_handleFrame(frame);
 	}
 }
 
@@ -249,7 +249,7 @@ void Client::onFrameReceived(const can_frame& frame)
 ///
 ///
 ///
-void Client::calculateRecvId(std::shared_ptr<IServer> server)
+void Client::_calculateRecvId(std::shared_ptr<IServer> server)
 {
 	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
 	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());
@@ -270,7 +270,7 @@ void Client::calculateRecvId(std::shared_ptr<IServer> server)
 ///
 ///
 ///
-bool Client::isFree(NodeId nodeId) const
+bool Client::_isFree(NodeId nodeId) const
 {
 	if (nodeId == _nodeId)
 	{

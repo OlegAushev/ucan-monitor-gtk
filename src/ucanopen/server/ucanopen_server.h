@@ -76,11 +76,11 @@ private:
 	};
 	std::map<TpdoType, TpdoInfo> _tpdoList;
 protected:
-	virtual void handleTpdo1(can_payload data) = 0;
-	virtual void handleTpdo2(can_payload data) = 0;
-	virtual void handleTpdo3(can_payload data) = 0;
-	virtual void handleTpdo4(can_payload data) = 0;
-	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
+	virtual void _handleTpdo1(can_payload data) = 0;
+	virtual void _handleTpdo2(can_payload data) = 0;
+	virtual void _handleTpdo3(can_payload data) = 0;
+	virtual void _handleTpdo4(can_payload data) = 0;
+	void _registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), _nodeId);
 		_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
@@ -110,11 +110,11 @@ private:
 	};
 	std::map<RpdoType, RpdoInfo> _rpdoList;
 protected:
-	virtual can_payload createRpdo1() = 0;
-	virtual can_payload createRpdo2() = 0;
-	virtual can_payload createRpdo3() = 0;
-	virtual can_payload createRpdo4() = 0;
-	void registerRpdo(RpdoType type, std::chrono::milliseconds period)
+	virtual can_payload _createRpdo1() = 0;
+	virtual can_payload _createRpdo2() = 0;
+	virtual can_payload _createRpdo3() = 0;
+	virtual can_payload _createRpdo4() = 0;
+	void _registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
 		canid_t id = calculateCobId(toCobType(type), _nodeId);
 		_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
@@ -144,7 +144,7 @@ public:
 
 	/* TSDO server --> client */
 protected:
-	virtual void handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
+	virtual void _handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
 
 	/* WATCH messages server <- client */
 private:
@@ -340,7 +340,7 @@ public:
 	NmtState nmtState() const { return _heartbeatInfo.nmtState; }
 
 private:	
-	std::map<ODEntryKey, ODEntryValue>::const_iterator findOdEntry(
+	std::map<ODEntryKey, ODEntryValue>::const_iterator _findOdEntry(
 		std::string_view category,
 		std::string_view subcategory,
 		std::string_view name)
@@ -353,15 +353,15 @@ private:
 		return it->second;
 	}
 
-	void sendPeriodic();
-	void handleFrame(const can_frame& frame);
+	void _sendPeriodic();
+	void _handleFrame(const can_frame& frame);
 
 	/**
 	 * @brief Sets server node ID.
 	 * 
 	 * @param nodeId 
 	 */
-	void setNodeId(NodeId nodeId);
+	void _setNodeId(NodeId nodeId);
 };
 
 

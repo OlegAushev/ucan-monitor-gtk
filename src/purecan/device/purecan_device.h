@@ -98,9 +98,9 @@ public:
 	void disableRxMessages() { _isRxEnabled = false; }
 
 private:
-	void send();
-	void handleFrame(const can_frame& frame);
-	void checkConnection();
+	void _send();
+	void _handleFrame(const can_frame& frame);
+	void _checkConnection();
 };
 
 

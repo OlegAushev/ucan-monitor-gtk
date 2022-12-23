@@ -100,8 +100,8 @@ public:
 	Error recv(can_frame& frame);
 
 private:
-	Error createSocket(const std::string& interface);
-	std::filesystem::path findScript(std::filesystem::path name);
+	Error _createSocket(const std::string& interface);
+	std::filesystem::path _findScript(std::filesystem::path name);
 };
 
 

@@ -24,7 +24,7 @@ Socket::Socket()
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
 	std::cout << "[cansocket] Searching for SocketCAN checking script... ";
-	std::filesystem::path scriptPath = findScript("socketcan_check.sh");
+	std::filesystem::path scriptPath = _findScript("socketcan_check.sh");
 	if (scriptPath.empty())
 	{
 		std::cout << "WARNING: not found." << std::endl;
@@ -39,7 +39,7 @@ Socket::Socket()
 	int shRet = system(cmd.c_str());
 	if (shRet == 0)
 	{
-		if (createSocket("can0") != Error::NoError)
+		if (_createSocket("can0") != Error::NoError)
 		{
 			_socket = -1;
 		}
@@ -59,7 +59,7 @@ Socket::~Socket()
 ///
 ///
 ///
-Error Socket::createSocket(const std::string& interface)
+Error Socket::_createSocket(const std::string& interface)
 {
 	/* CREATE SOCKET */
 	std::cout << "[cansocket] Creating socket..." << std::endl;
@@ -118,7 +118,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 
 	/* FIND SCRIPT */
 	std::cout << "[cansocket] Searching for SocketCAN enabling script... ";
-	std::filesystem::path scriptPath = findScript("socketcan_enable.sh");
+	std::filesystem::path scriptPath = _findScript("socketcan_enable.sh");
 	if (scriptPath.empty())
 	{
 		std::cout << "ERROR: not found." << std::endl;
@@ -158,7 +158,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 		return error;
 	}
 
-	return createSocket(interface);
+	return _createSocket(interface);
 }
 
 
@@ -193,7 +193,7 @@ Error Socket::disconnect()
 ///
 ///
 ///
-std::filesystem::path Socket::findScript(std::filesystem::path name)
+std::filesystem::path Socket::_findScript(std::filesystem::path name)
 {
 	std::filesystem::path scriptPath;
 	for (auto loc : can::detail::scriptsLocationList)

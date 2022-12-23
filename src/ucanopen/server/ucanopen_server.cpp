@@ -58,7 +58,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 ///
 ///
 ///
-void IServer::setNodeId(NodeId nodeId)
+void IServer::_setNodeId(NodeId nodeId)
 {
 	if (!nodeId.isValid()) return;
 
@@ -81,7 +81,7 @@ void IServer::setNodeId(NodeId nodeId)
 ///
 ///
 ///
-void IServer::sendPeriodic()
+void IServer::_sendPeriodic()
 {
 	auto now = std::chrono::steady_clock::now();
 	
@@ -96,16 +96,16 @@ void IServer::sendPeriodic()
 			switch (type)
 			{
 			case RpdoType::Rpdo1:
-				data = createRpdo1();
+				data = _createRpdo1();
 				break;
 			case RpdoType::Rpdo2:
-				data = createRpdo2();
+				data = _createRpdo2();
 				break;
 			case RpdoType::Rpdo3:
-				data = createRpdo3();
+				data = _createRpdo3();
 				break;
 			case RpdoType::Rpdo4:
-				data = createRpdo4();
+				data = _createRpdo4();
 				break;
 			}
 			_socket->send(createFrame(message.id, 8, data));
@@ -129,7 +129,7 @@ void IServer::sendPeriodic()
 ///
 ///
 ///
-void IServer::handleFrame(const can_frame& frame)
+void IServer::_handleFrame(const can_frame& frame)
 {
 	for (auto& [type, message] : _tpdoList)
 	{
@@ -142,16 +142,16 @@ void IServer::handleFrame(const can_frame& frame)
 		switch (type)
 		{
 		case TpdoType::Tpdo1:
-			handleTpdo1(data);
+			_handleTpdo1(data);
 			break;
 		case TpdoType::Tpdo2:
-			handleTpdo2(data);
+			_handleTpdo2(data);
 			break;
 		case TpdoType::Tpdo3:
-			handleTpdo3(data);
+			_handleTpdo3(data);
 			break;
 		case TpdoType::Tpdo4:
-			handleTpdo4(data);
+			_handleTpdo4(data);
 			break;
 		}
 		return;
@@ -198,7 +198,7 @@ void IServer::handleFrame(const can_frame& frame)
 		}
 
 		// server-specific TSDO handling
-		handleTsdo(sdoType, odEntry, sdoMessage.data);
+		_handleTsdo(sdoType, odEntry, sdoMessage.data);
 	}
 	else if (frame.can_id == _heartbeatInfo.id)
 	{
@@ -213,7 +213,7 @@ void IServer::handleFrame(const can_frame& frame)
 ///
 ODRequestStatus IServer::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	auto entryIt = findOdEntry(category, subcategory, name);
+	auto entryIt = _findOdEntry(category, subcategory, name);
 	
 	if (entryIt == _dictionary.end())
 	{
@@ -245,7 +245,7 @@ ODRequestStatus IServer::read(std::string_view category, std::string_view subcat
 ///
 ODRequestStatus IServer::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
 {
-	auto entryIt = findOdEntry(category, subcategory, name);
+	auto entryIt = _findOdEntry(category, subcategory, name);
 	
 	if (entryIt == _dictionary.end())
 	{
@@ -278,7 +278,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 ///
 ODRequestStatus IServer::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
-	auto entryIt = findOdEntry(category, subcategory, name);
+	auto entryIt = _findOdEntry(category, subcategory, name);
 	
 	if (entryIt == _dictionary.end())
 	{
@@ -345,7 +345,7 @@ ODRequestStatus IServer::write(std::string_view category, std::string_view subca
 ///
 ODRequestStatus IServer::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	auto entryIt = findOdEntry(category, subcategory, name);
+	auto entryIt = _findOdEntry(category, subcategory, name);
 	if (entryIt == _dictionary.end())
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "

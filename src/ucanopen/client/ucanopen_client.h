@@ -72,9 +72,9 @@ private:
 	/* THREADS */
 	std::thread _threadRun;
 	std::promise<void> _signalExitRunThread;
-	void run(std::future<void> futureExit);
+	void _run(std::future<void> futureExit);
 
-	void onFrameReceived(const can_frame& frame);
+	void _onFrameReceived(const can_frame& frame);
 
 public:
 	/**
@@ -250,8 +250,8 @@ public:
 	}
 
 protected:
-	void calculateRecvId(std::shared_ptr<IServer> server);
-	bool isFree(NodeId nodeId) const;
+	void _calculateRecvId(std::shared_ptr<IServer> server);
+	bool _isFree(NodeId nodeId) const;
 };
 
 

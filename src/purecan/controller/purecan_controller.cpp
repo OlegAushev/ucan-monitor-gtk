@@ -25,7 +25,7 @@ Controller::Controller(std::shared_ptr<can::Socket> socket)
 	std::cout << "[purecan] Starting aux thread..." << std::endl;
 
 	std::future<void> futureExit = _signalExitRunThread.get_future();
-	_threadRun = std::thread(&Controller::run, this, std::move(futureExit));
+	_threadRun = std::thread(&Controller::_run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
@@ -59,7 +59,7 @@ void Controller::registerDevice(std::shared_ptr<IDevice> device)
 ///
 ///
 ///
-void Controller::run(std::future<void> futureExit)
+void Controller::_run(std::future<void> futureExit)
 {
 	std::cout << "[purecan] Aux thread started." << std::endl;
 
@@ -89,8 +89,8 @@ void Controller::run(std::future<void> futureExit)
 		/* DEVICE's RX */
 		for (auto& device : _devices)
 		{
-			device->checkConnection();
-			device->send();
+			device->_checkConnection();
+			device->_send();
 		}
 
 		/* RECV */
@@ -98,7 +98,7 @@ void Controller::run(std::future<void> futureExit)
 		can::Error recvErr = _socket->recv(frame);
 		while (recvErr == can::Error::NoError)
 		{
-			(void) std::async(&Controller::onFrameReceived, this, frame);
+			(void) std::async(&Controller::_onFrameReceived, this, frame);
 			recvErr = _socket->recv(frame);
 		}
 	}
@@ -110,12 +110,12 @@ void Controller::run(std::future<void> futureExit)
 ///
 ///
 ///
-void Controller::onFrameReceived(const can_frame& frame)
+void Controller::_onFrameReceived(const can_frame& frame)
 {
 	auto it = _recvIdDeviceList.find(frame.can_id);
 	if (it != _recvIdDeviceList.end())
 	{
-		it->second->handleFrame(frame);
+		it->second->_handleFrame(frame);
 	}
 }
 
