@@ -56,7 +56,7 @@ int backend_main_loop(std::future<void> futureExit)
 	global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
 	global::ucanClient->registerServer(global::srmdriveServer);
 
-	global::bmsmain21Server = std::make_shared<bmsmain21::Server>("BMS Main 2.x", ucanopen::NodeId(0x01), global::canSocket, ucanopen::ObjectDictionaryType{});
+	global::bmsmain21Server = std::make_shared<bmsmain21::Server>("BMS Main 2.x", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
 	global::ucanClient->registerServer(global::bmsmain21Server);
 	
 	// define and register client TPDO callbacks
