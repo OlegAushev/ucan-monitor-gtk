@@ -32,16 +32,50 @@ public class Application : Adw.Application
 		ActionEntry[] action_entries = {
 			{"about", this.on_about_action},
 			{"preferences", this.on_preferences_action},
-			{"canbus", this.on_canbus_action},
-			{"quit", this.quit}
+			{"canbus_setup", this.on_canbus_setup_action},
+			{"quit", this.quit},
+			{"create_main_window", this.on_create_main_window_action}
+
 		};
 		this.add_action_entries(action_entries, this);
 		this.set_accels_for_action("app.quit", {"<primary>q"});
-
-		this.shutdown.connect(Backend.main_exit);
         }
 
 	public override void activate()
+	{
+		base.activate();
+		var win = this.active_window;
+		if (win == null)
+		{
+			win = new CanMonitor.WindowSelectServer(this);
+		}
+		win.present();
+		message("[gui] Waiting for ucanopen server selection...");
+        }
+
+	private void on_about_action()
+	{
+		string[] authors = { "Oleg Aushev" };
+		Gtk.show_about_dialog (this.active_window,
+				"program-name", "uCAN Monitor",
+				"authors", authors,
+				"version", GIT_DESCRIBE);
+	}
+
+	private void on_preferences_action()
+	{
+		message ("app.preferences action activated");
+	}
+
+	private void on_canbus_setup_action()
+	{
+		var win = this.active_window;
+		var win_canbus = new CanMonitor.WindowCanBusPreferences();
+		win_canbus.set_transient_for(win);
+		win_canbus.present();
+	}
+
+	private void on_create_main_window_action()
 	{
 		message("[gui] Waiting for backend...");
 		Backend.main_enter();
@@ -62,7 +96,8 @@ public class Application : Adw.Application
 
 		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));
 
-		base.activate();
+		this.shutdown.connect(Backend.main_exit);
+
 		var win = this.active_window;
 		if (win == null)
 		{
@@ -70,28 +105,6 @@ public class Application : Adw.Application
 		}
 		win.present();
 		message("[gui] GUI ready.");
-        }
-
-	private void on_about_action()
-	{
-		string[] authors = { "Oleg Aushev" };
-		Gtk.show_about_dialog (this.active_window,
-				"program-name", "uCAN Monitor",
-				"authors", authors,
-				"version", GIT_DESCRIBE);
-	}
-
-	private void on_preferences_action()
-	{
-		message ("app.preferences action activated");
-	}
-
-	private void on_canbus_action()
-	{
-		var win = this.active_window;
-		var win_canbus = new CanMonitor.WindowCanBusPreferences();
-		win_canbus.set_transient_for(win);
-		win_canbus.present();
 	}
 }
 

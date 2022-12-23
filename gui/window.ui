@@ -156,7 +156,7 @@
 		<section>
 			<item>
 				<attribute name="label">CAN bus</attribute>
-				<attribute name="action">app.canbus</attribute>
+				<attribute name="action">app.canbus_setup</attribute>
 			</item>
 			<item>
 				<attribute name="label">Preferences</attribute>
