@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include <cassert>
-#include "srmdrive/server/srmdrive_server.h"
+#include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
 
 
 namespace global {
