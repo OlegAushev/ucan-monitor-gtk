@@ -31,13 +31,13 @@ public class ServerConfiguration : Adw.Bin
 	private const size_t _categoriesLenMax = 32;
 	private string _categories[_categoriesCountMax];
 	private size_t _categoriesCount;
-	Gtk.StringList _categoriesModel;
+	private Gtk.StringList _categoriesModel;
 
 	private const size_t _entriesCountMax = 32;
 	private const size_t _entriesLenMax = 32;
 	private string _entries[_entriesCountMax];
 	private size_t _entriesCount;
-	Gtk.StringList _entriesModel;
+	private Gtk.StringList _entriesModel;
 
 
 	public ServerConfiguration() {}
@@ -55,9 +55,9 @@ public class ServerConfiguration : Adw.Bin
 		}
 
 		_categoriesModel = new Gtk.StringList(null);
-		comborowCategory.set_model(_categoriesModel);
+		comborowCategory.model = _categoriesModel;
 		_entriesModel = new Gtk.StringList(null);
-		comborowEntry.set_model(_entriesModel);
+		comborowEntry.model = _entriesModel;
 
 		size_t _categoriesCount = ucanopen_server_get_conf_categories(Backend.Ucanopen.server,
 				_categories, _categoriesCountMax, _categoriesLenMax);
@@ -94,7 +94,7 @@ public class ServerConfiguration : Adw.Bin
 		});
 
 		buttonRead.clicked.connect(() => {
-			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
+			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_conf_category,
 					_categories[comborowCategory.selected], _entries[comborowEntry.selected]);
 		});
 
@@ -103,7 +103,7 @@ public class ServerConfiguration : Adw.Bin
 			bool isNumber = float.try_parse(entryrowValue.text, out val);
 			if (isNumber && entryrowValue.text.length != 0)
 			{
-				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.serverConfCategory,
+				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_conf_category,
 						_categories[comborowCategory.selected], _entries[comborowEntry.selected],
 						entryrowValue.text);
 			}

@@ -24,11 +24,12 @@ namespace Backend {
 
 extern int main_enter();
 extern void main_exit();
-extern bool isReady;
+extern bool is_ready;
 
 namespace Ucanopen {
+extern string server_list[3];
 extern string server;
-extern string serverConfCategory;
+extern string server_conf_category;
 }
 
 }
@@ -38,16 +39,16 @@ extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 
 // ucanopen
-extern void ucanopen_client_set_nodeid(uint nodeId);
-extern void ucanopen_client_set_serverid(string serverName ,uint nodeId);
+extern void ucanopen_client_set_node_id(uint nodeId);
+extern void ucanopen_client_set_server_id(string serverName ,uint nodeId);
 extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
 extern void ucanopen_client_set_sync_enabled(bool isEnabled);
 extern void ucanopen_client_set_sync_period(int period);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
-extern void ucanopen_server_get_watch_value(string serverName, string watch, char* buf, size_t len);
-extern size_t ucanopen_server_get_conf_categories(string serverName, char** buf, size_t size, size_t len);
-extern size_t ucanopen_server_get_conf_entries(string serverName, string category, char** buf, size_t size, size_t len);
+extern void ucanopen_server_get_watch_value(string serverName, string watchName, char* buf, size_t len);
+extern size_t ucanopen_server_get_conf_categories(string serverName, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_server_get_conf_entries(string serverName, string category, char** buf, size_t countMax, size_t lenMax);
 extern bool ucanopen_server_is_heartbeat_ok(string serverName);
 extern void ucanopen_server_get_nmt_state(string serverName, char* buf, size_t len);
 extern bool ucanopen_server_is_tpdo_ok(string serverName, int tpdoNum);

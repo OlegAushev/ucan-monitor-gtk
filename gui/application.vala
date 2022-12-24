@@ -77,16 +77,17 @@ public class Application : Adw.Application
 
 	private void on_create_main_window_action()
 	{
+		message(@"[gui] '$(Backend.Ucanopen.server)' is selected.");
 		message("[gui] Waiting for backend...");
 		Backend.main_enter();
-		while (!Backend.isReady)
+		while (!Backend.is_ready)
 		{
 			Thread.usleep(10000);	// with empty loop Release build is not working
 		}
 		
 		message("[gui] Configuring backend...");
-		ucanopen_client_set_nodeid(WindowCanBusPreferences.client_id);
-		ucanopen_client_set_serverid(Backend.Ucanopen.server, WindowCanBusPreferences.server_id);
+		ucanopen_client_set_node_id(WindowCanBusPreferences.client_id);
+		ucanopen_client_set_server_id(Backend.Ucanopen.server, WindowCanBusPreferences.server_id);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.tpdo_state);
 		ucanopen_client_set_sync_period(WindowCanBusPreferences.sync_period);
 		ucanopen_client_set_sync_enabled(WindowCanBusPreferences.sync_state);

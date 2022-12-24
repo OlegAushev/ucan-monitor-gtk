@@ -15,9 +15,10 @@
 #include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
 
 
-bool backend_isReady = false;
-const char* backend_ucanopen_server = "SRM Drive";
-const char* backend_ucanopen_serverConfCategory = ucanopen::IServer::confCategory.data();
+bool backend_is_ready = false;
+const char* backend_ucanopen_server;
+const char* backend_ucanopen_server_list[3] = {"SRM Drive", "LaunchPad", "BMS Main"};
+const char* backend_ucanopen_server_conf_category = ucanopen::IServer::confCategory.data();
 
 
 namespace {
@@ -71,7 +72,7 @@ int backend_main_loop(std::future<void> futureExit)
 			callbackMakeTpdo2);
 
 	std::cout << "[backend] Backend ready." << std::endl;
-	backend_isReady = true;
+	backend_is_ready = true;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{

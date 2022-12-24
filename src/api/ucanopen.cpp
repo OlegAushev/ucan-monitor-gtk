@@ -26,7 +26,7 @@ extern "C" {
 ///
 ///
 ///
-unsigned int ucanopen_client_get_nodeid()
+unsigned int ucanopen_client_get_node_id()
 {
 	return global::ucanClient->nodeId().value();
 }
@@ -35,7 +35,7 @@ unsigned int ucanopen_client_get_nodeid()
 ///
 ///
 ///
-void ucanopen_client_set_nodeid(unsigned int nodeId)
+void ucanopen_client_set_node_id(unsigned int nodeId)
 {
 	global::ucanClient->setNodeId(ucanopen::NodeId(nodeId));
 }
@@ -44,7 +44,7 @@ void ucanopen_client_set_nodeid(unsigned int nodeId)
 ///
 ///
 ///
-void ucanopen_client_set_serverid(const char* serverName ,unsigned int nodeId)
+void ucanopen_client_set_server_id(const char* serverName ,unsigned int nodeId)
 {
 	global::ucanClient->setServerNodeId(serverName, ucanopen::NodeId(nodeId));
 }
@@ -109,10 +109,10 @@ void ucanopen_server_get_watch_value(const char* serverName, const char* watchNa
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, size_t size, size_t len)
+size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, size_t countMax, size_t lenMax)
 {
 	size_t ret = global::ucanClient->server(serverName)->confEntriesList().size();
-	if (ret >= size)
+	if (ret >= countMax)
 	{
 		return 0;
 	}
@@ -120,7 +120,7 @@ size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, s
 	size_t i = 0;
 	for (auto [category, names] : global::ucanClient->server(serverName)->confEntriesList())
 	{
-		strncpy(buf[i++], category.data(), len);
+		strncpy(buf[i++], category.data(), lenMax);
 	}
 
 	return ret;
@@ -130,11 +130,11 @@ size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, s
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_entries(const char* serverName, const char* category, char** buf, size_t size, size_t len)
+size_t ucanopen_server_get_conf_entries(const char* serverName, const char* category, char** buf, size_t countMax, size_t lenMax)
 {
 	auto entries = global::ucanClient->server(serverName)->confEntriesList().at(category);
 	size_t ret = entries.size();
-	if (ret >= size)
+	if (ret >= countMax)
 	{
 		return 0;
 	}
@@ -142,7 +142,7 @@ size_t ucanopen_server_get_conf_entries(const char* serverName, const char* cate
 	size_t i = 0;
 	for (auto entry : entries)
 	{
-		strncpy(buf[i++], entry.data(), len);
+		strncpy(buf[i++], entry.data(), lenMax);
 	}
 
 	return ret;

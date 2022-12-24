@@ -19,16 +19,8 @@
 					<object class="AdwPreferencesGroup">
 						<property name="title"></property>
 						<child>
-							<object class="AdwComboRow" id="comborow_can_interface">
+							<object class="AdwComboRow" id="comborow_servers">
 								<property name="title">uCANopen server</property>
-								<property name="model">
-									<object class="GtkStringList" id="list_can_interface">
-										<items>
-											<item>SRM Drive</item>
-											<item>BMS Main</item>
-										</items>
-									</object>
-								</property>
 							</object>
 						</child>
 
