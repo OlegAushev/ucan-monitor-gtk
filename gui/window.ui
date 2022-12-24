@@ -13,13 +13,13 @@
 				<child type="start">
 					<object class="GtkToggleButton">
 						<property name="icon-name">sidebar-show-symbolic</property>
-						<property name="active" bind-source="flapMain" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
+						<property name="active" bind-source="flap" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
 				<!-- VIEW SWITCHER -->
 				<child type="title">
-					<object class="AdwViewSwitcherTitle" id="viewswitcherTitle">
-						<property name="stack">viewstackMain</property>
+					<object class="AdwViewSwitcherTitle" id="viewswitcher_title">
+						<property name="stack">viewstack</property>
 						<property name="title" bind-source="CanMonitorWindow" bind-property="title" bind-flags="sync-create"/>
 					</object>
 				</child>
@@ -34,7 +34,7 @@
 				<child type="end">
 					<object class="GtkToggleButton">
 						<property name="icon-name">media-view-subtitles-symbolic</property>
-						<property name="active" bind-source="logTextView" bind-property="visible" bind-flags="sync-create|bidirectional"/>
+						<property name="active" bind-source="log_textview" bind-property="visible" bind-flags="sync-create|bidirectional"/>
 					</object>
 				</child>
 			</object>
@@ -44,12 +44,12 @@
 			<object class="GtkBox">
 				<property name="orientation">vertical</property>
 				<child>
-					<object class="AdwFlap" id="flapMain">
-						<property name="fold-policy">never</property>
-						<property name="locked">true</property>
+					<object class="AdwFlap" id="flap">
+						<property name="fold-policy">auto</property>
+						<property name="locked">false</property>
 						<property name="flap">scrolledwindow_control_panel</property>
-						<property name="separator">flapMainSeparator</property>
-						<property name="content">panedMain</property>
+						<property name="separator">flap_separator</property>
+						<property name="content">flap_content</property>
 						<!-- FLAP -->
 						<child>
 							<object class="GtkScrolledWindow" id="scrolledwindow_control_panel">
@@ -68,21 +68,21 @@
 						</child>
 						<!-- SEPARATOR -->
 						<child>
-							<object class="GtkSeparator" id="flapMainSeparator"></object>
+							<object class="GtkSeparator" id="flap_separator"></object>
 						</child>
 						<!-- CONTENT -->
 						<child>
-							<object class="GtkPaned" id="panedMain">
+							<object class="GtkPaned" id="flap_content">
 								<property name="width-request">320</property>
 								<property name="orientation">vertical</property>
 								<property name="wide-handle">false</property>
 								<property name="position">800</property>
 								<child>
-									<object class="AdwViewStack" id="viewstackMain">
+									<object class="AdwViewStack" id="viewstack">
 										<property name="vexpand">True</property>
 										<child>
 											<!-- PAGE 1 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstackPage1">
+											<object class="AdwViewStackPage" id="viewstack_page1">
 												<property name="title">Data</property>
 												<property name="icon-name">view-list-symbolic</property>
 												<property name="child">
@@ -102,7 +102,7 @@
 										</child>
 										<child>
 											<!-- PAGE 2 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstackPage2">
+											<object class="AdwViewStackPage" id="viewstack_page2">
 												<property name="title">Charts</property>
 												<property name="icon-name">computer-symbolic</property>
 												<property name="child">
@@ -114,7 +114,7 @@
 										</child>
 										<child>
 											<!-- PAGE 3 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstackPage3">
+											<object class="AdwViewStackPage" id="viewstack_page3">
 												<property name="title">Setup</property>
 												<property name="icon-name">preferences-system-symbolic</property>
 												<property name="child">
@@ -128,7 +128,7 @@
 
 								
 								<child>
-									<object class="LogTextView" id="logTextView">
+									<object class="LogTextView" id="log_textview">
 										<property name="visible">false</property>
 									</object>
 								</child>
@@ -139,9 +139,9 @@
 				</child>
 				
 				<child>
-					<object class="AdwViewSwitcherBar" id="viewswitcherBar">
-						<property name="stack">viewstackMain</property>
-						<property name="reveal" bind-source="viewswitcherTitle" bind-property="title-visible" bind-flags="sync-create"/>
+					<object class="AdwViewSwitcherBar" id="viewswitcher_bar">
+						<property name="stack">viewstack</property>
+						<property name="reveal" bind-source="viewswitcher_title" bind-property="title-visible" bind-flags="sync-create"/>
 					</object>
 				</child>
 			</object>
