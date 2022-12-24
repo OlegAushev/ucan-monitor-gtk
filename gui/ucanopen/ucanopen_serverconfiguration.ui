@@ -3,7 +3,7 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="UcanopenServerConfiguration" parent="AdwBin">
 		<child>
-			<object class="AdwToastOverlay" id="toastOverlay">
+			<object class="AdwToastOverlay" id="toast_overlay">
 				<property name="child">
 
 
@@ -13,18 +13,18 @@
 								<property name="title">Configuration</property>
 								
 								<child>
-									<object class="AdwComboRow" id="comborowCategory">
+									<object class="AdwComboRow" id="comborow_category">
 										<property name="title">Category</property>
 										<property name="width-request">400</property>
 									</object>
 								</child>
 
 								<child>
-									<object class="AdwComboRow" id="comborowEntry">
+									<object class="AdwComboRow" id="comborow_entry">
 										<property name="title">Entry</property>
 										<property name="width-request">400</property>
 										<child type="suffix">
-											<object class="GtkButton" id="buttonRead">
+											<object class="GtkButton" id="button_read">
 												<property name="label">Read</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -34,12 +34,12 @@
 								</child>
 
 								<child>
-									<object class="AdwEntryRow" id="entryrowValue">
+									<object class="AdwEntryRow" id="entryrow_value">
 										<property name="title">Value</property>
 										<property name="input-purpose">number</property>
 
 										<child type="suffix">
-											<object class="GtkButton" id="buttonWrite">
+											<object class="GtkButton" id="button_write">
 												<property name="label">Write</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -51,7 +51,7 @@
 								<child>
 									<object class="AdwActionRow">
 										<child type="prefix">
-											<object class="GtkButton" id="buttonReset">
+											<object class="GtkButton" id="button_reset">
 												<property name="label">Reset All to Default</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -63,7 +63,7 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkButton" id="buttonApply">
+											<object class="GtkButton" id="button_apply">
 												<property name="label">Apply</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
