@@ -47,23 +47,23 @@
 					<object class="AdwFlap" id="flapMain">
 						<property name="fold-policy">never</property>
 						<property name="locked">true</property>
-						<property name="flap">controlpanelWindow</property>
+						<property name="flap">scrolledwindow_control_panel</property>
 						<property name="separator">flapMainSeparator</property>
 						<property name="content">panedMain</property>
 						<!-- FLAP -->
 						<child>
-							<object class="GtkScrolledWindow" id="controlpanelWindow">
+							<object class="GtkScrolledWindow" id="scrolledwindow_control_panel">
 								<property name="hexpand">false</property>
 								<property name="vexpand">true</property>
 								<property name="hscrollbar-policy">never</property>
 								<property name="vscrollbar-policy">automatic</property>
-								<child>
+								<!--child>
 									<object class="SrmDriveControlPanel" id="controlpanel">
 										<style>
-											<class name="background"/>
+											<class name="background">
 										</style>
 									</object>
-								</child>
+								</child-->
 							</object>	
 						</child>
 						<!-- SEPARATOR -->
@@ -86,16 +86,16 @@
 												<property name="title">Data</property>
 												<property name="icon-name">view-list-symbolic</property>
 												<property name="child">
-													<object class="GtkScrolledWindow">
+													<object class="GtkScrolledWindow" id="scrolledwindow_data_tables">
 														<property name="hexpand">true</property>
 														<property name="vexpand">true</property>
 														<property name="hscrollbar-policy">automatic</property>
 														<property name="vscrollbar-policy">automatic</property>
-														<child>
+														<!--child>
 															<object class="SrmDriveDataTables" id="dataTables">
 																
 															</object>
-														</child>
+														</child-->
 													</object>
 												</property>
 											</object>

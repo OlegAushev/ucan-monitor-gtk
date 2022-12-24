@@ -54,22 +54,32 @@ int backend_main_loop(std::future<void> futureExit)
 	global::canSocket = std::make_shared<can::Socket>();
 
 	global::ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), global::canSocket);
-	global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
-	global::ucanClient->registerServer(global::srmdriveServer);
 
-	global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
-	global::ucanClient->registerServer(global::bmsmainServer);
-	
-	// define and register client TPDO callbacks
-	auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };
-	auto callbackMakeTpdo2 = []() { return global::srmdriveServer->controller.makeTpdo2(); };
+	std::string serverName(backend_ucanopen_server);
+	if (serverName == "SRM Drive")
+	{
+		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
+		global::ucanClient->registerServer(global::srmdriveServer);
+		
+		auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };
+		auto callbackMakeTpdo2 = []() { return global::srmdriveServer->controller.makeTpdo2(); };
 
-	global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
-			std::chrono::milliseconds(250),
-			callbackMakeTpdo1);
-	global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
-			std::chrono::milliseconds(100),
-			callbackMakeTpdo2);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
+				std::chrono::milliseconds(250),
+				callbackMakeTpdo1);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
+				std::chrono::milliseconds(100),
+				callbackMakeTpdo2);
+	}
+	else if (serverName == "LaunchPad")
+	{
+		// TODO
+	}
+	else if (serverName == "BMS Main")
+	{
+		global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
+		global::ucanClient->registerServer(global::bmsmainServer);
+	}
 
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;

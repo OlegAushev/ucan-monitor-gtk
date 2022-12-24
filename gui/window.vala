@@ -23,11 +23,29 @@ namespace CanMonitor {
 public class Window : Gtk.ApplicationWindow
 {
 	[GtkChild]
-	public unowned SrmDrive.DataTables dataTables;
+	private unowned Gtk.ScrolledWindow scrolledwindow_data_tables;
+	[GtkChild]
+	private unowned Gtk.ScrolledWindow scrolledwindow_control_panel;
 
 	public Window(Gtk.Application app)
 	{
 		Object (application: app);
+	}
+
+	construct
+	{
+		switch (Backend.Ucanopen.server)
+		{
+		case "SRM Drive":
+			scrolledwindow_control_panel.child = new SrmDrive.ControlPanel();
+			scrolledwindow_control_panel.child.add_css_class("background");
+			scrolledwindow_data_tables.child = new SrmDrive.DataTables();
+		case "LaunchPad":
+			
+		case "BMS Main":
+			scrolledwindow_data_tables.child = new BmsMain.DataTables();
+		default:
+		}
 	}
 }
 
