@@ -46,8 +46,10 @@ app_sources = files(
 
 	'gui/components/logtextview.vala',
 	'gui/components/spinbuttonscale.vala',
-	'gui/components/tableboolentry.vala',
+	'gui/components/tablecheckentry.vala',
 	'gui/components/tableentry.vala',
+
+	'gui/bmsmain/bmsmain_datatables.vala',
 
 	'gui/srmdrive/srmdrive_controlpanel.vala',
 	'gui/srmdrive/srmdrive_datatables.vala',
@@ -59,10 +61,14 @@ app_sources = files(
 	'gui/application.vala',
 	'gui/main.vala',
 	'gui/window_canbuspreferences.vala',
+	'gui/window_selectserver.vala',
 	'gui/window.vala',
 
 
-	'src/main.cpp',
+	'src/api/bmsmain.cpp',
+	'src/api/cansocket.cpp',
+	'src/api/srmdrive.cpp',
+	'src/api/ucanopen.cpp',
 
 	'src/cansocket/cansocket.cpp',
 
@@ -71,13 +77,13 @@ app_sources = files(
 	'src/ucanopen/client/ucanopen_client.cpp',
 	'src/ucanopen/server/ucanopen_server.cpp',
 
-	'src/srmdrive/server/srmdrive_server.cpp',
-	'src/srmdrive/server/srmdrive_objectdictionary.cpp',
-	'src/srmdrive/controller/srmdrive_controller.cpp',
+	'src/ucanopen_devices/srmdrive/server/srmdrive_server.cpp',
+	'src/ucanopen_devices/srmdrive/server/srmdrive_objectdictionary.cpp',
+	'src/ucanopen_devices/srmdrive/controller/srmdrive_controller.cpp',
 
-	'src/api/cansocket.cpp',
-	'src/api/srmdrive.cpp',
-	'src/api/ucanopen.cpp',
+	'src/ucanopen_devices/bmsmain/server/bmsmain_server.cpp',
+	
+	'src/main.cpp',
 )
 
 subdir('gui/advvchart')
