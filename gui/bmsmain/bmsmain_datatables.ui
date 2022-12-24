@@ -14,13 +14,13 @@
 				<child>
 
 					<!-- BMS Main -->
-					<object class="AdwPreferencesGroup" id="groupTpdo1">
+					<object class="AdwPreferencesGroup" id="group_tpdo1">
 						<property name="width-request">240</property>
 						<property name="title">System</property>
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableEntry" id="heartbeatIndicator">
+							<object class="TableEntry" id="heartbeat_indicator">
 								<property name="title">Network State</property>
 								<property name="subtitle"></property>
 								<property name="entry-width">80</property>
@@ -29,14 +29,14 @@
 						</child>
 
 						<child>
-							<object class="TableCheckEntry" id="tpdo1Indicator">
+							<object class="TableCheckEntry" id="tpdo1_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
 							</object>
 						</child>
 
 						<child>
-							<object class="TableEntry" id="entryCurrent">
+							<object class="TableEntry" id="entry_current">
 								<property name="title">Current</property>
 								<property name="subtitle">A</property>
 								<property name="entry-width">80</property>
@@ -44,7 +44,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryTempMin">
+							<object class="TableEntry" id="entry_temp_min">
 								<property name="title">Min Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -52,7 +52,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryTempMax">
+							<object class="TableEntry" id="entry_temp_max">
 								<property name="title">Max Temperature</property>
 								<property name="subtitle">°C</property>
 								<property name="entry-width">80</property>
@@ -60,7 +60,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryCharge">
+							<object class="TableEntry" id="entry_charge">
 								<property name="title">Charge</property>
 								<property name="subtitle">%</property>
 								<property name="entry-width">80</property>
@@ -68,7 +68,7 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entryVoltage">
+							<object class="TableEntry" id="entry_voltage">
 								<property name="title">Voltage</property>
 								<property name="subtitle">V</property>
 								<property name="entry-width">80</property>

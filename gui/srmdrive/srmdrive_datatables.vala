@@ -10,66 +10,66 @@ namespace SrmDrive {
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
-	private unowned TableEntry entryUptime;
+	private unowned TableEntry entry_uptime;
 	[GtkChild]
-	private unowned TableEntry entryState;
+	private unowned TableEntry entry_state;
 	[GtkChild]
-	private unowned TableEntry entryErrors;
+	private unowned TableEntry entry_errors;
 	[GtkChild]
-	private unowned TableEntry entryWarnings;
+	private unowned TableEntry entry_warnings;
 
 	[GtkChild]
-	private unowned TableEntry entrySpeed;
+	private unowned TableEntry entry_speed;
 	[GtkChild]
-	private unowned TableEntry entryTorque;
+	private unowned TableEntry entry_torque;
 	[GtkChild]
-	private unowned TableEntry entryCurrS;
+	private unowned TableEntry entry_curr_s;
 	[GtkChild]
-	private unowned TableEntry entryCurrF;
+	private unowned TableEntry entry_curr_f;
 	[GtkChild]
-	private unowned TableEntry entryCurrD;
+	private unowned TableEntry entry_curr_d;
 	[GtkChild]
-	private unowned TableEntry entryCurrQ;
+	private unowned TableEntry entry_curr_q;
 	[GtkChild]
-	private unowned TableEntry entryGamma;
+	private unowned TableEntry entry_gamma;
 	[GtkChild]
-	private unowned TableEntry entryTempS;
+	private unowned TableEntry entry_temp_s;
 	[GtkChild]
-	private unowned TableEntry entryTempFW;
+	private unowned TableEntry entry_temp_fw;
 	[GtkChild]
-	private unowned TableEntry entryPowerMech;
+	private unowned TableEntry entry_power_mech;
 
 	[GtkChild]
-	private unowned TableEntry entryVoltDC;
+	private unowned TableEntry entry_volt_dc;
 	[GtkChild]
-	private unowned TableEntry entryCurrDC;
+	private unowned TableEntry entry_curr_dc;
 	[GtkChild]
-	private unowned TableEntry entryCurrPhA;
+	private unowned TableEntry entry_curr_pha;
 	[GtkChild]
-	private unowned TableEntry entryCurrPhB;
+	private unowned TableEntry entry_curr_phb;
 	[GtkChild]
-	private unowned TableEntry entryCurrPhC;
+	private unowned TableEntry entry_curr_phc;
 	[GtkChild]
-	private unowned TableEntry entryTempPhA;
+	private unowned TableEntry entry_temp_pha;
 	[GtkChild]
-	private unowned TableEntry entryTempPhB;
+	private unowned TableEntry entry_temp_phb;
 	[GtkChild]
-	private unowned TableEntry entryTempPhC;
+	private unowned TableEntry entry_temp_phc;
 	[GtkChild]
-	private unowned TableEntry entryTempAir;
+	private unowned TableEntry entry_temp_air;
 	[GtkChild]
-	private unowned TableEntry entryPowerElec;
+	private unowned TableEntry entry_power_elec;
 
 	[GtkChild]
-	private unowned TableEntry heartbeatIndicator;
+	private unowned TableEntry heartbeat_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo1Indicator;
+	private unowned TableCheckEntry tpdo1_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo2Indicator;
+	private unowned TableCheckEntry tpdo2_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo3Indicator;
+	private unowned TableCheckEntry tpdo3_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo4Indicator;
+	private unowned TableCheckEntry tpdo4_indicator;
 
 
 	public DataTables() {}
@@ -81,118 +81,118 @@ public class DataTables : Adw.Bin
 	
 	public bool update()
 	{
-		updateSystemData();
-		updateMotorData();
-		updateInverterData();
-		updateConnectionStatus();
+		update_system_data();
+		update_motor_data();
+		update_inverter_data();
+		update_connection_status();
 		return true;
 	}
 
-	public void updateSystemData()
+	public void update_system_data()
 	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);
-		entryUptime.entry_text = entryText;
+		string buf = string.nfill(16, '\0');
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", buf, 16);
+		entry_uptime.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DRIVE_STATE", entryText, 16);
-		entryState.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DRIVE_STATE", buf, 16);
+		entry_state.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FAULTS", entryText, 16);
-		entryErrors.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FAULTS", buf, 16);
+		entry_errors.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", entryText, 16);
-		entryWarnings.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", buf, 16);
+		entry_warnings.entry_text = buf;
 	}
 
-	public void updateMotorData()
+	public void update_motor_data()
 	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "SPEED_RPM", entryText, 16);
-		entrySpeed.entry_text = entryText;
+		string buf = string.nfill(16, '\0');
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "SPEED_RPM", buf, 16);
+		entry_speed.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "TORQUE", entryText, 16);
-		entryTorque.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "TORQUE", buf, 16);
+		entry_torque.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "STATOR_CURRENT", entryText, 16);
-		entryCurrS.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "STATOR_CURRENT", buf, 16);
+		entry_curr_s.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FIELD_CURRENT", entryText, 16);
-		entryCurrF.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FIELD_CURRENT", buf, 16);
+		entry_curr_f.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "D_CURRENT", entryText, 16);
-		entryCurrD.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "D_CURRENT", buf, 16);
+		entry_curr_d.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "Q_CURRENT", entryText, 16);
-		entryCurrQ.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "Q_CURRENT", buf, 16);
+		entry_curr_q.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "GAMMA_ANGLE_DEG", entryText, 16);
-		entryGamma.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "GAMMA_ANGLE_DEG", buf, 16);
+		entry_gamma.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_S_TEMP", entryText, 16);
-		entryTempS.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_S_TEMP", buf, 16);
+		entry_temp_s.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_FW_TEMP", entryText, 16);
-		entryTempFW.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_FW_TEMP", buf, 16);
+		entry_temp_fw.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MECH_POWER", entryText, 16);
-		entryPowerMech.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MECH_POWER", buf, 16);
+		entry_power_mech.entry_text = buf;
 	}
 
-	public void updateInverterData()
+	public void update_inverter_data()
 	{
-		string entryText = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_VOLTAGE", entryText, 16);
-		entryVoltDC.entry_text = entryText;
+		string buf = string.nfill(16, '\0');
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_VOLTAGE", buf, 16);
+		entry_volt_dc.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_CURRENT", entryText, 16);
-		entryCurrDC.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_CURRENT", buf, 16);
+		entry_curr_dc.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_CURRENT", entryText, 16);
-		entryCurrPhA.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_CURRENT", buf, 16);
+		entry_curr_pha.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_CURRENT", entryText, 16);
-		entryCurrPhB.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_CURRENT", buf, 16);
+		entry_curr_phb.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_CURRENT", entryText, 16);
-		entryCurrPhC.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_CURRENT", buf, 16);
+		entry_curr_phc.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_TEMP", entryText, 16);
-		entryTempPhA.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_TEMP", buf, 16);
+		entry_temp_pha.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_TEMP", entryText, 16);
-		entryTempPhB.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_TEMP", buf, 16);
+		entry_temp_phb.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_TEMP", entryText, 16);
-		entryTempPhC.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_TEMP", buf, 16);
+		entry_temp_phc.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "CASE_TEMP", entryText, 16);
-		entryTempAir.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "CASE_TEMP", buf, 16);
+		entry_temp_air.entry_text = buf;
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "OUT_ELEC_POWER", entryText, 16);
-		entryPowerElec.entry_text = entryText;
+		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "OUT_ELEC_POWER", buf, 16);
+		entry_power_elec.entry_text = buf;
 	}
 
-	public void updateConnectionStatus()
+	public void update_connection_status()
 	{
 		if (!ucanopen_server_is_heartbeat_ok(Backend.Ucanopen.server))
 		{
-			heartbeatIndicator.entry_remove_css_class("success");
-			heartbeatIndicator.entry_add_css_class("error");
-			heartbeatIndicator.entry_text = "no HB";
+			heartbeat_indicator.entry_remove_css_class("success");
+			heartbeat_indicator.entry_add_css_class("error");
+			heartbeat_indicator.entry_text = "no HB";
 		}
 		else
 		{
-			heartbeatIndicator.entry_remove_css_class("error");
-			heartbeatIndicator.entry_add_css_class("success");
-			string nmtState = string.nfill(16, '\0');
-			ucanopen_server_get_nmt_state(Backend.Ucanopen.server, nmtState, 16);
-			heartbeatIndicator.entry_text = nmtState;
+			heartbeat_indicator.entry_remove_css_class("error");
+			heartbeat_indicator.entry_add_css_class("success");
+			string nmt_state = string.nfill(16, '\0');
+			ucanopen_server_get_nmt_state(Backend.Ucanopen.server, nmt_state, 16);
+			heartbeat_indicator.entry_text = nmt_state;
 		}
 
-		tpdo1Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
-		tpdo2Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
-		tpdo3Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
-		tpdo4Indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
+		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
+		tpdo2_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
+		tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
+		tpdo4_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
 	}
 }
 
