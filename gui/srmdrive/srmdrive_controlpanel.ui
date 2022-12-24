@@ -12,7 +12,7 @@
 				<property name="spacing">10</property>	
 
 				<child>
-					<object class="AdwPreferencesGroup" id="groupActions">
+					<object class="AdwPreferencesGroup" id="group_actions">
 						<property name="hexpand">false</property>
 						<property name="title">Actions</property>
 						
@@ -20,9 +20,9 @@
 							<object class="AdwActionRow">
 								<property name="title">Power ON/OFF</property>
 								<property name="icon-name">system-shutdown-symbolic</property>
-								<property name="activatable_widget">switchPower</property>
+								<property name="activatable_widget">switch_power</property>
 								<child>
-									<object class="GtkSwitch" id="switchPower">
+									<object class="GtkSwitch" id="switch_power">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>
@@ -34,9 +34,9 @@
 							<object class="AdwActionRow">
 								<property name="title">Run ON/OFF</property>
 								<property name="icon-name">media-playback-start-symbolic</property>
-								<property name="activatable_widget">switchRun</property>
+								<property name="activatable_widget">switch_run</property>
 								<child>
-									<object class="GtkSwitch" id="switchRun">
+									<object class="GtkSwitch" id="switch_run">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>
@@ -49,10 +49,10 @@
 								<property name="title">Misc Actions</property>
 								<child>
 									<object class="AdwActionRow">
-										<property name="activatable_widget">buttonCalibrate</property>
+										<property name="activatable_widget">button_calibrate</property>
 										<property name="title">Calibrate Position Sensor</property>
 										<child type="suffix">
-											<object class="GtkButton" id="buttonCalibrate">
+											<object class="GtkButton" id="button_calibrate">
 												<property name="label">Reset</property>
 												<property name="icon-name">object-rotate-right</property>
 												<property name="halign">center</property>
@@ -63,10 +63,10 @@
 								</child>
 								<child>
 									<object class="AdwActionRow">
-										<property name="activatable_widget">buttonInvert</property>
+										<property name="activatable_widget">button_invert</property>
 										<property name="title">Invert Default Direction</property>
 										<child type="suffix">
-											<object class="GtkButton" id="buttonInvert">
+											<object class="GtkButton" id="button_invert">
 												<property name="label">Reset</property>
 												<property name="icon-name">object-rotate-left</property>
 												<property name="halign">center</property>
@@ -77,10 +77,10 @@
 								</child>
 								<child>
 									<object class="AdwActionRow">
-										<property name="activatable_widget">buttonReset</property>
+										<property name="activatable_widget">button_reset</property>
 										<property name="title">Reset Device</property>
 										<child type="suffix">
-											<object class="GtkButton" id="buttonReset">
+											<object class="GtkButton" id="button_reset">
 												<property name="label">Reset</property>
 												<property name="icon-name">view-refresh-symbolic</property>
 												<property name="halign">center</property>
@@ -99,7 +99,7 @@
 				</child>
 
 				<child>
-					<object class="SpinButtonScale" id="sliderSpeed">
+					<object class="SpinButtonScale" id="slider_speed">
 						<property name="title">Speed, rpm</property>
 						<property name="lower">-8000</property>
 						<property name="upper">8000</property>
@@ -113,7 +113,7 @@
 				</child>
 
 				<child>
-					<object class="SpinButtonScale" id="sliderTorque">
+					<object class="SpinButtonScale" id="slider_torque">
 						<property name="title">Torque, %</property>
 						<property name="lower">-100</property>
 						<property name="upper">100</property>
@@ -127,7 +127,7 @@
 				</child>
 
 				<child>
-					<object class="AdwPreferencesGroup" id="groupEmergency">
+					<object class="AdwPreferencesGroup" id="group_emergency">
 						<property name="hexpand">false</property>
 						<!--property name="title">Emergency</property-->
 						<property name="vexpand">true</property>
@@ -136,9 +136,9 @@
 							<object class="AdwActionRow">
 								<property name="title">Emergency Stop</property>
 								<property name="icon-name">dialog-warning-symbolic</property>
-								<property name="activatable_widget">switchEmergency</property>
+								<property name="activatable_widget">switch_emergency</property>
 								<child>
-									<object class="GtkSwitch" id="switchEmergency">
+									<object class="GtkSwitch" id="switch_emergency">
 										<property name="valign">center</property>
 										<property name="active">false</property>
 									</object>

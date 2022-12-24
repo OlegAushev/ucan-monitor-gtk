@@ -257,7 +257,7 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableBoolEntry" id="tpdo1Indicator">
+							<object class="TableCheckEntry" id="tpdo1Indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
 							</object>
@@ -364,7 +364,7 @@
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableBoolEntry" id="tpdo2Indicator">
+							<object class="TableCheckEntry" id="tpdo2Indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
 							</object>
@@ -444,7 +444,7 @@
 								<property name="hexpand">false</property>
 								
 								<child>
-									<object class="TableBoolEntry" id="tpdo3Indicator">
+									<object class="TableCheckEntry" id="tpdo3Indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
 									</object>
@@ -503,7 +503,7 @@
 								<property name="hexpand">false</property>
 		
 								<child>
-									<object class="TableBoolEntry" id="tpdo4Indicator">
+									<object class="TableCheckEntry" id="tpdo4Indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
 									</object>

@@ -10,56 +10,56 @@ namespace SrmDrive {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
-	private unowned Gtk.Switch switchPower;
+	private unowned Gtk.Switch switch_power;
 	[GtkChild]
-	private unowned Gtk.Switch switchRun;
+	private unowned Gtk.Switch switch_run;
 	[GtkChild]
-	private unowned Gtk.Button buttonCalibrate;
+	private unowned Gtk.Button button_calibrate;
 	[GtkChild]
-	private unowned Gtk.Button buttonInvert;
+	private unowned Gtk.Button button_invert;
 	[GtkChild]
-	private unowned Gtk.Button buttonReset;
+	private unowned Gtk.Button button_reset;
 	[GtkChild]
-	private unowned SpinButtonScale sliderSpeed;
+	private unowned SpinButtonScale slider_speed;
 	[GtkChild]
-	private unowned SpinButtonScale sliderTorque;
+	private unowned SpinButtonScale slider_torque;
 	[GtkChild]
-	private unowned Gtk.Switch switchEmergency;
+	private unowned Gtk.Switch switch_emergency;
 
 	public ControlPanel() {}
 
 	construct
 	{
-		switchPower.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_power_enabled(switchPower.state);
+		switch_power.notify["state"].connect((s, p) => {
+			srmdrive_controller_set_power_enabled(switch_power.state);
 		});
 
-		switchRun.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_run_enabled(switchRun.state);
+		switch_run.notify["state"].connect((s, p) => {
+			srmdrive_controller_set_run_enabled(switch_run.state);
 		});
 
-		buttonCalibrate.clicked.connect(() => {
+		button_calibrate.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "BEGIN POSITION SENSOR CALIBRATION");
 		});
 
-		buttonInvert.clicked.connect(() => {
+		button_invert.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "INVERT ROTATION");
 		});
 
-		buttonReset.clicked.connect(() => {
+		button_reset.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET DEVICE");
 		});
 		
-		sliderSpeed.adjustment->value_changed.connect(() => {
-			srmdrive_controller_set_speed(sliderSpeed.value);
+		slider_speed.adjustment->value_changed.connect(() => {
+			srmdrive_controller_set_speed(slider_speed.value);
 		});
 		
-		sliderTorque.adjustment->value_changed.connect(() => {
-			srmdrive_controller_set_torque(sliderTorque.value / 100.0);
+		slider_torque.adjustment->value_changed.connect(() => {
+			srmdrive_controller_set_torque(slider_torque.value / 100.0);
 		});
 
-		switchEmergency.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_emergency_enabled(switchEmergency.state);
+		switch_emergency.notify["state"].connect((s, p) => {
+			srmdrive_controller_set_emergency_enabled(switch_emergency.state);
 		});
 	}
 }

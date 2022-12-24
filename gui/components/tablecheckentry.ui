@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="TableBoolEntry" parent="AdwActionRow">
+	<template class="TableCheckEntry" parent="AdwActionRow">
 		<child type="suffix">
-			<object class="GtkCheckButton" id="_check">
+			<object class="GtkCheckButton" id="_checkbutton">
 				<property name="can-target">false</property>
 				<style>
 					<class name="selection-mode"/>

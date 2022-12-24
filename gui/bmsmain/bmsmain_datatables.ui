@@ -29,7 +29,7 @@
 						</child>
 
 						<child>
-							<object class="TableBoolEntry" id="tpdo1Indicator">
+							<object class="TableCheckEntry" id="tpdo1Indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
 							</object>
