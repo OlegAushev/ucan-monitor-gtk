@@ -16,7 +16,7 @@ find_package(Threads REQUIRED)
 ################################################################################
 # Gtk and Vala
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTK4 REQUIRED gtk4 libadwaita-1)
+pkg_check_modules(GTK4 REQUIRED gtk4 libadwaita-1 gee-0.8)
 
 list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/cmake/vala
@@ -80,6 +80,7 @@ vala_precompile(vala_c
 PACKAGES
 	gtk4
 	libadwaita-1
+	gee-0.8
 OPTIONS
 	--gresources=${PROJECT_SOURCE_DIR}/${gresource_xml}
 )

@@ -102,6 +102,7 @@ app_incdirs = include_directories('src')
 app_deps = [
 	dependency('gtk4',		version: '>= 4.5.0'),
 	dependency('libadwaita-1',	version: '>= 1.0'),
+	dependency('gee-0.8'),
 ]
 
 # Executable

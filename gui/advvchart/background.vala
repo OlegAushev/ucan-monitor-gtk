@@ -1,7 +1,7 @@
 namespace AdvvChart {
 
 
-public class Background : Object
+public class Background : Drawable, Object
 {
         private BoundingBox bounding_box = BoundingBox() {
 		x=0, 
@@ -15,23 +15,24 @@ public class Background : Object
 	public Gdk.RGBA color
 	{
 		get; set; default = Gdk.RGBA() {
-			red = 1.0f,
+			red = 0.0f,
 			green = 0.0f,
 			blue = 0.0f,
-			alpha = 1.0f
+			alpha = 0.8f
 		};
 	}
 
 	public void draw(Cairo.Context ctx, Config config)
 	{
-		if (visible)
-		{
-			update_bounding_box(config);
-			ctx.rectangle(0, 0, config.width, config.height);
-			ctx.set_source_rgba(color.red, color.green, color.blue, color.alpha);
-			ctx.fill();
-		}
+		if (!visible) return;
+		
+		update_bounding_box(config);
+		ctx.rectangle(0, 0, config.width, config.height);
+		ctx.set_source_rgba(color.red, color.green, color.blue, color.alpha);
+		ctx.fill();
 	}
+
+	public BoundingBox get_bounding_box() {	return bounding_box; }
 
 	private void update_bounding_box(Config config)
 	{

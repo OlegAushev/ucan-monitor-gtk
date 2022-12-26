@@ -4,6 +4,7 @@ namespace AdvvChart {
 public class Chart : Gtk.DrawingArea
 {
 	public Background background { get; set; default = new Background(); }
+	public Grid grid { get; set; default = new Grid(); }
 	public Config config;
 
 
@@ -26,6 +27,7 @@ public class Chart : Gtk.DrawingArea
 	void draw_func(Gtk.DrawingArea area, Cairo.Context ctx, int width, int height)
 	{
 		background.draw(ctx, config);
+		grid.draw(ctx, config);
 	}
 }
 
