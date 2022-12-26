@@ -106,10 +106,14 @@
 												<property name="title">Charts</property>
 												<property name="icon-name">computer-symbolic</property>
 												<property name="child">
-													<object class="AdvvChartChart">
-														<!--property name="label">                    This is page 2                    </property-->
-													</object>
+													<object class="GtkFrame" id="chart_area">
+
+													</object> 
 												</property>
+												<!--property name="child">
+													<object class="AdvvChartChart" id = "chart">
+													</object>
+												</property-->
 											</object>
 										</child>
 										<child>

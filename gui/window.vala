@@ -26,6 +26,8 @@ public class Window : Gtk.ApplicationWindow
 	private unowned Gtk.ScrolledWindow scrolledwindow_data_tables;
 	[GtkChild]
 	private unowned Gtk.ScrolledWindow scrolledwindow_control_panel;
+	[GtkChild]
+	private unowned Gtk.Frame chart_area;
 
 	public Window(Gtk.Application app)
 	{
@@ -46,6 +48,10 @@ public class Window : Gtk.ApplicationWindow
 			scrolledwindow_data_tables.child = new BmsMain.DataTables();
 		default:
 		}
+
+		var chartConfig = new AdvvChart.Config();
+		AdvvChart.Chart chart = new AdvvChart.Chart(chartConfig);
+		chart_area.child = chart;
 	}
 }
 
