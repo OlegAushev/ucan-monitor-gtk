@@ -46,6 +46,7 @@ app_sources = files(
 
 	'gui/components/logtextview.vala',
 	'gui/components/spinbuttonscale.vala',
+	'gui/components/tableboolentry.vala',
 	'gui/components/tablecheckentry.vala',
 	'gui/components/tableentry.vala',
 
@@ -56,6 +57,7 @@ app_sources = files(
 
 	'gui/template/template_widget.vala',
 
+	'gui/ucanopen/ucanopen_heartbeatindicator.vala',
 	'gui/ucanopen/ucanopen_serverconfiguration.vala',
 	
 	'gui/application.vala',

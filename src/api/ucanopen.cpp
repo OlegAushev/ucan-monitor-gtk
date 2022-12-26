@@ -172,10 +172,10 @@ void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len
 		strncpy(buf, "stopped", len);
 		break;
 	case ucanopen::NmtState::Operational:
-		strncpy(buf, "op", len);
+		strncpy(buf, "run", len);
 		break;
 	case ucanopen::NmtState::PreOperational:
-		strncpy(buf, "preop", len);
+		strncpy(buf, "pre-run", len);
 		break;
 	}
 }

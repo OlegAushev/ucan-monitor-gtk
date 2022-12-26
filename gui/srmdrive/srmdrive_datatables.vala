@@ -61,7 +61,7 @@ public class DataTables : Adw.Bin
 	private unowned TableEntry entry_power_elec;
 
 	[GtkChild]
-	private unowned TableEntry heartbeat_indicator;
+	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
 	[GtkChild]
 	private unowned TableBoolEntry tpdo1_indicator;
 	[GtkChild]
@@ -174,21 +174,7 @@ public class DataTables : Adw.Bin
 
 	public void update_connection_status()
 	{
-		if (!ucanopen_server_is_heartbeat_ok(Backend.Ucanopen.server))
-		{
-			heartbeat_indicator.entry_remove_css_class("success");
-			heartbeat_indicator.entry_add_css_class("error");
-			heartbeat_indicator.entry_text = "no HB";
-		}
-		else
-		{
-			heartbeat_indicator.entry_remove_css_class("error");
-			heartbeat_indicator.entry_add_css_class("success");
-			string nmt_state = string.nfill(16, '\0');
-			ucanopen_server_get_nmt_state(Backend.Ucanopen.server, nmt_state, 16);
-			heartbeat_indicator.entry_text = nmt_state;
-		}
-
+		heartbeat_indicator.update();
 		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
 		tpdo2_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
 		tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
