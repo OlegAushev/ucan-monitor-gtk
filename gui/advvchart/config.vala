@@ -30,6 +30,21 @@ public struct Padding
 }
 
 
+public struct Boundary
+{
+	public int min;
+	public int max;
+}
+
+
+public struct Boundaries
+{
+	public Boundary x;
+	public Boundary y;
+	public int width;
+	public int height;
+}
+
 
 public class Config
 {
@@ -40,6 +55,17 @@ public class Config
 
 	public XAxis x_axis = new XAxis();
 	public YAxis y_axis = new YAxis();
+
+	public TimeSeek time = new TimeSeek();
+
+	public Boundaries boundaries() {
+		return Boundaries() {
+			x = {min: padding.left, max: width - padding.right},
+			y = {min: padding.top, max: height - padding.bottom},
+			width =  width - padding.right - padding.left,
+			height = height - padding.bottom - padding.top
+		};
+	}
 }
 
 

@@ -49,7 +49,26 @@ public class Window : Gtk.ApplicationWindow
 		default:
 		}
 
+		/////////////////////////////////////////////////////////////
 		var chartConfig = new AdvvChart.Config();
+		chartConfig.y_axis.unit = "%";
+		chartConfig.y_axis.tick_interval = 25;
+		chartConfig.y_axis.fixed_max = AdvvChart.cap(96);
+
+		chartConfig.x_axis.tick_length = 60;
+		chartConfig.x_axis.tick_interval = 10;
+		chartConfig.x_axis.lines.visible = true;
+		chartConfig.x_axis.show_fraction = false;
+
+		chartConfig.x_axis.labels.font.size = 8;
+		chartConfig.x_axis.labels.font.color = {0.0f, 1.0f, 1.0f, 1.0f};
+		chartConfig.x_axis.labels.font.weight = Cairo.FontWeight.BOLD;
+
+		chartConfig.y_axis.labels.font.size = 15;
+		chartConfig.y_axis.labels.font.color = {1.0f, 0.0f, 1.0f, 0.8f};
+		chartConfig.y_axis.labels.font.weight = Cairo.FontWeight.NORMAL;
+		chartConfig.y_axis.labels.font.slant = Cairo.FontSlant.ITALIC;
+
 		AdvvChart.Chart chart = new AdvvChart.Chart(chartConfig);
 		chart_area.child = chart;
 	}
