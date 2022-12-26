@@ -25,8 +25,8 @@ public class Grid : Drawable, Object
 	public void draw(Cairo.Context ctx, Config config)
 	{
 		if (!visible) return;
-		draw_x_axis();
-
+		draw_x_axis(ctx, config);
+		draw_y_axis(ctx, config);
 	}
 
 	public BoundingBox get_bounding_box() {	return bounding_box; }
@@ -37,12 +37,27 @@ public class Grid : Drawable, Object
 		ctx.set_dash(null, 0.0);
 	}
 
-	protected void draw_x_axis()
+	protected void draw_x_axis(Cairo.Context ctx, Config config)
 	{
+		if (!config.x_axis.visible || !config.x_axis.axis.visible) return;
 		
+		config.x_axis.axis.configure(ctx);
+		ctx.move_to(config.padding.left + 0.5, config.height - config.padding.bottom + 0.5);
+		ctx.line_to(config.width - config.padding.right + 0.5, config.height - config.padding.bottom + 0.5);
+		ctx.stroke();
+		restore(ctx);
 	}
 
-
+	protected void draw_y_axis(Cairo.Context ctx, Config config)
+	{
+		if (!config.y_axis.visible || !config.y_axis.axis.visible) return;
+		
+		config.y_axis.axis.configure(ctx);
+		ctx.move_to(config.padding.left + 0.5, config.height - config.padding.bottom + 0.5);
+		ctx.line_to(config.padding.left + 0.5, config.padding.top + 0.5);
+		ctx.stroke();
+		restore(ctx);
+	}
 
 
 
