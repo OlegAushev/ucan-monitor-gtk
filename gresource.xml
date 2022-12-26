@@ -3,6 +3,7 @@
 	<gresource prefix="/">
 		<file>gui/components/logtextview.ui</file>
 		<file>gui/components/spinbuttonscale.ui</file>
+		<file>gui/components/tableboolentry.ui</file>
 		<file>gui/components/tablecheckentry.ui</file>
 		<file>gui/components/tableentry.ui</file>
 		<file>gui/bmsmain/bmsmain_datatables.ui</file>

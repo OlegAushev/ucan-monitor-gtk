@@ -257,9 +257,15 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableCheckEntry" id="tpdo1_indicator">
+							<object class="TableBoolEntry" id="tpdo1_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
 							</object>
 						</child>
 						
@@ -364,9 +370,15 @@
 						<property name="hexpand">false</property>
 
 						<child>
-							<object class="TableCheckEntry" id="tpdo2_indicator">
+							<object class="TableBoolEntry" id="tpdo2_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
 							</object>
 						</child>
 
@@ -444,9 +456,15 @@
 								<property name="hexpand">false</property>
 								
 								<child>
-									<object class="TableCheckEntry" id="tpdo3_indicator">
+									<object class="TableBoolEntry" id="tpdo3_indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
+										<property name="entry-width">80</property>
+										<property name="entry-chars">8</property>
+										<property name="true-text">ok</property>
+										<property name="false-text">bad</property>
+										<property name="true-css-class">success</property>
+										<property name="false-css-class">error</property>
 									</object>
 								</child>
 
@@ -503,9 +521,15 @@
 								<property name="hexpand">false</property>
 		
 								<child>
-									<object class="TableCheckEntry" id="tpdo4_indicator">
+									<object class="TableBoolEntry" id="tpdo4_indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
+										<property name="entry-width">80</property>
+										<property name="entry-chars">8</property>
+										<property name="true-text">ok</property>
+										<property name="false-text">bad</property>
+										<property name="true-css-class">success</property>
+										<property name="false-css-class">error</property>
 									</object>
 								</child>
 

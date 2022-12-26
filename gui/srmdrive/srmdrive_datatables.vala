@@ -63,13 +63,13 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned TableEntry heartbeat_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo1_indicator;
+	private unowned TableBoolEntry tpdo1_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo2_indicator;
+	private unowned TableBoolEntry tpdo2_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo3_indicator;
+	private unowned TableBoolEntry tpdo3_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo4_indicator;
+	private unowned TableBoolEntry tpdo4_indicator;
 
 
 	public DataTables() {}
