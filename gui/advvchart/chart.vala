@@ -3,10 +3,11 @@ namespace AdvvChart {
 
 public class Chart : Gtk.DrawingArea
 {
-	public Background background { get; set; default = new Background(); }
-	public Grid grid { get; set; default = new Grid(); }
 	public Config config;
 
+	public Background background { get; set; default = new Background(); }
+	public Grid grid { get; set; default = new Grid(); }
+	// TODO public Legend legend { get; set; default = new HorizontalLegend(); }
 
 
 	public Chart(Config config = new Config())
