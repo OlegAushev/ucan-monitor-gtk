@@ -14,7 +14,7 @@ public class Values : Gee.LinkedList<TimestampedValue?>
 
 	private int _buffer_size;
 
-	public Values(int buffer_size = 1000) {
+	public Values(int buffer_size = 10000) {
 		bounds = new Bounds();
 		_buffer_size = buffer_size;
 	}

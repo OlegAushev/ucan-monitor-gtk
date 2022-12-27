@@ -50,10 +50,13 @@ public class Window : Gtk.ApplicationWindow
 		}
 
 		/////////////////////////////////////////////////////////////
+		var rss = new AdvvChart.Series("RSS",  new AdvvChart.Line());
+		rss.line.color = {1.0f, 0.1f, 0.1f, 1.0f};
+
+
 		var chartConfig = new AdvvChart.Config();
-		chartConfig.y_axis.unit = "%";
-		chartConfig.y_axis.tick_interval = 25;
-		chartConfig.y_axis.fixed_max = AdvvChart.cap(100);
+		chartConfig.y_axis.unit = "";
+		chartConfig.y_axis.lines.visible = true;
 
 		chartConfig.x_axis.tick_length = 60;
 		chartConfig.x_axis.tick_interval = 10;
@@ -70,6 +73,22 @@ public class Window : Gtk.ApplicationWindow
 		chartConfig.y_axis.labels.font.slant = Cairo.FontSlant.ITALIC;
 
 		AdvvChart.Chart chart = new AdvvChart.Chart(chartConfig);
+		chart.add_series(rss);
+
+
+		double rss_value = 200.0;
+		Timeout.add(10, () => {
+			/*if (Random.double_range(0.0, 1.0) > 0.13)
+			{
+				var new_value = Random.double_range(-50, 50.0);
+				if (rss_value + new_value > 0) rss_value += new_value;
+			}*/
+			
+			rss_value = Math.sin(0.000001 * GLib.get_real_time())+2;
+			rss.add(rss_value);
+			return true;
+		});
+
 		chart_area.child = chart;
 	}
 }

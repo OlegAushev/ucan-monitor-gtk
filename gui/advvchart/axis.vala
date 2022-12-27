@@ -110,7 +110,7 @@ public class YAxis
 
 			return ticks;
 		}
-		/* TODO if (bounds.has_upper())
+		if (bounds.has_upper())
 		{
 			float upper = AdvvChart.cap((float) bounds.upper);
 			var divs = AdvvChart.golden_divisors(upper);
@@ -132,7 +132,7 @@ public class YAxis
 					ticks.values.add(value);
 				}
 			}
-		}*/
+		}
 
 		return ticks;
 	}

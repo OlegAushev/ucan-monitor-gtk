@@ -18,7 +18,7 @@ public class Series : Drawable, Object
 	private SeriesRenderer _renderer;
 
 	public Series(string name_, SeriesRenderer renderer_ = new Line()) {
-		name = name;
+		name = name_;
 		_renderer = renderer_;
 	}
 
