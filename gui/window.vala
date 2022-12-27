@@ -51,7 +51,7 @@ public class Window : Gtk.ApplicationWindow
 
 		/////////////////////////////////////////////////////////////
 		var rss = new AdvvChart.Series("RSS",  new AdvvChart.Line());
-		rss.line.color = {1.0f, 0.1f, 0.1f, 1.0f};
+		rss.line.color = {0.88f, 0.11f, 0.14f, 1.0f};
 
 
 		var chartConfig = new AdvvChart.Config();
@@ -63,14 +63,14 @@ public class Window : Gtk.ApplicationWindow
 		chartConfig.x_axis.lines.visible = true;
 		chartConfig.x_axis.show_fraction = false;
 
-		chartConfig.x_axis.labels.font.size = 8;
-		chartConfig.x_axis.labels.font.color = {0.0f, 1.0f, 1.0f, 1.0f};
-		chartConfig.x_axis.labels.font.weight = Cairo.FontWeight.BOLD;
+		chartConfig.x_axis.labels.font.size = 12;
+		chartConfig.x_axis.labels.font.color = {0.47f, 0.68f, 0.96f, 1.0f};
+		chartConfig.x_axis.labels.font.weight = Cairo.FontWeight.NORMAL;
 
-		chartConfig.y_axis.labels.font.size = 15;
-		chartConfig.y_axis.labels.font.color = {1.0f, 0.0f, 1.0f, 0.8f};
+		chartConfig.y_axis.labels.font.size = 12;
+		chartConfig.y_axis.labels.font.color = {0.47f, 0.68f, 0.96f, 1.0f};
 		chartConfig.y_axis.labels.font.weight = Cairo.FontWeight.NORMAL;
-		chartConfig.y_axis.labels.font.slant = Cairo.FontSlant.ITALIC;
+		//chartConfig.y_axis.labels.font.slant = Cairo.FontSlant.ITALIC;
 
 		AdvvChart.Chart chart = new AdvvChart.Chart(chartConfig);
 		chart.add_series(rss);
@@ -84,7 +84,7 @@ public class Window : Gtk.ApplicationWindow
 				if (rss_value + new_value > 0) rss_value += new_value;
 			}*/
 			
-			rss_value = Math.sin(0.000001 * GLib.get_real_time())+2;
+			rss_value = 200 + 100 * Math.sin(0.000001 * GLib.get_real_time()) + 50 * Math.cos(0.000004 * GLib.get_real_time());
 			rss.add(rss_value);
 			return true;
 		});

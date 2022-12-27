@@ -15,8 +15,8 @@ public class XAxis
 
 	public XAxis()
 	{
-		axis.color = {0.5f, 0.5f, 0.5f, 0.5f};
-		lines.color = {0.5f, 0.5f, 0.5f, 0.2f};
+		axis.color = {0.37f, 0.36f, 0.39f, 1.0f};
+		lines.color = {0.37f, 0.36f, 0.39f, 1.0f};
 	}
 
 	public double get_ratio()
@@ -58,8 +58,8 @@ public class YAxis
 	{
 		unit = unit_;
 		ticks = get_ticks();
-		axis.color = {0.5f, 0.5f, 0.5f, 0.5f};            
-		lines.color = {0.5f, 0.5f, 0.5f, 0.2f};            
+		axis.color = {0.37f, 0.36f, 0.39f, 1.0f};
+		lines.color = {0.37f, 0.36f, 0.39f, 1.0f};
 		bounds.notify["upper"].connect(() => {
 			ticks = get_ticks();
 		});
