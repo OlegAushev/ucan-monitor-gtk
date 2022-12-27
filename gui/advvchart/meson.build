@@ -6,7 +6,12 @@ app_sources += files(
 	'chart.vala',
 	'config.vala',
 	'drawable.vala',
+	'font.vala',
 	'grid.vala',
 	'labels.vala',
-	'path.vala'
+	'legend.vala',
+	'path.vala',
+	'timeseek.vala',
+	'utils.vala',
+	'values.vala',
 )

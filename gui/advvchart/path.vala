@@ -31,15 +31,14 @@ public class Path : Object
 
 	public void configure(Cairo.Context ctx)
 	{
-		if (visible)
+		if (!visible) return;
+		
+		if (dash != null)
 		{
-			if (dash != null)
-			{
-				ctx.set_dash(dash.dashes, dash.offset);
-			}
-			ctx.set_source_rgba(color.red, color.green, color.blue, color.alpha);
-			ctx.set_line_width(width);
+			ctx.set_dash(dash.dashes, dash.offset);
 		}
+		ctx.set_source_rgba(color.red, color.green, color.blue, color.alpha);
+		ctx.set_line_width(width);
 	}
 }
 

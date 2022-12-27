@@ -53,7 +53,7 @@ public class Window : Gtk.ApplicationWindow
 		var chartConfig = new AdvvChart.Config();
 		chartConfig.y_axis.unit = "%";
 		chartConfig.y_axis.tick_interval = 25;
-		chartConfig.y_axis.fixed_max = AdvvChart.cap(96);
+		chartConfig.y_axis.fixed_max = AdvvChart.cap(100);
 
 		chartConfig.x_axis.tick_length = 60;
 		chartConfig.x_axis.tick_interval = 10;
