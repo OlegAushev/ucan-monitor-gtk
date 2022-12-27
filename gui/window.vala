@@ -59,7 +59,7 @@ public class Window : Gtk.ApplicationWindow
 		chartConfig.y_axis.lines.visible = true;
 
 		chartConfig.x_axis.tick_length = 60;
-		chartConfig.x_axis.tick_interval = 10;
+		chartConfig.x_axis.tick_interval = 1;
 		chartConfig.x_axis.lines.visible = true;
 		chartConfig.x_axis.show_fraction = false;
 

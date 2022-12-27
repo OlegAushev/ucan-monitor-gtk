@@ -70,11 +70,11 @@ public class Points : Object
 			double realtime_delta)
 	{
 		return Point() {
-		x = (boundaries.x.max - (config.time.current - current_value.timestamp) 
-			* config.x_axis.get_ratio() / config.time.conv_sec),
-		y = boundaries.y.max - (current_value.value * config.y_axis.get_ratio()),
-		height = current_value.value * config.y_axis.get_ratio(),
-		data = current_value
+			x = (boundaries.x.max - (config.time.current - current_value.timestamp) 
+				* config.x_axis.get_ratio() / config.time.conv_sec),
+			y = boundaries.y.max - (current_value.value * config.y_axis.get_ratio()),
+			height = current_value.value * config.y_axis.get_ratio(),
+			data = current_value
 		};
 	}
 }

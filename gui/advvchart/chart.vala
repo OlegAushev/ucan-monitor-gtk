@@ -53,7 +53,7 @@ public class Chart : Gtk.DrawingArea
 		grid.draw(ctx, config);
 		if (legend != null) legend.draw(ctx, config);
 
-		var boundaries = this.config.boundaries();
+		var boundaries = config.boundaries();
 		foreach (Drawable series_ in series)
 		{
 			ctx.rectangle(boundaries.x.min, boundaries.y.min, boundaries.x.max, boundaries.y.max);
