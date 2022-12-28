@@ -13,7 +13,7 @@
 #include "ucanopen/client/ucanopen_client.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
 #include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
-#include "gnuplot-iostream/gnuplot-iostream.h"
+#include "gnuplotter/gnuplotter.h"
 
 
 bool backend_is_ready = false;
@@ -85,33 +85,11 @@ int backend_main_loop(std::future<void> futureExit)
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;
 
-
-
-
-	////////////////////
-	Gnuplot gp;
-	gp << "set yrange [-1:1]\n";
-	const int N = 1000;
-	std::vector<double> pts(N);
-	double theta = 0;
-
-
-
-
+	Gnuplotter plotter;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
-		for(int i=0; i<N; i++)
-		{
-			double alpha = (static_cast<double>(i)/N-0.5) * 10;
-			pts[i] = sin(alpha*8.0 + theta) * exp(-alpha*alpha/2.0);
-		}
-
-		gp << "plot '-' binary" << gp.binFmt1d(pts, "array") << "with lines notitle\n";
-		gp.sendBinary1d(pts);
-		gp.flush();
-
-		theta += 0.2;
+		plotter.update();
 	}
 
 	std::cout << "[backend] Main loop thread stopped." << std::endl;

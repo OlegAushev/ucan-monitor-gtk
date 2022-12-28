@@ -66,7 +66,9 @@
 		"stop_token": "cpp",
 		"thread": "cpp",
 		"future": "cpp",
-		"charconv": "cpp"
+		"charconv": "cpp",
+		"complex": "cpp",
+		"fstream": "cpp"
 	},
 	"[Log]": {
 		"editor.fontSize": 14
