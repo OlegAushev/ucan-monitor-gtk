@@ -3,7 +3,7 @@
 * **Fedora:**
 
 ```bash
-cmake meson gtk4-devel libadwaita-devel vala libgee-devel
+cmake meson gtk4-devel libadwaita-devel vala libgee-devel boost-devel
 ```
 ### Charts
 

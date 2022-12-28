@@ -30,6 +30,10 @@ link_directories(${GTK4_LIBRARY_DIRS})
 add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
+# Boost
+find_package(Boost 1.56 REQUIRED COMPONENTS system filesystem iostreams)
+
+################################################################################
 # Headers and Sources
 set(app_incdirs
 	${PROJECT_SOURCE_DIR}
@@ -115,6 +119,12 @@ target_link_libraries(${executable}
 
 target_link_libraries(${executable}
 	git-version
+)
+
+target_link_libraries(${executable}
+	Boost::system
+	Boost::filesystem
+        Boost::iostreams
 )
 
 ################################################################################
