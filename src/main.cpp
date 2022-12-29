@@ -85,11 +85,9 @@ int backend_main_loop(std::future<void> futureExit)
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;
 
-	Gnuplotter plotter;
-
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
-		plotter.update();
+
 	}
 
 	std::cout << "[backend] Main loop thread stopped." << std::endl;
