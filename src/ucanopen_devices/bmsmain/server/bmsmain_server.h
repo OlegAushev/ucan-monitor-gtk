@@ -41,7 +41,7 @@ protected:
 	virtual ucanopen::can_payload _createRpdo4() override final { return {}; }
 
 	virtual void _handleTsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionaryType::const_iterator entryIt,
+			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final {}
 
 public:

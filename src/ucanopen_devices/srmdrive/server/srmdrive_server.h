@@ -22,7 +22,7 @@
 namespace srmdrive {
 
 
-extern const ucanopen::ObjectDictionaryType objectDictionary;
+extern const ucanopen::ObjectDictionary objectDictionary;
 extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
 
 
@@ -40,7 +40,7 @@ protected:
 	virtual ucanopen::can_payload _createRpdo4() override final { return {}; }
 
 	virtual void _handleTsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionaryType::const_iterator entryIt,
+			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final;
 
 public:

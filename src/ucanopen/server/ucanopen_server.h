@@ -35,8 +35,8 @@ private:
 
 	/* OBJECT DICTIONARY */
 private:
-	const ObjectDictionaryType& _dictionary;
-	ObjectDictionaryAuxType _dictionaryAux;
+	const ObjectDictionary& _dictionary;
+	ObjectDictionaryAux _dictionaryAux;
 public:
 	const std::string_view watchCategory;
 	const std::string_view watchSubcategory;
@@ -143,7 +143,7 @@ public:
 
 	/* TSDO server --> client */
 protected:
-	virtual void _handleTsdo(SdoType, ObjectDictionaryType::const_iterator, CobSdoData) = 0;
+	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;
 
 	/* WATCH messages server <- client */
 private:
@@ -262,7 +262,7 @@ public:
 	 * @param dictionary 
 	 */
 	IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,
-			const ObjectDictionaryType& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
+			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 	
 	/**
 	 * @brief Destroy the IServer object

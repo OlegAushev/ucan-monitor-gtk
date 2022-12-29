@@ -34,7 +34,7 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 ///
 ///
 void Server::_handleTsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionaryType::const_iterator entryIt,
+			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data)
 {
 	if (entryIt->second.category == watchCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)

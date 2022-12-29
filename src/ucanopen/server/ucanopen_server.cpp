@@ -20,7 +20,7 @@ namespace ucanopen {
 ///
 ///
 IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
-		const ObjectDictionaryType& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
+		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: _name(name)
 	, _nodeId(nodeId)
 	, _socket(socket)
