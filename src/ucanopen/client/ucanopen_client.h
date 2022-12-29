@@ -45,8 +45,8 @@ private:
 	/* SYNC */
 	struct SyncInfo
 	{
-		bool isEnabled{false};
-		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
+		bool isEnabled = false;
+		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
 	};
 	SyncInfo _syncInfo;
@@ -55,13 +55,13 @@ private:
 	/* HEARTBEAT */
 	struct HeartbeatInfo
 	{
-		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
+		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
 	HeartbeatInfo _heartbeatInfo;
 			
 	/* TPDO client --> server */
-	bool _isTpdoEnabled{false};
+	bool _isTpdoEnabled = false;
 	struct TpdoInfo
 	{
 		std::chrono::milliseconds period;

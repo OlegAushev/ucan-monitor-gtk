@@ -32,7 +32,7 @@ private:
 	std::map<canid_t, std::shared_ptr<IDevice>> _recvIdDeviceList;
 
 	/* controller -> device */
-	bool _isTxEnabled{true};
+	bool _isTxEnabled = true;
 	struct TxMessageInfo
 	{
 		std::string_view name;

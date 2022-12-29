@@ -27,7 +27,7 @@ class IDevice
 	friend class Controller;
 private:
 	std::shared_ptr<can::Socket> _socket;
-	bool _isConnectionOk{false};
+	bool _isConnectionOk = false;
 
 	/* device --> controller */
 	struct TxMessageInfo
@@ -41,7 +41,7 @@ private:
 	std::map<canid_t, TxMessageInfo> _txMessageList;
 	
 	/* device <-- controller */
-	bool _isRxEnabled{true};
+	bool _isRxEnabled = true;
 	struct RxMessageInfo
 	{
 		std::string_view name;

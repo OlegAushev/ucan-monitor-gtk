@@ -34,7 +34,7 @@ public:
 	static constexpr std::string_view confCategory = "CONFIG";
 
 private:
-	std::string _name{"unnamed"};
+	std::string _name = "unnamed";
 	NodeId _nodeId;
 	std::shared_ptr<can::Socket> _socket;
 
@@ -101,7 +101,7 @@ public:
 
 	/* RPDO server <-- client */
 private:
-	bool _isRpdoEnabled{false};
+	bool _isRpdoEnabled = false;
 	struct RpdoInfo
 	{
 		canid_t id;
@@ -148,10 +148,10 @@ protected:
 
 	/* WATCH messages server <- client */
 private:
-	bool _isWatchEnabled{false};
+	bool _isWatchEnabled = false;
 	struct WatchInfo
 	{
-		std::chrono::milliseconds period{std::chrono::milliseconds(1000)};
+		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
 	WatchInfo _watchInfo;
