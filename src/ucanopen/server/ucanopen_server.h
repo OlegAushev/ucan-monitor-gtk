@@ -28,20 +28,19 @@ namespace ucanopen {
 class IServer
 {
 	friend class Client;
-public:
-	static constexpr std::string_view watchCategory = "WATCH";
-	static constexpr std::string_view watchSubcategory = "WATCH";
-	static constexpr std::string_view configCategory = "CONFIG";
-
 private:
 	std::string _name = "unnamed";
 	NodeId _nodeId;
 	std::shared_ptr<can::Socket> _socket;
 
-private:
 	/* OBJECT DICTIONARY */
+private:
 	const ObjectDictionaryType& _dictionary;
 	ObjectDictionaryAuxType _dictionaryAux;
+public:
+	const std::string_view watchCategory;
+	const std::string_view watchSubcategory;
+	const std::string_view configCategory;
 
 	/* HEARTBEAT server --> client */
 private:
@@ -242,16 +241,16 @@ public:
 
 	/* CONFIGURATION entries */
 private:
-	std::map<std::string_view, std::vector<std::string_view>> _confEntriesList;
+	std::map<std::string_view, std::vector<std::string_view>> _configEntriesList;
 public:
 	/**
 	 * @brief 
 	 * 
 	 * @return std::map<std::string_view, std::vector<std::string_view>> 
 	 */
-	std::map<std::string_view, std::vector<std::string_view>> confEntriesList() const
+	std::map<std::string_view, std::vector<std::string_view>> configEntriesList() const
 	{
-		return _confEntriesList;
+		return _configEntriesList;
 	}
 
 public:
@@ -262,7 +261,8 @@ public:
 	 * @param socket 
 	 * @param dictionary 
 	 */
-	IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary);
+	IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,
+			const ObjectDictionaryType& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 	
 	/**
 	 * @brief Destroy the IServer object

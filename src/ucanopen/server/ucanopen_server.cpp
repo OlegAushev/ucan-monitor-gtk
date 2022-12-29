@@ -19,11 +19,15 @@ namespace ucanopen {
 ///
 ///
 ///
-IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket, const ObjectDictionaryType& dictionary)
+IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
+		const ObjectDictionaryType& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: _name(name)
 	, _nodeId(nodeId)
 	, _socket(socket)
 	, _dictionary(dictionary)
+	, watchCategory(dictionaryConfig.watchCategory)
+	, watchSubcategory(dictionaryConfig.watchSubcategory)
+	, configCategory(dictionaryConfig.configCategory)
 {
 	for (const auto& [key, entry] : _dictionary)
 	{
@@ -42,7 +46,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 		// create conf entries list
 		if (entry.category == configCategory)
 		{
-			_confEntriesList[entry.subcategory].push_back(entry.name);
+			_configEntriesList[entry.subcategory].push_back(entry.name);
 		}
 	}
 

@@ -19,7 +19,7 @@
 bool backend_is_ready = false;
 const char* backend_ucanopen_server;
 const char* backend_ucanopen_server_list[3] = {"SRM Drive", "LaunchPad", "BMS Main"};
-const char* backend_ucanopen_server_config_category = ucanopen::IServer::configCategory.data();
+const char* backend_ucanopen_server_config_category;
 
 
 namespace {
@@ -81,6 +81,8 @@ int backend_main_loop(std::future<void> futureExit)
 		global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
 		global::ucanClient->registerServer(global::bmsmainServer);
 	}
+
+	backend_ucanopen_server_config_category = global::ucanClient->server(serverName)->configCategory.data();
 
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;

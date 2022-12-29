@@ -453,6 +453,18 @@ using ObjectDictionaryAuxType = std::map<ODEntryValueAux, std::map<ODEntryKey, O
 
 
 /**
+ * @brief 
+ * 
+ */
+struct ObjectDictionaryConfig
+{
+	std::string_view watchCategory;
+	std::string_view watchSubcategory;
+	std::string_view configCategory;
+};
+
+
+/**
  * @brief Makes CAN frame.
  * 
  * @param cobType 

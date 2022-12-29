@@ -23,6 +23,7 @@ namespace srmdrive {
 
 
 extern const ucanopen::ObjectDictionaryType objectDictionary;
+extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
 
 
 class Server : public ucanopen::IServer
