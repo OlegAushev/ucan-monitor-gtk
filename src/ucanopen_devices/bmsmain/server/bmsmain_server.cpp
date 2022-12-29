@@ -19,11 +19,8 @@ namespace bmsmain {
 ///
 ///
 ///
-Server::Server(const std::string& name,
-		ucanopen::NodeId nodeId,
-		std::shared_ptr<can::Socket> socket,
-		const ucanopen::ObjectDictionaryType& dictionary)
-	: IServer(name, nodeId, socket, dictionary, ucanopen::ObjectDictionaryConfig{})
+Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
+	: IServer(name, nodeId, socket, ucanopen::ObjectDictionaryType{}, ucanopen::ObjectDictionaryConfig{})
 {
 	_registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(2000));
 }

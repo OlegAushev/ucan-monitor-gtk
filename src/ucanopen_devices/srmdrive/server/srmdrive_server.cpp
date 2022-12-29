@@ -19,11 +19,8 @@ namespace srmdrive {
 ///
 ///
 ///
-Server::Server(const std::string& name,
-		ucanopen::NodeId nodeId,
-		std::shared_ptr<can::Socket> socket,
-		const ucanopen::ObjectDictionaryType& dictionary)
-	: IServer(name, nodeId, socket, dictionary, objectDictionaryConfig)
+Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
+	: IServer(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 	, controller(this)
 {
 	_registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));

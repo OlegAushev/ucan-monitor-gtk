@@ -59,7 +59,7 @@ int backend_main_loop(std::future<void> futureExit)
 	std::string serverName(backend_ucanopen_server);
 	if (serverName == "SRM Drive")
 	{
-		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket, srmdrive::objectDictionary);
+		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket);
 		global::ucanClient->registerServer(global::srmdriveServer);
 		
 		auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };
@@ -78,7 +78,7 @@ int backend_main_loop(std::future<void> futureExit)
 	}
 	else if (serverName == "BMS Main")
 	{
-		global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket, ucanopen::ObjectDictionaryType{});
+		global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket);
 		global::ucanClient->registerServer(global::bmsmainServer);
 	}
 

@@ -45,10 +45,7 @@ protected:
 			ucanopen::CobSdoData data) override final {}
 
 public:
-	Server(const std::string& name,
-			ucanopen::NodeId nodeId,
-			std::shared_ptr<can::Socket> socket,
-			const ucanopen::ObjectDictionaryType& dictionary);
+	Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
 
 	double current() const { return _current; }
 	double voltage() const { return _voltage; }

@@ -46,10 +46,7 @@ protected:
 public:
 	Controller controller;
 
-	Server(const std::string& name,
-			ucanopen::NodeId nodeId,
-			std::shared_ptr<can::Socket> socket,
-			const ucanopen::ObjectDictionaryType& dictionary);
+	Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
 };
 
 
