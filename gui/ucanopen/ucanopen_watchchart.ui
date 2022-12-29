@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="UcanopenWatchChart" parent="AdwBin">
+		<child>
+			<object class="GtkBox">
+				<property name="orientation">vertical</property>
+				<child>
+					<object class="AdwPreferencesGroup">
+						<child>
+							<object class="AdwComboRow" id="comborow_watch_name">
+								<property name="title">Watch Name</property>
+								<property name="width-request">400</property>
+								<property name="model">
+									<object class="GtkStringList" id="list_watch">
+										<items>
+											<item>speed</item>
+											<item>torque</item>
+										</items>
+									</object>
+								</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<object class="GtkFrame" id="frame_chart">
+						<property name="vexpand">true</property>
+					</object> 
+				</child>
+
+			</object>
+		</child>
+	</template>
+</interface>
