@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=0.9.0
+Name=uCAN Monitor
+Comment=uCAN Monitor
+Icon=ucan-monitor
+Exec=/home/oleg/MEGA/workdir/vscode/git-repos/ucan-monitor/bin/ucan-monitor
+Terminal=false
