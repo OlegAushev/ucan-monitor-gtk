@@ -40,7 +40,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 		}
 
 		// create conf entries list
-		if (entry.category == confCategory)
+		if (entry.category == configCategory)
 		{
 			_confEntriesList[entry.subcategory].push_back(entry.name);
 		}

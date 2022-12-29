@@ -109,7 +109,7 @@ void ucanopen_server_get_watch_value(const char* serverName, const char* watchNa
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, size_t countMax, size_t lenMax)
+size_t ucanopen_server_get_config_categories(const char* serverName, char** buf, size_t countMax, size_t lenMax)
 {
 	size_t ret = global::ucanClient->server(serverName)->confEntriesList().size();
 	if (ret >= countMax)
@@ -130,7 +130,7 @@ size_t ucanopen_server_get_conf_categories(const char* serverName, char** buf, s
 ///
 ///
 ///
-size_t ucanopen_server_get_conf_entries(const char* serverName, const char* category, char** buf, size_t countMax, size_t lenMax)
+size_t ucanopen_server_get_config_entries(const char* serverName, const char* category, char** buf, size_t countMax, size_t lenMax)
 {
 	auto entries = global::ucanClient->server(serverName)->confEntriesList().at(category);
 	size_t ret = entries.size();

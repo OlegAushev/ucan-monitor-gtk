@@ -19,7 +19,7 @@
 bool backend_is_ready = false;
 const char* backend_ucanopen_server;
 const char* backend_ucanopen_server_list[3] = {"SRM Drive", "LaunchPad", "BMS Main"};
-const char* backend_ucanopen_server_conf_category = ucanopen::IServer::confCategory.data();
+const char* backend_ucanopen_server_config_category = ucanopen::IServer::configCategory.data();
 
 
 namespace {

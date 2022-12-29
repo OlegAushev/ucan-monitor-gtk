@@ -31,7 +31,7 @@ class IServer
 public:
 	static constexpr std::string_view watchCategory = "WATCH";
 	static constexpr std::string_view watchSubcategory = "WATCH";
-	static constexpr std::string_view confCategory = "CONFIG";
+	static constexpr std::string_view configCategory = "CONFIG";
 
 private:
 	std::string _name = "unnamed";

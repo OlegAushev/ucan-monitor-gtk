@@ -29,7 +29,7 @@ extern bool is_ready;
 namespace Ucanopen {
 extern string server_list[3];
 extern string server;
-extern string server_conf_category;
+extern string server_config_category;
 }
 
 }
@@ -47,8 +47,8 @@ extern void ucanopen_client_set_sync_period(int period);
 extern void ucanopen_client_set_watch_enabled(bool isEnabled);
 extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string serverName, string watchName, char* buf, size_t len);
-extern size_t ucanopen_server_get_conf_categories(string serverName, char** buf, size_t countMax, size_t lenMax);
-extern size_t ucanopen_server_get_conf_entries(string serverName, string category, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_server_get_config_categories(string serverName, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_server_get_config_entries(string serverName, string category, char** buf, size_t countMax, size_t lenMax);
 extern bool ucanopen_server_is_heartbeat_ok(string serverName);
 extern void ucanopen_server_get_nmt_state(string serverName, char* buf, size_t len);
 extern bool ucanopen_server_is_tpdo_ok(string serverName, int tpdoNum);

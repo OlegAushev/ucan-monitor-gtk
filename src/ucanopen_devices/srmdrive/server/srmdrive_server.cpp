@@ -47,17 +47,17 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			_watchData[entryIt->second.name] = driveStates[data.u32()];
 		}
 	}
-	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToRead)
+	else if (entryIt->second.category == configCategory && sdoType == ucanopen::SdoType::ResponseToRead)
 	{
 		std::stringstream sstr;
-		sstr << "[" << confCategory << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << configCategory << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " = " << data.toString(entryIt->second.dataType);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == confCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
+	else if (entryIt->second.category == configCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
 	{
 		std::stringstream sstr;
-		sstr << "[" << confCategory << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << configCategory << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " updated.";
 		Logger::instance().add(sstr.str());
 	}

@@ -59,7 +59,7 @@ public class ServerConfiguration : Adw.Bin
 		_entries_model = new Gtk.StringList(null);
 		comborow_entry.model = _entries_model;
 
-		size_t _categories_count = ucanopen_server_get_conf_categories(Backend.Ucanopen.server,
+		size_t _categories_count = ucanopen_server_get_config_categories(Backend.Ucanopen.server,
 				_categories, _categories_count_max, _categories_len_max);
 
 		if (_categories_count == 0)
@@ -72,7 +72,7 @@ public class ServerConfiguration : Adw.Bin
 			_categories_model.append(_categories[i]);
 		}
 
-		size_t _entries_count = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
+		size_t _entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
 				_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
 		for (size_t i = 0; i < _entries_count; ++i)
 		{
@@ -85,7 +85,7 @@ public class ServerConfiguration : Adw.Bin
 				_entries_model.remove(0);
 			}
 
-			_entries_count = ucanopen_server_get_conf_entries(Backend.Ucanopen.server,
+			_entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
 					_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
 			for (size_t i = 0; i < _entries_count; ++i)
 			{
@@ -94,7 +94,7 @@ public class ServerConfiguration : Adw.Bin
 		});
 
 		button_read.clicked.connect(() => {
-			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_conf_category,
+			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
 					_categories[comborow_category.selected], _entries[comborow_entry.selected]);
 		});
 
@@ -103,7 +103,7 @@ public class ServerConfiguration : Adw.Bin
 			bool is_number = float.try_parse(entryrow_value.text, out val);
 			if (is_number && entryrow_value.text.length != 0)
 			{
-				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_conf_category,
+				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
 						_categories[comborow_category.selected], _entries[comborow_entry.selected],
 						entryrow_value.text);
 			}
