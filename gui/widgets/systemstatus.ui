@@ -3,6 +3,24 @@
 	<requires lib="gtk" version="4.0" />
 	<template class="CanMonitorSystemStatus" parent="AdwBin">
 		<child>
+			<object class="GtkGrid">
+				<property name="margin-start">10</property>
+				<property name="margin-end">10</property>
+				<property name="margin-top">10</property>
+				<property name="margin-bottom">10</property>
+				<property name="row-spacing">6</property>
+				<property name="column-spacing">12</property>
+				<!--property name="halign">start</property-->
+
+				<child>
+					<object class="AdwPreferencesGroup" id="group_system">
+						<property name="width-request">240</property>
+						<property name="title">System</property>
+						<property name="hexpand">false</property>
+					</object>
+				</child>
+
+			</object>
 		</child>
 	</template>
 </interface>
