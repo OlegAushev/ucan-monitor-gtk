@@ -13,8 +13,9 @@
 		<file>gui/ucanopen/ucanopen_heartbeatindicator.ui</file>
 		<file>gui/ucanopen/ucanopen_serverconfiguration.ui</file>
 		<file>gui/ucanopen/ucanopen_watchchart.ui</file>
-		<file>gui/window_canbuspreferences.ui</file>
-		<file>gui/window_selectserver.ui</file>
+		<file>gui/widgets/systemstatus.ui</file>
+		<file>gui/canbuspreferences.ui</file>
+		<file>gui/selectserver.ui</file>
 		<file>gui/window.ui</file>
 	</gresource>
 </gresources>

@@ -6,7 +6,7 @@
 namespace CanMonitor {
 
 
-[GtkTemplate (ui = "/gui/window_canbuspreferences.ui")]
+[GtkTemplate (ui = "/gui/canbuspreferences.ui")]
 public class WindowCanBusPreferences : Adw.PreferencesWindow
 {
 	[GtkChild]

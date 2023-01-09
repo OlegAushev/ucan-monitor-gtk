@@ -6,7 +6,7 @@
 namespace CanMonitor {
 
 
-[GtkTemplate (ui = "/gui/window_selectserver.ui")]
+[GtkTemplate (ui = "/gui/selectserver.ui")]
 public class WindowSelectServer : Gtk.ApplicationWindow
 {
 	[GtkChild]

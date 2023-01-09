@@ -92,16 +92,37 @@
 														<property name="hscrollbar-policy">automatic</property>
 														<property name="vscrollbar-policy">automatic</property>
 														<!--child>
-															<object class="SrmDriveDataTables" id="dataTables">
+															<object class="SrmDriveDataTables" id="data_tables">
 															</object>
 														</child-->
 													</object>
 												</property>
 											</object>
 										</child>
+
 										<child>
 											<!-- PAGE 2 of VIEWSTACK -->
 											<object class="AdwViewStackPage" id="viewstack_page2">
+												<property name="title">Status</property>
+												<property name="icon-name">info-symbolic</property>
+												<property name="child">
+													<object class="GtkScrolledWindow">
+														<property name="hexpand">true</property>
+														<property name="vexpand">true</property>
+														<property name="hscrollbar-policy">automatic</property>
+														<property name="vscrollbar-policy">automatic</property>
+														<child>
+															<object class="CanMonitorSystemStatus" id="widget_system_status">
+															</object>
+														</child>
+													</object>
+												</property>
+											</object>
+										</child>
+
+										<child>
+											<!-- PAGE 3 of VIEWSTACK -->
+											<object class="AdwViewStackPage" id="viewstack_page3">
 												<property name="title">Charts</property>
 												<property name="icon-name">computer-symbolic</property>
 												<property name="child">
@@ -123,9 +144,10 @@
 												</property>
 											</object>
 										</child>
+
 										<child>
-											<!-- PAGE 3 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstack_page3">
+											<!-- PAGE 4 of VIEWSTACK -->
+											<object class="AdwViewStackPage" id="viewstack_page4">
 												<property name="title">Setup</property>
 												<property name="icon-name">preferences-system-symbolic</property>
 												<property name="child">
