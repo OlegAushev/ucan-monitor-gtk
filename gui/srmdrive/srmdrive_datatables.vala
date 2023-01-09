@@ -98,10 +98,30 @@ public class DataTables : Adw.Bin
 		entry_state.entry_text = buf;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FAULTS", buf, 16);
-		entry_errors.entry_text = buf;
+		uint error_code = uint.parse(buf);
+		if (error_code != 0)
+		{
+			entry_errors.add_css_class("error");
+			entry_errors.entry_text = error_code.to_string("%X");
+		}
+		else
+		{
+			entry_errors.remove_css_class("error");
+			entry_errors.entry_text = buf;
+		}
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", buf, 16);
-		entry_warnings.entry_text = buf;
+		uint warning_code = uint.parse(buf);
+		if (warning_code != 0)
+		{
+			entry_warnings.add_css_class("warning");
+			entry_warnings.entry_text = warning_code.to_string("%X");
+		}
+		else
+		{
+			entry_warnings.remove_css_class("warning");
+			entry_warnings.entry_text = buf;
+		}
 	}
 
 	public void update_motor_data()
