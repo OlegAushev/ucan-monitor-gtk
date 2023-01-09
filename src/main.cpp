@@ -62,8 +62,8 @@ int backend_main_loop(std::future<void> futureExit)
 		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket);
 		global::ucanClient->registerServer(global::srmdriveServer);
 		
-		auto callbackMakeTpdo1 = []() { return global::srmdriveServer->controller.makeTpdo1(); };
-		auto callbackMakeTpdo2 = []() { return global::srmdriveServer->controller.makeTpdo2(); };
+		auto callbackMakeTpdo1 = [](){ return global::srmdriveServer->controller.makeTpdo1(); };
+		auto callbackMakeTpdo2 = [](){ return global::srmdriveServer->controller.makeTpdo2(); };
 
 		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
 				std::chrono::milliseconds(250),
