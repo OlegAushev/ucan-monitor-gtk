@@ -125,7 +125,7 @@ struct CobRpdo4
 };
 
 
-inline const std::vector<std::string_view> syslogMessages = {
+inline const std::vector<std::string> syslogMessages = {
 	"No message",
 	"[syslog] Device boot - success.",
 	"[syslog] Device is busy.",

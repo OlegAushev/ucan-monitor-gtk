@@ -69,7 +69,7 @@ void Server::_handleTpdo3(ucanopen::can_payload data)
 	CobTpdo3 message = ucanopen::fromPayload<CobTpdo3>(data);
 	if ((message.syslogMessageId != 0) && (message.syslogMessageId < syslogMessages.size()))
 	{
-		Logger::instance().add(std::string(syslogMessages[message.syslogMessageId]));
+		Logger::instance().add(syslogMessages[message.syslogMessageId]);
 	}
 }
 

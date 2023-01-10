@@ -12,6 +12,7 @@
 
 #include "ucanopen/client/ucanopen_client.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
+#include "ucanopen_devices/launchpad/server/launchpad_server.h"
 #include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
 #include "gnuplotter/gnuplotter.h"
 
@@ -35,6 +36,7 @@ namespace global {
 std::shared_ptr<can::Socket> canSocket;
 std::shared_ptr<ucanopen::Client> ucanClient;
 std::shared_ptr<srmdrive::Server> srmdriveServer;
+std::shared_ptr<launchpad::Server> launchpadServer;
 std::shared_ptr<bmsmain::Server> bmsmainServer;
 
 }
@@ -74,7 +76,8 @@ int backend_main_loop(std::future<void> futureExit)
 	}
 	else if (serverName == "LaunchPad")
 	{
-		// TODO
+		global::launchpadServer = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), global::canSocket);
+		global::ucanClient->registerServer(global::launchpadServer);
 	}
 	else if (serverName == "BMS Main")
 	{

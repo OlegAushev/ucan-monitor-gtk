@@ -13,6 +13,19 @@
 namespace launchpad {
 
 
+inline const std::vector<std::string> syslogMessages = {
+	"No message",
+	"[syslog] Boot CPU1...",
+	"[syslog] Boot CPU1 - success.",
+	"[syslog] Boot CPU2...",
+	"[syslog] Boot CPU2 - success.",
+	"[syslog] CPU1 is ready.",
+	"[syslog] CPU2 is ready.",
+	"[syslog] Device is ready.",
+	"[syslog] Device is busy.",
+	"[syslog] Resetting device...",
+	"[syslog] SDO request lost.",
+};
 
 
 } // namespace launchpad
