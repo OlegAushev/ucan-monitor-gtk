@@ -74,6 +74,16 @@ void Server::_handleTpdo3(ucanopen::can_payload data)
 }
 
 
+///
+///
+///
+void Server::_handleTpdo4(ucanopen::can_payload data)
+{
+	CobTpdo4 message = ucanopen::fromPayload<CobTpdo4>(data);
+	_errors = message.errors;
+	_warnings = message.warnings;
+}
+
 }
 
 

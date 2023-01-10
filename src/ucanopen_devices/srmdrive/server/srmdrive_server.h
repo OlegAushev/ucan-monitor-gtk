@@ -32,7 +32,7 @@ protected:
 	virtual void _handleTpdo1(ucanopen::can_payload data) override final {}
 	virtual void _handleTpdo2(ucanopen::can_payload data) override final {}
 	virtual void _handleTpdo3(ucanopen::can_payload data) override final;
-	virtual void _handleTpdo4(ucanopen::can_payload data) override final {}
+	virtual void _handleTpdo4(ucanopen::can_payload data) override final;
 
 	virtual ucanopen::can_payload _createRpdo1() override final { return {}; }
 	virtual ucanopen::can_payload _createRpdo2() override final { return {}; }
@@ -43,10 +43,17 @@ protected:
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final;
 
+private:
+	uint32_t _errors = 0;
+	uint32_t _warnings = 0;
+
 public:
 	Controller controller;
 
 	Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
+
+	uint32_t errors() const { return _errors; }
+	uint32_t warnings() const { return _warnings; }
 };
 
 

@@ -56,6 +56,28 @@ size_t ucanopen_devices_get_error_names(const char* serverName, char** buf, size
 }
 
 
+///
+///
+///
+unsigned int ucanopen_devices_get_error_code(const char* serverName)
+{
+	if (std::string(serverName) == "SRM Drive")
+	{
+		return global::srmdriveServer->errors();
+	}
+	else if (std::string(serverName) == "LaunchPad")
+	{
+		// TODO
+	}
+	else if (std::string(serverName) == "BMS Main")
+	{
+		// TODO
+	}
+
+	return 0;	
+}
+
+
 }
 
 
