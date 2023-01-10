@@ -37,7 +37,131 @@
 							</object>
 						</child>
 					</object>
-					
+
+				</child>
+
+				<child>
+					<!-- TPDO1 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo1">
+						<property name="width-request">240</property>
+						<property name="title">TPDO1</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="TableBoolEntry" id="tpdo1_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="TableEntry">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO2 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo2">
+						<property name="width-request">240</property>
+						<property name="title">TPDO2</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="TableBoolEntry" id="tpdo2_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="TableEntry">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO3 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo3">
+						<property name="width-request">240</property>
+						<property name="title">TPDO3</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="TableBoolEntry" id="tpdo3_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="TableEntry">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO4 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo4">
+						<property name="width-request">240</property>
+						<property name="title">TPDO4</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="TableBoolEntry" id="tpdo4_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="TableEntry">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="entry-width">80</property>
+								<property name="entry-chars">8</property>
+							</object>
+						</child>
+					</object>
 				</child>
 
 			</object>
