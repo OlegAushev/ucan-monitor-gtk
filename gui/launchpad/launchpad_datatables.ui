@@ -15,7 +15,7 @@
 
 					<!-- SYSTEM -->
 					<object class="AdwPreferencesGroup" id="group_system">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">System</property>
 						<property name="hexpand">false</property>
 
@@ -23,8 +23,7 @@
 							<object class="UcanopenHeartbeatIndicator" id="heartbeat_indicator">
 								<property name="title">Network State</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 
@@ -32,8 +31,7 @@
 							<object class="TableEntry" id="entry_uptime">
 								<property name="title">Uptime</property>
 								<property name="subtitle">s</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -43,7 +41,7 @@
 				<child>
 					<!-- TPDO1 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo1">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO1</property>
 						<property name="hexpand">false</property>
 						
@@ -51,8 +49,7 @@
 							<object class="TableBoolEntry" id="tpdo1_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -64,8 +61,7 @@
 							<object class="TableEntry" id="entry_tpdo1_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -74,7 +70,7 @@
 				<child>
 					<!-- TPDO2 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo2">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO2</property>
 						<property name="hexpand">false</property>
 						
@@ -82,8 +78,7 @@
 							<object class="TableBoolEntry" id="tpdo2_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -95,8 +90,7 @@
 							<object class="TableEntry" id="entry_tpdo2_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -105,7 +99,7 @@
 				<child>
 					<!-- TPDO3 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo3">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO3</property>
 						<property name="hexpand">false</property>
 						
@@ -113,8 +107,7 @@
 							<object class="TableBoolEntry" id="tpdo3_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -126,8 +119,7 @@
 							<object class="TableEntry" id="entry_tpdo3_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -136,7 +128,7 @@
 				<child>
 					<!-- TPDO4 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo4">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO4</property>
 						<property name="hexpand">false</property>
 						
@@ -158,7 +150,7 @@
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 					</object>

@@ -51,7 +51,7 @@ public class SystemStatus : Adw.Bin
 		{
 			error_bytes[i] = new Adw.PreferencesGroup();
 			error_bytes[i].title = @"Error Byte $i";
-			error_bytes[i].width_request = 240;
+			error_bytes[i].width_request = 280;
 			error_bytes[i].hexpand = false;
 			grid.attach(error_bytes[i], i, 0);
 
@@ -60,7 +60,6 @@ public class SystemStatus : Adw.Bin
 				error_bits[8*i+j] = new TableBoolEntry();	
 				error_bits[8*i+j].title = _error_names[8*i+j];
 
-				error_bits[8*i+j].entry_width = 20;
 				error_bits[8*i+j].entry_chars = 2;
 				error_bits[8*i+j].true_text = "1";
 				error_bits[8*i+j].false_text = "0";
@@ -87,7 +86,7 @@ public class SystemStatus : Adw.Bin
 		{
 			warning_bytes[i] = new Adw.PreferencesGroup();
 			warning_bytes[i].title = @"Warning Byte $i";
-			warning_bytes[i].width_request = 240;
+			warning_bytes[i].width_request = 280;
 			warning_bytes[i].hexpand = false;
 			grid.attach(warning_bytes[i], i, 1);
 
@@ -96,7 +95,6 @@ public class SystemStatus : Adw.Bin
 				warning_bits[8*i+j] = new TableBoolEntry();	
 				warning_bits[8*i+j].title = _warning_names[8*i+j];
 
-				warning_bits[8*i+j].entry_width = 20;
 				warning_bits[8*i+j].entry_chars = 2;
 				warning_bits[8*i+j].true_text = "1";
 				warning_bits[8*i+j].false_text = "0";

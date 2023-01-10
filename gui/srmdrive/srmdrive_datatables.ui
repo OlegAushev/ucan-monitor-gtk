@@ -15,7 +15,7 @@
 
 					<!-- SYSTEM -->
 					<object class="AdwPreferencesGroup" id="group_system">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">System</property>
 						<property name="hexpand">false</property>
 
@@ -23,8 +23,7 @@
 							<object class="UcanopenHeartbeatIndicator" id="heartbeat_indicator">
 								<property name="title">Network State</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 
@@ -32,32 +31,28 @@
 							<object class="TableEntry" id="entry_uptime">
 								<property name="title">Uptime</property>
 								<property name="subtitle">s</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_state">
 								<property name="title">State</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_errors">
 								<property name="title">Errors</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_warnings">
 								<property name="title">Warnings</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -68,7 +63,7 @@
 
 					<!-- MOTOR -->
 					<object class="AdwPreferencesGroup" id="group_motor">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">Motor</property>
 						<property name="hexpand">false</property>
 
@@ -76,80 +71,70 @@
 							<object class="TableEntry" id="entry_speed">
 								<property name="title">Speed</property>
 								<property name="subtitle">rpm</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_torque">
 								<property name="title">Torque</property>
 								<property name="subtitle">Nm</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_s">
 								<property name="title">Stator Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_f">
 								<property name="title">Field Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_d">
 								<property name="title">Axis-D Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_q">
 								<property name="title">Axis-Q Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_gamma">
 								<property name="title">Gamma</property>
 								<property name="subtitle">°</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_s">
 								<property name="title">Stator Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_fw">
 								<property name="title">FW Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_power_mech">
 								<property name="title">Output Power</property>
 								<property name="subtitle">W</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -160,7 +145,7 @@
 
 					<!-- INVERTER -->
 					<object class="AdwPreferencesGroup" id="group_inverter">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">Inverter</property>
 						<property name="hexpand">false</property>
 
@@ -168,80 +153,70 @@
 							<object class="TableEntry" id="entry_volt_dc">
 								<property name="title">DC Voltage</property>
 								<property name="subtitle">V</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_dc">
 								<property name="title">DC Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_pha">
 								<property name="title">PhA Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_phb">
 								<property name="title">PhB Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_curr_phc">
 								<property name="title">PhC Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_pha">
 								<property name="title">PhA Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_phb">
 								<property name="title">PhB Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_phc">
 								<property name="title">PhC Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_temp_air">
 								<property name="title">Air Temperature</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry" id="entry_power_elec">
 								<property name="title">Output Power</property>
 								<property name="subtitle">W</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -252,7 +227,7 @@
 					
 					<!-- TPDO1 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo1">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO1</property>
 						<property name="hexpand">false</property>
 						
@@ -260,8 +235,7 @@
 							<object class="TableBoolEntry" id="tpdo1_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -270,91 +244,80 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo1_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Run</property>
 								<property name="subtitle">bool</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Fault</property>
 								<property name="subtitle">bool</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Warning</property>
 								<property name="subtitle">bool</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Overheat</property>
 								<property name="subtitle">bool</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Torque</property>
 								<property name="subtitle">%</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Speed</property>
 								<property name="subtitle">rpm</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Stator Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Power</property>
 								<property name="subtitle">W</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">DC Voltage</property>
 								<property name="subtitle">rpm</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Field Current</property>
 								<property name="subtitle">A</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -365,7 +328,7 @@
 
 					<!-- TPDO2 -->
 					<object class="AdwPreferencesGroup" id="group_tpdo2">
-						<property name="width-request">240</property>
+						<property name="width-request">280</property>
 						<property name="title">TPDO2</property>
 						<property name="hexpand">false</property>
 
@@ -373,8 +336,7 @@
 							<object class="TableBoolEntry" id="tpdo2_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -383,59 +345,52 @@
 						</child>
 
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo2_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Motor Temp</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Output Voltage</property>
 								<property name="subtitle">%</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Torque Limit</property>
 								<property name="subtitle">bool</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">FW Temp</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">HS Temp</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
 							<object class="TableEntry">
 								<property name="title">Air Temp</property>
 								<property name="subtitle">°C</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="entry-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -451,7 +406,7 @@
 
 							<!-- TPDO3 -->
 							<object class="AdwPreferencesGroup" id="group_tpdo3">
-								<property name="width-request">240</property>
+								<property name="width-request">280</property>
 								<property name="title">TPDO3</property>
 								<property name="hexpand">false</property>
 								
@@ -459,8 +414,7 @@
 									<object class="TableBoolEntry" id="tpdo3_indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 										<property name="true-text">ok</property>
 										<property name="false-text">bad</property>
 										<property name="true-css-class">success</property>
@@ -469,43 +423,38 @@
 								</child>
 
 								<child>
-									<object class="TableEntry">
+									<object class="TableEntry" id="entry_tpdo3_raw_data">
 										<property name="title">Raw Data</property>
 										<property name="subtitle">hex</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">16</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Iso Vpc</property>
 										<property name="subtitle">V</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Iso Vnc</property>
 										<property name="subtitle">V</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Iso Status</property>
 										<property name="subtitle">bool</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">DC Current</property>
 										<property name="subtitle">A</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 							</object>
@@ -516,7 +465,7 @@
 
 							<!-- TPDO4 -->
 							<object class="AdwPreferencesGroup" id="group_tpdo4">
-								<property name="width-request">240</property>
+								<property name="width-request">280</property>
 								<property name="title">TPDO4</property>
 								<property name="hexpand">false</property>
 		
@@ -524,8 +473,7 @@
 									<object class="TableBoolEntry" id="tpdo4_indicator">
 										<property name="title">Connection</property>
 										<property name="subtitle"></property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 										<property name="true-text">ok</property>
 										<property name="false-text">bad</property>
 										<property name="true-css-class">success</property>
@@ -534,43 +482,31 @@
 								</child>
 
 								<child>
-									<object class="TableEntry">
+									<object class="TableEntry" id="entry_tpdo4_raw_data">
 										<property name="title">Raw Data</property>
 										<property name="subtitle">hex</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">16</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Errors</property>
 										<property name="subtitle">hex</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Warnings</property>
 										<property name="subtitle">hex</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 								<child>
 									<object class="TableEntry">
 										<property name="title">Warning Count</property>
 										<property name="subtitle"></property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
-									</object>
-								</child>
-								<child>
-									<object class="TableEntry">
-										<property name="title">DC Current</property>
-										<property name="subtitle">A</property>
-										<property name="entry-width">80</property>
-										<property name="entry-chars">8</property>
+										<property name="entry-chars">10</property>
 									</object>
 								</child>
 							</object>
