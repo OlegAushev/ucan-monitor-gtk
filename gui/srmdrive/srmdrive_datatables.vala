@@ -110,8 +110,8 @@ public class DataTables : Adw.Bin
 			entry_errors.entry_text = buf;
 		}
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", buf, 16);
-		uint warning_code = uint.parse(buf);
+		//ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", buf, 16);
+		uint warning_code = ucanopen_devices_get_warning_code(Backend.Ucanopen.server);
 		if (warning_code != 0)
 		{
 			entry_warnings.add_css_class("warning");
