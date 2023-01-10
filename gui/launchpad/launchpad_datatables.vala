@@ -16,15 +16,23 @@ public class DataTables : Adw.Bin
 
 	[GtkChild]
 	private unowned TableBoolEntry tpdo1_indicator;
+	[GtkChild]
+	private unowned TableEntry entry_tpdo1_raw_data;
 	
 	[GtkChild]
 	private unowned TableBoolEntry tpdo2_indicator;
+	[GtkChild]
+	private unowned TableEntry entry_tpdo2_raw_data;
 	
 	[GtkChild]
 	private unowned TableBoolEntry tpdo3_indicator;
+	[GtkChild]
+	private unowned TableEntry entry_tpdo3_raw_data;
 	
 	[GtkChild]
 	private unowned TableBoolEntry tpdo4_indicator;
+	[GtkChild]
+	private unowned TableEntry entry_tpdo4_raw_data;
 
 
 	public DataTables() {}
@@ -56,21 +64,25 @@ public class DataTables : Adw.Bin
 	private void _update_tpdo1_data()
 	{
 		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
+		entry_tpdo1_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 0).to_string("%08X");
 	}
 
 	private void _update_tpdo2_data()
 	{
 		tpdo2_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
+		entry_tpdo2_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 1).to_string("%08X");
 	}
 
 	private void _update_tpdo3_data()
 	{
 		tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
+		entry_tpdo3_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 2).to_string("%08X");
 	}
 
 	private void _update_tpdo4_data()
 	{
 		tpdo4_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
+		entry_tpdo4_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 3).to_string("%08X");
 	}
 }
 

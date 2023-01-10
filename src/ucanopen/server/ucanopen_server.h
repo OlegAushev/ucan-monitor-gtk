@@ -72,6 +72,7 @@ private:
 		canid_t id;
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		can_payload data;
 	};
 	std::map<TpdoType, TpdoInfo> _tpdoList;
 protected:
@@ -82,7 +83,7 @@ protected:
 	void _registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), _nodeId);
-		_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now()}});
+		_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), can_payload{}}});
 	}
 public:
 	/**
@@ -96,6 +97,18 @@ public:
 	{
 		if (!_tpdoList.contains(tpdo)) return false;
 		return (std::chrono::steady_clock::now() - _tpdoList.at(tpdo).timepoint) <= _tpdoList.at(tpdo).timeout;
+	}
+
+	/**
+	 * @brief 
+	 * 
+	 * @param tpdo 
+	 * @return can_payload 
+	 */
+	can_payload tpdoData(TpdoType tpdo) const
+	{
+		if (!_tpdoList.contains(tpdo)) return can_payload{};
+		return _tpdoList.at(tpdo).data;
 	}
 
 	/* RPDO server <-- client */

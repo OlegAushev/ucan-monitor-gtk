@@ -61,7 +61,7 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo1_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
@@ -92,7 +92,7 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo2_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
@@ -123,7 +123,7 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo3_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>
@@ -154,7 +154,7 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry">
+							<object class="TableEntry" id="entry_tpdo4_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
 								<property name="entry-width">80</property>

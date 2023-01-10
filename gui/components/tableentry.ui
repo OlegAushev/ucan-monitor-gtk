@@ -10,6 +10,9 @@
 				<property name="editable">false</property>
 				<property name="can_focus">false</property>
 				<property name="xalign">0.5</property>
+				<style>
+					<class name="monospace"/>
+				</style>
 			</object>
 		</child>
 	</template>

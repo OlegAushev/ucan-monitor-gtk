@@ -142,6 +142,7 @@ void IServer::_handleFrame(const can_frame& frame)
 		message.timepoint = std::chrono::steady_clock::now();
 		can_payload data{};
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
+		message.data = data;
 
 		switch (type)
 		{

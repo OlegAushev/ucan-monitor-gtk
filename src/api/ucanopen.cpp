@@ -194,6 +194,16 @@ bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 ///
 ///
 ///
+unsigned long ucanopen_server_get_tpdo_data(const char* serverName, int tpdoNum)
+{
+	assert((tpdoNum >= 0) && (tpdoNum <= 3));
+	return ucanopen::fromPayload<uint64_t>(global::ucanClient->server(serverName)->tpdoData(static_cast<ucanopen::TpdoType>(tpdoNum)));
+}
+
+
+///
+///
+///
 void ucanopen_server_read(const char* serverName, const char* category, const char* subcategory, const char* name)
 {
 	global::ucanClient->server(serverName)->read(category, subcategory, name);
