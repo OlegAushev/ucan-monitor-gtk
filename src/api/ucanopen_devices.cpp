@@ -1,5 +1,5 @@
 /**
- * @file devices.cpp
+ * @file ucanopen_devices.cpp
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -26,7 +26,7 @@ extern "C" {
 ///
 ///
 ///
-size_t get_error_names(const char* serverName, char** buf, size_t countMax, size_t lenMax)
+size_t ucanopen_devices_get_error_names(const char* serverName, char** buf, size_t countMax, size_t lenMax)
 {
 	if (std::string(serverName) == "SRM Drive")
 	{

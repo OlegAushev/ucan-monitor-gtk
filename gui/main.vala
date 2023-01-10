@@ -73,6 +73,8 @@ extern double bmsmain_tpdo1_get_charge();
 extern double bmsmain_tpdo1_get_temp_max();
 extern double bmsmain_tpdo1_get_temp_min();
 
+/// ucanopen_devices
+extern size_t ucanopen_devices_get_error_names(string serverName, char** buf, size_t countMax, size_t lenMax);
 
 
 int main(string[] args)
