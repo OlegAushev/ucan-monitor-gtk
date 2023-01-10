@@ -16,18 +16,26 @@ public class SystemStatus : Adw.Bin
 	private const size_t _error_name_len_max = 64;
 	private string _error_names[_error_name_count_max];
 	private size_t _error_name_count;
-	private Gtk.StringList _error_names_list;
 	private size_t _error_code_byte_count;
-	
 	private Adw.PreferencesGroup[] error_bytes;
 	private TableBoolEntry[] error_bits;
-
 	private uint _error_code = 0;
+
+	private const size_t _warning_name_count_max = 32;
+	private const size_t _warning_name_len_max = 64;
+	private string _warning_names[_warning_name_count_max];
+	private size_t _warning_name_count;
+	private size_t _warning_code_byte_count;
+	private Adw.PreferencesGroup[] warning_bytes;
+	private TableBoolEntry[] warning_bits;
+	private uint _warning_code = 0;
+
 
 	public SystemStatus() {}
 
 	construct
 	{
+		// errors
 		for (size_t i = 0; i < _error_name_count_max; ++i)
 		{
 			_error_names[i] = string.nfill(_error_name_len_max, '\0');
@@ -36,7 +44,6 @@ public class SystemStatus : Adw.Bin
 				_error_names, _error_name_count_max, _error_name_len_max);
 
 		_error_code_byte_count = (_error_name_count + 7) / 8;
-
 
 		error_bytes = new Adw.PreferencesGroup[4];
 		error_bits = new TableBoolEntry[32];
@@ -64,10 +71,53 @@ public class SystemStatus : Adw.Bin
 			}
 		}
 
+		// warnings
+		for (size_t i = 0; i < _warning_name_count_max; ++i)
+		{
+			_warning_names[i] = string.nfill(_warning_name_len_max, '\0');
+		}
+		_warning_name_count = ucanopen_devices_get_warning_names(Backend.Ucanopen.server,
+				_warning_names, _warning_name_count_max, _warning_name_len_max);
+
+		_warning_code_byte_count = (_warning_name_count + 7) / 8;
+
+		warning_bytes = new Adw.PreferencesGroup[4];
+		warning_bits = new TableBoolEntry[32];
+		for (int i = 0; i < 4; ++i)
+		{
+			warning_bytes[i] = new Adw.PreferencesGroup();
+			warning_bytes[i].title = @"Warning Byte $i";
+			warning_bytes[i].width_request = 240;
+			warning_bytes[i].hexpand = false;
+			grid.attach(warning_bytes[i], i, 1);
+
+			for (int j = 0; j < 8; ++j)
+			{
+				warning_bits[8*i+j] = new TableBoolEntry();	
+				warning_bits[8*i+j].title = _warning_names[8*i+j];
+
+				warning_bits[8*i+j].entry_width = 20;
+				warning_bits[8*i+j].entry_chars = 2;
+				warning_bits[8*i+j].true_text = "1";
+				warning_bits[8*i+j].false_text = "0";
+				warning_bits[8*i+j].true_css_class = "error";
+				warning_bits[8*i+j].false_css_class = "success";
+
+				warning_bytes[i].add(warning_bits[8*i+j]);
+			}
+		}
+
 		Timeout.add(50, update);
 	}
 	
 	public bool update()
+	{
+		_updateErrors();
+		_updateWarnings();
+		return true;
+	}
+
+	private void _updateErrors()
 	{
 		uint error_code = ucanopen_devices_get_error_code(Backend.Ucanopen.server);
 		if (error_code == _error_code)
@@ -88,8 +138,29 @@ public class SystemStatus : Adw.Bin
 				error_bits[i].value = false;
 			}
 		}
+	}
 
-		return true;
+	private void _updateWarnings()
+	{
+		uint warning_code = ucanopen_devices_get_warning_code(Backend.Ucanopen.server);
+		if (warning_code == _warning_code)
+		{
+			return;
+		}
+
+		_warning_code = warning_code;
+
+		for (int i = 0; i < _warning_name_count; ++i)
+		{
+			if ((_warning_code & (1 << i)) != 0)
+			{
+				warning_bits[i].value = true;
+			}
+			else
+			{
+				warning_bits[i].value = false;
+			}
+		}
 	}
 }
 

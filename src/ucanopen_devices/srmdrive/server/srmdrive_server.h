@@ -45,7 +45,7 @@ protected:
 
 private:
 	uint32_t _errors = 0;
-	uint32_t _warnings = 0;
+	uint16_t _warnings = 0;
 
 public:
 	Controller controller;
@@ -53,7 +53,7 @@ public:
 	Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
 
 	uint32_t errors() const { return _errors; }
-	uint32_t warnings() const { return _warnings; }
+	uint16_t warnings() const { return _warnings; }
 };
 
 

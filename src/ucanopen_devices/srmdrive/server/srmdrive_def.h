@@ -85,7 +85,8 @@ struct CobTpdo3
 struct CobTpdo4
 {
 	uint32_t errors : 32;
-	uint32_t warnings : 32;
+	uint16_t _reserved : 16;
+	uint16_t warnings : 16;
 	CobTpdo4() = default;
 };
 
@@ -183,6 +184,19 @@ inline const std::vector<std::string_view> errorList = {
 	"POSSENSOR_CALIBRATION_FAULT",	// 0x0010 0000
 	"MOTOR_TEMP_SENSOR_FAULT",	// 0x0020 0000
 	"BYPASS_CONTACTOR_OPENING_FAULT",	// 0x0040 0000
+};
+
+
+inline const std::vector<std::string_view> warningList = {
+	"DCLINK_DISCONNECTED",
+	"DCLINK_CHARGING",
+	"DCLINK_HV_AT_OPEN_CONTACTORS",
+	"CAN_BUS_WARNING",
+	"JUNCTION_OVERHEATING",
+	"CASE_OVERHEATING",
+	"STATOR_OVERHEATING",
+	"FIELD_WINDING_OVERHEATING",
+	"FLUX_WEAKENING"
 };
 
 

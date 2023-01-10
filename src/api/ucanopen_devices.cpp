@@ -59,11 +59,66 @@ size_t ucanopen_devices_get_error_names(const char* serverName, char** buf, size
 ///
 ///
 ///
+size_t ucanopen_devices_get_warning_names(const char* serverName, char** buf, size_t countMax, size_t lenMax)
+{
+	if (std::string(serverName) == "SRM Drive")
+	{
+		if (srmdrive::warningList.size() > countMax)
+		{
+			return 0;
+		}
+
+		size_t i = 0;
+		for (auto error : srmdrive::warningList)
+		{
+			strncpy(buf[i++], error.data(), lenMax);
+		}
+
+		return srmdrive::warningList.size();
+	}
+	else if (std::string(serverName) == "LaunchPad")
+	{
+		// TODO
+	}
+	else if (std::string(serverName) == "BMS Main")
+	{
+		// TODO
+	}
+
+	return 0;
+}
+
+
+///
+///
+///
 unsigned int ucanopen_devices_get_error_code(const char* serverName)
 {
 	if (std::string(serverName) == "SRM Drive")
 	{
 		return global::srmdriveServer->errors();
+	}
+	else if (std::string(serverName) == "LaunchPad")
+	{
+		// TODO
+	}
+	else if (std::string(serverName) == "BMS Main")
+	{
+		// TODO
+	}
+
+	return 0;	
+}
+
+
+///
+///
+///
+unsigned int ucanopen_devices_get_warning_code(const char* serverName)
+{
+	if (std::string(serverName) == "SRM Drive")
+	{
+		return global::srmdriveServer->warnings();
 	}
 	else if (std::string(serverName) == "LaunchPad")
 	{

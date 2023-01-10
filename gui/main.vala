@@ -75,7 +75,9 @@ extern double bmsmain_tpdo1_get_temp_min();
 
 /// ucanopen_devices
 extern size_t ucanopen_devices_get_error_names(string serverName, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_devices_get_warning_names(string serverName, char** buf, size_t countMax, size_t lenMax);
 extern uint ucanopen_devices_get_error_code(string serverName);
+extern uint ucanopen_devices_get_warning_code(string serverName);
 
 
 int main(string[] args)
