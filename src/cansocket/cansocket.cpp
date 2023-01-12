@@ -145,7 +145,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 		error = Error::DeviceNotFound;
 		break;
 	case 3:
-		error = Error::SocketcanFailed;
+		error = Error::SocketСanFailed;
 		break;
 	default:
 		error = Error::ScriptExecFailed;

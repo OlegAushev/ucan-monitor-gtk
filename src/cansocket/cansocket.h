@@ -41,7 +41,7 @@ enum class Error
 	InvalidArgument,
 	ScriptNotFound,
 	DeviceNotFound,
-	SocketcanFailed,
+	SocketСanFailed,
 	ScriptExecFailed,
 	SocketCreationFailed,
 	SocketClosingFailed,
