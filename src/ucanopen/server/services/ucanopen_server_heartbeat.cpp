@@ -10,7 +10,7 @@
  */
 
 
-#include "ucanopen_service_heartbeat.h"
+#include "ucanopen_server_heartbeat.h"
 
 
 namespace ucanopen {

@@ -102,7 +102,7 @@ void ucanopen_client_set_watch_period(int period)
 ///
 void ucanopen_server_get_watch_value(const char* serverName, const char* watchName, char* buf, size_t len)
 {
-	global::ucanClient->server(serverName)->watchValue(watchName, buf, len);
+	global::ucanClient->server(serverName)->watchService.value(watchName, buf, len);
 }
 
 

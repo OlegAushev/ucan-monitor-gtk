@@ -233,7 +233,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->enableWatch();
+			server->watchService.enable();
 		}
 	}
 
@@ -245,7 +245,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->disableWatch();
+			server->watchService.disable();
 		}
 	}
 
@@ -257,7 +257,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->setWatchPeriod(period);
+			server->watchService.setPeriod(period);
 		}
 	}
 

@@ -21,7 +21,8 @@
 #include "../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
 
-#include "services/ucanopen_service_heartbeat.h"
+#include "services/ucanopen_server_heartbeat.h"
+#include "services/ucanopen_server_watch.h"
 
 
 namespace ucanopen {
@@ -47,6 +48,7 @@ public:
 	/* HEARTBEAT server --> client */
 public:
 	ServerHeartbeatService heartbeatService;
+	ServerWatchService watchService;
 
 	/* TPDO server --> client */
 private:
@@ -140,100 +142,6 @@ public:
 	/* TSDO server --> client */
 protected:
 	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;
-
-	/* WATCH messages server <- client */
-private:
-	bool _isWatchEnabled = false;
-	struct WatchInfo
-	{
-		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
-		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-	};
-	WatchInfo _watchInfo;
-	std::vector<std::string_view> _watchEntriesList;
-	mutable std::mutex _watchMutex;
-protected:
-	std::map<std::string_view, std::string> _watchData;
-public:
-	/**
-	 * @brief 
-	 * 
-	 */
-	void enableWatch()
-	{
-		std::cout << "[ucanopen] Enabling '" << _name << "' server watch requests (period = " << _watchInfo.period << ")... ";
-		_isWatchEnabled = true;
-		std::cout << "done." << std::endl;
-	}
-
-	/**
-	 * @brief 
-	 * 
-	 */
-	void disableWatch()
-	{
-		std::cout << "[ucanopen] Disabling '" << _name << "' server watch requests... ";
-		_isWatchEnabled = false;
-		std::cout << "done." << std::endl;
-	}
-
-	/**
-	 * @brief
-	 * 
-	 * @param period 
-	 */
-	void setWatchPeriod(std::chrono::milliseconds period)
-	{
-		std::cout << "[ucanopen] Setting '" << _name << "' server watch requests period = " << period << "... ";
-		_watchInfo.period = period;
-		std::cout << "done." << std::endl;
-	}
-
-	/**
-	 * @brief 
-	 * 
-	 * @return std::vector<std::string_view> 
-	 */
-	std::vector<std::string_view> watchEntriesList() const
-	{
-		return _watchEntriesList;
-	}
-
-	/**
-	 * @brief 
-	 * 
-	 * @param watchName 
-	 * @return std::string 
-	 */
-	std::string watchValue(std::string_view watchName) const
-	{
-		auto it = _watchData.find(watchName);
-		if (it == _watchData.end())
-		{
-			return "n/a";
-		}
-		return it->second;
-	}
-
-	/**
-	 * @brief 
-	 * 
-	 * @param watchName 
-	 * @param buf 
-	 * @param len 
-	 */
-	void watchValue(std::string_view watchName, char* buf, size_t len) const
-	{
-		auto it = _watchData.find(watchName);
-		if (it == _watchData.end())
-		{
-			const char* str = "n/a";
-			std::strncpy(buf, str, len);
-			return;
-		}
-		std::lock_guard<std::mutex> lock(_watchMutex);
-		std::strncpy(buf, it->second.c_str(), len);
-	}
 
 	/* CONFIGURATION entries */
 private:

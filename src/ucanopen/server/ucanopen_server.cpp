@@ -25,6 +25,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 	, _nodeId(nodeId)
 	, _socket(socket)
 	, heartbeatService(nodeId, std::chrono::milliseconds(2000))
+	, watchService(dictionary, dictionaryConfig)
 	, _dictionary(dictionary)
 	, watchCategory(dictionaryConfig.watchCategory)
 	, watchSubcategory(dictionaryConfig.watchSubcategory)
@@ -36,13 +37,6 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 		_dictionaryAux.insert({
 				{entry.category, entry.subcategory, entry.name},
 				_dictionary.find(key)});
-
-		// create watch entries list and data map
-		if (entry.category == watchCategory)
-		{
-			_watchEntriesList.push_back(entry.name);
-			_watchData.insert({entry.name, "..."});
-		}
 
 		// create conf entries list
 		if (entry.category == configCategory)
@@ -111,16 +105,7 @@ void IServer::_sendPeriodic()
 		}
 	}
 
-	if (_isWatchEnabled && !_watchEntriesList.empty())
-	{
-		if (now - _watchInfo.timepoint >= _watchInfo.period)
-		{
-			static size_t i = 0;
-			read(watchCategory, watchSubcategory, _watchEntriesList[i]);
-			_watchInfo.timepoint = now;
-			i = (i + 1) % _watchEntriesList.size();
-		}
-	}
+	watchService.sendPeriodicRequest();
 }
 
 
@@ -187,14 +172,7 @@ void IServer::_handleFrame(const can_frame& frame)
 		}
 		
 		// handle watch data
-		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::ResponseToRead))
-		{
-			if (odEntry->second.dataType != OD_ENUM16)
-			{
-				std::lock_guard<std::mutex> lock(_watchMutex);
-				_watchData[odEntry->second.name] = sdoMessage.data.toString(odEntry->second.dataType);
-			}
-		}
+		watchService.handleFrame(sdoType, odEntry, sdoMessage.data);
 
 		// server-specific TSDO handling
 		_handleTsdo(sdoType, odEntry, sdoMessage.data);
