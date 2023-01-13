@@ -154,7 +154,7 @@ size_t ucanopen_server_get_config_entries(const char* serverName, const char* ca
 ///
 bool ucanopen_server_is_heartbeat_ok(const char* serverName)
 {
-	return global::ucanClient->server(serverName)->isHeartbeatOk();
+	return global::ucanClient->server(serverName)->heartbeatService.isOk();
 }
 
 
@@ -163,7 +163,7 @@ bool ucanopen_server_is_heartbeat_ok(const char* serverName)
 ///
 void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len)
 {
-	switch (global::ucanClient->server(serverName)->nmtState())
+	switch (global::ucanClient->server(serverName)->heartbeatService.nmtState())
 	{
 	case ucanopen::NmtState::Initialization:
 		strncpy(buf, "init", len);

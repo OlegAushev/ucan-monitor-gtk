@@ -21,6 +21,8 @@
 #include "../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
 
+#include "services/ucanopen_service_heartbeat.h"
+
 
 namespace ucanopen {
 
@@ -43,27 +45,8 @@ public:
 	const std::string_view configCategory;
 
 	/* HEARTBEAT server --> client */
-private:
-	struct HeartbeatInfo
-	{
-		canid_t id;
-		std::chrono::milliseconds timeout;
-		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		NmtState nmtState;
-	};
-	HeartbeatInfo _heartbeatInfo;
 public:
-	/**
-	 * @brief 
-	 * 
-	 * @return true 
-	 * @return false 
-	 */
-	bool isHeartbeatOk() const
-	{
-		return ((std::chrono::steady_clock::now() - _heartbeatInfo.timepoint) <= _heartbeatInfo.timeout)
-				&& (_heartbeatInfo.nmtState == NmtState::Operational);
-	}
+	ServerHeartbeatService heartbeatService;
 
 	/* TPDO server --> client */
 private:
@@ -344,13 +327,6 @@ public:
 	 * @return ODRequestStatus 
 	 */
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
-
-	/**
-	 * @brief 
-	 * 
-	 * @return NmtState 
-	 */
-	NmtState nmtState() const { return _heartbeatInfo.nmtState; }
 
 private:	
 	std::map<ODEntryKey, ODEntryValue>::const_iterator _findOdEntry(

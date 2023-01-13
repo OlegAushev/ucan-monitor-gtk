@@ -24,6 +24,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 	: _name(name)
 	, _nodeId(nodeId)
 	, _socket(socket)
+	, heartbeatService(nodeId, std::chrono::milliseconds(2000))
 	, _dictionary(dictionary)
 	, watchCategory(dictionaryConfig.watchCategory)
 	, watchSubcategory(dictionaryConfig.watchSubcategory)
@@ -49,13 +50,6 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 			_configEntriesList[entry.subcategory].push_back(entry.name);
 		}
 	}
-
-	_heartbeatInfo = {
-		.id = calculateCobId(CobType::Heartbeat, _nodeId),
-		.timeout = std::chrono::milliseconds(2000),
-		.timepoint = std::chrono::steady_clock::now(),
-		.nmtState = NmtState::Stopped
-	};
 }
 
 
@@ -78,7 +72,7 @@ void IServer::_setNodeId(NodeId nodeId)
 		message.id = calculateCobId(toCobType(type), _nodeId);
 	}
 
-	_heartbeatInfo.id = calculateCobId(CobType::Heartbeat, _nodeId);	
+	heartbeatService.setNodeId(_nodeId);
 }
 
 
@@ -205,10 +199,9 @@ void IServer::_handleFrame(const can_frame& frame)
 		// server-specific TSDO handling
 		_handleTsdo(sdoType, odEntry, sdoMessage.data);
 	}
-	else if (frame.can_id == _heartbeatInfo.id)
+	else if (heartbeatService.handleFrame(frame))
 	{
-		_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
-		_heartbeatInfo.nmtState = static_cast<NmtState>(frame.data[0]);
+		return;
 	}	
 }
 
