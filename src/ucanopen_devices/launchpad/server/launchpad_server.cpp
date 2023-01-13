@@ -44,7 +44,7 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			Logger::instance().add(syslogMessages[messageId]);
 		}
 	}
-	else if (entryIt->second.category == watchService.dictionaryCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
+	else if (entryIt->second.category == watchService.watchCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
 	{
 		
 	}

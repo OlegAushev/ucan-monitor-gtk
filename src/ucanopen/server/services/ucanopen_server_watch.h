@@ -28,8 +28,8 @@ namespace ucanopen {
 class ServerWatchService
 {
 public:
-	const std::string_view dictionaryCategory;
-	const std::string_view dictionarySubcategory;
+	const std::string_view watchCategory;
+	const std::string_view watchSubcategory;
 private:
 	impl::IBaseServer* const _server;
 	bool _isEnabled = false;
@@ -51,7 +51,7 @@ public:
 			if (now - _timepoint >= _period)
 			{
 				static size_t i = 0;
-				_server->read(dictionaryCategory, dictionarySubcategory, _entriesList[i]);
+				_server->read(watchCategory, watchSubcategory, _entriesList[i]);
 				_timepoint = now;
 				i = (i + 1) % _entriesList.size();
 			}
@@ -60,7 +60,7 @@ public:
 
 	bool handleFrame(SdoType sdoType, ObjectDictionary::const_iterator odEntry, CobSdoData data)
 	{
-		if ((odEntry->second.category == dictionaryCategory) && (sdoType == SdoType::ResponseToRead))
+		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::ResponseToRead))
 		{
 			if (odEntry->second.dataType != OD_ENUM16)
 			{
