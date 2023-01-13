@@ -37,7 +37,7 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data)
 {
-	if (entryIt->second.category == watchCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
+	if (entryIt->second.category == watchService.dictionaryCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
 	{
 		if (entryIt->second.name == "DRIVE_STATE" && data.u32() < driveStates.size())
 		{

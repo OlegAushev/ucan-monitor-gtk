@@ -18,9 +18,7 @@
 #include <chrono>
 #include <future>
 
-#include "../ucanopen_def.h" 
-#include "cansocket/cansocket.h"
-
+#include "ucanopen_base_server.h"
 #include "services/ucanopen_server_heartbeat.h"
 #include "services/ucanopen_server_watch.h"
 
@@ -28,27 +26,13 @@
 namespace ucanopen {
 
 
-class IServer
+class IServer : public impl::IBaseServer
 {
 	friend class Client;
-private:
-	std::string _name = "unnamed";
-	NodeId _nodeId;
-	std::shared_ptr<can::Socket> _socket;
-
-	/* OBJECT DICTIONARY */
-private:
-	const ObjectDictionary& _dictionary;
-	ObjectDictionaryAux _dictionaryAux;
-public:
-	const std::string_view watchCategory;
-	const std::string_view watchSubcategory;
-	const std::string_view configCategory;
-
-	/* HEARTBEAT server --> client */
 public:
 	ServerHeartbeatService heartbeatService;
 	ServerWatchService watchService;
+	const std::string_view configCategory;
 
 	/* TPDO server --> client */
 private:
@@ -173,83 +157,8 @@ public:
 	 * 
 	 */
 	virtual ~IServer() = default;
-
-	/**
-	 * @brief Returns server name.
-	 * 
-	 * @return std::string_view 
-	 */
-	std::string_view name() const
-	{
-		return _name;
-	}
-
-	/**
-	 * @brief Returns server node ID.
-	 * 
-	 * @return NodeId 
-	 */
-	NodeId nodeId() const
-	{
-		return _nodeId;
-	}
 	
-	/**
-	 * @brief 
-	 * 
-	 * @param category 
-	 * @param subcategory 
-	 * @param name 
-	 * @return ODRequestStatus 
-	 */
-	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
-
-	/**
-	 * @brief 
-	 * 
-	 * @param category 
-	 * @param subcategory 
-	 * @param name 
-	 * @param data 
-	 * @return ODRequestStatus 
-	 */
-	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
-
-	/**
-	 * @brief 
-	 * 
-	 * @param category 
-	 * @param subcategory 
-	 * @param name 
-	 * @param value 
-	 * @return ODRequestStatus 
-	 */
-	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
-
-	/**
-	 * @brief 
-	 * 
-	 * @param category 
-	 * @param subcategory 
-	 * @param name 
-	 * @return ODRequestStatus 
-	 */
-	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
-
 private:	
-	std::map<ODEntryKey, ODEntryValue>::const_iterator _findOdEntry(
-		std::string_view category,
-		std::string_view subcategory,
-		std::string_view name)
-	{
-		auto it = _dictionaryAux.find({category, subcategory, name});
-		if (it == _dictionaryAux.end())
-		{
-			return _dictionary.end();
-		}
-		return it->second;
-	}
-
 	void _sendPeriodic();
 	void _handleFrame(const can_frame& frame);
 

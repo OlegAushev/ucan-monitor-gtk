@@ -19,9 +19,11 @@ namespace ucanopen {
 ///
 ///
 ///
-ServerWatchService::ServerWatchService(const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
+ServerWatchService::ServerWatchService(impl::IBaseServer* server,
+		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: dictionaryCategory(dictionaryConfig.watchCategory)
 	, dictionarySubcategory(dictionaryConfig.watchSubcategory)
+	, _server(server)
 {
 	_timepoint = std::chrono::steady_clock::now();
 

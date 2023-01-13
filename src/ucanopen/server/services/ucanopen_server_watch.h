@@ -10,8 +10,12 @@
  */
 
 
+#pragma once
+
+
 #include "../../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
+#include "../ucanopen_base_server.h"
 
 #include <vector>
 #include <map>
@@ -27,7 +31,7 @@ public:
 	const std::string_view dictionaryCategory;
 	const std::string_view dictionarySubcategory;
 private:
-	std::string _name = "foo"; // FIXME
+	impl::IBaseServer* const _server;
 	bool _isEnabled = false;
 	std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
@@ -35,7 +39,8 @@ private:
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
+	ServerWatchService(impl::IBaseServer* server,
+			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 
 
 	void sendPeriodicRequest()
@@ -46,7 +51,7 @@ public:
 			if (now - _timepoint >= _period)
 			{
 				static size_t i = 0;
-				// TODO read(dictionaryCategory, dictionarySubcategory, _entriesList[i]);
+				_server->read(dictionaryCategory, dictionarySubcategory, _entriesList[i]);
 				_timepoint = now;
 				i = (i + 1) % _entriesList.size();
 			}
@@ -73,7 +78,7 @@ public:
 	 */
 	void enable()
 	{
-		std::cout << "[ucanopen] Enabling '" << _name << "' server watch requests (period = " << _period << ")... ";
+		std::cout << "[ucanopen] Enabling '" << _server->name() << "' server watch requests (period = " << _period << ")... ";
 		_isEnabled = true;
 		std::cout << "done." << std::endl;
 	}
@@ -84,7 +89,7 @@ public:
 	 */
 	void disable()
 	{
-		std::cout << "[ucanopen] Disabling '" << _name << "' server watch requests... ";
+		std::cout << "[ucanopen] Disabling '" << _server->name() << "' server watch requests... ";
 		_isEnabled = false;
 		std::cout << "done." << std::endl;
 	}
@@ -96,7 +101,7 @@ public:
 	 */
 	void setPeriod(std::chrono::milliseconds period)
 	{
-		std::cout << "[ucanopen] Setting '" << _name << "' server watch requests period = " << period << "... ";
+		std::cout << "[ucanopen] Setting '" << _server->name() << "' server watch requests period = " << period << "... ";
 		_period = period;
 		std::cout << "done." << std::endl;
 	}
