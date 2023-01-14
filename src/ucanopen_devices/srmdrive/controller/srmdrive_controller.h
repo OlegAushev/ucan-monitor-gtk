@@ -24,7 +24,7 @@ namespace srmdrive {
 class Controller
 {
 private:
-	ucanopen::IServer* _driveServer;
+	ucanopen::Server* _driveServer;
 
 	bool _isRunEnabled = false;
 	bool _isEmergencyEnabled = false;
@@ -33,7 +33,7 @@ private:
 	float _speedRef = 0;
 
 public:
-	Controller(ucanopen::IServer* driveServer);
+	Controller(ucanopen::Server* driveServer);
 	
 	void powerUp();
 	void powerDown();

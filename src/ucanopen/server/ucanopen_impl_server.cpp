@@ -10,7 +10,7 @@
  */
 
 
-#include "ucanopen_base_server.h"
+#include "ucanopen_impl_server.h"
 
 
 namespace ucanopen {
@@ -19,7 +19,7 @@ namespace ucanopen {
 ///
 ///
 ///
-impl::IBaseServer::IBaseServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
+impl::Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary)
 	: _name(name)
 	, _nodeId(nodeId)
@@ -39,7 +39,7 @@ impl::IBaseServer::IBaseServer(const std::string& name, NodeId nodeId, std::shar
 ///
 ///
 ///
-ODRequestStatus impl::IBaseServer::read(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = _findOdEntry(category, subcategory, name);
 	
@@ -71,7 +71,7 @@ ODRequestStatus impl::IBaseServer::read(std::string_view category, std::string_v
 ///
 ///
 ///
-ODRequestStatus impl::IBaseServer::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
+ODRequestStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdoData)
 {
 	auto entryIt = _findOdEntry(category, subcategory, name);
 	
@@ -104,7 +104,7 @@ ODRequestStatus impl::IBaseServer::write(std::string_view category, std::string_
 ///
 ///
 ///
-ODRequestStatus impl::IBaseServer::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
+ODRequestStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	auto entryIt = _findOdEntry(category, subcategory, name);
 	
@@ -171,7 +171,7 @@ ODRequestStatus impl::IBaseServer::write(std::string_view category, std::string_
 ///
 ///
 ///
-ODRequestStatus impl::IBaseServer::exec(std::string_view category, std::string_view subcategory, std::string_view name)
+ODRequestStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	auto entryIt = _findOdEntry(category, subcategory, name);
 	if (entryIt == _dictionary.end())

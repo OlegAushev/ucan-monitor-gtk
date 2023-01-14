@@ -39,8 +39,8 @@ private:
 	std::shared_ptr<can::Socket> _socket;
 	NmtState _state;
 
-	std::set<std::shared_ptr<IServer>> _servers;
-	std::map<canid_t, std::shared_ptr<IServer>> _recvIdServerList;
+	std::set<std::shared_ptr<Server>> _servers;
+	std::map<canid_t, std::shared_ptr<Server>> _recvIdServerList;
 
 	/* SYNC */
 	struct SyncInfo
@@ -114,15 +114,15 @@ public:
 	 * 
 	 * @param server 
 	 */
-	void registerServer(std::shared_ptr<IServer> server);
+	void registerServer(std::shared_ptr<Server> server);
 
 	/**
 	 * @brief Returns pointer to server
 	 * 
 	 * @param name 
-	 * @return std::shared_ptr<IServer> 
+	 * @return std::shared_ptr<Server> 
 	 */
-	std::shared_ptr<IServer> server(std::string_view name)
+	std::shared_ptr<Server> server(std::string_view name)
 	{
 		auto itServer = std::find_if(_servers.begin(), _servers.end(),
 			[name](const auto& s)
@@ -262,7 +262,7 @@ public:
 	}
 
 protected:
-	void _calculateRecvId(std::shared_ptr<IServer> server);
+	void _calculateRecvId(std::shared_ptr<Server> server);
 	bool _isFree(NodeId nodeId) const;
 };
 

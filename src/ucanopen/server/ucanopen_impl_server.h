@@ -13,8 +13,8 @@
 #pragma once
 
 
-#include "../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
+#include "../ucanopen_def.h" 
 
 
 namespace ucanopen {
@@ -23,7 +23,7 @@ namespace ucanopen {
 namespace impl {
 
 
-class IBaseServer
+class Server
 {
 protected:
 	std::string _name = "unnamed";
@@ -32,9 +32,21 @@ protected:
 
 	const ObjectDictionary& _dictionary;
 	ObjectDictionaryAux _dictionaryAux;
+protected:
+	virtual void _handleTpdo1(can_payload data) = 0;
+	virtual void _handleTpdo2(can_payload data) = 0;
+	virtual void _handleTpdo3(can_payload data) = 0;
+	virtual void _handleTpdo4(can_payload data) = 0;
+
+	virtual can_payload _createRpdo1() = 0;
+	virtual can_payload _createRpdo2() = 0;
+	virtual can_payload _createRpdo3() = 0;
+	virtual can_payload _createRpdo4() = 0;
+
+	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;
 public:
 	/**
-	 * @brief Construct a new IBaseServer object
+	 * @brief Construct a new Server object
 	 * 
 	 * @param name 
 	 * @param nodeId 
@@ -42,7 +54,7 @@ public:
 	 * @param dictionary 
 	 * @param dictionaryConfig 
 	 */
-	IBaseServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
+	Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary);
 
 	/**

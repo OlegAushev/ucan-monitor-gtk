@@ -75,7 +75,7 @@ void Client::setNodeId(NodeId nodeId)
 ///
 ///
 ///
-void Client::registerServer(std::shared_ptr<IServer> server)
+void Client::registerServer(std::shared_ptr<Server> server)
 {
 	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
 			<< std::hex << server->nodeId().value() << std::dec << " to client... ";
@@ -246,7 +246,7 @@ void Client::_onFrameReceived(const can_frame& frame)
 ///
 ///
 ///
-void Client::_calculateRecvId(std::shared_ptr<IServer> server)
+void Client::_calculateRecvId(std::shared_ptr<Server> server)
 {
 	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
 	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());

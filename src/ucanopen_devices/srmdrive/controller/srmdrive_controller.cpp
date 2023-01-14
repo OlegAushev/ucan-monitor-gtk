@@ -19,7 +19,7 @@ namespace srmdrive {
 ///
 ///
 ///
-Controller::Controller(ucanopen::IServer* driveServer)
+Controller::Controller(ucanopen::Server* driveServer)
 	: _driveServer(driveServer)
 {}
 

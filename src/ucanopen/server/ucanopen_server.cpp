@@ -19,9 +19,9 @@ namespace ucanopen {
 ///
 ///
 ///
-IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
+Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
-	: impl::IBaseServer(name, nodeId, socket, dictionary)
+	: impl::Server(name, nodeId, socket, dictionary)
 	, heartbeatService(nodeId, std::chrono::milliseconds(2000))
 	, watchService(this, dictionary, dictionaryConfig)
 	, configCategory(dictionaryConfig.configCategory)
@@ -40,7 +40,7 @@ IServer::IServer(const std::string& name, NodeId nodeId, std::shared_ptr<can::So
 ///
 ///
 ///
-void IServer::_setNodeId(NodeId nodeId)
+void Server::_setNodeId(NodeId nodeId)
 {
 	if (!nodeId.isValid()) return;
 
@@ -63,7 +63,7 @@ void IServer::_setNodeId(NodeId nodeId)
 ///
 ///
 ///
-void IServer::_sendPeriodic()
+void Server::_sendPeriodic()
 {
 	auto now = std::chrono::steady_clock::now();
 	
@@ -102,7 +102,7 @@ void IServer::_sendPeriodic()
 ///
 ///
 ///
-void IServer::_handleFrame(const can_frame& frame)
+void Server::_handleFrame(const can_frame& frame)
 {
 	for (auto& [type, message] : _tpdoList)
 	{

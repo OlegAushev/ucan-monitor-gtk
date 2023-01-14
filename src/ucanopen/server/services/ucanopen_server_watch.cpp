@@ -19,7 +19,7 @@ namespace ucanopen {
 ///
 ///
 ///
-ServerWatchService::ServerWatchService(impl::IBaseServer* server,
+ServerWatchService::ServerWatchService(impl::Server* server,
 		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: watchCategory(dictionaryConfig.watchCategory)
 	, watchSubcategory(dictionaryConfig.watchSubcategory)

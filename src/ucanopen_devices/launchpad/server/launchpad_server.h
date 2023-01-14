@@ -25,7 +25,7 @@ extern const ucanopen::ObjectDictionary objectDictionary;
 extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
 
 
-class Server : public ucanopen::IServer
+class Server : public ucanopen::Server
 {
 protected:
 	virtual void _handleTpdo1(ucanopen::can_payload data) override final {}

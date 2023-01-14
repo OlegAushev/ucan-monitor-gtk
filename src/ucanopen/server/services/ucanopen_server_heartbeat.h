@@ -13,8 +13,8 @@
 #pragma once
 
 
-#include "../../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
+#include "../../ucanopen_def.h" 
 
 
 namespace ucanopen {

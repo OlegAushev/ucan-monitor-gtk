@@ -13,9 +13,9 @@
 #pragma once
 
 
-#include "../../ucanopen_def.h" 
 #include "cansocket/cansocket.h"
-#include "../ucanopen_base_server.h"
+#include "../../ucanopen_def.h" 
+#include "../ucanopen_impl_server.h"
 
 #include <vector>
 #include <map>
@@ -31,7 +31,7 @@ public:
 	const std::string_view watchCategory;
 	const std::string_view watchSubcategory;
 private:
-	impl::IBaseServer* const _server;
+	impl::Server* const _server;
 	bool _isEnabled = false;
 	std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
@@ -39,7 +39,7 @@ private:
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(impl::IBaseServer* server,
+	ServerWatchService(impl::Server* server,
 			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 
 

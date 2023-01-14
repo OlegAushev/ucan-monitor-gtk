@@ -20,7 +20,7 @@
 namespace bmsmain {
 
 
-class Server : public ucanopen::IServer
+class Server : public ucanopen::Server
 {
 private:
 	double _current = 0;

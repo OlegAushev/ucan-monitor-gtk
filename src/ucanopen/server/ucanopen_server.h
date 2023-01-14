@@ -18,7 +18,7 @@
 #include <chrono>
 #include <future>
 
-#include "ucanopen_base_server.h"
+#include "ucanopen_impl_server.h"
 #include "services/ucanopen_server_heartbeat.h"
 #include "services/ucanopen_server_watch.h"
 
@@ -26,7 +26,7 @@
 namespace ucanopen {
 
 
-class IServer : public impl::IBaseServer
+class Server : public impl::Server
 {
 	friend class Client;
 public:
@@ -45,10 +45,6 @@ private:
 	};
 	std::map<TpdoType, TpdoInfo> _tpdoList;
 protected:
-	virtual void _handleTpdo1(can_payload data) = 0;
-	virtual void _handleTpdo2(can_payload data) = 0;
-	virtual void _handleTpdo3(can_payload data) = 0;
-	virtual void _handleTpdo4(can_payload data) = 0;
 	void _registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0))
 	{
 		canid_t id = calculateCobId(toCobType(type), _nodeId);
@@ -91,10 +87,6 @@ private:
 	};
 	std::map<RpdoType, RpdoInfo> _rpdoList;
 protected:
-	virtual can_payload _createRpdo1() = 0;
-	virtual can_payload _createRpdo2() = 0;
-	virtual can_payload _createRpdo3() = 0;
-	virtual can_payload _createRpdo4() = 0;
 	void _registerRpdo(RpdoType type, std::chrono::milliseconds period)
 	{
 		canid_t id = calculateCobId(toCobType(type), _nodeId);
@@ -123,9 +115,7 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/* TSDO server --> client */
-protected:
-	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;
+	/* TSDO server --> client */	
 
 	/* CONFIGURATION entries */
 private:
@@ -149,14 +139,14 @@ public:
 	 * @param socket 
 	 * @param dictionary 
 	 */
-	IServer(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,
+	Server(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,
 			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 	
 	/**
-	 * @brief Destroy the IServer object
+	 * @brief Destroy the Server object
 	 * 
 	 */
-	virtual ~IServer() = default;
+	virtual ~Server() = default;
 	
 private:	
 	void _sendPeriodic();
