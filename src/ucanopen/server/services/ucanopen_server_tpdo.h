@@ -34,13 +34,10 @@ private:
 		can_payload data;
 	};
 	std::map<TpdoType, Message> _tpdoList;
-
 public:
-	void _registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
-
-public:
-
 	ServerTpdoService(impl::Server* server);
+
+	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
 
 	bool isOk(TpdoType tpdo) const
 	{
