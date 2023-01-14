@@ -23,10 +23,10 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 	, controller(this)
 {
-	_registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
-	_registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
-	_registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
-	_registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
+	tpdoService._registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200));
+	tpdoService._registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200));
+	tpdoService._registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200));
+	tpdoService._registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200));
 }
 
 

@@ -19,9 +19,10 @@ namespace ucanopen {
 ///
 ///
 ///
-ServerHeartbeatService::ServerHeartbeatService(NodeId nodeId, std::chrono::milliseconds timeout)
+ServerHeartbeatService::ServerHeartbeatService(impl::Server* server, std::chrono::milliseconds timeout)
+	: _server(server)
 {
-	_id = calculateCobId(CobType::Heartbeat, nodeId);
+	_id = calculateCobId(CobType::Heartbeat, _server->nodeId());
 	_timeout = timeout;
 	_timepoint = std::chrono::steady_clock::now();
 	_nmtState = NmtState::Stopped;
@@ -31,9 +32,9 @@ ServerHeartbeatService::ServerHeartbeatService(NodeId nodeId, std::chrono::milli
 ///
 ///
 ///
-void ServerHeartbeatService::setNodeId(NodeId nodeId)
+void ServerHeartbeatService::updateNodeId()
 {
-	_id = calculateCobId(CobType::Heartbeat, nodeId);
+	_id = calculateCobId(CobType::Heartbeat, _server->nodeId());
 }
 
 

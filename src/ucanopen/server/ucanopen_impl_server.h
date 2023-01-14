@@ -20,11 +20,15 @@
 namespace ucanopen {
 
 
+class ServerTpdoService;
+
+
 namespace impl {
 
 
 class Server
 {
+	friend class ucanopen::ServerTpdoService;
 protected:
 	std::string _name = "unnamed";
 	NodeId _nodeId;

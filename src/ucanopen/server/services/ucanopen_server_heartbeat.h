@@ -15,6 +15,7 @@
 
 #include "cansocket/cansocket.h"
 #include "../../ucanopen_def.h" 
+#include "../ucanopen_impl_server.h"
 
 
 namespace ucanopen {
@@ -23,12 +24,13 @@ namespace ucanopen {
 class ServerHeartbeatService
 {
 private:
+	impl::Server* const _server;
 	canid_t _id;
 	std::chrono::milliseconds _timeout;
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
 	NmtState _nmtState;
 public:
-	ServerHeartbeatService(NodeId nodeId, std::chrono::milliseconds timeout);
+	ServerHeartbeatService(impl::Server* server, std::chrono::milliseconds timeout);
 
 	bool isOk() const
 	{
@@ -38,7 +40,7 @@ public:
 
 	NmtState nmtState() const { return _nmtState; }
 
-	void setNodeId(NodeId nodeId);
+	void updateNodeId();
 
 	bool handleFrame(const can_frame& frame)
 	{

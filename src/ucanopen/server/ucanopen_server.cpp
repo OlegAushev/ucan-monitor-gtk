@@ -22,7 +22,8 @@ namespace ucanopen {
 Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: impl::Server(name, nodeId, socket, dictionary)
-	, heartbeatService(nodeId, std::chrono::milliseconds(2000))
+	, heartbeatService(this, std::chrono::milliseconds(2000))
+	, tpdoService(this)
 	, watchService(this, dictionary, dictionaryConfig)
 	, configCategory(dictionaryConfig.configCategory)
 {
@@ -51,12 +52,8 @@ void Server::_setNodeId(NodeId nodeId)
 		message.id = calculateCobId(toCobType(type), _nodeId);
 	}
 
-	for (auto& [type, message] : _tpdoList)
-	{
-		message.id = calculateCobId(toCobType(type), _nodeId);
-	}
-
-	heartbeatService.setNodeId(_nodeId);
+	heartbeatService.updateNodeId();
+	tpdoService.updateNodeId();
 }
 
 
@@ -104,34 +101,11 @@ void Server::_sendPeriodic()
 ///
 void Server::_handleFrame(const can_frame& frame)
 {
-	for (auto& [type, message] : _tpdoList)
+	if (tpdoService.handleFrame(frame))
 	{
-		if (frame.can_id != message.id) continue;
-
-		message.timepoint = std::chrono::steady_clock::now();
-		can_payload data{};
-		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
-		message.data = data;
-
-		switch (type)
-		{
-		case TpdoType::Tpdo1:
-			_handleTpdo1(data);
-			break;
-		case TpdoType::Tpdo2:
-			_handleTpdo2(data);
-			break;
-		case TpdoType::Tpdo3:
-			_handleTpdo3(data);
-			break;
-		case TpdoType::Tpdo4:
-			_handleTpdo4(data);
-			break;
-		}
 		return;
 	}
-
-	if (frame.can_id == calculateCobId(CobType::Tsdo, _nodeId))
+	else if (frame.can_id == calculateCobId(CobType::Tsdo, _nodeId))
 	{
 		CobSdo sdoMessage(frame.data);
 		ODEntryKey key = {sdoMessage.index, sdoMessage.subindex};

@@ -42,7 +42,6 @@ public:
 	ServerWatchService(impl::Server* server,
 			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 
-
 	void sendPeriodicRequest()
 	{
 		if (_isEnabled && !_entriesList.empty())
@@ -72,10 +71,6 @@ public:
 		return false;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void enable()
 	{
 		std::cout << "[ucanopen] Enabling '" << _server->name() << "' server watch requests (period = " << _period << ")... ";
@@ -83,10 +78,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void disable()
 	{
 		std::cout << "[ucanopen] Disabling '" << _server->name() << "' server watch requests... ";
@@ -94,11 +85,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief
-	 * 
-	 * @param period 
-	 */
 	void setPeriod(std::chrono::milliseconds period)
 	{
 		std::cout << "[ucanopen] Setting '" << _server->name() << "' server watch requests period = " << period << "... ";
@@ -106,22 +92,11 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 * @return std::vector<std::string_view> 
-	 */
 	std::vector<std::string_view> entriesList() const
 	{
 		return _entriesList;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 * @param watchName 
-	 * @return std::string 
-	 */
 	std::string value(std::string_view watchName) const
 	{
 		auto it = _data.find(watchName);
@@ -132,13 +107,6 @@ public:
 		return it->second;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 * @param watchName 
-	 * @param buf 
-	 * @param len 
-	 */
 	void value(std::string_view watchName, char* buf, size_t len) const
 	{
 		auto it = _data.find(watchName);

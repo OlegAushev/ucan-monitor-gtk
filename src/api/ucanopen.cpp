@@ -187,7 +187,7 @@ void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len
 bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return global::ucanClient->server(serverName)->isTpdoOk(static_cast<ucanopen::TpdoType>(tpdoNum));
+	return global::ucanClient->server(serverName)->tpdoService.isOk(static_cast<ucanopen::TpdoType>(tpdoNum));
 }
 
 
@@ -197,7 +197,7 @@ bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 unsigned long ucanopen_server_get_tpdo_data(const char* serverName, int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return ucanopen::fromPayload<uint64_t>(global::ucanClient->server(serverName)->tpdoData(static_cast<ucanopen::TpdoType>(tpdoNum)));
+	return ucanopen::fromPayload<uint64_t>(global::ucanClient->server(serverName)->tpdoService.data(static_cast<ucanopen::TpdoType>(tpdoNum)));
 }
 
 

@@ -22,7 +22,7 @@ namespace bmsmain {
 Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, nodeId, socket, ucanopen::ObjectDictionary{}, ucanopen::ObjectDictionaryConfig{})
 {
-	_registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(2000));
+	tpdoService._registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(2000));
 }
 
 
