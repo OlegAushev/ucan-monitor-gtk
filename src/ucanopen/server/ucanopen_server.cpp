@@ -24,6 +24,7 @@ Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Sock
 	: impl::Server(name, nodeId, socket, dictionary)
 	, heartbeatService(this, std::chrono::milliseconds(2000))
 	, tpdoService(this)
+	, rpdoService(this)
 	, watchService(this, dictionary, dictionaryConfig)
 	, configCategory(dictionaryConfig.configCategory)
 {
@@ -47,13 +48,9 @@ void Server::_setNodeId(NodeId nodeId)
 
 	_nodeId = nodeId;
 
-	for (auto& [type, message] : _rpdoList)
-	{
-		message.id = calculateCobId(toCobType(type), _nodeId);
-	}
-
 	heartbeatService.updateNodeId();
 	tpdoService.updateNodeId();
+	rpdoService.updateNodeId();
 }
 
 
@@ -61,37 +58,8 @@ void Server::_setNodeId(NodeId nodeId)
 ///
 ///
 void Server::_sendPeriodic()
-{
-	auto now = std::chrono::steady_clock::now();
-	
-	if (_isRpdoEnabled)
-	{
-		for (auto& [type, message] : _rpdoList)
-		{
-			if (message.period == std::chrono::milliseconds(0)) continue;
-			if (now - message.timepoint < message.period) continue;
-
-			can_payload data;
-			switch (type)
-			{
-			case RpdoType::Rpdo1:
-				data = _createRpdo1();
-				break;
-			case RpdoType::Rpdo2:
-				data = _createRpdo2();
-				break;
-			case RpdoType::Rpdo3:
-				data = _createRpdo3();
-				break;
-			case RpdoType::Rpdo4:
-				data = _createRpdo4();
-				break;
-			}
-			_socket->send(createFrame(message.id, 8, data));
-			message.timepoint = now;	
-		}
-	}
-
+{	
+	rpdoService.sendPeriodic();
 	watchService.sendPeriodicRequest();
 }
 

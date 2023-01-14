@@ -21,6 +21,7 @@
 #include "ucanopen_impl_server.h"
 #include "services/ucanopen_server_heartbeat.h"
 #include "services/ucanopen_server_tpdo.h"
+#include "services/ucanopen_server_rpdo.h"
 #include "services/ucanopen_server_watch.h"
 
 
@@ -33,49 +34,9 @@ class Server : public impl::Server
 public:
 	ServerHeartbeatService heartbeatService;
 	ServerTpdoService tpdoService;
+	ServerRpdoService rpdoService;
 	ServerWatchService watchService;
 	const std::string_view configCategory;
-
-	/* RPDO server <-- client */
-private:
-	bool _isRpdoEnabled = false;
-	struct RpdoInfo
-	{
-		canid_t id;
-		std::chrono::milliseconds period;
-		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-	};
-	std::map<RpdoType, RpdoInfo> _rpdoList;
-protected:
-	void _registerRpdo(RpdoType type, std::chrono::milliseconds period)
-	{
-		canid_t id = calculateCobId(toCobType(type), _nodeId);
-		_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
-	}
-public:
-	/**
-	 * @brief 
-	 * 
-	 */
-	void enableRpdo()
-	{
-		std::cout << "[ucanopen] Enabling '" << _name << "' server RPDO messages... ";
-		_isRpdoEnabled = true;
-		std::cout << "done." << std::endl;
-	}
-	
-	/**
-	 * @brief 
-	 * 
-	 */
-	void disableRpdo() 
-	{
-		std::cout << "[ucanopen] Disabling '" << _name << "' server RPDO messages... ";
-		_isRpdoEnabled = false;
-		std::cout << "done." << std::endl;
-	}
-
-	/* TSDO server --> client */	
 
 	/* CONFIGURATION entries */
 private:
