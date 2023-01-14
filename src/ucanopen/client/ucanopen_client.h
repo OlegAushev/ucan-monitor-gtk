@@ -51,7 +51,6 @@ private:
 	};
 	SyncInfo _syncInfo;
 
-
 	/* HEARTBEAT */
 	struct HeartbeatInfo
 	{
