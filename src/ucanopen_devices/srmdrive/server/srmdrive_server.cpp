@@ -44,17 +44,17 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			watchService.setValue(entryIt->second.name, driveStates[data.u32()]);
 		}
 	}
-	else if (entryIt->second.category == configCategory && sdoType == ucanopen::SdoType::ResponseToRead)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToRead)
 	{
 		std::stringstream sstr;
-		sstr << "[" << configCategory << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " = " << data.toString(entryIt->second.dataType);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == configCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
 	{
 		std::stringstream sstr;
-		sstr << "[" << configCategory << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " updated.";
 		Logger::instance().add(sstr.str());
 	}

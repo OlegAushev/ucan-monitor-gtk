@@ -52,51 +52,20 @@ private:
 	std::map<canid_t, RxMessageInfo> _rxMessageList;
 
 public:
-	/**
-	 * @brief Construct a new IDevice object
-	 * 
-	 * @param socket 
-	 */
 	IDevice(std::shared_ptr<can::Socket> socket);
 
-	/**
-	 * @brief 
-	 * 
-	 * @param id 
-	 * @param name 
-	 * @param timeout 
-	 * @param handler 
-	 */
 	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
 	{
 		_txMessageList.insert({id, {name, timeout, std::chrono::steady_clock::now() ,false, handler}});
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 * @param id 
-	 * @param name 
-	 * @param period 
-	 * @param creator 
-	 */
 	void registerRxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
 	{
 		_rxMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void enableRxMessages() { _isRxEnabled = true; }
-
-	/**
-	 * @brief 
-	 * 
-	 */
 	void disableRxMessages() { _isRxEnabled = false; }
-
 private:
 	void _send();
 	void _handleFrame(const can_frame& frame);

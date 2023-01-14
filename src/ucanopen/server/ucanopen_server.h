@@ -23,6 +23,7 @@
 #include "services/ucanopen_server_tpdo.h"
 #include "services/ucanopen_server_rpdo.h"
 #include "services/ucanopen_server_watch.h"
+#include "services/ucanopen_server_config.h"
 
 
 namespace ucanopen {
@@ -36,21 +37,7 @@ public:
 	ServerTpdoService tpdoService;
 	ServerRpdoService rpdoService;
 	ServerWatchService watchService;
-	const std::string_view configCategory;
-
-	/* CONFIGURATION entries */
-private:
-	std::map<std::string_view, std::vector<std::string_view>> _configEntriesList;
-public:
-	/**
-	 * @brief 
-	 * 
-	 * @return std::map<std::string_view, std::vector<std::string_view>> 
-	 */
-	std::map<std::string_view, std::vector<std::string_view>> configEntriesList() const
-	{
-		return _configEntriesList;
-	}
+	ServerConfigService configService;
 
 public:
 	Server(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,

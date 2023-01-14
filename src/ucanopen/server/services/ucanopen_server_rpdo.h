@@ -34,11 +34,10 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
 	std::map<RpdoType, Message> _rpdoList;
-
 public:
 	ServerRpdoService(impl::Server* server);
-
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period);
+	void updateNodeId();
 
 	void enable()
 	{
@@ -53,8 +52,6 @@ public:
 		_isEnabled = false;
 		std::cout << "done." << std::endl;
 	}
-
-	void updateNodeId();
 
 	void sendPeriodic()
 	{

@@ -39,8 +39,7 @@ private:
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(impl::Server* server,
-			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
+	ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 
 	void sendPeriodicRequest()
 	{

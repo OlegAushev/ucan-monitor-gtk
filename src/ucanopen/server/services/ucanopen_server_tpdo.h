@@ -36,8 +36,8 @@ private:
 	std::map<TpdoType, Message> _tpdoList;
 public:
 	ServerTpdoService(impl::Server* server);
-
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
+	void updateNodeId();
 
 	bool isOk(TpdoType tpdo) const
 	{
@@ -50,8 +50,6 @@ public:
 		if (!_tpdoList.contains(tpdo)) return can_payload{};
 		return _tpdoList.at(tpdo).data;
 	}
-
-	void updateNodeId();
 
 	bool handleFrame(const can_frame& frame)
 	{

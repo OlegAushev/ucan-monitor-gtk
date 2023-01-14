@@ -78,50 +78,12 @@ private:
 	void _onFrameReceived(const can_frame& frame);
 
 public:
-	/**
-	 * @brief Construct a new Client object
-	 * 
-	 * @param nodeId_ 
-	 * @param socket 
-	 */
 	Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket);
-
-	/**
-	 * @brief Destroy the Client object
-	 * 
-	 */
 	~Client();
-
-	/**
-	 * @brief Returns client node ID.
-	 * 
-	 * @return NodeId 
-	 */
-	NodeId nodeId() const
-	{
-		return _nodeId;
-	}
-
-	/**
-	 * @brief Sets client node ID.
-	 * 
-	 * @param nodeId_ 
-	 */
+	NodeId nodeId() const { return _nodeId;	}
 	void setNodeId(NodeId nodeId);
-	
-	/**
-	 * @brief 
-	 * 
-	 * @param server 
-	 */
 	void registerServer(std::shared_ptr<Server> server);
 
-	/**
-	 * @brief Returns pointer to server
-	 * 
-	 * @param name 
-	 * @return std::shared_ptr<Server> 
-	 */
 	std::shared_ptr<Server> server(std::string_view name)
 	{
 		auto itServer = std::find_if(_servers.begin(), _servers.end(),
@@ -136,20 +98,8 @@ public:
 		return *itServer;
 	}
 
-	/**
-	 * @brief Set the Server Node Id object
-	 * 
-	 * @param name 
-	 * @param nodeId 
-	 */
 	void setServerNodeId(std::string_view name, NodeId nodeId);
 
-	/* SYNC */
-	/**
-	 * @brief 
-	 * 
-	 * @param period 
-	 */
 	void enableSync()
 	{
 		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << _syncInfo.period << ")... ";	
@@ -157,10 +107,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void disableSync()
 	{
 		std::cout << "[ucanopen] Disabling client SYNC messages... ";
@@ -168,10 +114,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void setSyncPeriod(std::chrono::milliseconds period)
 	{
 		std::cout << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
@@ -179,34 +121,16 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/* HEARTBEAT */
-	/**
-	 * @brief Set the Heartbeat Period object
-	 * 
-	 * @param period 
-	 */
 	void setHeartbeatPeriod(std::chrono::milliseconds period)
 	{
 		_heartbeatInfo.period = period;
 	}
 
-	/* TPDO */
-	/**
-	 * @brief 
-	 * 
-	 * @param tpdoType 
-	 * @param period 
-	 * @param creator 
-	 */
 	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 	{
 		_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void enableTpdo()
 	{
 		std::cout << "[ucanopen] Enabling client TPDO messages... ";
@@ -214,10 +138,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void disableTpdo()
 	{
 		std::cout << "[ucanopen] Disabling client TPDO messages... ";
@@ -225,10 +145,6 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void enableServerWatch()
 	{
 		for (auto& server : _servers)
@@ -237,10 +153,6 @@ public:
 		}
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void disableServerWatch()
 	{
 		for (auto& server : _servers)
@@ -249,10 +161,6 @@ public:
 		}
 	}
 
-	/**
-	 * @brief 
-	 * 
-	 */
 	void setServerWatchPeriod(std::chrono::milliseconds period)
 	{
 		for (auto& server : _servers)

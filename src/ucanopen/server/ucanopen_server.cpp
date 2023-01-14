@@ -26,17 +26,8 @@ Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Sock
 	, tpdoService(this)
 	, rpdoService(this)
 	, watchService(this, dictionary, dictionaryConfig)
-	, configCategory(dictionaryConfig.configCategory)
-{
-	for (const auto& [key, entry] : _dictionary)
-	{
-		// create conf entries list
-		if (entry.category == configCategory)
-		{
-			_configEntriesList[entry.subcategory].push_back(entry.name);
-		}
-	}
-}
+	, configService(this, dictionary, dictionaryConfig)
+{}
 
 
 ///
