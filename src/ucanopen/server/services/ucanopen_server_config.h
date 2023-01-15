@@ -15,7 +15,7 @@
 
 #include "cansocket/cansocket.h"
 #include "../../ucanopen_def.h" 
-#include "../ucanopen_impl_server.h"
+#include "../impl/ucanopen_impl_server.h"
 
 #include <vector>
 #include <map>

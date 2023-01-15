@@ -18,7 +18,7 @@
 #include <chrono>
 #include <future>
 
-#include "ucanopen_impl_server.h"
+#include "impl/ucanopen_impl_server.h"
 #include "services/ucanopen_server_heartbeat.h"
 #include "services/ucanopen_server_tpdo.h"
 #include "services/ucanopen_server_rpdo.h"

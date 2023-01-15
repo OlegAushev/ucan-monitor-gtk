@@ -1,5 +1,5 @@
 /**
- * @file ucanopen_base_server.h
+ * @file ucanopen_impl_server.h
  * @author Oleg Aushev (aushevom@protonmail.com)
  * @brief 
  * @version 0.1
@@ -14,7 +14,7 @@
 
 
 #include "cansocket/cansocket.h"
-#include "../ucanopen_def.h" 
+#include "../../ucanopen_def.h" 
 
 
 namespace ucanopen {
