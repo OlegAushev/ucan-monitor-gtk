@@ -53,7 +53,7 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
-	void sendPeriodic()
+	void send()
 	{
 		if (_isEnabled)
 		{

@@ -41,7 +41,7 @@ private:
 public:
 	ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 
-	void sendPeriodicRequest()
+	void send()
 	{
 		if (_isEnabled && !_entriesList.empty())
 		{

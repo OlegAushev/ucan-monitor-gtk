@@ -44,7 +44,7 @@ public:
 			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
 	virtual ~Server() = default;
 private:	
-	void _sendPeriodic();
+	void _send();
 	void _handleFrame(const can_frame& frame);
 	void _setNodeId(NodeId nodeId);
 };

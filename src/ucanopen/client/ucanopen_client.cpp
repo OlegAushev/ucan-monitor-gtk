@@ -210,10 +210,10 @@ void Client::_run(std::future<void> futureExit)
 			}
 		}
 
-		/* SERVER's RPDO */
+		/* SEND TO SERVERS */
 		for (auto& server : _servers)
 		{
-			server->_sendPeriodic();
+			server->_send();
 		}
 
 		/* RECV */

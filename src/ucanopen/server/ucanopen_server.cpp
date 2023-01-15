@@ -48,10 +48,10 @@ void Server::_setNodeId(NodeId nodeId)
 ///
 ///
 ///
-void Server::_sendPeriodic()
+void Server::_send()
 {	
-	rpdoService.sendPeriodic();
-	watchService.sendPeriodicRequest();
+	rpdoService.send();
+	watchService.send();
 }
 
 
