@@ -25,7 +25,6 @@ ServerHeartbeatService::ServerHeartbeatService(impl::Server* server, std::chrono
 	_id = calculateCobId(CobType::Heartbeat, _server->nodeId());
 	_timeout = timeout;
 	_timepoint = std::chrono::steady_clock::now();
-	_nmtState = NmtState::Stopped;
 }
 
 

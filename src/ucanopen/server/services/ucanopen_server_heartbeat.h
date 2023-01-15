@@ -28,17 +28,14 @@ private:
 	canid_t _id;
 	std::chrono::milliseconds _timeout;
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
-	NmtState _nmtState;
 public:
 	ServerHeartbeatService(impl::Server* server, std::chrono::milliseconds timeout);
 
 	bool isOk() const
 	{
 		return ((std::chrono::steady_clock::now() - _timepoint) <= _timeout)
-				&& (_nmtState == NmtState::Operational);
+				&& (_server->_nmtState == NmtState::Operational);
 	}
-
-	NmtState nmtState() const { return _nmtState; }
 
 	void updateNodeId();
 
@@ -47,7 +44,7 @@ public:
 		if (frame.can_id != _id) return false;
 		
 		_timepoint = std::chrono::steady_clock::now();
-		_nmtState = static_cast<NmtState>(frame.data[0]);
+		_server->_nmtState = static_cast<NmtState>(frame.data[0]);
 		return true;
 	}
 };

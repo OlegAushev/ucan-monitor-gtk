@@ -20,6 +20,7 @@
 namespace ucanopen {
 
 
+class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;
 
@@ -29,6 +30,7 @@ namespace impl {
 
 class Server
 {
+	friend class ucanopen::ServerHeartbeatService;
 	friend class ucanopen::ServerTpdoService;
 	friend class ucanopen::ServerRpdoService;
 protected:
@@ -38,6 +40,8 @@ protected:
 
 	const ObjectDictionary& _dictionary;
 	ObjectDictionaryAux _dictionaryAux;
+
+	NmtState _nmtState = NmtState::Stopped;
 protected:
 	virtual void _handleTpdo1(can_payload data) = 0;
 	virtual void _handleTpdo2(can_payload data) = 0;
@@ -54,15 +58,9 @@ public:
 	Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary);
 
-	std::string_view name() const
-	{
-		return _name;
-	}
-
-	NodeId nodeId() const
-	{
-		return _nodeId;
-	}
+	std::string_view name() const { return _name; }
+	NodeId nodeId() const {	return _nodeId; }
+	NmtState nmtState() const { return _nmtState; }
 
 	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
