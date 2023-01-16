@@ -17,6 +17,8 @@
 #include "../../ucanopen_def.h" 
 #include "../impl/ucanopen_impl_server.h"
 
+#include <functional>
+
 
 namespace ucanopen {
 
@@ -32,11 +34,12 @@ private:
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		can_payload data;
+		std::function<void(can_payload)> handler;
 	};
 	std::map<TpdoType, Message> _tpdoList;
 public:
 	ServerTpdoService(impl::Server* server);
-	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
+	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler);
 	void updateNodeId();
 
 	bool isOk(TpdoType tpdo) const
@@ -61,24 +64,10 @@ public:
 			can_payload data{};
 			std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
 			message.data = data;
-
-			switch (type)
-			{
-			case TpdoType::Tpdo1:
-				_server->_handleTpdo1(data);
-				return true;
-			case TpdoType::Tpdo2:
-				_server->_handleTpdo2(data);
-				return true;
-			case TpdoType::Tpdo3:
-				_server->_handleTpdo3(data);
-				return true;
-			case TpdoType::Tpdo4:
-				_server->_handleTpdo4(data);
-				return true;
-			}
-			return false;
+			message.handler(data);
+			return true;
 		}
+		return false;
 	}
 };
 

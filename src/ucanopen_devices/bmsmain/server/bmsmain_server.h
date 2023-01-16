@@ -30,10 +30,7 @@ private:
 	double _tempMax = 0;
 
 protected:
-	virtual void _handleTpdo1(ucanopen::can_payload data) override final;
-	virtual void _handleTpdo2(ucanopen::can_payload data) override final {}
-	virtual void _handleTpdo3(ucanopen::can_payload data) override final {}
-	virtual void _handleTpdo4(ucanopen::can_payload data) override final {}
+	void _handleTpdo1(ucanopen::can_payload data);
 
 	virtual ucanopen::can_payload _createRpdo1() override final { return {}; }
 	virtual ucanopen::can_payload _createRpdo2() override final { return {}; }

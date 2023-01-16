@@ -22,10 +22,14 @@ namespace launchpad {
 Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 {
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(60));
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(110));
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(1100));
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(110));
+	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(60),
+			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
+	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(110),
+			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
+	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(1100),
+			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
+	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(110),
+			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
 }
 
 

@@ -43,11 +43,6 @@ protected:
 
 	NmtState _nmtState = NmtState::Stopped;
 protected:
-	virtual void _handleTpdo1(can_payload data) = 0;
-	virtual void _handleTpdo2(can_payload data) = 0;
-	virtual void _handleTpdo3(can_payload data) = 0;
-	virtual void _handleTpdo4(can_payload data) = 0;
-
 	virtual can_payload _createRpdo1() = 0;
 	virtual can_payload _createRpdo2() = 0;
 	virtual can_payload _createRpdo3() = 0;
