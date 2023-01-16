@@ -34,15 +34,9 @@ protected:
 	void _handleTpdo3(ucanopen::can_payload data);
 	void _handleTpdo4(ucanopen::can_payload data);
 
-	virtual ucanopen::can_payload _createRpdo1() override final { return {}; }
-	virtual ucanopen::can_payload _createRpdo2() override final { return {}; }
-	virtual ucanopen::can_payload _createRpdo3() override final { return {}; }
-	virtual ucanopen::can_payload _createRpdo4() override final { return {}; }
-
 	virtual void _handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final;
-
 private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;

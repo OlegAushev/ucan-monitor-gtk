@@ -43,11 +43,6 @@ protected:
 
 	NmtState _nmtState = NmtState::Stopped;
 protected:
-	virtual can_payload _createRpdo1() = 0;
-	virtual can_payload _createRpdo2() = 0;
-	virtual can_payload _createRpdo3() = 0;
-	virtual can_payload _createRpdo4() = 0;
-
 	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
 public:
 	Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,

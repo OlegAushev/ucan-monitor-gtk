@@ -17,6 +17,8 @@
 #include "../../ucanopen_def.h" 
 #include "../impl/ucanopen_impl_server.h"
 
+#include <functional>
+
 
 namespace ucanopen {
 
@@ -32,11 +34,12 @@ private:
 		canid_t id;
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
+		std::function<can_payload(void)> creator;
 	};
 	std::map<RpdoType, Message> _rpdoList;
 public:
 	ServerRpdoService(impl::Server* server);
-	void registerRpdo(RpdoType type, std::chrono::milliseconds period);
+	void registerRpdo(RpdoType type, std::chrono::milliseconds period, std::function<can_payload(void)> creator);
 	void updateNodeId();
 
 	void enable()
@@ -64,22 +67,7 @@ public:
 				auto now = std::chrono::steady_clock::now();
 				if (now - message.timepoint < message.period) continue;
 
-				can_payload data;
-				switch (type)
-				{
-				case RpdoType::Rpdo1:
-					data = _server->_createRpdo1();
-					break;
-				case RpdoType::Rpdo2:
-					data = _server->_createRpdo2();
-					break;
-				case RpdoType::Rpdo3:
-					data = _server->_createRpdo3();
-					break;
-				case RpdoType::Rpdo4:
-					data = _server->_createRpdo4();
-					break;
-				}
+				can_payload data = message.creator();
 				_server->_socket->send(createFrame(message.id, 8, data));
 				message.timepoint = now;	
 			}

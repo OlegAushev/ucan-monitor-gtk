@@ -27,10 +27,10 @@ ServerRpdoService::ServerRpdoService(impl::Server* server)
 ///
 ///
 ///
-void ServerRpdoService::registerRpdo(RpdoType type, std::chrono::milliseconds period)
+void ServerRpdoService::registerRpdo(RpdoType type, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 {
 	canid_t id = calculateCobId(toCobType(type), _server->nodeId());
-	_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now()}});
+	_rpdoList.insert({type, {id, period, std::chrono::steady_clock::now(), creator}});
 }
 
 
