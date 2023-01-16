@@ -74,6 +74,10 @@ extern double bmsmain_tpdo1_get_charge();
 extern double bmsmain_tpdo1_get_temp_max();
 extern double bmsmain_tpdo1_get_temp_min();
 
+/// launchpad
+extern void launchpad_set_client_value(uint tpdoNum, double value);
+extern void launchpad_set_server_value(uint rpdoNum, double value);
+
 /// ucanopen_devices
 extern size_t ucanopen_devices_get_error_names(string serverName, char** buf, size_t countMax, size_t lenMax);
 extern size_t ucanopen_devices_get_warning_names(string serverName, char** buf, size_t countMax, size_t lenMax);

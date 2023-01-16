@@ -22,6 +22,9 @@ namespace launchpad {
 Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 {
+	_clientValues.fill(0);
+	_serverValues.fill(0);
+
 	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(60),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
 	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(110),

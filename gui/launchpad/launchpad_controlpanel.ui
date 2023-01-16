@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="LaunchPadControlPanel" parent="AdwBin">
+		<child>
+			<object class="GtkBox">
+				<property name="margin-start">10</property>
+				<property name="margin-end">10</property>
+				<property name="margin-top">10</property>
+				<property name="margin-bottom">10</property>
+				<property name="orientation">vertical</property>
+				<property name="spacing">10</property>	
+
+				<child>
+					<object class="SpinButtonScale" id="slider_client_tpdo1">
+						<property name="title">Client TPDO1</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_client_tpdo2">
+						<property name="title">Client TPDO2</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_client_tpdo3">
+						<property name="title">Client TPDO3</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_client_tpdo4">
+						<property name="title">Client TPDO4</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_server_rpdo1">
+						<property name="title">Server RPDO1</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_server_rpdo2">
+						<property name="title">Server RPDO2</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_server_rpdo3">
+						<property name="title">Server RPDO3</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+
+				<child>
+					<object class="SpinButtonScale" id="slider_server_rpdo4">
+						<property name="title">Server RPDO4</property>
+						<property name="lower">0</property>
+						<property name="upper">255</property>
+						<property name="step">1</property>
+						<property name="value">0</property>
+						<property name="spin-width">6</property>
+						<property name="spin-digits">0</property>
+						<property name="scale-digits">0</property>
+						<property name="scale-width">200</property>
+					</object>
+				</child>
+				
+			</object>
+		</child>
+	</template>
+</interface>

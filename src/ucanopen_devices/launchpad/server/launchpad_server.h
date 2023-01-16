@@ -27,6 +27,9 @@ extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
 
 class Server : public ucanopen::Server
 {
+private:
+	std::array<double, 4> _clientValues;
+	std::array<double, 4> _serverValues;
 protected:
 	void _handleTpdo1(ucanopen::can_payload data) {}
 	void _handleTpdo2(ucanopen::can_payload data) {}
@@ -38,6 +41,9 @@ protected:
 			ucanopen::CobSdoData data) override final;
 public:
 	Server(const std::string& name,	ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
+
+	void setClientValue(ucanopen::TpdoType tpdo, double value) { _clientValues[static_cast<size_t>(tpdo)] = value; }
+	void setServerValue(ucanopen::RpdoType rpdo, double value) { _serverValues[static_cast<size_t>(rpdo)] = value; }
 };
 
 

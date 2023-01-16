@@ -42,6 +42,8 @@ public class Window : Gtk.ApplicationWindow
 			scrolledwindow_data_tables.child = new SrmDrive.DataTables();
 			break;
 		case "LaunchPad":
+			scrolledwindow_control_panel.child = new LaunchPad.ControlPanel();
+			scrolledwindow_control_panel.child.add_css_class("background");
 			scrolledwindow_data_tables.child = new LaunchPad.DataTables();
 			break;
 		case "BMS Main":
