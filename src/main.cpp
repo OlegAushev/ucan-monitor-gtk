@@ -64,20 +64,26 @@ int backend_main_loop(std::future<void> futureExit)
 		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket);
 		global::ucanClient->registerServer(global::srmdriveServer);
 		
-		auto callbackMakeTpdo1 = [](){ return global::srmdriveServer->controller.makeTpdo1(); };
-		auto callbackMakeTpdo2 = [](){ return global::srmdriveServer->controller.makeTpdo2(); };
+		auto callbackCreateTpdo1 = [](){ return global::srmdriveServer->controller.makeTpdo1(); };
+		auto callbackCreateTpdo2 = [](){ return global::srmdriveServer->controller.makeTpdo2(); };
 
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1,
-				std::chrono::milliseconds(250),
-				callbackMakeTpdo1);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2,
-				std::chrono::milliseconds(100),
-				callbackMakeTpdo2);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
 	}
 	else if (serverName == "LaunchPad")
 	{
 		global::launchpadServer = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), global::canSocket);
 		global::ucanClient->registerServer(global::launchpadServer);
+
+		auto callbackCreateTpdo1 = [](){ return global::launchpadServer->createTpdo1(); };
+		auto callbackCreateTpdo2 = [](){ return global::launchpadServer->createTpdo2(); };
+		auto callbackCreateTpdo3 = [](){ return global::launchpadServer->createTpdo3(); };
+		auto callbackCreateTpdo4 = [](){ return global::launchpadServer->createTpdo4(); };
+
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
 	}
 	else if (serverName == "BMS Main")
 	{

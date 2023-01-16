@@ -89,6 +89,7 @@ public class Application : Adw.Application
 		ucanopen_client_set_node_id(WindowCanBusPreferences.client_id);
 		ucanopen_client_set_server_id(Backend.Ucanopen.server, WindowCanBusPreferences.server_id);
 		ucanopen_client_set_tpdo_enabled(WindowCanBusPreferences.tpdo_state);
+		ucanopen_client_set_server_rpdo_enabled(WindowCanBusPreferences.rpdo_state);
 		ucanopen_client_set_sync_period(WindowCanBusPreferences.sync_period);
 		ucanopen_client_set_sync_enabled(WindowCanBusPreferences.sync_state);
 		ucanopen_client_set_watch_period(WindowCanBusPreferences.watch_period);

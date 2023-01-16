@@ -81,6 +81,15 @@ void ucanopen_client_set_tpdo_enabled(bool isEnabled)
 ///
 ///
 ///
+void ucanopen_client_set_server_rpdo_enabled(bool isEnabled)
+{
+	isEnabled ? global::ucanClient->enableServerRpdo() : global::ucanClient->disableServerRpdo();
+}
+
+
+///
+///
+///
 void ucanopen_client_set_watch_enabled(bool isEnabled)
 {
 	isEnabled ? global::ucanClient->enableServerWatch() : global::ucanClient->disableServerWatch();

@@ -13,6 +13,54 @@
 namespace launchpad {
 
 
+struct CobRpdo1
+{
+	double value;
+};
+
+
+struct CobRpdo2
+{
+	double value;
+};
+
+
+struct CobRpdo3
+{
+	double value;
+};
+
+
+struct CobRpdo4
+{
+	double value;
+};
+
+
+struct CobClientTpdo1
+{
+	double value;
+};
+
+
+struct CobClientTpdo2
+{
+	double value;
+};
+
+
+struct CobClientTpdo3
+{
+	double value;
+};
+
+
+struct CobClientTpdo4
+{
+	double value;
+};
+
+
 inline const std::vector<std::string> syslogMessages = {
 	"No message",
 	"[syslog] Boot CPU1...",

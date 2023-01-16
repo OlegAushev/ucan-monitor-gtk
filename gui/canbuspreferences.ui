@@ -6,7 +6,7 @@
 		<property name="width-request">320</property>
 		<property name="height-request">640</property>
 		<property name="default-width">320</property>
-		<property name="default-height">640</property>
+		<property name="default-height">700</property>
 		<property name="search-enabled">False</property>	
 		<child>
 			<object class="AdwPreferencesPage">
@@ -128,7 +128,7 @@
 						<!-- TPDO -->
 						<child>
 							<object class="AdwActionRow">
-								<property name="title">Enable client TPDO-messages</property>
+								<property name="title">Client TPDO-messages</property>
 								<property name="activatable_widget">switch_tpdo</property>
 								<child>
 									<object class="GtkSwitch" id="switch_tpdo">
@@ -191,6 +191,18 @@
 												<property name="numeric">true</property>
 											</object>
 										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+						<!-- SERVER RPDO -->
+						<child>
+							<object class="AdwActionRow">
+								<property name="title">Server RPDO-messages</property>
+								<property name="activatable_widget">switch_rpdo</property>
+								<child>
+									<object class="GtkSwitch" id="switch_rpdo">
+										<property name="valign">center</property>
 									</object>
 								</child>
 							</object>

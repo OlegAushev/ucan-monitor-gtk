@@ -144,6 +144,22 @@ public:
 		std::cout << "done." << std::endl;
 	}
 
+	void enableServerRpdo()
+	{
+		for (auto& server : _servers)
+		{
+			server->rpdoService.enable();
+		}
+	}
+
+	void disableServerRpdo()
+	{
+		for (auto& server : _servers)
+		{
+			server->rpdoService.disable();
+		}
+	}
+
 	void enableServerWatch()
 	{
 		for (auto& server : _servers)

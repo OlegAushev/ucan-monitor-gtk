@@ -44,16 +44,16 @@ public class ControlPanel : Adw.Bin
 		});
 
 		slider_server_rpdo1.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(0, slider_server_rpdo1.value);
+			launchpad_set_server_value(0, slider_server_rpdo1.value);
 		});
 		slider_server_rpdo2.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(1, slider_server_rpdo2.value);
+			launchpad_set_server_value(1, slider_server_rpdo2.value);
 		});
 		slider_server_rpdo3.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(2, slider_server_rpdo3.value);
+			launchpad_set_server_value(2, slider_server_rpdo3.value);
 		});
 		slider_server_rpdo4.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(3, slider_server_rpdo4.value);
+			launchpad_set_server_value(3, slider_server_rpdo4.value);
 		});
 	}
 }

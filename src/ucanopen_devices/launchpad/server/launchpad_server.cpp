@@ -33,6 +33,15 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
 	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(110),
 			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
+
+	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo1, std::chrono::milliseconds(25),
+			[this](){ return this->_createRpdo1(); });
+	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo2, std::chrono::milliseconds(50),
+			[this](){ return this->_createRpdo2(); });
+	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo3, std::chrono::milliseconds(100),
+			[this](){ return this->_createRpdo3(); });
+	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo4, std::chrono::milliseconds(1000),
+			[this](){ return this->_createRpdo4(); });
 }
 
 

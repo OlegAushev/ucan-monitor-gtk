@@ -42,6 +42,9 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	[GtkChild]
 	private unowned Gtk.Adjustment adjustment_watch_period;
 
+	[GtkChild]
+	private unowned Gtk.Switch switch_rpdo;
+
 	private static uint _client_id = 2;
 	private static uint _server_id = 1;
 
@@ -50,6 +53,7 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	private static int _sync_period = 200;
 	private static bool _watch_state = true;
 	private static int _watch_period = 10;
+	private static bool _rpdo_state = true;
 	
 	public WindowCanBusPreferences() {}
 
@@ -65,6 +69,8 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 
 		expanderrow_watch.enable_expansion = _watch_state;
 		adjustment_watch_period.value = _watch_period;
+
+		switch_rpdo.active = _rpdo_state;
 
 		// SIGNALS
 		button_connect.clicked.connect(() => {
@@ -121,6 +127,11 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 			ucanopen_client_set_watch_period((int)adjustment_watch_period.value);
 			_watch_period = (int)adjustment_watch_period.value;
 		});
+
+		switch_rpdo.notify["state"].connect((s,p) => {
+			ucanopen_client_set_server_rpdo_enabled(switch_rpdo.state);
+			_rpdo_state = switch_rpdo.state;
+		});
 	}
 
 	public static uint client_id
@@ -156,6 +167,11 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	public static int watch_period
 	{
 		get { return _watch_period; }
+	}
+
+	public static bool rpdo_state
+	{
+		get { return _rpdo_state; }
 	}
 }
 
