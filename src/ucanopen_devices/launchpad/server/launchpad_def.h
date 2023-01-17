@@ -10,54 +10,76 @@
  */
 
 
+#pragma once
+
+
+#include <cstdint>
+
+
 namespace launchpad {
 
 
 struct CobRpdo1
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobRpdo2
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobRpdo3
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobRpdo4
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobClientTpdo1
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobClientTpdo2
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobClientTpdo3
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 
 struct CobClientTpdo4
 {
-	double value;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+	float value;
 };
 
 

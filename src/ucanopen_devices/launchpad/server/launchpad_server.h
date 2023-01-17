@@ -28,18 +28,45 @@ extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
 class Server : public ucanopen::Server
 {
 private:
-	std::array<double, 4> _clientValues;
-	std::array<double, 4> _serverValues;
+	std::array<float, 4> _clientValues;
+	std::array<float, 4> _serverValues;
 protected:
 	void _handleTpdo1(ucanopen::can_payload data) {}
 	void _handleTpdo2(ucanopen::can_payload data) {}
 	void _handleTpdo3(ucanopen::can_payload data) {}
 	void _handleTpdo4(ucanopen::can_payload data) {}
 
-	ucanopen::can_payload _createRpdo1() { return ucanopen::toPayload<CobRpdo1>(CobRpdo1(_serverValues[0])); }
-	ucanopen::can_payload _createRpdo2() { return ucanopen::toPayload<CobRpdo2>(CobRpdo2(_serverValues[1])); }
-	ucanopen::can_payload _createRpdo3() { return ucanopen::toPayload<CobRpdo3>(CobRpdo3(_serverValues[2])); }
-	ucanopen::can_payload _createRpdo4() { return ucanopen::toPayload<CobRpdo4>(CobRpdo4(_serverValues[3])); }
+	ucanopen::can_payload _createRpdo1()
+	{
+		static unsigned int counter = 0;
+		CobRpdo1 message{.counter = counter, ._reserved = 0, .value = _serverValues[0]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobRpdo1>(message);
+	}
+
+	ucanopen::can_payload _createRpdo2()
+	{
+		static unsigned int counter = 0;
+		CobRpdo2 message{.counter = counter, ._reserved = 0, .value = _serverValues[1]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobRpdo2>(message);
+	}
+
+	ucanopen::can_payload _createRpdo3()
+	{
+		static unsigned int counter = 0;
+		CobRpdo3 message{.counter = counter, ._reserved = 0, .value = _serverValues[2]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobRpdo3>(message);
+	}
+
+	ucanopen::can_payload _createRpdo4()
+	{
+		static unsigned int counter = 0;
+		CobRpdo4 message{.counter = counter, ._reserved = 0, .value = _serverValues[3]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobRpdo4>(message);
+	}
 
 	virtual void _handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
@@ -50,10 +77,37 @@ public:
 	void setClientValue(ucanopen::TpdoType tpdo, double value) { _clientValues[static_cast<size_t>(tpdo)] = value; }
 	void setServerValue(ucanopen::RpdoType rpdo, double value) { _serverValues[static_cast<size_t>(rpdo)] = value; }
 
-	ucanopen::can_payload createTpdo1() { return ucanopen::toPayload<CobClientTpdo1>(CobClientTpdo1(_clientValues[0])); }
-	ucanopen::can_payload createTpdo2() { return ucanopen::toPayload<CobClientTpdo2>(CobClientTpdo2(_clientValues[1])); }
-	ucanopen::can_payload createTpdo3() { return ucanopen::toPayload<CobClientTpdo3>(CobClientTpdo3(_clientValues[2])); }
-	ucanopen::can_payload createTpdo4() { return ucanopen::toPayload<CobClientTpdo4>(CobClientTpdo4(_clientValues[3])); }
+	ucanopen::can_payload createTpdo1()
+	{
+		static unsigned int counter = 0;
+		CobClientTpdo1 message{.counter = counter, ._reserved = 0, .value = _serverValues[0]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobClientTpdo1>(message);
+	}
+
+	ucanopen::can_payload createTpdo2()
+	{
+		static unsigned int counter = 0;
+		CobClientTpdo2 message{.counter = counter, ._reserved = 0, .value = _serverValues[1]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobClientTpdo2>(message);
+	}
+
+	ucanopen::can_payload createTpdo3()
+	{
+		static unsigned int counter = 0;
+		CobClientTpdo3 message{.counter = counter, ._reserved = 0, .value = _serverValues[2]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobClientTpdo3>(message);
+	}
+
+	ucanopen::can_payload createTpdo4()
+	{
+		static unsigned int counter = 0;
+		CobClientTpdo4 message{.counter = counter, ._reserved = 0, .value = _serverValues[3]};
+		counter = (counter + 1) % 4;
+		return ucanopen::toPayload<CobClientTpdo4>(message);
+	}
 };
 
 

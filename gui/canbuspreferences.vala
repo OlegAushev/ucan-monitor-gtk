@@ -86,6 +86,8 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 			}
 			else
 			{
+				if (adjustment_client_id.value == _client_id) return;
+
 				ucanopen_client_set_node_id((uint)adjustment_client_id.value);
 				_client_id = (uint)adjustment_client_id.value;
 			}
@@ -98,6 +100,8 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 			}
 			else
 			{
+				if (adjustment_server_id.value == _server_id) return;
+
 				ucanopen_client_set_server_id(Backend.Ucanopen.server, (uint)adjustment_server_id.value);
 				_server_id = (uint)adjustment_server_id.value;
 			}
