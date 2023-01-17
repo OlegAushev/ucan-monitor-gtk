@@ -30,11 +30,14 @@ class Server : public ucanopen::Server
 private:
 	std::array<float, 4> _clientValues;
 	std::array<float, 4> _serverValues;
+
+	uint32_t _errors = 0;
+	uint16_t _warnings = 0;
 protected:
 	void _handleTpdo1(ucanopen::can_payload data) {}
 	void _handleTpdo2(ucanopen::can_payload data) {}
 	void _handleTpdo3(ucanopen::can_payload data) {}
-	void _handleTpdo4(ucanopen::can_payload data) {}
+	void _handleTpdo4(ucanopen::can_payload data);
 
 	ucanopen::can_payload _createRpdo1()
 	{
@@ -76,6 +79,9 @@ public:
 
 	void setClientValue(ucanopen::TpdoType tpdo, double value) { _clientValues[static_cast<size_t>(tpdo)] = value; }
 	void setServerValue(ucanopen::RpdoType rpdo, double value) { _serverValues[static_cast<size_t>(rpdo)] = value; }
+
+	uint32_t errors() const { return _errors; }
+	uint16_t warnings() const { return _warnings; }
 
 	ucanopen::can_payload createClientTpdo1()
 	{

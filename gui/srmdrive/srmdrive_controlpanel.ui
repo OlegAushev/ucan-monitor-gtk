@@ -53,7 +53,7 @@
 										<property name="title">Calibrate Position Sensor</property>
 										<child type="suffix">
 											<object class="GtkButton" id="button_calibrate">
-												<property name="label">Reset</property>
+												<property name="label"></property>
 												<property name="icon-name">object-rotate-right</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -67,7 +67,7 @@
 										<property name="title">Invert Default Direction</property>
 										<child type="suffix">
 											<object class="GtkButton" id="button_invert">
-												<property name="label">Reset</property>
+												<property name="label"></property>
 												<property name="icon-name">object-rotate-left</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -81,7 +81,7 @@
 										<property name="title">Reset Device</property>
 										<child type="suffix">
 											<object class="GtkButton" id="button_reset">
-												<property name="label">Reset</property>
+												<property name="label"></property>
 												<property name="icon-name">view-refresh-symbolic</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>

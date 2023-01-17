@@ -48,6 +48,17 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 ///
 ///
 ///
+void Server::_handleTpdo4(ucanopen::can_payload data)
+{
+	CobTpdo4 message = ucanopen::fromPayload<CobTpdo4>(data);
+	_errors = message.errors;
+	_warnings = message.warnings;
+}
+
+
+///
+///
+///
 void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data)

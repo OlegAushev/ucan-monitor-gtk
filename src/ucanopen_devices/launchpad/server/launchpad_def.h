@@ -14,9 +14,19 @@
 
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 
 namespace launchpad {
+
+
+struct CobTpdo4
+{
+	uint64_t counter : 2;
+	uint64_t errors : 31;
+	uint64_t warnings : 31;
+};
 
 
 struct CobRpdo1
@@ -95,6 +105,18 @@ inline const std::vector<std::string> syslogMessages = {
 	"[syslog] Device is busy.",
 	"[syslog] Resetting device...",
 	"[syslog] SDO request lost.",
+};
+
+
+inline const std::vector<std::string_view> errorList = {
+	"can_bus_connection_lost",
+};
+
+
+inline const std::vector<std::string_view> warningList = {
+	"can_bus_error",
+	"can_bus_overrun",
+	"can_bus_connection_lost",
 };
 
 

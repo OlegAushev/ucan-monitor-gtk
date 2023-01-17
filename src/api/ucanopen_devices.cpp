@@ -11,11 +11,13 @@
 
 
 #include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
+#include "ucanopen_devices/launchpad/server/launchpad_server.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
 
 
 namespace global {
 extern std::shared_ptr<bmsmain::Server> bmsmainServer;
+extern std::shared_ptr<launchpad::Server> launchpadServer;
 extern std::shared_ptr<srmdrive::Server> srmdriveServer;
 }
 
@@ -45,7 +47,18 @@ size_t ucanopen_devices_get_error_names(const char* serverName, char** buf, size
 	}
 	else if (std::string(serverName) == "LaunchPad")
 	{
-		// TODO
+		if (launchpad::errorList.size() > countMax)
+		{
+			return 0;
+		}
+
+		size_t i = 0;
+		for (auto error : launchpad::errorList)
+		{
+			strncpy(buf[i++], error.data(), lenMax);
+		}
+
+		return launchpad::errorList.size();
 	}
 	else if (std::string(serverName) == "BMS Main")
 	{
@@ -78,7 +91,18 @@ size_t ucanopen_devices_get_warning_names(const char* serverName, char** buf, si
 	}
 	else if (std::string(serverName) == "LaunchPad")
 	{
-		// TODO
+		if (launchpad::warningList.size() > countMax)
+		{
+			return 0;
+		}
+
+		size_t i = 0;
+		for (auto error : launchpad::warningList)
+		{
+			strncpy(buf[i++], error.data(), lenMax);
+		}
+
+		return launchpad::warningList.size();
 	}
 	else if (std::string(serverName) == "BMS Main")
 	{
@@ -100,7 +124,7 @@ unsigned int ucanopen_devices_get_error_code(const char* serverName)
 	}
 	else if (std::string(serverName) == "LaunchPad")
 	{
-		// TODO
+		return global::launchpadServer->errors();
 	}
 	else if (std::string(serverName) == "BMS Main")
 	{
@@ -122,7 +146,7 @@ unsigned int ucanopen_devices_get_warning_code(const char* serverName)
 	}
 	else if (std::string(serverName) == "LaunchPad")
 	{
-		// TODO
+		return global::launchpadServer->warnings();
 	}
 	else if (std::string(serverName) == "BMS Main")
 	{

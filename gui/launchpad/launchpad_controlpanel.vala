@@ -10,6 +10,11 @@ namespace LaunchPad {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
+	private unowned Gtk.Button button_reset_errors;
+	[GtkChild]
+	private unowned Gtk.Button button_reset_device;
+
+	[GtkChild]
 	private unowned SpinButtonScale slider_client_tpdo1;
 	[GtkChild]
 	private unowned SpinButtonScale slider_client_tpdo2;
@@ -30,6 +35,24 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
+		button_reset_errors.clicked.connect(() => {
+			ucanopen_server_exec(Backend.Ucanopen.server, "system", "syslog", "reset_errors");
+		});
+
+		button_reset_device.clicked.connect(() => {
+			Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+					"Warning!",
+					"Device will be reset.");
+			dialog.add_response("cancel", "Cancel");
+			dialog.add_response("continue", "Continue");
+			dialog.set_response_appearance("cancel", DESTRUCTIVE);
+			dialog.set_response_appearance("continue", SUGGESTED);
+			dialog.response["continue"].connect(() => {
+				ucanopen_server_exec(Backend.Ucanopen.server, "system", "device", "reset_device");
+			});
+			dialog.present();
+		});
+
 		slider_client_tpdo1.adjustment->value_changed.connect(() => {
 			launchpad_set_client_value(0, slider_client_tpdo1.value);
 		});
