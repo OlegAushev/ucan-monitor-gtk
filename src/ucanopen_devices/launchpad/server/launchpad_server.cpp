@@ -40,7 +40,7 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 			[this](){ return this->_createRpdo2(); });
 	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo3, std::chrono::milliseconds(100),
 			[this](){ return this->_createRpdo3(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo4, std::chrono::milliseconds(1000),
+	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo4, std::chrono::milliseconds(500),
 			[this](){ return this->_createRpdo4(); });
 }
 

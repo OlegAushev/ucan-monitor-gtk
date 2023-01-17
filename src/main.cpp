@@ -75,10 +75,10 @@ int backend_main_loop(std::future<void> futureExit)
 		global::launchpadServer = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), global::canSocket);
 		global::ucanClient->registerServer(global::launchpadServer);
 
-		auto callbackCreateTpdo1 = [](){ return global::launchpadServer->createTpdo1(); };
-		auto callbackCreateTpdo2 = [](){ return global::launchpadServer->createTpdo2(); };
-		auto callbackCreateTpdo3 = [](){ return global::launchpadServer->createTpdo3(); };
-		auto callbackCreateTpdo4 = [](){ return global::launchpadServer->createTpdo4(); };
+		auto callbackCreateTpdo1 = [](){ return global::launchpadServer->createClientTpdo1(); };
+		auto callbackCreateTpdo2 = [](){ return global::launchpadServer->createClientTpdo2(); };
+		auto callbackCreateTpdo3 = [](){ return global::launchpadServer->createClientTpdo3(); };
+		auto callbackCreateTpdo4 = [](){ return global::launchpadServer->createClientTpdo4(); };
 
 		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
 		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
