@@ -87,7 +87,7 @@ enum class CobType
 constexpr size_t cob_type_count = 15;
 
 
-constexpr std::array<canid_t, cob_type_count> cobFunctionCodes = {
+constexpr std::array<canid_t, cob_type_count> cob_function_codes = {
 	0x000,	// NMT
 	0x080,	// SYNC
 	0x080,	// EMCY
@@ -110,9 +110,9 @@ inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id)
 {
 	if ((cob_type == CobType::nmt) || (cob_type == CobType::sync) || (cob_type == CobType::time))
 	{
-		return cobFunctionCodes[static_cast<size_t>(cob_type)];
+		return cob_function_codes[static_cast<size_t>(cob_type)];
 	}
-	return cobFunctionCodes[static_cast<size_t>(cob_type)] + node_id.value();
+	return cob_function_codes[static_cast<size_t>(cob_type)] + node_id.value();
 }
 
 
