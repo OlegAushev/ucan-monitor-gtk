@@ -1,32 +1,13 @@
-/**
- * @file ucanopen_server_tpdo.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-14
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #include "ucanopen_server_tpdo.h"
 
 
 namespace ucanopen {
 
-
-///
-///
-///
 ServerTpdoService::ServerTpdoService(impl::Server* server)
 	: _server(server)
 {}
 
 
-///
-///
-///
 void ServerTpdoService::registerTpdo(TpdoType type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
 {
 	canid_t id = calculate_cob_id(to_cob_type(type), _server->node_id());
@@ -34,10 +15,7 @@ void ServerTpdoService::registerTpdo(TpdoType type, std::chrono::milliseconds ti
 }
 
 
-///
-///
-///
-void ServerTpdoService::updateNodeId()
+void ServerTpdoService::update_node_id()
 {
 	for (auto& [type, message] : _tpdoList)
 	{
@@ -45,7 +23,5 @@ void ServerTpdoService::updateNodeId()
 	}
 }
 
-
-}
-
+} // namespace ucanopen
 

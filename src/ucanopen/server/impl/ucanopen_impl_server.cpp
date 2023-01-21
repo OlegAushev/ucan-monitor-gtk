@@ -186,11 +186,6 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 }
 
 
-
-
-
-
-
 ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 				ObjectDictionary::const_iterator& entry_iter, check_exec_perm)
 {
@@ -202,7 +197,7 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 				<< " - no such OD entry." << std::endl;
 		return ODRequestStatus::fail;
 	}
-	else if (entry_iter->second.data_type != ODEntryDataType::OD_TASK)
+	else if (entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
@@ -211,11 +206,6 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 	}
 	return ODRequestStatus::success;
 }
-
-
-
-
-
 
 } // namespace ucanopen
 

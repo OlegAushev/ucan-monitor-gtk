@@ -23,13 +23,13 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 	, controller(this)
 {
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1200),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(200),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(200),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
 }
 
@@ -41,21 +41,21 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data)
 {
-	if (entryIt->second.category == watchService.watchCategory && entryIt->second.data_type == ucanopen::OD_ENUM16)
+	if (entryIt->second.category == watch_service.watchCategory && entryIt->second.data_type == ucanopen::OD_ENUM16)
 	{
 		if (entryIt->second.name == "DRIVE_STATE" && data.u32() < driveStates.size())
 		{
-			watchService.setValue(entryIt->second.name, driveStates[data.u32()]);
+			watch_service.setValue(entryIt->second.name, driveStates[data.u32()]);
 		}
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_read)
+	else if (entryIt->second.category == config_service.configCategory && sdoType == ucanopen::SdoType::response_to_read)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " = " << data.to_string(entryIt->second.data_type);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_write)
+	else if (entryIt->second.category == config_service.configCategory && sdoType == ucanopen::SdoType::response_to_write)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name

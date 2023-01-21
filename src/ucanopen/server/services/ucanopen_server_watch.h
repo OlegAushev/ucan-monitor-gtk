@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_server_watch.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-13
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -23,7 +11,6 @@
 
 
 namespace ucanopen {
-
 
 class ServerWatchService
 {
@@ -56,7 +43,7 @@ public:
 		}
 	}
 
-	bool handleFrame(SdoType sdoType, ObjectDictionary::const_iterator odEntry, CobSdoData data)
+	bool handle_frame(SdoType sdoType, ObjectDictionary::const_iterator odEntry, CobSdoData data)
 	{
 		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::response_to_read))
 		{
@@ -126,7 +113,5 @@ public:
 	}
 };
 
-
-}
-
+} // namespace ucanopen
 

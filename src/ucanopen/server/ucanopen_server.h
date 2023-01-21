@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_server.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-07
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -28,28 +16,25 @@
 
 namespace ucanopen {
 
-
 class Server : public impl::Server
 {
 	friend class Client;
 public:
-	ServerHeartbeatService heartbeatService;
-	ServerTpdoService tpdoService;
-	ServerRpdoService rpdoService;
-	ServerWatchService watchService;
-	ServerConfigService configService;
+	ServerHeartbeatService heartbeat_service;
+	ServerTpdoService tpdo_service;
+	ServerRpdoService rpdo_service;
+	ServerWatchService watch_service;
+	ServerConfigService config_service;
 
 public:
-	Server(const std::string& name, NodeId nodeId_, std::shared_ptr<can::Socket> socket,
-			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
+	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
+			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config);
 	virtual ~Server() = default;
 private:	
 	void _send();
-	void _handleFrame(const can_frame& frame);
-	void _setNodeId(NodeId nodeId);
+	void _handle_frame(const can_frame& frame);
+	void _set_node_id(NodeId nodeId);
 };
 
-
 } // namespace ucanopen
-
 

@@ -147,7 +147,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		return;
 	}
 
-	(*itServer)->_setNodeId(nodeId);
+	(*itServer)->_set_node_id(nodeId);
 
 	// erase outdated elements from [id; server] map
 	for (auto it = _recvIdServerList.begin(); it != _recvIdServerList.end();)
@@ -238,7 +238,7 @@ void Client::_onFrameReceived(const can_frame& frame)
 	auto it = _recvIdServerList.find(frame.can_id);
 	if (it != _recvIdServerList.end())
 	{
-		it->second->_handleFrame(frame);
+		it->second->_handle_frame(frame);
 	}
 }
 

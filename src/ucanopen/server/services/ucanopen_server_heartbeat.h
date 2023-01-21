@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_service_heartbeat.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-13
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -19,7 +7,6 @@
 
 
 namespace ucanopen {
-
 
 class ServerHeartbeatService
 {
@@ -37,9 +24,9 @@ public:
 				&& (_server->nmt_state() == NmtState::operational);
 	}
 
-	void updateNodeId();
+	void update_node_id();
 
-	bool handleFrame(const can_frame& frame)
+	bool handle_frame(const can_frame& frame)
 	{
 		if (frame.can_id != _id) return false;
 		
@@ -49,7 +36,5 @@ public:
 	}
 };
 
-
-}
-
+} // namespace ucanopen
 

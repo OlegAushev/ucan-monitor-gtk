@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_server_config.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-15
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -22,7 +10,6 @@
 
 
 namespace ucanopen {
-
 
 class ServerConfigService
 {
@@ -40,7 +27,5 @@ public:
 	}
 };
 
-
-}
-
+} // namespace ucanopen
 

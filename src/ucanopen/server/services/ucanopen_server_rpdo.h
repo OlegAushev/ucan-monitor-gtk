@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_server_rpdo.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-15
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -21,7 +9,6 @@
 
 
 namespace ucanopen {
-
 
 class ServerRpdoService
 {
@@ -40,7 +27,7 @@ private:
 public:
 	ServerRpdoService(impl::Server* server);
 	void registerRpdo(RpdoType type, std::chrono::milliseconds period, std::function<can_payload(void)> creator);
-	void updateNodeId();
+	void update_node_id();
 
 	void enable()
 	{
@@ -75,7 +62,5 @@ public:
 	}
 };
 
-
-}
-
+} // namespace ucanopen
 

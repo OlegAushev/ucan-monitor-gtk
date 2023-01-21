@@ -25,22 +25,22 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 	_clientValues.fill(0);
 	_serverValues.fill(0);
 
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
 			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
 			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
+	tpdo_service.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
 			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
 
-	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
+	rpdo_service.registerRpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
 			[this](){ return this->_createRpdo1(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo2, std::chrono::milliseconds(50),
+	rpdo_service.registerRpdo(ucanopen::RpdoType::rpdo2, std::chrono::milliseconds(50),
 			[this](){ return this->_createRpdo2(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo3, std::chrono::milliseconds(100),
+	rpdo_service.registerRpdo(ucanopen::RpdoType::rpdo3, std::chrono::milliseconds(100),
 			[this](){ return this->_createRpdo3(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo4, std::chrono::milliseconds(500),
+	rpdo_service.registerRpdo(ucanopen::RpdoType::rpdo4, std::chrono::milliseconds(500),
 			[this](){ return this->_createRpdo4(); });
 }
 
@@ -71,18 +71,18 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			Logger::instance().add(syslogMessages[messageId]);
 		}
 	}
-	else if (entryIt->second.category == watchService.watchCategory && entryIt->second.data_type == ucanopen::OD_ENUM16)
+	else if (entryIt->second.category == watch_service.watchCategory && entryIt->second.data_type == ucanopen::OD_ENUM16)
 	{
 		
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_read)
+	else if (entryIt->second.category == config_service.configCategory && sdoType == ucanopen::SdoType::response_to_read)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
 				<< " = " << data.to_string(entryIt->second.data_type);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_write)
+	else if (entryIt->second.category == config_service.configCategory && sdoType == ucanopen::SdoType::response_to_write)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name

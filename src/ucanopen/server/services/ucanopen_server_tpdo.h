@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_server_tpdo.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-14
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -21,7 +9,6 @@
 
 
 namespace ucanopen {
-
 
 class ServerTpdoService
 {
@@ -40,7 +27,7 @@ private:
 public:
 	ServerTpdoService(impl::Server* server);
 	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler);
-	void updateNodeId();
+	void update_node_id();
 
 	bool isOk(TpdoType tpdo) const
 	{
@@ -54,7 +41,7 @@ public:
 		return _tpdoList.at(tpdo).data;
 	}
 
-	bool handleFrame(const can_frame& frame)
+	bool handle_frame(const can_frame& frame)
 	{
 		for (auto& [type, message] : _tpdoList)
 		{
@@ -71,7 +58,5 @@ public:
 	}
 };
 
-
-}
-
+} // namespace ucanopen
 

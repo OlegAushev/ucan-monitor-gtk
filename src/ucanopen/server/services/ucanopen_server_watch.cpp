@@ -1,24 +1,8 @@
-/**
- * @file ucanopen_server_watch.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-13
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #include "ucanopen_server_watch.h"
 
 
 namespace ucanopen {
 
-
-///
-///
-///
 ServerWatchService::ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
 	: watchCategory(dictionaryConfig.watch_category)
 	, watchSubcategory(dictionaryConfig.watch_subcategory)
@@ -37,7 +21,5 @@ ServerWatchService::ServerWatchService(impl::Server* server, const ObjectDiction
 	}
 }
 
-
 }
-
 

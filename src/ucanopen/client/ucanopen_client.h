@@ -148,7 +148,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->rpdoService.enable();
+			server->rpdo_service.enable();
 		}
 	}
 
@@ -156,7 +156,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->rpdoService.disable();
+			server->rpdo_service.disable();
 		}
 	}
 
@@ -164,7 +164,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->watchService.enable();
+			server->watch_service.enable();
 		}
 	}
 
@@ -172,7 +172,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->watchService.disable();
+			server->watch_service.disable();
 		}
 	}
 
@@ -180,7 +180,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->watchService.setPeriod(period);
+			server->watch_service.setPeriod(period);
 		}
 	}
 

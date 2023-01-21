@@ -190,7 +190,7 @@ enum ODEntryDataType
 	OD_UINT32,
 	OD_FLOAT32,
 	OD_ENUM16,
-	OD_TASK,
+	OD_EXEC,
 	OD_STRING_4CHARS
 };
 
@@ -286,7 +286,7 @@ public:
 			}
 		case ucanopen::OD_ENUM16:
 			return std::to_string(u16());
-		case ucanopen::OD_TASK:
+		case ucanopen::OD_EXEC:
 			return std::string();
 		case ucanopen::OD_STRING_4CHARS:
 			{
@@ -353,7 +353,7 @@ enum class SdoType
 {
 	response_to_read,
 	response_to_write,
-	response_to_task,
+	response_to_exec,
 };
 
 

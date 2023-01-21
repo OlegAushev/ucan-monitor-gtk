@@ -91,7 +91,7 @@ int backend_main_loop(std::future<void> futureExit)
 		global::ucanClient->registerServer(global::bmsmainServer);
 	}
 
-	backend_ucanopen_server_config_category = global::ucanClient->server(serverName)->configService.configCategory.data();
+	backend_ucanopen_server_config_category = global::ucanClient->server(serverName)->config_service.configCategory.data();
 
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;

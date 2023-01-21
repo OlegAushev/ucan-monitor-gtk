@@ -1,112 +1,85 @@
-/**
- * @file ucanopen_server.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-07
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "ucanopen_server.h"
 
 
 namespace ucanopen {
 
-
-///
-///
-///
-Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
-		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
-	: impl::Server(name, nodeId, socket, dictionary)
-	, heartbeatService(this, std::chrono::milliseconds(2000))
-	, tpdoService(this)
-	, rpdoService(this)
-	, watchService(this, dictionary, dictionaryConfig)
-	, configService(this, dictionary, dictionaryConfig)
+Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
+		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config)
+	: impl::Server(name, node_id, socket, dictionary)
+	, heartbeat_service(this, std::chrono::milliseconds(2000))
+	, tpdo_service(this)
+	, rpdo_service(this)
+	, watch_service(this, dictionary, dictionary_config)
+	, config_service(this, dictionary, dictionary_config)
 {}
 
 
-///
-///
-///
-void Server::_setNodeId(NodeId nodeId)
+void Server::_set_node_id(NodeId node_id)
 {
-	if (!nodeId.is_valid()) return;
+	if (!node_id.is_valid()) return;
 
-	_node_id = nodeId;
+	_node_id = node_id;
 
-	heartbeatService.updateNodeId();
-	tpdoService.updateNodeId();
-	rpdoService.updateNodeId();
+	heartbeat_service.update_node_id();
+	tpdo_service.update_node_id();
+	rpdo_service.update_node_id();
 }
 
 
-///
-///
-///
 void Server::_send()
 {	
-	rpdoService.send();
-	watchService.send();
+	rpdo_service.send();
+	watch_service.send();
 }
 
 
-///
-///
-///
-void Server::_handleFrame(const can_frame& frame)
+void Server::_handle_frame(const can_frame& frame)
 {
-	if (tpdoService.handleFrame(frame))
+	if (tpdo_service.handle_frame(frame))
 	{
 		return;
 	}
 	else if (frame.can_id == calculate_cob_id(CobType::tsdo, _node_id))
 	{
-		CobSdo sdoMessage(frame.data);
-		ODEntryKey key = {sdoMessage.index, sdoMessage.subindex};
-		auto odEntry = _dictionary.find(key);
-		if (odEntry == _dictionary.end())
+		CobSdo sdo_message(frame.data);
+		ODEntryKey key = {sdo_message.index, sdo_message.subindex};
+		auto od_entry = _dictionary.find(key);
+		if (od_entry == _dictionary.end())
 		{
 			return;
 		}
 
-		SdoType sdoType;
-		switch (sdoMessage.cs)
+		SdoType sdo_type;
+		switch (sdo_message.cs)
 		{
 		case cs_codes::sdo_scs_read:
-			if (odEntry->second.data_type == ODEntryDataType::OD_TASK)
+			if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
 			{
-				sdoType = SdoType::response_to_task;
+				sdo_type = SdoType::response_to_exec;
 			}
 			else
 			{
-				sdoType = SdoType::response_to_read;
+				sdo_type = SdoType::response_to_read;
 			}
 			break;
 		case cs_codes::sdo_scs_write:
-			sdoType = SdoType::response_to_write;
+			sdo_type = SdoType::response_to_write;
 			break;
 		default:
 			return;
 		}
 		
 		// handle watch data
-		watchService.handleFrame(sdoType, odEntry, sdoMessage.data);
+		watch_service.handle_frame(sdo_type, od_entry, sdo_message.data);
 
 		// server-specific TSDO handling
-		_handle_tsdo(sdoType, odEntry, sdoMessage.data);
+		_handle_tsdo(sdo_type, od_entry, sdo_message.data);
 	}
-	else if (heartbeatService.handleFrame(frame))
+	else if (heartbeat_service.handle_frame(frame))
 	{
 		return;
 	}	
 }
 
-
 } // namespace ucanopen
-
 
