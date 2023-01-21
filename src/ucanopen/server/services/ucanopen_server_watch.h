@@ -58,12 +58,12 @@ public:
 
 	bool handleFrame(SdoType sdoType, ObjectDictionary::const_iterator odEntry, CobSdoData data)
 	{
-		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::ResponseToRead))
+		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::response_to_read))
 		{
 			if (odEntry->second.dataType != OD_ENUM16)
 			{
 				std::lock_guard<std::mutex> lock(_mutex);
-				_data[odEntry->second.name] = data.toString(odEntry->second.dataType);
+				_data[odEntry->second.name] = data.to_string(odEntry->second.dataType);
 			}
 			return true;
 		}

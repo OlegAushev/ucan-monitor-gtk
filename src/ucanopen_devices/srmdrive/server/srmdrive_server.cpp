@@ -23,13 +23,13 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
 	, controller(this)
 {
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(200),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(1200),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(200),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(200),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
 }
 
@@ -48,14 +48,14 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 			watchService.setValue(entryIt->second.name, driveStates[data.u32()]);
 		}
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToRead)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_read)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
-				<< " = " << data.toString(entryIt->second.dataType);
+				<< " = " << data.to_string(entryIt->second.dataType);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_write)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
@@ -70,7 +70,7 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 ///
 void Server::_handleTpdo3(ucanopen::can_payload data)
 {
-	CobTpdo3 message = ucanopen::fromPayload<CobTpdo3>(data);
+	CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(data);
 	if ((message.syslogMessageId != 0) && (message.syslogMessageId < syslogMessages.size()))
 	{
 		Logger::instance().add(syslogMessages[message.syslogMessageId]);
@@ -83,7 +83,7 @@ void Server::_handleTpdo3(ucanopen::can_payload data)
 ///
 void Server::_handleTpdo4(ucanopen::can_payload data)
 {
-	CobTpdo4 message = ucanopen::fromPayload<CobTpdo4>(data);
+	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(data);
 	_errors = message.errors;
 	_warnings = message.warnings;
 }

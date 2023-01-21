@@ -20,7 +20,7 @@ namespace ucanopen {
 ///
 ///
 ServerConfigService::ServerConfigService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
-	: configCategory(dictionaryConfig.configCategory)
+	: configCategory(dictionaryConfig.config_category)
 	, _server(server)
 {
 	for (const auto& [key, entry] : dictionary)

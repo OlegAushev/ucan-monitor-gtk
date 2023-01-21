@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_def.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-04
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -34,7 +22,7 @@ using can_payload = std::array<uint8_t, 8>;
 
 
 template <typename T>
-inline can_payload toPayload(T message)
+inline can_payload to_payload(T message)
 {
 	static_assert(sizeof(T) <= 8);
 	can_payload payload{};
@@ -44,7 +32,7 @@ inline can_payload toPayload(T message)
 
 
 template <typename T>
-inline T fromPayload(can_payload payload)
+inline T from_payload(can_payload payload)
 {
 	static_assert(sizeof(T) <= 8);
 	T message;
@@ -60,7 +48,7 @@ private:
 public:
 	explicit NodeId(unsigned int value) : _value(value) {}
 	unsigned int value() const { return _value; }
-	bool isValid() const { return (_value >= 1) && (_value <= 127); }
+	bool is_valid() const { return (_value >= 1) && (_value <= 127); }
 };
 
 
@@ -69,37 +57,37 @@ inline bool operator==(const NodeId& lhs, const NodeId& rhs) { return lhs.value(
 
 enum class NmtState
 {
-	Initialization = 0x00,
-	Stopped = 0x04,
-	Operational = 0x05,
-	PreOperational = 0x7F
+	initialization = 0x00,
+	stopped = 0x04,
+	operational = 0x05,
+	pre_operational = 0x7F
 };
 
 
 enum class CobType
 {
-	Nmt,
-	Sync,
-	Emcy,
-	Time,
-	Tpdo1,
-	Rpdo1,
-	Tpdo2,
-	Rpdo2,
-	Tpdo3,
-	Rpdo3,
-	Tpdo4,
-	Rpdo4,
-	Tsdo,
-	Rsdo,
-	Heartbeat
+	nmt,
+	sync,
+	emcy,
+	time,
+	tpdo1,
+	rpdo1,
+	tpdo2,
+	rpdo2,
+	tpdo3,
+	rpdo3,
+	tpdo4,
+	rpdo4,
+	tsdo,
+	rsdo,
+	heartbeat
 };
 
 
-constexpr size_t cobTypeCount = 15;
+constexpr size_t cob_type_count = 15;
 
 
-constexpr std::array<canid_t, cobTypeCount> cobFunctionCodes = {
+constexpr std::array<canid_t, cob_type_count> cobFunctionCodes = {
 	0x000,	// NMT
 	0x080,	// SYNC
 	0x080,	// EMCY
@@ -118,17 +106,17 @@ constexpr std::array<canid_t, cobTypeCount> cobFunctionCodes = {
 };
 
 
-inline canid_t calculateCobId(CobType cobType, NodeId nodeId)
+inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id)
 {
-	if ((cobType == CobType::Nmt) || (cobType == CobType::Sync) || (cobType == CobType::Time))
+	if ((cob_type == CobType::nmt) || (cob_type == CobType::sync) || (cob_type == CobType::time))
 	{
-		return cobFunctionCodes[static_cast<size_t>(cobType)];
+		return cobFunctionCodes[static_cast<size_t>(cob_type)];
 	}
-	return cobFunctionCodes[static_cast<size_t>(cobType)] + nodeId.value();
+	return cobFunctionCodes[static_cast<size_t>(cob_type)] + node_id.value();
 }
 
 
-constexpr std::array<unsigned int, cobTypeCount> COB_DATA_LEN = {
+constexpr std::array<unsigned int, cob_type_count> cob_sizes = {
 	2,	// NMT
 	0,	// SYNC
 	2,	// EMCY
@@ -147,55 +135,52 @@ constexpr std::array<unsigned int, cobTypeCount> COB_DATA_LEN = {
 };
 
 
-/// TPDO type
 enum class TpdoType
 {
-	Tpdo1,
-	Tpdo2,
-	Tpdo3,
-	Tpdo4,
+	tpdo1,
+	tpdo2,
+	tpdo3,
+	tpdo4,
 };
 
 
-inline CobType toCobType(TpdoType tpdoType)
+inline CobType to_cob_type(TpdoType tpdo_type)
 {
 	return static_cast<CobType>(
-		static_cast<unsigned int>(CobType::Tpdo1) + 2 * static_cast<unsigned int>(tpdoType)
+		static_cast<unsigned int>(CobType::tpdo1) + 2 * static_cast<unsigned int>(tpdo_type)
 	);
 }
 
 
-/// RPDO type
 enum class RpdoType
 {
-	Rpdo1,
-	Rpdo2,
-	Rpdo3,
-	Rpdo4,	
+	rpdo1,
+	rpdo2,
+	rpdo3,
+	rpdo4,	
 };
 
 
-inline CobType toCobType(RpdoType rpdoType)
+inline CobType to_cob_type(RpdoType rpdo_type)
 {
 	return static_cast<CobType>(
-		static_cast<unsigned int>(CobType::Rpdo1) + 2 * static_cast<unsigned int>(rpdoType)
+		static_cast<unsigned int>(CobType::rpdo1) + 2 * static_cast<unsigned int>(rpdo_type)
 	);
 }
 
 
-inline RpdoType oppositePdo(TpdoType type)
+inline RpdoType opposite_pdo(TpdoType type)
 {
 	return static_cast<RpdoType>(type);
 }
 
 
-inline TpdoType oppositePdo(RpdoType type)
+inline TpdoType opposite_pdo(RpdoType type)
 {
 	return static_cast<TpdoType>(type);
 }
 
 
-/// OD entry data types
 enum ODEntryDataType
 {
 	OD_BOOL,
@@ -210,8 +195,7 @@ enum ODEntryDataType
 };
 
 
-/// OD entry access right types
-enum ODEntryAccessRight
+enum ODEntryAccessPermission
 {
 	OD_ACCESS_RW,
 	OD_ACCESS_RO,
@@ -219,10 +203,6 @@ enum ODEntryAccessRight
 };
 
 
-/**
- * @brief SDO data.
- * 
- */
 class CobSdoData
 {
 private:
@@ -276,7 +256,7 @@ public:
 		return val;
 	}
 
-	std::string toString(ODEntryDataType type) const
+	std::string to_string(ODEntryDataType type) const
 	{
 		switch (type)
 		{
@@ -322,16 +302,12 @@ public:
 };
 
 
-/**
- * @brief SDO message.
- * 
- */
 struct CobSdo
 {
-	uint32_t dataSizeIndicated : 1;
-	uint32_t expeditedTransfer : 1;
-	uint32_t dataEmptyBytes : 2;
-	uint32_t reserved : 1;
+	uint32_t data_size_indicated : 1;
+	uint32_t expedited_transfer : 1;
+	uint32_t data_empty_bytes : 2;
+	uint32_t _reserved : 1;
 	uint32_t cs : 3;
 	uint32_t index : 16;
 	uint32_t subindex : 8;
@@ -356,7 +332,7 @@ struct CobSdo
 		return data;
 	}
 
-	can_payload toPayload() const
+	can_payload to_payload() const
 	{
 		can_payload payload;
 		memcpy(payload.data(), this, sizeof(CobSdo));
@@ -365,28 +341,22 @@ struct CobSdo
 };
 
 
-// SDO cs-codes
 namespace cs_codes {
-const uint32_t sdoCcsWrite = 1;
-const uint32_t sdoScsWrite = 3;
-const uint32_t sdoCcsRead = 2;
-const uint32_t sdoScsRead = 2;
+const uint32_t sdo_ccs_write = 1;
+const uint32_t sdo_scs_write = 3;
+const uint32_t sdo_ccs_read = 2;
+const uint32_t sdo_scs_read = 2;
 }
 
 
-// Received SDO types
-enum SdoType
+enum class SdoType
 {
-	ResponseToRead,
-	ResponseToWrite,
-	ResponseToTask,
+	response_to_read,
+	response_to_write,
+	response_to_task,
 };
 
 
-/**
- * @brief OD entry key.
- * 
- */
 struct ODEntryKey
 {
 	unsigned int index;
@@ -407,28 +377,10 @@ struct ODEntryValue
 	std::string_view name;
 	std::string_view unit;
 	ODEntryDataType dataType;
-	ODEntryAccessRight accessRight;
+	ODEntryAccessPermission access_permission;
 
-	/**
-	 * @brief Checks OD-entry read access.
-	 * @param (none)
-	 * @return \c true if entry has read access, \c false otherwise.
-	 */
-	bool hasReadAccess() const
-	{
-		return (accessRight == OD_ACCESS_RW) || (accessRight == OD_ACCESS_RO);
-	}
-
-
-	/**
-	 * @brief Checks OD-entry write access.
-	 * @param (none)
-	 * @return \c true if entry has write access, \c false otherwise.
-	 */
-	bool hasWriteAccess() const
-	{
-		return (accessRight == OD_ACCESS_RW) || (accessRight == OD_ACCESS_WO);
-	}
+	bool hasReadPermission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }
+	bool hasWritePermission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_WO); }
 };
 
 
@@ -452,73 +404,49 @@ using ObjectDictionary = std::map<ODEntryKey, ODEntryValue>;
 using ObjectDictionaryAux = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
 
 
-/**
- * @brief 
- * 
- */
 struct ObjectDictionaryConfig
 {
-	std::string_view watchCategory;
-	std::string_view watchSubcategory;
-	std::string_view configCategory;
+	std::string_view watch_category;
+	std::string_view watch_subcategory;
+	std::string_view config_category;
 };
 
 
-/**
- * @brief Makes CAN frame.
- * 
- * @param cobType 
- * @param nodeId 
- * @param data 
- * @return CAN frame.
- */
-inline can_frame createFrame(CobType cobType, NodeId nodeId, can_payload data)
+inline can_frame create_frame(CobType cob_type, NodeId node_id, can_payload payload)
 {
 	can_frame frame;
-	frame.can_id = calculateCobId(cobType, nodeId);
-	frame.len = COB_DATA_LEN[static_cast<size_t>(cobType)];
-	std::copy(data.begin(), std::next(data.begin(), frame.len), frame.data);
+	frame.can_id = calculate_cob_id(cob_type, node_id);
+	frame.len = cob_sizes[static_cast<size_t>(cob_type)];
+	std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
 	return frame;
 }
 
 
-/**
- * @brief Makes CAN frame.
- * 
- * @param id 
- * @param len 
- * @param data 
- * @return CAN frame.
- */
-inline can_frame createFrame(canid_t id, unsigned char len, can_payload data)
+inline can_frame create_frame(canid_t id, unsigned char len, can_payload payload)
 {
 	can_frame frame;
 	frame.can_id = id;
 	frame.len = len;
-	std::copy(data.begin(), std::next(data.begin(), frame.len), frame.data);
+	std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
 	return frame;	
 }
 
 
-/// OD_TASK execution status
 enum class ODTaskStatus
 {
-	Success = 0,
-	Fail = 1,
-	InProgress = 2,
-	Started = 3
+	success = 0,
+	fail = 1,
+	in_progress = 2,
+	started = 3
 };
 
 
-/// OD request status
 enum class ODRequestStatus
 {
-	Success = 0,
-	Fail = 1,
-	NoAccess = 2
+	success = 0,
+	fail = 1,
+	no_access = 2
 };
 
-
 } // namespace ucanopen
-
 

@@ -22,7 +22,7 @@ namespace bmsmain {
 Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, nodeId, socket, ucanopen::ObjectDictionary{}, ucanopen::ObjectDictionaryConfig{})
 {
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(2000),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(2000),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
 }
 
@@ -33,7 +33,7 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 void Server::_handleTpdo1(ucanopen::can_payload data)
 {
 	static_assert(sizeof(CobTpdo1) == 8);
-	CobTpdo1 message = ucanopen::fromPayload<CobTpdo1>(data);
+	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(data);
 
 	int16_t current{message.current};
 	_current = 0.1 * current;

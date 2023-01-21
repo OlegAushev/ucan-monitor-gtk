@@ -44,7 +44,7 @@ protected:
 		static unsigned int counter = 0;
 		CobRpdo1 message{.counter = counter, ._reserved = 0, .value = _serverValues[0]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobRpdo1>(message);
+		return ucanopen::to_payload<CobRpdo1>(message);
 	}
 
 	ucanopen::can_payload _createRpdo2()
@@ -52,7 +52,7 @@ protected:
 		static unsigned int counter = 0;
 		CobRpdo2 message{.counter = counter, ._reserved = 0, .value = _serverValues[1]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobRpdo2>(message);
+		return ucanopen::to_payload<CobRpdo2>(message);
 	}
 
 	ucanopen::can_payload _createRpdo3()
@@ -60,7 +60,7 @@ protected:
 		static unsigned int counter = 0;
 		CobRpdo3 message{.counter = counter, ._reserved = 0, .value = _serverValues[2]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobRpdo3>(message);
+		return ucanopen::to_payload<CobRpdo3>(message);
 	}
 
 	ucanopen::can_payload _createRpdo4()
@@ -68,7 +68,7 @@ protected:
 		static unsigned int counter = 0;
 		CobRpdo4 message{.counter = counter, ._reserved = 0, .value = _serverValues[3]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobRpdo4>(message);
+		return ucanopen::to_payload<CobRpdo4>(message);
 	}
 
 	virtual void _handleTsdo(ucanopen::SdoType sdoType,
@@ -88,7 +88,7 @@ public:
 		static unsigned int counter = 0;
 		CobClientTpdo1 message{.counter = counter, ._reserved = 0, .value = _clientValues[0]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobClientTpdo1>(message);
+		return ucanopen::to_payload<CobClientTpdo1>(message);
 	}
 
 	ucanopen::can_payload createClientTpdo2()
@@ -96,7 +96,7 @@ public:
 		static unsigned int counter = 0;
 		CobClientTpdo2 message{.counter = counter, ._reserved = 0, .value = _clientValues[1]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobClientTpdo2>(message);
+		return ucanopen::to_payload<CobClientTpdo2>(message);
 	}
 
 	ucanopen::can_payload createClientTpdo3()
@@ -104,7 +104,7 @@ public:
 		static unsigned int counter = 0;
 		CobClientTpdo3 message{.counter = counter, ._reserved = 0, .value = _clientValues[2]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobClientTpdo3>(message);
+		return ucanopen::to_payload<CobClientTpdo3>(message);
 	}
 
 	ucanopen::can_payload createClientTpdo4()
@@ -112,7 +112,7 @@ public:
 		static unsigned int counter = 0;
 		CobClientTpdo4 message{.counter = counter, ._reserved = 0, .value = _clientValues[3]};
 		counter = (counter + 1) % 4;
-		return ucanopen::toPayload<CobClientTpdo4>(message);
+		return ucanopen::to_payload<CobClientTpdo4>(message);
 	}
 };
 

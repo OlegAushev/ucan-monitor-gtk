@@ -22,7 +22,7 @@ namespace ucanopen {
 Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	: _nodeId(nodeId)
 	, _socket(socket)
-	, _state(NmtState::Initialization)
+	, _state(NmtState::initialization)
 {
 	_syncInfo.timepoint = std::chrono::steady_clock::now();
 	_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
@@ -32,7 +32,7 @@ Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
 	std::future<void> futureExit = _signalExitRunThread.get_future();
 	_threadRun = std::thread(&Client::_run, this, std::move(futureExit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	_state = NmtState::Operational;
+	_state = NmtState::operational;
 }
 
 
@@ -55,7 +55,7 @@ void Client::setNodeId(NodeId nodeId)
 	std::cout << "[ucanopen] Setting client ID = " << nodeId.value()
 			<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
 
-	if (!nodeId.isValid())
+	if (!nodeId.is_valid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
 		return;
@@ -124,7 +124,7 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 	std::cout << "[ucanopen] Setting '" << name << "' server ID = " << nodeId.value()
 				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
 
-	if (!nodeId.isValid())
+	if (!nodeId.is_valid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
 		return;
@@ -184,7 +184,7 @@ void Client::_run(std::future<void> futureExit)
 		{
 			if (now - _syncInfo.timepoint > _syncInfo.period)
 			{
-				_socket->send(createFrame(CobType::Sync, _nodeId, {}));
+				_socket->send(create_frame(CobType::sync, _nodeId, {}));
 				_syncInfo.timepoint = now;
 			}
 		}
@@ -192,7 +192,7 @@ void Client::_run(std::future<void> futureExit)
 		/* HEARTBEAT */
 		if (now - _heartbeatInfo.timepoint > _heartbeatInfo.period)
 		{
-			_socket->send(createFrame(CobType::Heartbeat, _nodeId, {static_cast<uint8_t>(_state)}));
+			_socket->send(create_frame(CobType::heartbeat, _nodeId, {static_cast<uint8_t>(_state)}));
 			_heartbeatInfo.timepoint = now;
 		}
 
@@ -204,7 +204,7 @@ void Client::_run(std::future<void> futureExit)
 				if (!message.creator) continue;
 				if (now - message.timepoint >= message.period)
 				{
-					_socket->send(createFrame(toCobType(type), _nodeId, message.creator()));
+					_socket->send(create_frame(to_cob_type(type), _nodeId, message.creator()));
 					message.timepoint = now;
 				}
 			}
@@ -248,12 +248,12 @@ void Client::_onFrameReceived(const can_frame& frame)
 ///
 void Client::_calculateRecvId(std::shared_ptr<Server> server)
 {
-	canid_t tpdo1 = calculateCobId(CobType::Tpdo1, server->nodeId());
-	canid_t tpdo2 = calculateCobId(CobType::Tpdo2, server->nodeId());
-	canid_t tpdo3 = calculateCobId(CobType::Tpdo3, server->nodeId());
-	canid_t tpdo4 = calculateCobId(CobType::Tpdo4, server->nodeId());
-	canid_t tsdo = calculateCobId(CobType::Tsdo, server->nodeId());
-	canid_t heartbeat = calculateCobId(CobType::Heartbeat, server->nodeId());
+	canid_t tpdo1 = calculate_cob_id(CobType::tpdo1, server->nodeId());
+	canid_t tpdo2 = calculate_cob_id(CobType::tpdo2, server->nodeId());
+	canid_t tpdo3 = calculate_cob_id(CobType::tpdo3, server->nodeId());
+	canid_t tpdo4 = calculate_cob_id(CobType::tpdo4, server->nodeId());
+	canid_t tsdo = calculate_cob_id(CobType::tsdo, server->nodeId());
+	canid_t heartbeat = calculate_cob_id(CobType::heartbeat, server->nodeId());
 
 	_recvIdServerList.insert({tpdo1, server});
 	_recvIdServerList.insert({tpdo2, server});

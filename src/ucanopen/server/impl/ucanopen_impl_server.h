@@ -41,7 +41,7 @@ protected:
 	const ObjectDictionary& _dictionary;
 	ObjectDictionaryAux _dictionaryAux;
 
-	NmtState _nmtState = NmtState::Stopped;
+	NmtState _nmtState = NmtState::stopped;
 protected:
 	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
 public:

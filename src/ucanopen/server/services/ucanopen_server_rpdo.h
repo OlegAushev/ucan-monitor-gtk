@@ -68,7 +68,7 @@ public:
 				if (now - message.timepoint < message.period) continue;
 
 				can_payload data = message.creator();
-				_server->_socket->send(createFrame(message.id, 8, data));
+				_server->_socket->send(create_frame(message.id, 8, data));
 				message.timepoint = now;	
 			}
 		}

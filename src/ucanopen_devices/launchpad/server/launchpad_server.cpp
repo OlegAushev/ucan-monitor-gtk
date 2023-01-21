@@ -25,22 +25,22 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 	_clientValues.fill(0);
 	_serverValues.fill(0);
 
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(60),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
 			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(110),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
 			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(1100),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
 			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
-	tpdoService.registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(110),
+	tpdoService.registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
 			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
 
-	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo1, std::chrono::milliseconds(25),
+	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
 			[this](){ return this->_createRpdo1(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo2, std::chrono::milliseconds(50),
+	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo2, std::chrono::milliseconds(50),
 			[this](){ return this->_createRpdo2(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo3, std::chrono::milliseconds(100),
+	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo3, std::chrono::milliseconds(100),
 			[this](){ return this->_createRpdo3(); });
-	rpdoService.registerRpdo(ucanopen::RpdoType::Rpdo4, std::chrono::milliseconds(500),
+	rpdoService.registerRpdo(ucanopen::RpdoType::rpdo4, std::chrono::milliseconds(500),
 			[this](){ return this->_createRpdo4(); });
 }
 
@@ -50,7 +50,7 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 ///
 void Server::_handleTpdo4(ucanopen::can_payload data)
 {
-	CobTpdo4 message = ucanopen::fromPayload<CobTpdo4>(data);
+	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(data);
 	_errors = message.errors;
 	_warnings = message.warnings;
 }
@@ -75,14 +75,14 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 	{
 		
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToRead)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_read)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
-				<< " = " << data.toString(entryIt->second.dataType);
+				<< " = " << data.to_string(entryIt->second.dataType);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::ResponseToWrite)
+	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_write)
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name

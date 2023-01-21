@@ -95,7 +95,7 @@ ucanopen::can_payload Controller::makeTpdo1()
 	message.run = ((_isRunEnabled) ? 1 : 0);
 	message.emergencyStop = ((_isEmergencyEnabled) ? 1 : 0);
 
-	return ucanopen::toPayload(message);
+	return ucanopen::to_payload(message);
 }
 
 
@@ -108,7 +108,7 @@ ucanopen::can_payload Controller::makeTpdo2()
 
 	message.torque = ((_torquePuRef > 0) ? _torquePuRef * 32767 : _torquePuRef * 32768);
 
-	return ucanopen::toPayload(message);
+	return ucanopen::to_payload(message);
 }
 
 

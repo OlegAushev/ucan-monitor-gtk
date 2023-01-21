@@ -174,16 +174,16 @@ void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len
 {
 	switch (global::ucanClient->server(serverName)->nmtState())
 	{
-	case ucanopen::NmtState::Initialization:
+	case ucanopen::NmtState::initialization:
 		strncpy(buf, "init", len);
 		break;
-	case ucanopen::NmtState::Stopped:
+	case ucanopen::NmtState::stopped:
 		strncpy(buf, "stopped", len);
 		break;
-	case ucanopen::NmtState::Operational:
+	case ucanopen::NmtState::operational:
 		strncpy(buf, "run", len);
 		break;
-	case ucanopen::NmtState::PreOperational:
+	case ucanopen::NmtState::pre_operational:
 		strncpy(buf, "pre-run", len);
 		break;
 	}
@@ -206,7 +206,7 @@ bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 unsigned long ucanopen_server_get_tpdo_data(const char* serverName, int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return ucanopen::fromPayload<uint64_t>(global::ucanClient->server(serverName)->tpdoService.data(static_cast<ucanopen::TpdoType>(tpdoNum)));
+	return ucanopen::from_payload<uint64_t>(global::ucanClient->server(serverName)->tpdoService.data(static_cast<ucanopen::TpdoType>(tpdoNum)));
 }
 
 

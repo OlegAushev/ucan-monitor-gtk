@@ -20,9 +20,9 @@ using namespace ucanopen;
 
 
 extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig = {
-	.watchCategory = "watch",
-	.watchSubcategory = "watch",
-	.configCategory = "config"
+	.watch_category = "watch",
+	.watch_subcategory = "watch",
+	.config_category = "config"
 };
 
 

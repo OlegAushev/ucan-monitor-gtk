@@ -35,7 +35,7 @@ Server::Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Sock
 ///
 void Server::_setNodeId(NodeId nodeId)
 {
-	if (!nodeId.isValid()) return;
+	if (!nodeId.is_valid()) return;
 
 	_nodeId = nodeId;
 
@@ -64,7 +64,7 @@ void Server::_handleFrame(const can_frame& frame)
 	{
 		return;
 	}
-	else if (frame.can_id == calculateCobId(CobType::Tsdo, _nodeId))
+	else if (frame.can_id == calculate_cob_id(CobType::tsdo, _nodeId))
 	{
 		CobSdo sdoMessage(frame.data);
 		ODEntryKey key = {sdoMessage.index, sdoMessage.subindex};
@@ -77,18 +77,18 @@ void Server::_handleFrame(const can_frame& frame)
 		SdoType sdoType;
 		switch (sdoMessage.cs)
 		{
-		case cs_codes::sdoScsRead:
+		case cs_codes::sdo_scs_read:
 			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
 			{
-				sdoType = SdoType::ResponseToTask;
+				sdoType = SdoType::response_to_task;
 			}
 			else
 			{
-				sdoType = SdoType::ResponseToRead;
+				sdoType = SdoType::response_to_read;
 			}
 			break;
-		case cs_codes::sdoScsWrite:
-			sdoType = SdoType::ResponseToWrite;
+		case cs_codes::sdo_scs_write:
+			sdoType = SdoType::response_to_write;
 			break;
 		default:
 			return;

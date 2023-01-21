@@ -67,8 +67,8 @@ int backend_main_loop(std::future<void> futureExit)
 		auto callbackCreateTpdo1 = [](){ return global::srmdriveServer->controller.makeTpdo1(); };
 		auto callbackCreateTpdo2 = [](){ return global::srmdriveServer->controller.makeTpdo2(); };
 
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
 	}
 	else if (serverName == "LaunchPad")
 	{
@@ -80,10 +80,10 @@ int backend_main_loop(std::future<void> futureExit)
 		auto callbackCreateTpdo3 = [](){ return global::launchpadServer->createClientTpdo3(); };
 		auto callbackCreateTpdo4 = [](){ return global::launchpadServer->createClientTpdo4(); };
 
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::Tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
+		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
 	}
 	else if (serverName == "BMS Main")
 	{

@@ -48,23 +48,23 @@ ODRequestStatus impl::Server::read(std::string_view category, std::string_view s
 		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::Fail;
+		return ODRequestStatus::fail;
 	}
-	else if (entryIt->second.hasReadAccess() == false)
+	else if (entryIt->second.hasReadPermission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-		return ODRequestStatus::NoAccess;
+		return ODRequestStatus::no_access;
 	}
 
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = cs_codes::sdoCcsRead;
+	message.cs = cs_codes::sdo_ccs_read;
 
-	_socket->send(createFrame(CobType::Rsdo, _nodeId, message.toPayload()));
-	return ODRequestStatus::Success;
+	_socket->send(create_frame(CobType::rsdo, _nodeId, message.to_payload()));
+	return ODRequestStatus::success;
 }
 
 
@@ -80,24 +80,24 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::Fail;;
+		return ODRequestStatus::fail;;
 	}
-	else if (entryIt->second.hasWriteAccess() == false)
+	else if (entryIt->second.hasWritePermission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-		return ODRequestStatus::NoAccess;
+		return ODRequestStatus::no_access;
 	}
 
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = cs_codes::sdoCcsWrite;
+	message.cs = cs_codes::sdo_ccs_write;
 	message.data = sdoData;
 
-	_socket->send(createFrame(CobType::Rsdo, _nodeId, message.toPayload()));
-	return ODRequestStatus::Success;
+	_socket->send(create_frame(CobType::rsdo, _nodeId, message.to_payload()));
+	return ODRequestStatus::success;
 }
 
 
@@ -113,14 +113,14 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::Fail;
+		return ODRequestStatus::fail;
 	}
-	else if (entryIt->second.hasWriteAccess() == false)
+	else if (entryIt->second.hasWritePermission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-		return ODRequestStatus::NoAccess;
+		return ODRequestStatus::no_access;
 	}
 
 	CobSdoData sdoData;
@@ -133,7 +133,7 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
 			sdoData = CobSdoData(true);
 		else
-			return ODRequestStatus::Fail;
+			return ODRequestStatus::fail;
 		break;
 	case OD_INT16:
 		sdoData = CobSdoData(int16_t(std::stoi(value)));
@@ -154,17 +154,17 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		sdoData = CobSdoData(uint16_t(std::stoi(value)));
 		break;
 	default:
-		return ODRequestStatus::Fail;
+		return ODRequestStatus::fail;
 	}
 
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
-	message.cs = cs_codes::sdoCcsWrite;
+	message.cs = cs_codes::sdo_ccs_write;
 	message.data = sdoData;
 
-	_socket->send(createFrame(CobType::Rsdo, _nodeId, message.toPayload()));
-	return ODRequestStatus::Success;
+	_socket->send(create_frame(CobType::rsdo, _nodeId, message.to_payload()));
+	return ODRequestStatus::success;
 }
 
 
@@ -179,31 +179,31 @@ ODRequestStatus impl::Server::exec(std::string_view category, std::string_view s
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::Fail;
+		return ODRequestStatus::fail;
 	}
 	else if (entryIt->second.dataType != ODEntryDataType::OD_TASK)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry." << std::endl;
-		return ODRequestStatus::NoAccess;
+		return ODRequestStatus::no_access;
 	}
 
 	CobSdo message{};
 	message.index = entryIt->first.index;
 	message.subindex = entryIt->first.subindex;
 
-	if (entryIt->second.hasReadAccess())
+	if (entryIt->second.hasReadPermission())
 	{
-		message.cs = cs_codes::sdoCcsRead;
+		message.cs = cs_codes::sdo_ccs_read;
 	}
-	else if (entryIt->second.hasWriteAccess())
+	else if (entryIt->second.hasWritePermission())
 	{
-		message.cs = cs_codes::sdoCcsWrite;
+		message.cs = cs_codes::sdo_ccs_write;
 	}
 
-	_socket->send(createFrame(CobType::Rsdo, _nodeId, message.toPayload()));
-	return ODRequestStatus::Success;
+	_socket->send(create_frame(CobType::rsdo, _nodeId, message.to_payload()));
+	return ODRequestStatus::success;
 }
 
 
