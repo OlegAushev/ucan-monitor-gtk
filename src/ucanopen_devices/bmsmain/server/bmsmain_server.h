@@ -32,7 +32,7 @@ private:
 protected:
 	void _handleTpdo1(ucanopen::can_payload data);
 
-	virtual void _handleTsdo(ucanopen::SdoType sdoType,
+	virtual void _handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data) override final {}
 public:

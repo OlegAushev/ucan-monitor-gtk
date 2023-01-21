@@ -376,7 +376,7 @@ struct ODEntryValue
 	std::string_view subcategory;
 	std::string_view name;
 	std::string_view unit;
-	ODEntryDataType dataType;
+	ODEntryDataType data_type;
 	ODEntryAccessPermission access_permission;
 
 	bool hasReadPermission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }

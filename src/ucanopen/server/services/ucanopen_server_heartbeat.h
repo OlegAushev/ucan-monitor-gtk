@@ -34,7 +34,7 @@ public:
 	bool isOk() const
 	{
 		return ((std::chrono::steady_clock::now() - _timepoint) <= _timeout)
-				&& (_server->nmtState() == NmtState::operational);
+				&& (_server->nmt_state() == NmtState::operational);
 	}
 
 	void updateNodeId();

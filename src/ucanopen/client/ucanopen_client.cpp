@@ -78,7 +78,7 @@ void Client::setNodeId(NodeId nodeId)
 void Client::registerServer(std::shared_ptr<Server> server)
 {
 	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
-			<< std::hex << server->nodeId().value() << std::dec << " to client... ";
+			<< std::hex << server->node_id().value() << std::dec << " to client... ";
 
 	auto itServerSameName = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
@@ -94,18 +94,18 @@ void Client::registerServer(std::shared_ptr<Server> server)
 	auto itServerSameId = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
 		{
-			return server->nodeId() == s->nodeId();				
+			return server->node_id() == s->node_id();				
 		});
 	if (itServerSameId != _servers.end())
 	{
-		std::cout << "failed: server with ID 0x" << std::hex << server->nodeId().value() << std::dec
+		std::cout << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
 				<< " already added to client."  << std::endl;
 		return;
 	}
 
-	if (server->nodeId() == _nodeId)
+	if (server->node_id() == _nodeId)
 	{
-		std::cout << "failed: client has the same ID 0x" << std::hex << server->nodeId().value() << std::dec << std::endl;
+		std::cout << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec << std::endl;
 		return;
 	}
 
@@ -248,12 +248,12 @@ void Client::_onFrameReceived(const can_frame& frame)
 ///
 void Client::_calculateRecvId(std::shared_ptr<Server> server)
 {
-	canid_t tpdo1 = calculate_cob_id(CobType::tpdo1, server->nodeId());
-	canid_t tpdo2 = calculate_cob_id(CobType::tpdo2, server->nodeId());
-	canid_t tpdo3 = calculate_cob_id(CobType::tpdo3, server->nodeId());
-	canid_t tpdo4 = calculate_cob_id(CobType::tpdo4, server->nodeId());
-	canid_t tsdo = calculate_cob_id(CobType::tsdo, server->nodeId());
-	canid_t heartbeat = calculate_cob_id(CobType::heartbeat, server->nodeId());
+	canid_t tpdo1 = calculate_cob_id(CobType::tpdo1, server->node_id());
+	canid_t tpdo2 = calculate_cob_id(CobType::tpdo2, server->node_id());
+	canid_t tpdo3 = calculate_cob_id(CobType::tpdo3, server->node_id());
+	canid_t tpdo4 = calculate_cob_id(CobType::tpdo4, server->node_id());
+	canid_t tsdo = calculate_cob_id(CobType::tsdo, server->node_id());
+	canid_t heartbeat = calculate_cob_id(CobType::heartbeat, server->node_id());
 
 	_recvIdServerList.insert({tpdo1, server});
 	_recvIdServerList.insert({tpdo2, server});
@@ -276,7 +276,7 @@ bool Client::_isFree(NodeId nodeId) const
 
 	for (const auto& server : _servers)
 	{
-		if (nodeId == server->nodeId())
+		if (nodeId == server->node_id())
 		{
 			return false;
 		}

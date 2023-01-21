@@ -37,11 +37,11 @@ Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr
 ///
 ///
 ///
-void Server::_handleTsdo(ucanopen::SdoType sdoType,
+void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
 			ucanopen::CobSdoData data)
 {
-	if (entryIt->second.category == watchService.watchCategory && entryIt->second.dataType == ucanopen::OD_ENUM16)
+	if (entryIt->second.category == watchService.watchCategory && entryIt->second.data_type == ucanopen::OD_ENUM16)
 	{
 		if (entryIt->second.name == "DRIVE_STATE" && data.u32() < driveStates.size())
 		{
@@ -52,7 +52,7 @@ void Server::_handleTsdo(ucanopen::SdoType sdoType,
 	{
 		std::stringstream sstr;
 		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
-				<< " = " << data.to_string(entryIt->second.dataType);
+				<< " = " << data.to_string(entryIt->second.data_type);
 		Logger::instance().add(sstr.str());
 	}
 	else if (entryIt->second.category == configService.configCategory && sdoType == ucanopen::SdoType::response_to_write)

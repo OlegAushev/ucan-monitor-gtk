@@ -29,7 +29,7 @@ ServerTpdoService::ServerTpdoService(impl::Server* server)
 ///
 void ServerTpdoService::registerTpdo(TpdoType type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
 {
-	canid_t id = calculate_cob_id(to_cob_type(type), _server->nodeId());
+	canid_t id = calculate_cob_id(to_cob_type(type), _server->node_id());
 	_tpdoList.insert({type, {id, timeout, std::chrono::steady_clock::now(), can_payload{}, handler}});
 }
 
@@ -41,7 +41,7 @@ void ServerTpdoService::updateNodeId()
 {
 	for (auto& [type, message] : _tpdoList)
 	{
-		message.id = calculate_cob_id(to_cob_type(type), _server->nodeId());
+		message.id = calculate_cob_id(to_cob_type(type), _server->node_id());
 	}
 }
 

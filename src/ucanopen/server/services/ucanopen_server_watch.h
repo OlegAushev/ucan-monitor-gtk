@@ -60,10 +60,10 @@ public:
 	{
 		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::response_to_read))
 		{
-			if (odEntry->second.dataType != OD_ENUM16)
+			if (odEntry->second.data_type != OD_ENUM16)
 			{
 				std::lock_guard<std::mutex> lock(_mutex);
-				_data[odEntry->second.name] = data.to_string(odEntry->second.dataType);
+				_data[odEntry->second.name] = data.to_string(odEntry->second.data_type);
 			}
 			return true;
 		}

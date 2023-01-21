@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_impl_server.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2023-01-13
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-
-
 #pragma once
 
 
@@ -19,14 +7,12 @@
 
 namespace ucanopen {
 
-
 class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;
 
 
 namespace impl {
-
 
 class Server
 {
@@ -35,46 +21,57 @@ class Server
 	friend class ucanopen::ServerRpdoService;
 protected:
 	std::string _name = "unnamed";
-	NodeId _nodeId;
+	NodeId _node_id;
 	std::shared_ptr<can::Socket> _socket;
 
 	const ObjectDictionary& _dictionary;
-	ObjectDictionaryAux _dictionaryAux;
+	ObjectDictionaryAux _dictionary_aux;
 
 	NmtState _nmtState = NmtState::stopped;
 protected:
-	virtual void _handleTsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
+	virtual void _handle_tsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
 public:
-	Server(const std::string& name, NodeId nodeId, std::shared_ptr<can::Socket> socket,
+	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary);
 
 	std::string_view name() const { return _name; }
-	NodeId nodeId() const {	return _nodeId; }
-	NmtState nmtState() const { return _nmtState; }
+	NodeId node_id() const { return _node_id; }
+	NmtState nmt_state() const { return _nmtState; }
 
 	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
-	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData data);
+	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data);
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 protected:
-	std::map<ODEntryKey, ODEntryValue>::const_iterator _findOdEntry(
+	ObjectDictionary::const_iterator _find_od_entry(
 		std::string_view category,
 		std::string_view subcategory,
 		std::string_view name)
 	{
-		auto it = _dictionaryAux.find({category, subcategory, name});
-		if (it == _dictionaryAux.end())
+		auto iter = _dictionary_aux.find({category, subcategory, name});
+		if (iter == _dictionary_aux.end())
 		{
 			return _dictionary.end();
 		}
-		return it->second;
+		return iter->second;
 	}
+
+	// traits
+	struct check_read_perm{};
+	struct check_write_perm{};
+	struct check_exec_perm{};
+
+	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ObjectDictionary::const_iterator& entry_iter, check_read_perm);
+
+	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ObjectDictionary::const_iterator& entry_iter, check_write_perm);
+	
+	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ObjectDictionary::const_iterator& entry_iter, check_exec_perm);
 };
 
+} // namespace impl
 
-}
-
-
-}
-
+} // namespace ucanopen
 

@@ -172,7 +172,7 @@ bool ucanopen_server_is_heartbeat_ok(const char* serverName)
 ///
 void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len)
 {
-	switch (global::ucanClient->server(serverName)->nmtState())
+	switch (global::ucanClient->server(serverName)->nmt_state())
 	{
 	case ucanopen::NmtState::initialization:
 		strncpy(buf, "init", len);

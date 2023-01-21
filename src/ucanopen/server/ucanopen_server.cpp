@@ -37,7 +37,7 @@ void Server::_setNodeId(NodeId nodeId)
 {
 	if (!nodeId.is_valid()) return;
 
-	_nodeId = nodeId;
+	_node_id = nodeId;
 
 	heartbeatService.updateNodeId();
 	tpdoService.updateNodeId();
@@ -64,7 +64,7 @@ void Server::_handleFrame(const can_frame& frame)
 	{
 		return;
 	}
-	else if (frame.can_id == calculate_cob_id(CobType::tsdo, _nodeId))
+	else if (frame.can_id == calculate_cob_id(CobType::tsdo, _node_id))
 	{
 		CobSdo sdoMessage(frame.data);
 		ODEntryKey key = {sdoMessage.index, sdoMessage.subindex};
@@ -78,7 +78,7 @@ void Server::_handleFrame(const can_frame& frame)
 		switch (sdoMessage.cs)
 		{
 		case cs_codes::sdo_scs_read:
-			if (odEntry->second.dataType == ODEntryDataType::OD_TASK)
+			if (odEntry->second.data_type == ODEntryDataType::OD_TASK)
 			{
 				sdoType = SdoType::response_to_task;
 			}
@@ -98,7 +98,7 @@ void Server::_handleFrame(const can_frame& frame)
 		watchService.handleFrame(sdoType, odEntry, sdoMessage.data);
 
 		// server-specific TSDO handling
-		_handleTsdo(sdoType, odEntry, sdoMessage.data);
+		_handle_tsdo(sdoType, odEntry, sdoMessage.data);
 	}
 	else if (heartbeatService.handleFrame(frame))
 	{
