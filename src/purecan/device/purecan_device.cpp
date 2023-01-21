@@ -1,24 +1,8 @@
-/**
- * @file purecan_device.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-11-14
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "purecan_device.h"
 
 
 namespace purecan {
 
-
-/// 
-///
-///
 IDevice::IDevice(std::shared_ptr<can::Socket> socket)
 	: _socket(socket)
 {
@@ -26,16 +10,13 @@ IDevice::IDevice(std::shared_ptr<can::Socket> socket)
 }
 
 
-///
-///
-///
 void IDevice::_send()
 {
 	auto now = std::chrono::steady_clock::now();
 
-	if (!_isRxEnabled) return;
+	if (!_is_rx_enabled) return;
 
-	for (auto& [id, message] : _rxMessageList)
+	for (auto& [id, message] : _rx_message_list)
 	{
 		if (message.period == std::chrono::milliseconds(0)) continue;
 		if (now - message.timepoint < message.period) continue;
@@ -52,17 +33,14 @@ void IDevice::_send()
 }
 
 
-///
-///
-///
-void IDevice::_handleFrame(const can_frame& frame)
+void IDevice::_handle_frame(const can_frame& frame)
 {
-	for (auto& [id, message] : _txMessageList)
+	for (auto& [id, message] : _tx_message_list)
 	{
 		if (frame.can_id != id) continue;
 
 		message.timepoint = std::chrono::steady_clock::now();
-		message.isOnSchedule = true;
+		message.is_on_schedule = true;
 		can_payload data{};
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
 		message.handler(data);
@@ -70,28 +48,23 @@ void IDevice::_handleFrame(const can_frame& frame)
 }
 
 
-///
-///
-///
-void IDevice::_checkConnection()
+void IDevice::_check_connection()
 {
-	bool isConnectionOk = true;
+	bool is_connection_ok = true;
 	auto now = std::chrono::steady_clock::now();
 
-	for (auto& [id, message] : _txMessageList)
+	for (auto& [id, message] : _tx_message_list)
 	{
 		if (message.timeout == std::chrono::milliseconds(0)) continue;
 		if ((now - message.timepoint) > message.timeout)
 		{
-			message.isOnSchedule = false;
-			isConnectionOk = false;
+			message.is_on_schedule = false;
+			is_connection_ok = false;
 		}
 	}
 
-	_isConnectionOk = isConnectionOk;
+	_is_connection_ok = is_connection_ok;
 }
 
-
 } // namespace purecan
-
 

@@ -1,15 +1,3 @@
-/**
- * @file purecan_device.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-11-14
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -21,13 +9,12 @@
 
 namespace purecan {
 
-
 class IDevice
 {
 	friend class Controller;
 private:
 	std::shared_ptr<can::Socket> _socket;
-	bool _isConnectionOk = false;
+	bool _is_connection_ok = false;
 
 	/* device --> controller */
 	struct TxMessageInfo
@@ -35,13 +22,13 @@ private:
 		std::string_view name;
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		bool isOnSchedule;
+		bool is_on_schedule;
 		std::function<void(can_payload)> handler;
 	};
-	std::map<canid_t, TxMessageInfo> _txMessageList;
+	std::map<canid_t, TxMessageInfo> _tx_message_list;
 	
 	/* device <-- controller */
-	bool _isRxEnabled = true;
+	bool _is_rx_enabled = true;
 	struct RxMessageInfo
 	{
 		std::string_view name;
@@ -49,30 +36,28 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload_va(void)> creator; 
 	};
-	std::map<canid_t, RxMessageInfo> _rxMessageList;
+	std::map<canid_t, RxMessageInfo> _rx_message_list;
 
 public:
 	IDevice(std::shared_ptr<can::Socket> socket);
 
-	void registerTxMessage(canid_t id, std::string_view name, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
+	void register_tx_message(canid_t id, std::string_view name, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
 	{
-		_txMessageList.insert({id, {name, timeout, std::chrono::steady_clock::now() ,false, handler}});
+		_tx_message_list.insert({id, {name, timeout, std::chrono::steady_clock::now() ,false, handler}});
 	}
 
-	void registerRxMessage(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
+	void register_rx_message(canid_t id, std::string_view name, std::chrono::milliseconds period, std::function<can_payload_va(void)> creator)
 	{
-		_rxMessageList.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
+		_rx_message_list.insert({id, {name, period, std::chrono::steady_clock::now(), creator}});
 	}
 
-	void enableRxMessages() { _isRxEnabled = true; }
-	void disableRxMessages() { _isRxEnabled = false; }
+	void enable_rx_messages() { _is_rx_enabled = true; }
+	void disable_rx_messages() { _is_rx_enabled = false; }
 private:
 	void _send();
-	void _handleFrame(const can_frame& frame);
-	void _checkConnection();
+	void _handle_frame(const can_frame& frame);
+	void _check_connection();
 };
 
-
 } // namespace purecan
-
 
