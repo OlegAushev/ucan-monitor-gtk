@@ -65,7 +65,7 @@ extern bool logger_get_message(string buf, size_t len);
 extern void srmdrive_controller_set_power_enabled(bool is_enabled);
 extern void srmdrive_controller_set_run_enabled(bool is_enabled);
 extern void srmdrive_controller_set_emergency_enabled(bool is_enabled);
-extern void srmdrive_controller_set_torque(double valPu);
+extern void srmdrive_controller_set_torque(double val_pu);
 extern void srmdrive_controller_set_speed(double val);
 
 /// bmsmain21
@@ -76,12 +76,12 @@ extern double bmsmain_tpdo1_get_temp_max();
 extern double bmsmain_tpdo1_get_temp_min();
 
 /// launchpad
-extern void launchpad_set_client_value(uint tpdoNum, double value);
-extern void launchpad_set_server_value(uint rpdoNum, double value);
+extern void launchpad_set_client_value(uint tpdo_num, double value);
+extern void launchpad_set_server_value(uint rpdo_num, double value);
 
 /// ucanopen_devices
-extern size_t ucanopen_devices_get_error_names(string server_name, char** buf, size_t countMax, size_t lenMax);
-extern size_t ucanopen_devices_get_warning_names(string server_name, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_devices_get_error_names(string server_name, char** buf, size_t count_max, size_t len_max);
+extern size_t ucanopen_devices_get_warning_names(string server_name, char** buf, size_t count_max, size_t len_max);
 extern uint ucanopen_devices_get_error_code(string server_name);
 extern uint ucanopen_devices_get_warning_code(string server_name);
 
