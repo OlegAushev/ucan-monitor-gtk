@@ -1,54 +1,35 @@
-/**
- * @file launchpad_server.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-12-12
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "launchpad_server.h"
 
 
 namespace launchpad {
 
-
-///
-///
-///
-Server::Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket)
-	: ucanopen::Server(name, nodeId, socket, objectDictionary, objectDictionaryConfig)
+Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
+	: ucanopen::Server(name, node_id, socket, object_dictionary, object_dictionary_config)
 {
-	_clientValues.fill(0);
-	_serverValues.fill(0);
+	_client_values.fill(0);
+	_server_values.fill(0);
 
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
-			[this](ucanopen::can_payload data) { this->_handleTpdo1(data); });
+			[this](ucanopen::can_payload data) { this->_handle_tpdo1(data); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
-			[this](ucanopen::can_payload data) { this->_handleTpdo2(data); });
+			[this](ucanopen::can_payload data) { this->_handle_tpdo2(data); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
-			[this](ucanopen::can_payload data) { this->_handleTpdo3(data); });
+			[this](ucanopen::can_payload data) { this->_handle_tpdo3(data); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
-			[this](ucanopen::can_payload data) { this->_handleTpdo4(data); });
+			[this](ucanopen::can_payload data) { this->_handle_tpdo4(data); });
 
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
-			[this](){ return this->_createRpdo1(); });
+			[this](){ return this->_create_rpdo1(); });
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo2, std::chrono::milliseconds(50),
-			[this](){ return this->_createRpdo2(); });
+			[this](){ return this->_create_rpdo2(); });
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo3, std::chrono::milliseconds(100),
-			[this](){ return this->_createRpdo3(); });
+			[this](){ return this->_create_rpdo3(); });
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo4, std::chrono::milliseconds(500),
-			[this](){ return this->_createRpdo4(); });
+			[this](){ return this->_create_rpdo4(); });
 }
 
 
-///
-///
-///
-void Server::_handleTpdo4(ucanopen::can_payload data)
+void Server::_handle_tpdo4(ucanopen::can_payload data)
 {
 	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(data);
 	_errors = message.errors;
@@ -56,42 +37,37 @@ void Server::_handleTpdo4(ucanopen::can_payload data)
 }
 
 
-///
-///
-///
 void Server::_handle_tsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionary::const_iterator entryIt,
+			ucanopen::ObjectDictionary::const_iterator entry_iter,
 			ucanopen::CobSdoData data)
 {
-	if (entryIt->second.name == "syslog_message")
+	if (entry_iter->second.name == "syslog_message")
 	{
-		auto messageId = data.u32();
-		if ((messageId != 0) && (messageId < syslogMessages.size()))
+		auto message_id = data.u32();
+		if ((message_id != 0) && (message_id < syslog_messages.size()))
 		{
-			Logger::instance().add(syslogMessages[messageId]);
+			Logger::instance().add(syslog_messages[message_id]);
 		}
 	}
-	else if (entryIt->second.category == watch_service.watch_category && entryIt->second.data_type == ucanopen::OD_ENUM16)
+	else if (entry_iter->second.category == watch_service.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
 	{
 		
 	}
-	else if (entryIt->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_read)
+	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_read)
 	{
 		std::stringstream sstr;
-		sstr << "[" << entryIt->second.category << "/read] " << entryIt->second.subcategory << "::" << entryIt->second.name
-				<< " = " << data.to_string(entryIt->second.data_type);
+		sstr << "[" << entry_iter->second.category << "/read] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " = " << data.to_string(entry_iter->second.data_type);
 		Logger::instance().add(sstr.str());
 	}
-	else if (entryIt->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_write)
+	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_write)
 	{
 		std::stringstream sstr;
-		sstr << "[" << entryIt->second.category << "/write] " << entryIt->second.subcategory << "::" << entryIt->second.name
+		sstr << "[" << entry_iter->second.category << "/write] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
 				<< " updated.";
 		Logger::instance().add(sstr.str());
 	}
 }
 
-
 } // namespace launchpad
-
 

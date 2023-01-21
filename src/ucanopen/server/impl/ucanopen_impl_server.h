@@ -27,7 +27,7 @@ protected:
 	const ObjectDictionary& _dictionary;
 	ObjectDictionaryAux _dictionary_aux;
 
-	NmtState _nmtState = NmtState::stopped;
+	NmtState _nmt_state = NmtState::stopped;
 protected:
 	virtual void _handle_tsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
 public:
@@ -36,7 +36,7 @@ public:
 
 	std::string_view name() const { return _name; }
 	NodeId node_id() const { return _node_id; }
-	NmtState nmt_state() const { return _nmtState; }
+	NmtState nmt_state() const { return _nmt_state; }
 
 	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
 	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data);

@@ -1,15 +1,3 @@
-/**
- * @file srmdrive_controller.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-18
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -20,35 +8,32 @@
 
 namespace srmdrive {
 
-
 class Controller
 {
 private:
-	ucanopen::Server* _driveServer;
+	ucanopen::Server* _drive_server;
 
-	bool _isRunEnabled = false;
-	bool _isEmergencyEnabled = false;
+	bool _is_run_enabled = false;
+	bool _is_emergency_enabled = false;
 
-	float _torquePuRef = 0;
-	float _speedRef = 0;
+	float _torque_pu_ref = 0;
+	float _speed_ref = 0;
 
 public:
-	Controller(ucanopen::Server* driveServer);
+	Controller(ucanopen::Server* drive_server);
 	
-	void powerUp();
-	void powerDown();
+	void powerup();
+	void powerdown();
 
-	void setRunEnabled(bool isEnabled);
-	void setEmergencyEnabled(bool isEnabled);
+	void set_run(bool is_enabled);
+	void set_emergency(bool is_enabled);
 
-	void setTorque(double valPercents);
-	void setSpeed(double val);
+	void set_torque(double val_percents);
+	void set_speed(double val);
 
-	ucanopen::can_payload makeTpdo1();
-	ucanopen::can_payload makeTpdo2();
+	ucanopen::can_payload make_tpdo1();
+	ucanopen::can_payload make_tpdo2();
 };
 
-
 } // namespace srmdrive
-
 

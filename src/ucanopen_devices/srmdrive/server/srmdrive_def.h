@@ -1,15 +1,3 @@
-/**
- * @file srmdrive_def.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-11-14
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -22,66 +10,54 @@
 
 namespace srmdrive {
 
-/**
- * @brief
- */
 struct CobTpdo1
 {
-	uint16_t statusRun : 1;		// bit 0
-	uint16_t statusFault : 1;	// bit 1
-	uint16_t statusWarning : 1;	// bit 2
-	uint16_t statusOverheat : 1;	// bit 3
-	uint16_t statusReserved : 4;	// bit 4..7
+	uint16_t status_run : 1;	// bit 0
+	uint16_t status_fault : 1;	// bit 1
+	uint16_t status_warning : 1;	// bit 2
+	uint16_t status_overheat : 1;	// bit 3
+	uint16_t status_reserved : 4;	// bit 4..7
 	int8_t torque : 8;
 	int16_t speed : 16;
-	int8_t currentS : 8;
+	int8_t current_s : 8;
 	int8_t power : 8;
-	uint8_t voltageDC : 8;
-	uint8_t currentF : 8;
+	uint8_t voltage_dc : 8;
+	uint8_t current_f : 8;
 	CobTpdo1() = default;
 };
 
 
-/**
- * @brief
- */
 struct CobTpdo2
 {
-	uint8_t tempMotorS : 8;
-	uint8_t reserved1 : 8;
-	uint8_t voltageOut : 8;
-	uint8_t reserved2 : 7;
-	uint16_t torqueLimitation : 1;
-	uint8_t tempMotorFw : 8;
-	uint8_t tempHeatsink : 8;
-	uint8_t tepmCaseAir : 8;
-	uint8_t reserved3 : 8;
+	uint8_t temp_motor_s : 8;
+	uint8_t _reserved1 : 8;
+	uint8_t voltage_out : 8;
+	uint8_t _reserved2 : 7;
+	uint16_t torque_limitation : 1;
+	uint8_t temp_motor_fw : 8;
+	uint8_t temp_heatsink : 8;
+	uint8_t tepm_case_air : 8;
+	uint8_t _reserved3 : 8;
 	CobTpdo2() = default;
 };
 
 
-/**
- * @brief
- */
 struct CobTpdo3
 {
-	uint8_t voltagePosHousing : 8;
-	uint8_t voltageNegHousing : 8;
-	uint16_t statusReserved1 : 1;			// bit 0
-	uint16_t statusInsulationLow : 1;		// bit 1
-	uint16_t statusInsulationLowWoFilter : 1;	// bit 2
-	uint16_t statusReserved2 : 1;			// bit 3
-	uint16_t reserved1 : 3;
-	uint16_t driveReference : 1;
-	int8_t currentDC : 8;
-	uint32_t syslogMessageId : 32;
+	uint8_t voltage_pos_housing : 8;
+	uint8_t voltage_neg_housing : 8;
+	uint16_t status_reserved1 : 1;			// bit 0
+	uint16_t status_insulation_low : 1;		// bit 1
+	uint16_t status_insulation_low_wofilter : 1;	// bit 2
+	uint16_t status_reserved2 : 1;			// bit 3
+	uint16_t _reserved1 : 3;
+	uint16_t drive_reference : 1;
+	int8_t current_dc : 8;
+	uint32_t syslog_message_id : 32;
 	CobTpdo3() = default;
 };
 
 
-/**
- * @brief
- */
 struct CobTpdo4
 {
 	uint32_t errors : 32;
@@ -94,21 +70,21 @@ struct CobTpdo4
 struct CobRpdo1
 {
 	uint16_t run : 1;
-	uint32_t reserved1 : 31;
-	uint16_t emergencyStop : 1;
-	uint16_t reserved2 : 1;
+	uint32_t _reserved1 : 31;
+	uint16_t emergency_stop : 1;
+	uint16_t _reserved2 : 1;
 	uint16_t braking : 1;
-	uint32_t reserved3 : 29;
+	uint32_t _reserved3 : 29;
 	CobRpdo1() = default;
 };
 
 
 struct CobRpdo2
 {
-	int8_t torqueObsolete : 8;
-	uint8_t reserved1 : 8;
+	int8_t torque_obsolete : 8;
+	uint8_t _reserved1 : 8;
 	int16_t torque : 16;
-	uint32_t reserved2 : 32;
+	uint32_t _reserved2 : 32;
 	CobRpdo2() = default;
 };
 
@@ -125,7 +101,7 @@ struct CobRpdo4
 };
 
 
-inline const std::vector<std::string> syslogMessages = {
+inline const std::vector<std::string> syslog_messages = {
 	"No message",
 	"[syslog] Device boot - success.",
 	"[syslog] Device is busy.",
@@ -144,7 +120,7 @@ inline const std::vector<std::string> syslogMessages = {
 };
 
 
-inline const std::vector<std::string> driveStates = {
+inline const std::vector<std::string> drive_states = {
 	"standby",
 	"idle",
 	"pwrup",
@@ -160,7 +136,7 @@ inline const std::vector<std::string> driveStates = {
 } ;
 
 
-inline const std::vector<std::string_view> errorList = {
+inline const std::vector<std::string_view> error_list = {
 	"DC_UNDERVOLTAGE",		// 0x0000 0001
 	"DC_OVERVOLTAGE",		// 0x0000 0002
 	"PHASE_OVERCURRENT",		// 0x0000 0004
@@ -187,7 +163,7 @@ inline const std::vector<std::string_view> errorList = {
 };
 
 
-inline const std::vector<std::string_view> warningList = {
+inline const std::vector<std::string_view> warning_list = {
 	"DCLINK_DISCONNECTED",
 	"DCLINK_CHARGING",
 	"DCLINK_HV_AT_OPEN_CONTACTORS",
@@ -199,7 +175,5 @@ inline const std::vector<std::string_view> warningList = {
 	"FLUX_WEAKENING"
 };
 
-
 }
-
 

@@ -1,15 +1,3 @@
-/**
- * @file main.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-10
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "ucanopen/client/ucanopen_client.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
 #include "ucanopen_devices/launchpad/server/launchpad_server.h"
@@ -25,19 +13,19 @@ const char* backend_ucanopen_server_config_category;
 
 namespace {
 
-std::thread threadMain;
-std::promise<void> signalExitMain;
+std::thread thread_main;
+std::promise<void> signal_exit_main;
 
 }
 
 
 namespace global {
 
-std::shared_ptr<can::Socket> canSocket;
-std::shared_ptr<ucanopen::Client> ucanClient;
-std::shared_ptr<srmdrive::Server> srmdriveServer;
-std::shared_ptr<launchpad::Server> launchpadServer;
-std::shared_ptr<bmsmain::Server> bmsmainServer;
+std::shared_ptr<can::Socket> can_socket;
+std::shared_ptr<ucanopen::Client> ucanopen_client;
+std::shared_ptr<srmdrive::Server> srmdrive_server;
+std::shared_ptr<launchpad::Server> launchpad_server;
+std::shared_ptr<bmsmain::Server> bmsmain_server;
 
 }
 
@@ -54,44 +42,44 @@ int backend_main_loop(std::future<void> futureExit)
 {
 	std::cout << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << std::endl;
 
-	global::canSocket = std::make_shared<can::Socket>();
+	global::can_socket = std::make_shared<can::Socket>();
 
-	global::ucanClient = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), global::canSocket);
+	global::ucanopen_client = std::make_shared<ucanopen::Client>(ucanopen::NodeId(0x14), global::can_socket);
 
-	std::string serverName(backend_ucanopen_server);
-	if (serverName == "SRM Drive")
+	std::string server_name(backend_ucanopen_server);
+	if (server_name == "SRM Drive")
 	{
-		global::srmdriveServer = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::canSocket);
-		global::ucanClient->registerServer(global::srmdriveServer);
+		global::srmdrive_server = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), global::can_socket);
+		global::ucanopen_client->register_server(global::srmdrive_server);
 		
-		auto callbackCreateTpdo1 = [](){ return global::srmdriveServer->controller.makeTpdo1(); };
-		auto callbackCreateTpdo2 = [](){ return global::srmdriveServer->controller.makeTpdo2(); };
+		auto callbackCreateTpdo1 = [](){ return global::srmdrive_server->controller.make_tpdo1(); };
+		auto callbackCreateTpdo2 = [](){ return global::srmdrive_server->controller.make_tpdo2(); };
 
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
 	}
-	else if (serverName == "LaunchPad")
+	else if (server_name == "LaunchPad")
 	{
-		global::launchpadServer = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), global::canSocket);
-		global::ucanClient->registerServer(global::launchpadServer);
+		global::launchpad_server = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), global::can_socket);
+		global::ucanopen_client->register_server(global::launchpad_server);
 
-		auto callbackCreateTpdo1 = [](){ return global::launchpadServer->createClientTpdo1(); };
-		auto callbackCreateTpdo2 = [](){ return global::launchpadServer->createClientTpdo2(); };
-		auto callbackCreateTpdo3 = [](){ return global::launchpadServer->createClientTpdo3(); };
-		auto callbackCreateTpdo4 = [](){ return global::launchpadServer->createClientTpdo4(); };
+		auto callbackCreateTpdo1 = [](){ return global::launchpad_server->create_client_tpdo1(); };
+		auto callbackCreateTpdo2 = [](){ return global::launchpad_server->create_client_tpdo2(); };
+		auto callbackCreateTpdo3 = [](){ return global::launchpad_server->create_client_tpdo3(); };
+		auto callbackCreateTpdo4 = [](){ return global::launchpad_server->create_client_tpdo4(); };
 
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
-		global::ucanClient->registerTpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
+		global::ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
 	}
-	else if (serverName == "BMS Main")
+	else if (server_name == "BMS Main")
 	{
-		global::bmsmainServer = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::canSocket);
-		global::ucanClient->registerServer(global::bmsmainServer);
+		global::bmsmain_server = std::make_shared<bmsmain::Server>("BMS Main", ucanopen::NodeId(0x20), global::can_socket);
+		global::ucanopen_client->register_server(global::bmsmain_server);
 	}
 
-	backend_ucanopen_server_config_category = global::ucanClient->server(serverName)->config_service.configCategory.data();
+	backend_ucanopen_server_config_category = global::ucanopen_client->server(server_name)->config_service.config_category.data();
 
 	std::cout << "[backend] Backend ready." << std::endl;
 	backend_is_ready = true;
@@ -117,8 +105,8 @@ int backend_main_enter()
 	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
 	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
 
-	std::future<void> futureExit = signalExitMain.get_future();
-	threadMain = std::thread(backend_main_loop, std::move(futureExit));
+	std::future<void> futureExit = signal_exit_main.get_future();
+	thread_main = std::thread(backend_main_loop, std::move(futureExit));
 	return 0;
 }
 
@@ -132,8 +120,8 @@ void backend_main_exit()
 {
 	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;
 
-	signalExitMain.set_value();
-	threadMain.join();
+	signal_exit_main.set_value();
+	thread_main.join();
 }
 
 

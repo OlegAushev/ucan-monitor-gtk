@@ -1,15 +1,3 @@
-/**
- * @file launchpad_def.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-12-12
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -19,7 +7,6 @@
 
 
 namespace launchpad {
-
 
 struct CobTpdo4
 {
@@ -93,7 +80,7 @@ struct CobClientTpdo4
 };
 
 
-inline const std::vector<std::string> syslogMessages = {
+inline const std::vector<std::string> syslog_messages = {
 	"No message",
 	"[syslog] Boot CPU1...",
 	"[syslog] Boot CPU1 - success.",
@@ -108,18 +95,16 @@ inline const std::vector<std::string> syslogMessages = {
 };
 
 
-inline const std::vector<std::string_view> errorList = {
+inline const std::vector<std::string_view> error_list = {
 	"can_bus_connection_lost",
 };
 
 
-inline const std::vector<std::string_view> warningList = {
+inline const std::vector<std::string_view> warning_list = {
 	"can_bus_error",
 	"can_bus_overrun",
 	"can_bus_connection_lost",
 };
 
-
 } // namespace launchpad
-
 

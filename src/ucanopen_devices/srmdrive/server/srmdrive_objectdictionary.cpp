@@ -1,32 +1,19 @@
-/**
- * @file objectdictionary.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-04
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "srmdrive_server.h"
 
 
 namespace srmdrive {
 
-
 using namespace ucanopen;
 
 
-extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig = {
+extern const ucanopen::ObjectDictionaryConfig object_dictionary_config = {
 	.watch_category = "WATCH",
 	.watch_subcategory = "WATCH",
 	.config_category = "CONFIG"
 };
 
 
-extern const ucanopen::ObjectDictionary objectDictionary = {	
+extern const ucanopen::ObjectDictionary object_dictionary = {	
 {{0x1008, 0x00}, {"SYSTEM", "INFO", "DEVICE_NAME", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
 {{0x5FFF, 0x00}, {"SYSTEM", "INFO", "SOFTWARE_VERSION", "", OD_UINT32, OD_ACCESS_RO}},
 {{0x5FFF, 0x01}, {"SYSTEM", "INFO", "BUILD_CONFIGURATION", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
@@ -126,7 +113,5 @@ extern const ucanopen::ObjectDictionary objectDictionary = {
 {{0x2105, 0x03}, {"CONFIG",	"POSSENS",	"CAL_SPEED_RPM",	"rpm",	OD_FLOAT32, 	OD_ACCESS_RW}},
 };
 
-
 } // namespace srmdrive
-
 

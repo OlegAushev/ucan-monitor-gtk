@@ -1,15 +1,3 @@
-/**
- * @file ucanopen_client.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-04
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -31,25 +19,24 @@
 
 namespace ucanopen {
 
-
 class Client
 {
 private:
-	NodeId _nodeId;
+	NodeId _node_id;
 	std::shared_ptr<can::Socket> _socket;
-	NmtState _state;
+	NmtState _nmt_state;
 
 	std::set<std::shared_ptr<Server>> _servers;
-	std::map<canid_t, std::shared_ptr<Server>> _recvIdServerList;
+	std::map<canid_t, std::shared_ptr<Server>> _recvid_server_list;
 
 	/* SYNC */
 	struct SyncInfo
 	{
-		bool isEnabled = false;
+		bool is_enabled = false;
 		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;		
 	};
-	SyncInfo _syncInfo;
+	SyncInfo _sync_info;
 
 	/* HEARTBEAT */
 	struct HeartbeatInfo
@@ -57,94 +44,94 @@ private:
 		std::chrono::milliseconds period = std::chrono::milliseconds(1000);
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 	};
-	HeartbeatInfo _heartbeatInfo;
+	HeartbeatInfo _heartbeat_info;
 			
 	/* TPDO client --> server */
-	bool _isTpdoEnabled = false;
+	bool _is_tpdo_enabled = false;
 	struct TpdoInfo
 	{
 		std::chrono::milliseconds period;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload(void)> creator;
 	};
-	std::map<TpdoType, TpdoInfo> _tpdoList;
+	std::map<TpdoType, TpdoInfo> _tpdo_list;
 
 	/* THREADS */
-	std::thread _threadRun;
-	std::promise<void> _signalExitRunThread;
-	void _run(std::future<void> futureExit);
+	std::thread _thread_run;
+	std::promise<void> _signal_exit_run_thread;
+	void _run(std::future<void> future_exit);
 
-	void _onFrameReceived(const can_frame& frame);
+	void _on_frame_received(const can_frame& frame);
 
 public:
-	Client(NodeId nodeId_, std::shared_ptr<can::Socket> socket);
+	Client(NodeId node_id, std::shared_ptr<can::Socket> socket);
 	~Client();
-	NodeId nodeId() const { return _nodeId;	}
-	void setNodeId(NodeId nodeId);
-	void registerServer(std::shared_ptr<Server> server);
+	NodeId node_id() const { return _node_id; }
+	void set_node_id(NodeId nodeId);
+	void register_server(std::shared_ptr<Server> server);
 
 	std::shared_ptr<Server> server(std::string_view name)
 	{
-		auto itServer = std::find_if(_servers.begin(), _servers.end(),
+		auto server_iter = std::find_if(_servers.begin(), _servers.end(),
 			[name](const auto& s)
 			{
 				return s->name() == name;
 			});
-		if (itServer == _servers.end())
+		if (server_iter == _servers.end())
 		{
 			return nullptr;
 		}
-		return *itServer;
+		return *server_iter;
 	}
 
-	void setServerNodeId(std::string_view name, NodeId nodeId);
+	void set_server_node_id(std::string_view name, NodeId node_id);
 
-	void enableSync()
+	void enable_sync()
 	{
-		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << _syncInfo.period << ")... ";	
-		_syncInfo.isEnabled = true;
+		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << _sync_info.period << ")... ";	
+		_sync_info.is_enabled = true;
 		std::cout << "done." << std::endl;
 	}
 
-	void disableSync()
+	void disable_sync()
 	{
 		std::cout << "[ucanopen] Disabling client SYNC messages... ";
-		_syncInfo.isEnabled = false;
+		_sync_info.is_enabled = false;
 		std::cout << "done." << std::endl;
 	}
 
-	void setSyncPeriod(std::chrono::milliseconds period)
+	void set_sync_period(std::chrono::milliseconds period)
 	{
 		std::cout << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
-		_syncInfo.period = period;
+		_sync_info.period = period;
 		std::cout << "done." << std::endl;
 	}
 
-	void setHeartbeatPeriod(std::chrono::milliseconds period)
+	void set_heartbeat_period(std::chrono::milliseconds period)
 	{
-		_heartbeatInfo.period = period;
+		_heartbeat_info.period = period;
 	}
 
-	void registerTpdo(TpdoType tpdoType, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
+	void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds period, std::function<can_payload(void)> creator)
 	{
-		_tpdoList.insert({tpdoType, {period, std::chrono::steady_clock::now(), creator}});
+		_tpdo_list.insert({tpdo_type, {period, std::chrono::steady_clock::now(), creator}});
 	}
 
-	void enableTpdo()
+	void enable_tpdo()
 	{
 		std::cout << "[ucanopen] Enabling client TPDO messages... ";
-		_isTpdoEnabled = true;
+		_is_tpdo_enabled = true;
 		std::cout << "done." << std::endl;
 	}
 
-	void disableTpdo()
+	void disable_tpdo()
 	{
 		std::cout << "[ucanopen] Disabling client TPDO messages... ";
-		_isTpdoEnabled = false;
+		_is_tpdo_enabled = false;
 		std::cout << "done." << std::endl;
 	}
 
-	void enableServerRpdo()
+	void enable_server_rpdo()
 	{
 		for (auto& server : _servers)
 		{
@@ -152,7 +139,7 @@ public:
 		}
 	}
 
-	void disableServerRpdo()
+	void disable_server_rpdo()
 	{
 		for (auto& server : _servers)
 		{
@@ -160,7 +147,7 @@ public:
 		}
 	}
 
-	void enableServerWatch()
+	void enable_server_watch()
 	{
 		for (auto& server : _servers)
 		{
@@ -168,7 +155,7 @@ public:
 		}
 	}
 
-	void disableServerWatch()
+	void disable_server_watch()
 	{
 		for (auto& server : _servers)
 		{
@@ -176,7 +163,7 @@ public:
 		}
 	}
 
-	void setServerWatchPeriod(std::chrono::milliseconds period)
+	void set_server_watch_period(std::chrono::milliseconds period)
 	{
 		for (auto& server : _servers)
 		{
@@ -185,11 +172,9 @@ public:
 	}
 
 protected:
-	void _calculateRecvId(std::shared_ptr<Server> server);
-	bool _isFree(NodeId nodeId) const;
+	void _calculate_recvid(std::shared_ptr<Server> server);
+	bool _is_free(NodeId nodeId) const;
 };
 
-
 } // namespace ucanopen
-
 

@@ -1,149 +1,100 @@
-/**
- * @file ucanopen.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-19
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "ucanopen/client/ucanopen_client.h"
 #include "logger/logger.h"
 #include <cassert>
 
 
 namespace global {
-extern std::shared_ptr<ucanopen::Client> ucanClient;
+extern std::shared_ptr<ucanopen::Client> ucanopen_client;
 }
 
 
 extern "C" {
 
-
-///
-///
-///
 unsigned int ucanopen_client_get_node_id()
 {
-	return global::ucanClient->nodeId().value();
+	return global::ucanopen_client->node_id().value();
 }
 
 
-///
-///
-///
-void ucanopen_client_set_node_id(unsigned int nodeId)
+void ucanopen_client_set_node_id(unsigned int node_id)
 {
-	global::ucanClient->setNodeId(ucanopen::NodeId(nodeId));
+	global::ucanopen_client->set_node_id(ucanopen::NodeId(node_id));
 }
 
 
-///
-///
-///
-void ucanopen_client_set_server_id(const char* serverName ,unsigned int nodeId)
+void ucanopen_client_set_server_id(const char* server_name ,unsigned int node_id)
 {
-	global::ucanClient->setServerNodeId(serverName, ucanopen::NodeId(nodeId));
+	global::ucanopen_client->set_server_node_id(server_name, ucanopen::NodeId(node_id));
 }
 
 
-///
-///
-///
-void ucanopen_client_set_sync_enabled(bool isEnabled)
+void ucanopen_client_set_sync_enabled(bool is_enabled)
 {
-	isEnabled ? global::ucanClient->enableSync() : global::ucanClient->disableSync();
+	is_enabled ? global::ucanopen_client->enable_sync() : global::ucanopen_client->disable_sync();
 }
 
 
-///
-///
-///
 void ucanopen_client_set_sync_period(int period)
 {
 	if (period <= 0) return;
-	global::ucanClient->setSyncPeriod(std::chrono::milliseconds(period));
+	global::ucanopen_client->set_sync_period(std::chrono::milliseconds(period));
 }
 
 
-///
-///
-///
-void ucanopen_client_set_tpdo_enabled(bool isEnabled)
+void ucanopen_client_set_tpdo_enabled(bool is_enabled)
 {
-	isEnabled ? global::ucanClient->enableTpdo() : global::ucanClient->disableTpdo();
+	is_enabled ? global::ucanopen_client->enable_tpdo() : global::ucanopen_client->disable_tpdo();
 }
 
 
-///
-///
-///
-void ucanopen_client_set_server_rpdo_enabled(bool isEnabled)
+void ucanopen_client_set_server_rpdo_enabled(bool is_enabled)
 {
-	isEnabled ? global::ucanClient->enableServerRpdo() : global::ucanClient->disableServerRpdo();
+	is_enabled ? global::ucanopen_client->enable_server_rpdo() : global::ucanopen_client->disable_server_rpdo();
 }
 
 
-///
-///
-///
-void ucanopen_client_set_watch_enabled(bool isEnabled)
+void ucanopen_client_set_watch_enabled(bool is_enabled)
 {
-	isEnabled ? global::ucanClient->enableServerWatch() : global::ucanClient->disableServerWatch();
+	is_enabled ? global::ucanopen_client->enable_server_watch() : global::ucanopen_client->disable_server_watch();
 }
 
 
-///
-///
-///
 void ucanopen_client_set_watch_period(int period)
 {
 	if (period <= 0) return;
-	global::ucanClient->setServerWatchPeriod(std::chrono::milliseconds(period));
+	global::ucanopen_client->set_server_watch_period(std::chrono::milliseconds(period));
 }
 
 
-///
-///
-///
-void ucanopen_server_get_watch_value(const char* serverName, const char* watchName, char* buf, size_t len)
+void ucanopen_server_get_watch_value(const char* server_name, const char* watch_name, char* buf, size_t len)
 {
-	global::ucanClient->server(serverName)->watch_service.value(watchName, buf, len);
+	global::ucanopen_client->server(server_name)->watch_service.value(watch_name, buf, len);
 }
 
 
-///
-///
-///
-size_t ucanopen_server_get_config_categories(const char* serverName, char** buf, size_t countMax, size_t lenMax)
+size_t ucanopen_server_get_config_categories(const char* server_name, char** buf, size_t count_max, size_t len_max)
 {
-	size_t ret = global::ucanClient->server(serverName)->config_service.entries_list().size();
-	if (ret >= countMax)
+	size_t ret = global::ucanopen_client->server(server_name)->config_service.entries_list().size();
+	if (ret >= count_max)
 	{
 		return 0;
 	}
 
 	size_t i = 0;
-	for (auto [category, names] : global::ucanClient->server(serverName)->config_service.entries_list())
+	for (auto [category, names] : global::ucanopen_client->server(server_name)->config_service.entries_list())
 	{
-		strncpy(buf[i++], category.data(), lenMax);
+		strncpy(buf[i++], category.data(), len_max);
 	}
 
 	return ret;
 }
 
 
-///
-///
-///
-size_t ucanopen_server_get_config_entries(const char* serverName, const char* category, char** buf, size_t countMax, size_t lenMax)
+size_t ucanopen_server_get_config_entries(const char* server_name, const char* category, char** buf, size_t count_max, size_t len_max)
 {
-	auto entries = global::ucanClient->server(serverName)->config_service.entries_list().at(category);
+	auto entries = global::ucanopen_client->server(server_name)->config_service.entries_list().at(category);
 	size_t ret = entries.size();
-	if (ret >= countMax)
+	if (ret >= count_max)
 	{
 		return 0;
 	}
@@ -151,28 +102,22 @@ size_t ucanopen_server_get_config_entries(const char* serverName, const char* ca
 	size_t i = 0;
 	for (auto entry : entries)
 	{
-		strncpy(buf[i++], entry.data(), lenMax);
+		strncpy(buf[i++], entry.data(), len_max);
 	}
 
 	return ret;
 }
 
 
-///
-///
-///
-bool ucanopen_server_is_heartbeat_ok(const char* serverName)
+bool ucanopen_server_is_heartbeat_ok(const char* server_name)
 {
-	return global::ucanClient->server(serverName)->heartbeat_service.is_ok();
+	return global::ucanopen_client->server(server_name)->heartbeat_service.is_ok();
 }
 
 
-///
-///
-///
-void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len)
+void ucanopen_server_get_nmt_state(const char* server_name, char* buf, size_t len)
 {
-	switch (global::ucanClient->server(serverName)->nmt_state())
+	switch (global::ucanopen_client->server(server_name)->nmt_state())
 	{
 	case ucanopen::NmtState::initialization:
 		strncpy(buf, "init", len);
@@ -190,56 +135,39 @@ void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len
 }
 
 
-///
-///
-///
-bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
+bool ucanopen_server_is_tpdo_ok(const char* server_name, uint tpdo_num)
 {
-	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return global::ucanClient->server(serverName)->tpdo_service.is_ok(static_cast<ucanopen::TpdoType>(tpdoNum));
+	assert(tpdo_num <= 3);
+	return global::ucanopen_client->server(server_name)->tpdo_service.is_ok(static_cast<ucanopen::TpdoType>(tpdo_num));
 }
 
 
-///
-///
-///
-unsigned long ucanopen_server_get_tpdo_data(const char* serverName, int tpdoNum)
+unsigned long ucanopen_server_get_tpdo_data(const char* server_name, uint tpdo_num)
 {
-	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return ucanopen::from_payload<uint64_t>(global::ucanClient->server(serverName)->tpdo_service.data(static_cast<ucanopen::TpdoType>(tpdoNum)));
+	assert(tpdo_num <= 3);
+	return ucanopen::from_payload<uint64_t>(global::ucanopen_client->server(server_name)->tpdo_service.data(static_cast<ucanopen::TpdoType>(tpdo_num)));
 }
 
 
-///
-///
-///
-void ucanopen_server_read(const char* serverName, const char* category, const char* subcategory, const char* name)
+void ucanopen_server_read(const char* server_name, const char* category, const char* subcategory, const char* name)
 {
-	global::ucanClient->server(serverName)->read(category, subcategory, name);
+	global::ucanopen_client->server(server_name)->read(category, subcategory, name);
 }
 
 
-///
-///
-///
-void ucanopen_server_write(const char* serverName, const char* category, const char* subcategory, const char* name, const char* value)
+void ucanopen_server_write(const char* server_name, const char* category, const char* subcategory, const char* name, const char* value)
 {
 	std::stringstream sstr;
 		sstr << "[" << category << "/write] " << subcategory << "::" << name << " = " << value << ", updating...";
 	Logger::instance().add(sstr.str());
-	global::ucanClient->server(serverName)->write(category, subcategory, name, std::string(value));
+	global::ucanopen_client->server(server_name)->write(category, subcategory, name, std::string(value));
 }
 
 
-///
-///
-///
-void ucanopen_server_exec(const char* serverName, const char* category, const char* subcategory, const char* name)
+void ucanopen_server_exec(const char* server_name, const char* category, const char* subcategory, const char* name)
 {
-	global::ucanClient->server(serverName)->exec(category, subcategory, name);
+	global::ucanopen_client->server(server_name)->exec(category, subcategory, name);
 }
 
-
 }
-
 

@@ -1,15 +1,3 @@
-/**
- * @file srmdrive_server.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-11-13
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -21,18 +9,17 @@
 
 namespace srmdrive {
 
-
-extern const ucanopen::ObjectDictionary objectDictionary;
-extern const ucanopen::ObjectDictionaryConfig objectDictionaryConfig;
+extern const ucanopen::ObjectDictionary object_dictionary;
+extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 
 class Server : public ucanopen::Server
 {
 protected:
-	void _handleTpdo1(ucanopen::can_payload data) {}
-	void _handleTpdo2(ucanopen::can_payload data) {}
-	void _handleTpdo3(ucanopen::can_payload data);
-	void _handleTpdo4(ucanopen::can_payload data);
+	void _handle_tpdo1(ucanopen::can_payload data) {}
+	void _handle_tpdo2(ucanopen::can_payload data) {}
+	void _handle_tpdo3(ucanopen::can_payload data);
+	void _handle_tpdo4(ucanopen::can_payload data);
 
 	virtual void _handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
@@ -44,12 +31,11 @@ private:
 public:
 	Controller controller;
 
-	Server(const std::string& name, ucanopen::NodeId nodeId, std::shared_ptr<can::Socket> socket);
+	Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 
 	uint32_t errors() const { return _errors; }
 	uint16_t warnings() const { return _warnings; }
 };
-
 
 } // namespace srmdrive
 

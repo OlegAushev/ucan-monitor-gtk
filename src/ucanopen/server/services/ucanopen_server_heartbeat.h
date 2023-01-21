@@ -31,7 +31,7 @@ public:
 		if (frame.can_id != _id) return false;
 		
 		_timepoint = std::chrono::steady_clock::now();
-		_server->_nmtState = static_cast<NmtState>(frame.data[0]);
+		_server->_nmt_state = static_cast<NmtState>(frame.data[0]);
 		return true;
 	}
 };

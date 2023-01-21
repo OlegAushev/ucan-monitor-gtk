@@ -1,160 +1,132 @@
-/**
- * @file ucanopen_client.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-04
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "ucanopen_client.h"
 
 
 namespace ucanopen {
 
-
-///
-///
-///
-Client::Client(NodeId nodeId, std::shared_ptr<can::Socket> socket)
-	: _nodeId(nodeId)
+Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
+	: _node_id(node_id)
 	, _socket(socket)
-	, _state(NmtState::initialization)
+	, _nmt_state(NmtState::initialization)
 {
-	_syncInfo.timepoint = std::chrono::steady_clock::now();
-	_heartbeatInfo.timepoint = std::chrono::steady_clock::now();
+	_sync_info.timepoint = std::chrono::steady_clock::now();
+	_heartbeat_info.timepoint = std::chrono::steady_clock::now();
 
 	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
 
-	std::future<void> futureExit = _signalExitRunThread.get_future();
-	_threadRun = std::thread(&Client::_run, this, std::move(futureExit));
+	std::future<void> future_exit = _signal_exit_run_thread.get_future();
+	_thread_run = std::thread(&Client::_run, this, std::move(future_exit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	_state = NmtState::operational;
+	_nmt_state = NmtState::operational;
 }
 
 
-///
-///
-///
 Client::~Client()
 {
 	std::cout << "[ucanopen] Sending signal to aux thread to stop..." << std::endl;
-	_signalExitRunThread.set_value();
-	_threadRun.join();
+	_signal_exit_run_thread.set_value();
+	_thread_run.join();
 }
 
 
-///
-///
-///
-void Client::setNodeId(NodeId nodeId)
+void Client::set_node_id(NodeId node_id)
 {
-	std::cout << "[ucanopen] Setting client ID = " << nodeId.value()
-			<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
+	std::cout << "[ucanopen] Setting client ID = " << node_id.value()
+			<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
-	if (!nodeId.is_valid())
+	if (!node_id.is_valid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
 		return;
 	}
 
-	if (!_isFree(nodeId))
+	if (!_is_free(node_id))
 	{
 		std::cout << "failed: already occupied ID." << std::endl;
 		return;
 	}
 	
-	_nodeId = nodeId;
+	_node_id = node_id;
 	std::cout << "done." << std::endl;
 }
 
 
-///
-///
-///
-void Client::registerServer(std::shared_ptr<Server> server)
+void Client::register_server(std::shared_ptr<Server> server)
 {
 	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
 			<< std::hex << server->node_id().value() << std::dec << " to client... ";
 
-	auto itServerSameName = std::find_if(_servers.begin(), _servers.end(), 
+	auto server_same_name = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
 		{
 			return server->name() == s->name();				
 		});
-	if (itServerSameName != _servers.end())
+	if (server_same_name != _servers.end())
 	{
 		std::cout << "failed: server with that name already added to client." << std::endl;
 		return;
 	}
 
-	auto itServerSameId = std::find_if(_servers.begin(), _servers.end(), 
+	auto server_same_id = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
 		{
 			return server->node_id() == s->node_id();				
 		});
-	if (itServerSameId != _servers.end())
+	if (server_same_id != _servers.end())
 	{
 		std::cout << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
 				<< " already added to client."  << std::endl;
 		return;
 	}
 
-	if (server->node_id() == _nodeId)
+	if (server->node_id() == _node_id)
 	{
 		std::cout << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec << std::endl;
 		return;
 	}
 
 	_servers.insert(server);
-	_calculateRecvId(server);
+	_calculate_recvid(server);
 
 	std::cout << "done." << std::endl;
 }
 
 
-///
-///
-///
-void Client::setServerNodeId(std::string_view name, NodeId nodeId)
+void Client::set_server_node_id(std::string_view name, NodeId node_id)
 {
-	std::cout << "[ucanopen] Setting '" << name << "' server ID = " << nodeId.value()
-				<< " (0x" << std::hex << nodeId.value() << std::dec << ")... ";
+	std::cout << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
+				<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
-	if (!nodeId.is_valid())
+	if (!node_id.is_valid())
 	{
 		std::cout << "failed: invalid ID." << std::endl;
 		return;
 	}
 
-	if (!_isFree(nodeId))
+	if (!_is_free(node_id))
 	{
 		std::cout << "failed: already occupied ID." << std::endl;
 		return;
 	}
 
-	auto itServer = std::find_if(_servers.begin(), _servers.end(),
+	auto server_iter = std::find_if(_servers.begin(), _servers.end(),
 		[name](const auto& s)
 		{
 			return s->name() == name;
 		});
-	if (itServer == _servers.end())
+	if (server_iter == _servers.end())
 	{
 		std::cout << "failed: no such server found." << std::endl;
 		return;
 	}
 
-	(*itServer)->_set_node_id(nodeId);
+	(*server_iter)->_set_node_id(node_id);
 
 	// erase outdated elements from [id; server] map
-	for (auto it = _recvIdServerList.begin(); it != _recvIdServerList.end();)
+	for (auto it = _recvid_server_list.begin(); it != _recvid_server_list.end();)
 	{
 		if (it->second->name() == name)
 		{
-			it = _recvIdServerList.erase(it);
+			it = _recvid_server_list.erase(it);
 		}
 		else
 		{
@@ -162,49 +134,46 @@ void Client::setServerNodeId(std::string_view name, NodeId nodeId)
 		}
 	}
 
-	_calculateRecvId(*itServer);
+	_calculate_recvid(*server_iter);
 
 	std::cout << "done." << std::endl;
 }
 
 
-///
-///
-///
-void Client::_run(std::future<void> futureExit)
+void Client::_run(std::future<void> future_exit)
 {
 	std::cout << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << std::endl;
 
-	while (futureExit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+	while (future_exit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
 		auto now = std::chrono::steady_clock::now();
 
 		/* SYNC */
-		if (_syncInfo.period != std::chrono::milliseconds(0))
+		if (_sync_info.period != std::chrono::milliseconds(0))
 		{
-			if (now - _syncInfo.timepoint > _syncInfo.period)
+			if (now - _sync_info.timepoint > _sync_info.period)
 			{
-				_socket->send(create_frame(CobType::sync, _nodeId, {}));
-				_syncInfo.timepoint = now;
+				_socket->send(create_frame(CobType::sync, _node_id, {}));
+				_sync_info.timepoint = now;
 			}
 		}
 
 		/* HEARTBEAT */
-		if (now - _heartbeatInfo.timepoint > _heartbeatInfo.period)
+		if (now - _heartbeat_info.timepoint > _heartbeat_info.period)
 		{
-			_socket->send(create_frame(CobType::heartbeat, _nodeId, {static_cast<uint8_t>(_state)}));
-			_heartbeatInfo.timepoint = now;
+			_socket->send(create_frame(CobType::heartbeat, _node_id, {static_cast<uint8_t>(_nmt_state)}));
+			_heartbeat_info.timepoint = now;
 		}
 
 		/* TPDO */
-		if (_isTpdoEnabled)
+		if (_is_tpdo_enabled)
 		{
-			for (auto& [type, message] : _tpdoList)
+			for (auto& [tpdo_type, message] : _tpdo_list)
 			{
 				if (!message.creator) continue;
 				if (now - message.timepoint >= message.period)
 				{
-					_socket->send(create_frame(to_cob_type(type), _nodeId, message.creator()));
+					_socket->send(create_frame(to_cob_type(tpdo_type), _node_id, message.creator()));
 					message.timepoint = now;
 				}
 			}
@@ -218,11 +187,11 @@ void Client::_run(std::future<void> futureExit)
 
 		/* RECV */
 		can_frame frame;
-		can::Error recvErr = _socket->recv(frame);
-		while (recvErr == can::Error::no_error)
+		can::Error recv_error = _socket->recv(frame);
+		while (recv_error == can::Error::no_error)
 		{
-			(void) std::async(&Client::_onFrameReceived, this, frame);
-			recvErr = _socket->recv(frame);
+			(void) std::async(&Client::_on_frame_received, this, frame);
+			recv_error = _socket->recv(frame);
 		}
 	}
 
@@ -230,23 +199,17 @@ void Client::_run(std::future<void> futureExit)
 }
 
 
-///
-///
-///
-void Client::_onFrameReceived(const can_frame& frame)
+void Client::_on_frame_received(const can_frame& frame)
 {
-	auto it = _recvIdServerList.find(frame.can_id);
-	if (it != _recvIdServerList.end())
+	auto server_iter = _recvid_server_list.find(frame.can_id);
+	if (server_iter != _recvid_server_list.end())
 	{
-		it->second->_handle_frame(frame);
+		server_iter->second->_handle_frame(frame);
 	}
 }
 
 
-///
-///
-///
-void Client::_calculateRecvId(std::shared_ptr<Server> server)
+void Client::_calculate_recvid(std::shared_ptr<Server> server)
 {
 	canid_t tpdo1 = calculate_cob_id(CobType::tpdo1, server->node_id());
 	canid_t tpdo2 = calculate_cob_id(CobType::tpdo2, server->node_id());
@@ -255,28 +218,25 @@ void Client::_calculateRecvId(std::shared_ptr<Server> server)
 	canid_t tsdo = calculate_cob_id(CobType::tsdo, server->node_id());
 	canid_t heartbeat = calculate_cob_id(CobType::heartbeat, server->node_id());
 
-	_recvIdServerList.insert({tpdo1, server});
-	_recvIdServerList.insert({tpdo2, server});
-	_recvIdServerList.insert({tpdo3, server});
-	_recvIdServerList.insert({tpdo4, server});
-	_recvIdServerList.insert({tsdo, server});
-	_recvIdServerList.insert({heartbeat, server});
+	_recvid_server_list.insert({tpdo1, server});
+	_recvid_server_list.insert({tpdo2, server});
+	_recvid_server_list.insert({tpdo3, server});
+	_recvid_server_list.insert({tpdo4, server});
+	_recvid_server_list.insert({tsdo, server});
+	_recvid_server_list.insert({heartbeat, server});
 }
 
 
-///
-///
-///
-bool Client::_isFree(NodeId nodeId) const
+bool Client::_is_free(NodeId node_id) const
 {
-	if (nodeId == _nodeId)
+	if (node_id == _node_id)
 	{
 		return false;
 	}
 
 	for (const auto& server : _servers)
 	{
-		if (nodeId == server->node_id())
+		if (node_id == server->node_id())
 		{
 			return false;
 		}
@@ -285,7 +245,5 @@ bool Client::_isFree(NodeId nodeId) const
 	return true;
 }
 
-
 } // namespace ucanopen
-
 

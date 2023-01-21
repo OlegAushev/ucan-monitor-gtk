@@ -39,32 +39,32 @@ extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 
 // ucanopen
-extern void ucanopen_client_set_node_id(uint nodeId);
-extern void ucanopen_client_set_server_id(string serverName ,uint nodeId);
-extern void ucanopen_client_set_tpdo_enabled(bool isEnabled);
-extern void ucanopen_client_set_server_rpdo_enabled(bool isEnabled);
-extern void ucanopen_client_set_sync_enabled(bool isEnabled);
+extern void ucanopen_client_set_node_id(uint node_id);
+extern void ucanopen_client_set_server_id(string server_name ,uint node_id);
+extern void ucanopen_client_set_tpdo_enabled(bool is_enabled);
+extern void ucanopen_client_set_server_rpdo_enabled(bool is_enabled);
+extern void ucanopen_client_set_sync_enabled(bool is_enabled);
 extern void ucanopen_client_set_sync_period(int period);
-extern void ucanopen_client_set_watch_enabled(bool isEnabled);
+extern void ucanopen_client_set_watch_enabled(bool is_enabled);
 extern void ucanopen_client_set_watch_period(int period);
-extern void ucanopen_server_get_watch_value(string serverName, string watchName, char* buf, size_t len);
-extern size_t ucanopen_server_get_config_categories(string serverName, char** buf, size_t countMax, size_t lenMax);
-extern size_t ucanopen_server_get_config_entries(string serverName, string category, char** buf, size_t countMax, size_t lenMax);
-extern bool ucanopen_server_is_heartbeat_ok(string serverName);
-extern void ucanopen_server_get_nmt_state(string serverName, char* buf, size_t len);
-extern bool ucanopen_server_is_tpdo_ok(string serverName, int tpdoNum);
-extern ulong ucanopen_server_get_tpdo_data(string serverName, int tpdoNum);
-extern void ucanopen_server_read(string serverName, string category, string subcategory, string name);
-extern void ucanopen_server_write(string serverName, string category, string subcategory, string name, string value);
-extern void ucanopen_server_exec(string serverName, string category, string subcategory, string name);
+extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* buf, size_t len);
+extern size_t ucanopen_server_get_config_categories(string server_name, char** buf, size_t count_max, size_t len_max);
+extern size_t ucanopen_server_get_config_entries(string server_name, string category, char** buf, size_t count_max, size_t len_max);
+extern bool ucanopen_server_is_heartbeat_ok(string server_name);
+extern void ucanopen_server_get_nmt_state(string server_name, char* buf, size_t len);
+extern bool ucanopen_server_is_tpdo_ok(string server_name, uint tpdo_num);
+extern ulong ucanopen_server_get_tpdo_data(string server_name, uint tpdo_num);
+extern void ucanopen_server_read(string server_name, string category, string subcategory, string name);
+extern void ucanopen_server_write(string server_name, string category, string subcategory, string name, string value);
+extern void ucanopen_server_exec(string server_name, string category, string subcategory, string name);
 
 // logger
 extern bool logger_get_message(string buf, size_t len);
 
 // srmdrive
-extern void srmdrive_controller_set_power_enabled(bool isEnabled);
-extern void srmdrive_controller_set_run_enabled(bool isEnabled);
-extern void srmdrive_controller_set_emergency_enabled(bool isEnabled);
+extern void srmdrive_controller_set_power_enabled(bool is_enabled);
+extern void srmdrive_controller_set_run_enabled(bool is_enabled);
+extern void srmdrive_controller_set_emergency_enabled(bool is_enabled);
 extern void srmdrive_controller_set_torque(double valPu);
 extern void srmdrive_controller_set_speed(double val);
 
@@ -80,10 +80,10 @@ extern void launchpad_set_client_value(uint tpdoNum, double value);
 extern void launchpad_set_server_value(uint rpdoNum, double value);
 
 /// ucanopen_devices
-extern size_t ucanopen_devices_get_error_names(string serverName, char** buf, size_t countMax, size_t lenMax);
-extern size_t ucanopen_devices_get_warning_names(string serverName, char** buf, size_t countMax, size_t lenMax);
-extern uint ucanopen_devices_get_error_code(string serverName);
-extern uint ucanopen_devices_get_warning_code(string serverName);
+extern size_t ucanopen_devices_get_error_names(string server_name, char** buf, size_t countMax, size_t lenMax);
+extern size_t ucanopen_devices_get_warning_names(string server_name, char** buf, size_t countMax, size_t lenMax);
+extern uint ucanopen_devices_get_error_code(string server_name);
+extern uint ucanopen_devices_get_warning_code(string server_name);
 
 
 int main(string[] args)
