@@ -3,9 +3,9 @@
 
 namespace ucanopen {
 
-ServerWatchService::ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig)
-	: watchCategory(dictionaryConfig.watch_category)
-	, watchSubcategory(dictionaryConfig.watch_subcategory)
+ServerWatchService::ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config)
+	: watch_category(dictionary_config.watch_category)
+	, watch_subcategory(dictionary_config.watch_subcategory)
 	, _server(server)
 {
 	_timepoint = std::chrono::steady_clock::now();
@@ -13,9 +13,9 @@ ServerWatchService::ServerWatchService(impl::Server* server, const ObjectDiction
 	for (const auto& [key, entry] : dictionary)
 	{
 		// create watch entries list and data map
-		if (entry.category == watchCategory)
+		if (entry.category == watch_category)
 		{
-			_entriesList.push_back(entry.name);
+			_entries_list.push_back(entry.name);
 			_data.insert({entry.name, "..."});
 		}
 	}

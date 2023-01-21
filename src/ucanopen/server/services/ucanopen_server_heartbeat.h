@@ -18,7 +18,7 @@ private:
 public:
 	ServerHeartbeatService(impl::Server* server, std::chrono::milliseconds timeout);
 
-	bool isOk() const
+	bool is_ok() const
 	{
 		return ((std::chrono::steady_clock::now() - _timepoint) <= _timeout)
 				&& (_server->nmt_state() == NmtState::operational);

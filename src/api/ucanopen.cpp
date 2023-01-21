@@ -120,14 +120,14 @@ void ucanopen_server_get_watch_value(const char* serverName, const char* watchNa
 ///
 size_t ucanopen_server_get_config_categories(const char* serverName, char** buf, size_t countMax, size_t lenMax)
 {
-	size_t ret = global::ucanClient->server(serverName)->config_service.entriesList().size();
+	size_t ret = global::ucanClient->server(serverName)->config_service.entries_list().size();
 	if (ret >= countMax)
 	{
 		return 0;
 	}
 
 	size_t i = 0;
-	for (auto [category, names] : global::ucanClient->server(serverName)->config_service.entriesList())
+	for (auto [category, names] : global::ucanClient->server(serverName)->config_service.entries_list())
 	{
 		strncpy(buf[i++], category.data(), lenMax);
 	}
@@ -141,7 +141,7 @@ size_t ucanopen_server_get_config_categories(const char* serverName, char** buf,
 ///
 size_t ucanopen_server_get_config_entries(const char* serverName, const char* category, char** buf, size_t countMax, size_t lenMax)
 {
-	auto entries = global::ucanClient->server(serverName)->config_service.entriesList().at(category);
+	auto entries = global::ucanClient->server(serverName)->config_service.entries_list().at(category);
 	size_t ret = entries.size();
 	if (ret >= countMax)
 	{
@@ -163,7 +163,7 @@ size_t ucanopen_server_get_config_entries(const char* serverName, const char* ca
 ///
 bool ucanopen_server_is_heartbeat_ok(const char* serverName)
 {
-	return global::ucanClient->server(serverName)->heartbeat_service.isOk();
+	return global::ucanClient->server(serverName)->heartbeat_service.is_ok();
 }
 
 
@@ -196,7 +196,7 @@ void ucanopen_server_get_nmt_state(const char* serverName, char* buf, size_t len
 bool ucanopen_server_is_tpdo_ok(const char* serverName, int tpdoNum)
 {
 	assert((tpdoNum >= 0) && (tpdoNum <= 3));
-	return global::ucanClient->server(serverName)->tpdo_service.isOk(static_cast<ucanopen::TpdoType>(tpdoNum));
+	return global::ucanClient->server(serverName)->tpdo_service.is_ok(static_cast<ucanopen::TpdoType>(tpdoNum));
 }
 
 

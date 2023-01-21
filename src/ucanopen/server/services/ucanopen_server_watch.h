@@ -15,42 +15,42 @@ namespace ucanopen {
 class ServerWatchService
 {
 public:
-	const std::string_view watchCategory;
-	const std::string_view watchSubcategory;
+	const std::string_view watch_category;
+	const std::string_view watch_subcategory;
 private:
 	impl::Server* const _server;
-	bool _isEnabled = false;
+	bool _is_enabled = false;
 	std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
-	std::vector<std::string_view> _entriesList;
+	std::vector<std::string_view> _entries_list;
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionaryConfig);
+	ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config);
 
 	void send()
 	{
-		if (_isEnabled && !_entriesList.empty())
+		if (_is_enabled && !_entries_list.empty())
 		{
 			auto now = std::chrono::steady_clock::now();
 			if (now - _timepoint >= _period)
 			{
 				static size_t i = 0;
-				_server->read(watchCategory, watchSubcategory, _entriesList[i]);
+				_server->read(watch_category, watch_subcategory, _entries_list[i]);
 				_timepoint = now;
-				i = (i + 1) % _entriesList.size();
+				i = (i + 1) % _entries_list.size();
 			}
 		}
 	}
 
-	bool handle_frame(SdoType sdoType, ObjectDictionary::const_iterator odEntry, CobSdoData data)
+	bool handle_frame(SdoType sdo_type, ObjectDictionary::const_iterator od_entry, CobSdoData sdo_data)
 	{
-		if ((odEntry->second.category == watchCategory) && (sdoType == SdoType::response_to_read))
+		if ((od_entry->second.category == watch_category) && (sdo_type == SdoType::response_to_read))
 		{
-			if (odEntry->second.data_type != OD_ENUM16)
+			if (od_entry->second.data_type != OD_ENUM16)
 			{
 				std::lock_guard<std::mutex> lock(_mutex);
-				_data[odEntry->second.name] = data.to_string(odEntry->second.data_type);
+				_data[od_entry->second.name] = sdo_data.to_string(od_entry->second.data_type);
 			}
 			return true;
 		}
@@ -60,27 +60,27 @@ public:
 	void enable()
 	{
 		std::cout << "[ucanopen] Enabling '" << _server->name() << "' server watch requests (period = " << _period << ")... ";
-		_isEnabled = true;
+		_is_enabled = true;
 		std::cout << "done." << std::endl;
 	}
 
 	void disable()
 	{
 		std::cout << "[ucanopen] Disabling '" << _server->name() << "' server watch requests... ";
-		_isEnabled = false;
+		_is_enabled = false;
 		std::cout << "done." << std::endl;
 	}
 
-	void setPeriod(std::chrono::milliseconds period)
+	void set_period(std::chrono::milliseconds period)
 	{
 		std::cout << "[ucanopen] Setting '" << _server->name() << "' server watch requests period = " << period << "... ";
 		_period = period;
 		std::cout << "done." << std::endl;
 	}
 
-	std::vector<std::string_view> entriesList() const
+	std::vector<std::string_view> entries_list() const
 	{
-		return _entriesList;
+		return _entries_list;
 	}
 
 	std::string value(std::string_view watchName) const
@@ -106,7 +106,7 @@ public:
 		std::strncpy(buf, it->second.c_str(), len);
 	}
 
-	void setValue(std::string_view watchName, std::string value)
+	void set_value(std::string_view watchName, std::string value)
 	{
 		if (!_data.contains(watchName)) return;
 		_data[watchName] = value;

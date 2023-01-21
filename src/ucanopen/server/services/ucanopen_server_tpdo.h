@@ -23,27 +23,27 @@ private:
 		can_payload data;
 		std::function<void(can_payload)> handler;
 	};
-	std::map<TpdoType, Message> _tpdoList;
+	std::map<TpdoType, Message> _tpdo_list;
 public:
 	ServerTpdoService(impl::Server* server);
-	void registerTpdo(TpdoType type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler);
+	void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler);
 	void update_node_id();
 
-	bool isOk(TpdoType tpdo) const
+	bool is_ok(TpdoType tpdo_type) const
 	{
-		if (!_tpdoList.contains(tpdo)) return false;
-		return (std::chrono::steady_clock::now() - _tpdoList.at(tpdo).timepoint) <= _tpdoList.at(tpdo).timeout;
+		if (!_tpdo_list.contains(tpdo_type)) return false;
+		return (std::chrono::steady_clock::now() - _tpdo_list.at(tpdo_type).timepoint) <= _tpdo_list.at(tpdo_type).timeout;
 	}
 
-	can_payload data(TpdoType tpdo) const
+	can_payload data(TpdoType tpdo_type) const
 	{
-		if (!_tpdoList.contains(tpdo)) return can_payload{};
-		return _tpdoList.at(tpdo).data;
+		if (!_tpdo_list.contains(tpdo_type)) return can_payload{};
+		return _tpdo_list.at(tpdo_type).data;
 	}
 
 	bool handle_frame(const can_frame& frame)
 	{
-		for (auto& [type, message] : _tpdoList)
+		for (auto& [tpdo_type, message] : _tpdo_list)
 		{
 			if (frame.can_id != message.id) continue;
 

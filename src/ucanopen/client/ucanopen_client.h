@@ -180,7 +180,7 @@ public:
 	{
 		for (auto& server : _servers)
 		{
-			server->watch_service.setPeriod(period);
+			server->watch_service.set_period(period);
 		}
 	}
 

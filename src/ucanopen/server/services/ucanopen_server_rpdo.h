@@ -14,7 +14,7 @@ class ServerRpdoService
 {
 private:
 	impl::Server* const _server;
-	bool _isEnabled = false;
+	bool _is_enabled = false;
 
 	struct Message
 	{
@@ -23,31 +23,31 @@ private:
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		std::function<can_payload(void)> creator;
 	};
-	std::map<RpdoType, Message> _rpdoList;
+	std::map<RpdoType, Message> _rpdo_list;
 public:
 	ServerRpdoService(impl::Server* server);
-	void registerRpdo(RpdoType type, std::chrono::milliseconds period, std::function<can_payload(void)> creator);
+	void register_rpdo(RpdoType rpdo_type, std::chrono::milliseconds period, std::function<can_payload(void)> creator);
 	void update_node_id();
 
 	void enable()
 	{
 		std::cout << "[ucanopen] Enabling '" << _server->name() << "' server RPDO messages... ";
-		_isEnabled = true;
+		_is_enabled = true;
 		std::cout << "done." << std::endl;
 	}
 
 	void disable() 
 	{
 		std::cout << "[ucanopen] Disabling '" << _server->name() << "' server RPDO messages... ";
-		_isEnabled = false;
+		_is_enabled = false;
 		std::cout << "done." << std::endl;
 	}
 
 	void send()
 	{
-		if (_isEnabled)
+		if (_is_enabled)
 		{
-			for (auto& [type, message] : _rpdoList)
+			for (auto& [rpdo_type, message] : _rpdo_list)
 			{
 				if (message.period == std::chrono::milliseconds(0)) continue;
 				
