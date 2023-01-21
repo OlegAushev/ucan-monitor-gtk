@@ -1,45 +1,29 @@
-/**
- * @file cansocket.cpp
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-03
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #include "cansocket.h"
 
 
 namespace can {
 
-
-///
-///
-///
 Socket::Socket()
 {
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
 	std::cout << "[cansocket] Searching for SocketCAN checking script... ";
-	std::filesystem::path scriptPath = _findScript("socketcan_check.sh");
-	if (scriptPath.empty())
+	std::filesystem::path script_path = _find_script("socketcan_check.sh");
+	if (script_path.empty())
 	{
 		std::cout << "WARNING: not found." << std::endl;
 		return;
 	}
-	std::cout << "found: " << scriptPath << std::endl;
+	std::cout << "found: " << script_path << std::endl;
 
 	/* RUN SCRIPT */
-	std::string cmd = "sh " + scriptPath.string() + " " + "can0";
+	std::string cmd = "sh " + script_path.string() + " " + "can0";
 	std::cout << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"" << std::endl;
 
-	int shRet = system(cmd.c_str());
-	if (shRet == 0)
+	int script_retval = system(cmd.c_str());
+	if (script_retval == 0)
 	{
-		if (_createSocket("can0") != Error::NoError)
+		if (_create_socket("can0") != Error::no_error)
 		{
 			_socket = -1;
 		}
@@ -47,19 +31,13 @@ Socket::Socket()
 }
 
 
-///
-///
-///
 Socket::~Socket()
 {
 	disconnect();
 }
 
 
-///
-///
-///
-Error Socket::_createSocket(const std::string& interface)
+Error Socket::_create_socket(const std::string& interface)
 {
 	/* CREATE SOCKET */
 	std::cout << "[cansocket] Creating socket..." << std::endl;
@@ -67,14 +45,14 @@ Error Socket::_createSocket(const std::string& interface)
 	if (_socket < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket creation failed." << std::endl;
-		return Error::SocketCreationFailed;
+		return Error::socket_creation_failed;
 	}
 
 	std::strcpy(_ifr.ifr_name, interface.c_str());
 	if (ioctl(_socket, SIOCGIFINDEX, &_ifr) < 0)
 	{
 		std::cout << "[cansocket] ERROR: interface retrieving failed." << std::endl;
-		return Error::InterfaceRetrievingFailed;
+		return Error::interface_retrieving_failed;
 	}
 
 	memset(&_addr, 0, sizeof(_addr));
@@ -89,183 +67,166 @@ Error Socket::_createSocket(const std::string& interface)
 	if (bind(_socket, (sockaddr*)&_addr, sizeof(_addr)) < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket binding failed." << std::endl;
-		return Error::SocketBindingFailed;
+		return Error::socket_binding_failed;
 	}
 
-	_recvFd.fd = _socket;
-	_recvFd.events = POLLIN;
+	_recv_fd.fd = _socket;
+	_recv_fd.events = POLLIN;
 
 	std::cout << "[cansocket] Socket created." << std::endl;
-	return Error::NoError;
+	return Error::no_error;
 }
 
 
-///
-///
-///
 Error Socket::connect(const std::string& interface, int bitrate)
 {
 	_socket = -1;
 
-	if (!detail::interfaceList.contains(interface)
-			|| !detail::bitrateList.contains(bitrate))
+	if (!detail::interface_list.contains(interface)
+			|| !detail::bitrate_list.contains(bitrate))
 	{
-		return Error::InvalidArgument;
+		return Error::invalid_argument;
 	}
 
-	std::lock_guard<std::mutex> lock1(_sendMutex);
-	std::lock_guard<std::mutex> lock2(_recvMutex);
+	std::lock_guard<std::mutex> lock1(_send_mutex);
+	std::lock_guard<std::mutex> lock2(_recv_mutex);
 
 	/* FIND SCRIPT */
 	std::cout << "[cansocket] Searching for SocketCAN enabling script... ";
-	std::filesystem::path scriptPath = _findScript("socketcan_enable.sh");
-	if (scriptPath.empty())
+	std::filesystem::path script_path = _find_script("socketcan_enable.sh");
+	if (script_path.empty())
 	{
 		std::cout << "ERROR: not found." << std::endl;
-		return Error::ScriptNotFound;
+		return Error::script_not_found;
 	}
-	std::cout << "found: " << scriptPath << std::endl;
+	std::cout << "found: " << script_path << std::endl;
 
 	/* RUN SCRIPT */
-	std::string cmd = "pkexec sh " + scriptPath.string() + " " + interface + " " + std::to_string(bitrate);
+	std::string cmd = "pkexec sh " + script_path.string() + " " + interface + " " + std::to_string(bitrate);
 	std::cout << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"" << std::endl;
 
-	int pkexecRet = system(cmd.c_str());
+	int pkexec_retval = system(cmd.c_str());
 	Error error;
 
-	switch (pkexecRet)
+	switch (pkexec_retval)
 	{
 	case 0:
-		error = Error::NoError;
+		error = Error::no_error;
 		break;
 	case 1:
-		error = Error::InvalidArgument;
+		error = Error::invalid_argument;
 		break;
 	case 2:
-		error = Error::DeviceNotFound;
+		error = Error::device_not_found;
 		break;
 	case 3:
-		error = Error::SocketСanFailed;
+		error = Error::socket_can_failed;
 		break;
 	default:
-		error = Error::ScriptExecFailed;
+		error = Error::script_exec_failed;
 		break;
 	}
 
-	if (error != Error::NoError)
+	if (error != Error::no_error)
 	{
 		std::cout << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << std::endl;
 		return error;
 	}
 
-	return _createSocket(interface);
+	return _create_socket(interface);
 }
 
 
-///
-///
-///
 Error Socket::disconnect()
 {
 	if (_socket < 0)
 	{
 		std::cout << "[cansocket] No socket to close." << std::endl;
-		return Error::NoError;
+		return Error::no_error;
 	}
 
-	std::lock_guard<std::mutex> lock1(_sendMutex);
-	std::lock_guard<std::mutex> lock2(_recvMutex);
+	std::lock_guard<std::mutex> lock1(_send_mutex);
+	std::lock_guard<std::mutex> lock2(_recv_mutex);
 
 	if (close(_socket) < 0)
 	{
 		std::cout << "[cansocket] ERROR: socket closing failed." << std::endl;
-		return Error::SocketClosingFailed;
+		return Error::socket_closing_failed;
 	}
 	else
 	{
 		std::cout << "[cansocket] Socket closed." << std::endl;
 		_socket = -1;
-		return Error::NoError;
+		return Error::no_error;
 	}
 }
 
 
-///
-///
-///
-std::filesystem::path Socket::_findScript(std::filesystem::path name)
+std::filesystem::path Socket::_find_script(std::filesystem::path name)
 {
-	std::filesystem::path scriptPath;
-	for (auto loc : can::detail::scriptsLocationList)
+	std::filesystem::path script_path;
+	for (auto loc : can::detail::scripts_location_list)
 	{
-		auto absolutePath = std::filesystem::absolute(loc/name);
-		if (std::filesystem::exists(absolutePath))
+		auto absolute_path = std::filesystem::absolute(loc/name);
+		if (std::filesystem::exists(absolute_path))
 		{
-			scriptPath = std::filesystem::canonical(loc/name);
+			script_path = std::filesystem::canonical(loc/name);
 		}
 	}
-	return scriptPath;
+	return script_path;
 }
 
 
-///
-///
-///
 Error Socket::send(const can_frame& frame)
 {
 	if (_socket < 0)
 	{
-		return Error::SocketClosed;
+		return Error::socket_closed;
 	}
 
-	std::lock_guard<std::mutex> lock(_sendMutex);
+	std::lock_guard<std::mutex> lock(_send_mutex);
 
 	if (::write(_socket, &frame, sizeof(can_frame)) != sizeof(can_frame))
 	{
-		return Error::SendError;
+		return Error::send_error;
 	}
-	return Error::NoError;
+	return Error::no_error;
 }
 
 
-///
-///
-///
 Error Socket::recv(can_frame& frame)
 {
 	if (_socket < 0)
 	{
-		return Error::SocketClosed;
+		return Error::socket_closed;
 	}
 
-	int nBytes;
+	int byte_count;
 
-	std::lock_guard<std::mutex> lock(_recvMutex);
+	std::lock_guard<std::mutex> lock(_recv_mutex);
 
-	int ret = poll(&_recvFd, 1, _recvTimeout.count());
+	int ret = poll(&_recv_fd, 1, _recv_timeout.count());
 	switch (ret)
 	{
 	case -1:
-		return Error::RecvError;
+		return Error::recv_error;
 		break;
 	case 0:
-		return Error::RecvTimeout;
+		return Error::recv_timeout;
 		break;
 	default:
-		nBytes = ::read(_socket, &frame, sizeof(can_frame));
-		if (nBytes < 0)
+		byte_count = ::read(_socket, &frame, sizeof(can_frame));
+		if (byte_count < 0)
 		{
-			return Error::RecvError;
+			return Error::recv_error;
 		}
 		else
 		{
-			return Error::NoError;
+			return Error::no_error;
 		}
 		break;
 	}
 }
 
-
 } // namespace can
-
 

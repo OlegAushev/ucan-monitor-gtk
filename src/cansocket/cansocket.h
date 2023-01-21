@@ -1,15 +1,3 @@
-/**
- * @file cansocket.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-03
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
@@ -34,38 +22,35 @@
 
 namespace can {
 
-
 enum class Error
 {
-	NoError,
-	InvalidArgument,
-	ScriptNotFound,
-	DeviceNotFound,
-	SocketСanFailed,
-	ScriptExecFailed,
-	SocketCreationFailed,
-	SocketClosingFailed,
-	SocketBindingFailed,
-	SocketClosed,
-	SendError,
-	RecvTimeout,
-	RecvError,
-	InterfaceRetrievingFailed,
+	no_error,
+	invalid_argument,
+	script_not_found,
+	device_not_found,
+	socket_can_failed,
+	script_exec_failed,
+	socket_creation_failed,
+	socket_closing_failed,
+	socket_binding_failed,
+	socket_closed,
+	send_error,
+	recv_timeout,
+	recv_error,
+	interface_retrieving_failed,
 };
 
 
 namespace detail {
 
-
-const std::set<std::string> interfaceList = {"can0", "can1"};
-const std::set<int> bitrateList = {125'000, 250'000, 500'000, 1'000'000};
-const std::set<std::filesystem::path> scriptsLocationList = {
+const std::set<std::string> interface_list = {"can0", "can1"};
+const std::set<int> bitrate_list = {125'000, 250'000, 500'000, 1'000'000};
+const std::set<std::filesystem::path> scripts_location_list = {
 	"",
 	"scripts",
 	"..",
 	"../scripts"
 };
-
 
 } // namespace detail
 
@@ -81,11 +66,11 @@ private:
 	ifreq _ifr;
 	sockaddr_can _addr;
 
-	pollfd _recvFd;
-	static constexpr std::chrono::milliseconds _recvTimeout = std::chrono::milliseconds(1);
+	pollfd _recv_fd;
+	static constexpr std::chrono::milliseconds _recv_timeout = std::chrono::milliseconds(1);
 
-	std::mutex _sendMutex;
-	std::mutex _recvMutex;
+	std::mutex _send_mutex;
+	std::mutex _recv_mutex;
 
 public:
 	Socket();
@@ -100,11 +85,9 @@ public:
 	Error recv(can_frame& frame);
 
 private:
-	Error _createSocket(const std::string& interface);
-	std::filesystem::path _findScript(std::filesystem::path name);
+	Error _create_socket(const std::string& interface);
+	std::filesystem::path _find_script(std::filesystem::path name);
 };
 
-
 } // namespace can
-
 
