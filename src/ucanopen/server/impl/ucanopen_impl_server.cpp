@@ -125,11 +125,11 @@ ODRequestStatus impl::Server::exec(std::string_view category, std::string_view s
 	message.index = entry_iter->first.index;
 	message.subindex = entry_iter->first.subindex;
 
-	if (entry_iter->second.hasReadPermission())
+	if (entry_iter->second.has_read_permission())
 	{
 		message.cs = cs_codes::sdo_ccs_read;
 	}
-	else if (entry_iter->second.hasWritePermission())
+	else if (entry_iter->second.has_write_permission())
 	{
 		message.cs = cs_codes::sdo_ccs_write;
 	}
@@ -150,7 +150,7 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 				<< " - no such OD entry." << std::endl;
 		return ODRequestStatus::fail;
 	}
-	else if (entry_iter->second.hasReadPermission() == false)
+	else if (entry_iter->second.has_read_permission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
@@ -175,7 +175,7 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 				<< " - no such OD entry." << std::endl;
 		return ODRequestStatus::fail;;
 	}
-	else if (entry_iter->second.hasWritePermission() == false)
+	else if (entry_iter->second.has_write_permission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 

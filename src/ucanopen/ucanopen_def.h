@@ -379,8 +379,8 @@ struct ODEntryValue
 	ODEntryDataType data_type;
 	ODEntryAccessPermission access_permission;
 
-	bool hasReadPermission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }
-	bool hasWritePermission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_WO); }
+	bool has_read_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }
+	bool has_write_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_WO); }
 };
 
 
