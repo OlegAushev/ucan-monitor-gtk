@@ -39,14 +39,14 @@ void Controller::set_emergency(bool is_enabled)
 void Controller::set_torque(double val_pu)
 {
 	_torque_pu_ref = std::clamp(val_pu, -1.0, 1.0);
-	std::cout << "[srmdrive] Torque reference: " << _torque_pu_ref * 100.0 << "%" << std::endl;
+	//std::cout << "[srmdrive] Torque reference: " << _torque_pu_ref * 100.0 << "%" << std::endl;
 }
 
 
 void Controller::set_speed(double val)
 {
 	_speed_ref = val;
-	std::cout << "[srmdrive] Speed reference: " << _speed_ref << "rpm" << std::endl;
+	//std::cout << "[srmdrive] Speed reference: " << _speed_ref << "rpm" << std::endl;
 	_drive_server->write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(_speed_ref));
 }
 

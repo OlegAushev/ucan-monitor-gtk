@@ -1,8 +1,14 @@
 #include "cansocket/cansocket.h"
 
 
-namespace global {
-extern std::shared_ptr<can::Socket> can_socket;
+std::shared_ptr<can::Socket> can_socket;
+
+
+namespace api {
+void register_can_socket(std::shared_ptr<can::Socket> can_socket_)
+{
+	can_socket = can_socket_;
+}
 }
 
 
@@ -10,23 +16,23 @@ extern "C" {
 
 void cansocket_connect(const char* interface, int bitrate)
 {
-	if (global::can_socket == nullptr)
+	if (can_socket == nullptr)
 	{
 		return;
 	}
 
-	global::can_socket->connect(interface, bitrate);
+	can_socket->connect(interface, bitrate);
 }
 
 
 void cansocket_disconnect()
 {
-	if (global::can_socket == nullptr)
+	if (can_socket == nullptr)
 	{
 		return;
 	}
 
-	global::can_socket->disconnect();
+	can_socket->disconnect();
 }
 
 }

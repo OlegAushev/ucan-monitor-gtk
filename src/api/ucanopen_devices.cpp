@@ -3,11 +3,9 @@
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
 
 
-namespace global {
-extern std::shared_ptr<bmsmain::Server> bmsmain_server;
-extern std::shared_ptr<launchpad::Server> launchpad_server;
 extern std::shared_ptr<srmdrive::Server> srmdrive_server;
-}
+extern std::shared_ptr<launchpad::Server> launchpad_server;
+extern std::shared_ptr<bmsmain::Server> bmsmain_server;
 
 
 extern "C" {
@@ -96,11 +94,11 @@ unsigned int ucanopen_devices_get_error_code(const char* server_name)
 {
 	if (std::string(server_name) == "SRM Drive")
 	{
-		return global::srmdrive_server->errors();
+		return srmdrive_server->errors();
 	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
-		return global::launchpad_server->errors();
+		return launchpad_server->errors();
 	}
 	else if (std::string(server_name) == "BMS Main")
 	{
@@ -114,11 +112,11 @@ unsigned int ucanopen_devices_get_warning_code(const char* server_name)
 {
 	if (std::string(server_name) == "SRM Drive")
 	{
-		return global::srmdrive_server->warnings();
+		return srmdrive_server->warnings();
 	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
-		return global::launchpad_server->warnings();
+		return launchpad_server->warnings();
 	}
 	else if (std::string(server_name) == "BMS Main")
 	{
