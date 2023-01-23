@@ -6,7 +6,7 @@
 namespace LaunchPad {
 
 
-[GtkTemplate (ui = "/gui/launchpad/launchpad_datatables.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/launchpad/launchpad_datatables.ui")]
 public class DataTables : Adw.Bin
 {
 	[GtkChild]

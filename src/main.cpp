@@ -7,7 +7,7 @@
 
 bool backend_is_ready = false;
 const char* backend_ucanopen_server;
-const char* backend_ucanopen_server_list[3] = {"SRM Drive", "LaunchPad", "BMS Main"};
+const char* backend_ucanopen_server_list[4] = {"SRM Drive", "CRD600", "LaunchPad", "BMS Main"};
 const char* backend_ucanopen_server_config_category;
 
 

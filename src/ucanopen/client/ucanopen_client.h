@@ -1,20 +1,17 @@
 #pragma once
 
 
+#include "../ucanopen_def.h"
+#include "../server/ucanopen_server.h"
+#include <cansocket/cansocket.h>
+#include <sstream>
+#include <iomanip>
 #include <functional>
 #include <thread>
 #include <future>
 #include <atomic>
 #include <chrono>
 #include <map>
-
-#include <sstream>
-#include <iomanip>
-
-#include "cansocket/cansocket.h"
-#include "../ucanopen_def.h"
-#include "../server/ucanopen_server.h"
-#include "../tester/ucanopen_tester.h"
 
 
 namespace ucanopen {

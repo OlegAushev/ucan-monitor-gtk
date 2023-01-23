@@ -1,27 +1,13 @@
-/**
- * @file ucanopen_tester.h
- * @author Oleg Aushev (aushevom@protonmail.com)
- * @brief 
- * @version 0.1
- * @date 2022-09-08
- * 
- * @copyright Copyright (c) 2022
- * 
- */
-
-
 #pragma once
 
 
+#include "../ucanopen_def.h"
 #include <iostream>
 #include <iomanip>
 #include <chrono>
 
-#include "../ucanopen_def.h"
-
 
 namespace ucanopen {
-
 
 class Tester
 {

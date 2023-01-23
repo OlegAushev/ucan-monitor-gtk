@@ -6,7 +6,7 @@
 namespace LaunchPad {
 
 
-[GtkTemplate (ui = "/gui/launchpad/launchpad_controlpanel.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/launchpad/launchpad_controlpanel.ui")]
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]

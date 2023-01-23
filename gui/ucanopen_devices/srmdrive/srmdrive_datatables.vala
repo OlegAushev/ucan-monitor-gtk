@@ -6,7 +6,7 @@
 namespace SrmDrive {
 
 
-[GtkTemplate (ui = "/gui/srmdrive/srmdrive_datatables.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/srmdrive/srmdrive_datatables.ui")]
 public class DataTables : Adw.Bin
 {
 	[GtkChild]

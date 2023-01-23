@@ -1,17 +1,16 @@
 #pragma once
 
 
-#include <atomic>
-#include <functional>
-#include <chrono>
-#include <future>
-
 #include "impl/ucanopen_impl_server.h"
 #include "services/ucanopen_server_heartbeat.h"
 #include "services/ucanopen_server_tpdo.h"
 #include "services/ucanopen_server_rpdo.h"
 #include "services/ucanopen_server_watch.h"
 #include "services/ucanopen_server_config.h"
+#include <atomic>
+#include <functional>
+#include <chrono>
+#include <future>
 
 
 namespace ucanopen {

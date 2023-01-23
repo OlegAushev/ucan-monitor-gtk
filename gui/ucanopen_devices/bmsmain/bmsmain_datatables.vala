@@ -6,7 +6,7 @@
 namespace BmsMain {
 
 
-[GtkTemplate (ui = "/gui/bmsmain/bmsmain_datatables.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui")]
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
