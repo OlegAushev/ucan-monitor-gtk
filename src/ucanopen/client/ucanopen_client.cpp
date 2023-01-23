@@ -149,7 +149,7 @@ void Client::_run(std::future<void> future_exit)
 		auto now = std::chrono::steady_clock::now();
 
 		/* SYNC */
-		if (_sync_info.period != std::chrono::milliseconds(0))
+		if (_sync_info.is_enabled)
 		{
 			if (now - _sync_info.timepoint > _sync_info.period)
 			{
