@@ -432,7 +432,7 @@ inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& 
 }
 
 
-enum class ODTaskStatus
+enum class ODExecStatus
 {
 	success = 0,
 	fail = 1,
