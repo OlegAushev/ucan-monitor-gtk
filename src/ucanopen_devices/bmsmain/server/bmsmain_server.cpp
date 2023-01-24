@@ -16,13 +16,13 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload)
 	static_assert(sizeof(CobTpdo1) == 8);
 	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(payload);
 
-	int16_t current{message.current};
+	int16_t current = message.current;
 	_current = 0.1 * current;
 
-	int8_t temp_min{message.temp_min};
+	int8_t temp_min = message.temp_min;
 	_temp_min = temp_min;
 
-	int8_t temp_max{message.temp_max};
+	int8_t temp_max = message.temp_max;
 	_temp_max = temp_max;
 
 	_charge = message.charge_percentage;

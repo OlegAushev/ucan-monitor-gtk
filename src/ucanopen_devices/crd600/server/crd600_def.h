@@ -1,0 +1,119 @@
+#pragma once
+
+
+#include <cstdint>
+#include <string>
+#include <vector>
+
+
+namespace crd600 {
+
+struct CobTpdo1
+{
+	uint16_t status_run1 : 1;		// bit 0
+	uint16_t status_run2 : 1;		// bit 1
+	uint16_t status_fault : 1;		// bit 2
+	uint16_t status_warning : 1;		// bit 3
+	uint16_t status_overheat : 1;		// bit 4
+	uint16_t reference_type1 : 1;		// bit 5
+	uint16_t reference_type2 : 1;		// bit 6
+	uint16_t control_loop_type : 1;		// bit 7
+	uint16_t _status_reserved : 8;
+	uint16_t drive_state1 : 8;
+	uint16_t drive_state2 : 8;
+	uint32_t _reserved : 32;
+};
+
+
+struct CobTpdo2
+{
+	uint64_t _reserved;
+};
+
+
+struct CobTpdo3
+{
+	uint64_t _reserved;
+};
+
+
+struct CobTpdo4
+{
+	uint64_t counter : 2;
+	uint64_t errors : 31;
+	uint64_t warnings : 31;
+};
+
+
+struct CobRpdo1
+{
+	uint16_t run : 1;
+	uint32_t _reserved1 : 31;
+	uint16_t emergency_stop : 1;
+	uint32_t _reserved2 : 31;
+};
+
+struct CobRpdo2
+{
+	int16_t speed1;
+	int16_t torque1;
+	int16_t speed2;
+	int16_t torque2;
+};
+
+
+inline const std::vector<std::string> syslog_messages = {
+	"No message",
+	"[syslog] Boot CPU1...",
+	"[syslog] Boot CPU1 - success.",
+	"[syslog] Boot CPU2...",
+	"[syslog] Boot CPU2 - success.",
+	"[syslog] CPU1 is ready.",
+	"[syslog] CPU2 is ready.",
+	"[syslog] Device is ready.",
+	"[syslog] Device is busy.",
+	"[syslog] Resetting device...",
+	"[syslog] SDO request lost.",
+	"[syslog] Read configs - success.",	
+	"[syslog] Read configs - fail.",
+	"[syslog] Reset configs - success.",
+	"[syslog] Reset configs - fail.",
+	"[syslog] Apply configs - success.",
+	"[syslog] Apply configs - fail.",
+};
+
+
+inline const std::vector<std::string_view> error_list = {
+	"dc_undervoltage",
+	"dc_overvoltage",
+	"phase_overcurrent",
+	"driver_fault_all",
+	"driver_fault_uvw",
+	"driver_fault_xyz",
+	"driver_fault_u",
+	"driver_fault_v",
+	"driver_fault_w",
+	"driver_fault_x",
+	"driver_fault_y",
+	"driver_fault_z",
+	"module_overtemp",
+	"case_overtemp",
+	"eeprom_fault",
+	"current_sensor_fault",
+	"emergency_stop",
+	"can_bus_connection_lost",
+};
+
+
+inline const std::vector<std::string_view> warning_list = {
+	"module_overheating",
+	"case_overheating",
+	"flux_weakening",
+	"can_bus_error",
+	"can_bus_overrun",
+	"can_bus_connection_lost",
+};
+
+
+} // namespcae crd600
+

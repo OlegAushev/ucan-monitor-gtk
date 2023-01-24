@@ -46,26 +46,26 @@ int backend_main_loop(std::future<void> futureExit)
 		srmdrive_server = std::make_shared<srmdrive::Server>("SRM Drive", ucanopen::NodeId(0x01), can_socket);
 		ucanopen_client->register_server(srmdrive_server);
 		
-		auto callbackCreateTpdo1 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo1(); };
-		auto callbackCreateTpdo2 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo2(); };
+		auto callback_create_tpdo1 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo1(); };
+		auto callback_create_tpdo2 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo2(); };
 
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callbackCreateTpdo1);
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callback_create_tpdo1);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callback_create_tpdo2);
 	}
 	else if (server_name == "LaunchPad")
 	{
 		launchpad_server = std::make_shared<launchpad::Server>("LaunchPad", ucanopen::NodeId(0x142), can_socket);
 		ucanopen_client->register_server(launchpad_server);
 
-		auto callbackCreateTpdo1 = [launchpad_server](){ return launchpad_server->create_client_tpdo1(); };
-		auto callbackCreateTpdo2 = [launchpad_server](){ return launchpad_server->create_client_tpdo2(); };
-		auto callbackCreateTpdo3 = [launchpad_server](){ return launchpad_server->create_client_tpdo3(); };
-		auto callbackCreateTpdo4 = [launchpad_server](){ return launchpad_server->create_client_tpdo4(); };
+		auto callback_create_tpdo1 = [launchpad_server](){ return launchpad_server->create_client_tpdo1(); };
+		auto callback_create_tpdo2 = [launchpad_server](){ return launchpad_server->create_client_tpdo2(); };
+		auto callback_create_tpdo3 = [launchpad_server](){ return launchpad_server->create_client_tpdo3(); };
+		auto callback_create_tpdo4 = [launchpad_server](){ return launchpad_server->create_client_tpdo4(); };
 
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(50), callbackCreateTpdo1);
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callbackCreateTpdo2);
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(250), callbackCreateTpdo3);
-		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callbackCreateTpdo4);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(50), callback_create_tpdo1);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callback_create_tpdo2);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(250), callback_create_tpdo3);
+		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callback_create_tpdo4);
 	}
 	else if (server_name == "BMS Main")
 	{
