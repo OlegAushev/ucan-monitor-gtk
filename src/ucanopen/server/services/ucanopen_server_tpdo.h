@@ -17,7 +17,7 @@ private:
 		canid_t id;
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
-		can_payload data;
+		can_payload payload;
 		std::function<void(const can_payload&)> handler;
 	};
 	std::map<TpdoType, Message> _tpdo_list;
@@ -35,7 +35,7 @@ public:
 	can_payload data(TpdoType tpdo_type) const
 	{
 		if (!_tpdo_list.contains(tpdo_type)) return can_payload{};
-		return _tpdo_list.at(tpdo_type).data;
+		return _tpdo_list.at(tpdo_type).payload;
 	}
 
 	bool handle_frame(const can_frame& frame)
@@ -45,10 +45,10 @@ public:
 			if (frame.can_id != message.id) continue;
 
 			message.timepoint = std::chrono::steady_clock::now();
-			can_payload data{};
-			std::copy(frame.data, std::next(frame.data, frame.can_dlc), data.begin());
-			message.data = data;
-			message.handler(data);
+			can_payload payload{};
+			std::copy(frame.data, std::next(frame.data, frame.can_dlc), payload.begin());
+			message.payload = payload;
+			message.handler(payload);
 			return true;
 		}
 		return false;

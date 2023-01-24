@@ -51,8 +51,8 @@ public:
 				auto now = std::chrono::steady_clock::now();
 				if (now - message.timepoint < message.period) continue;
 
-				can_payload data = message.creator();
-				_server->_socket->send(create_frame(message.id, 8, data));
+				can_payload payload = message.creator();
+				_server->_socket->send(create_frame(message.id, 8, payload));
 				message.timepoint = now;	
 			}
 		}
