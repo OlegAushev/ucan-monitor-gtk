@@ -16,10 +16,10 @@ extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 class Server : public ucanopen::Server
 {
 protected:
-	void _handle_tpdo1(ucanopen::can_payload data) {}
-	void _handle_tpdo2(ucanopen::can_payload data) {}
-	void _handle_tpdo3(ucanopen::can_payload data);
-	void _handle_tpdo4(ucanopen::can_payload data);
+	void _handle_tpdo1([[maybe_unused]] const ucanopen::can_payload& payload) {}
+	void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}
+	void _handle_tpdo3(const ucanopen::can_payload& payload);
+	void _handle_tpdo4(const ucanopen::can_payload& payload);
 
 	virtual void _handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,

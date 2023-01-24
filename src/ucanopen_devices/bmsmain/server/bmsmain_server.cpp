@@ -7,14 +7,14 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 	: ucanopen::Server(name, node_id, socket, ucanopen::ObjectDictionary{}, ucanopen::ObjectDictionaryConfig{})
 {
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(2000),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo1(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
 }
 
 
-void Server::_handle_tpdo1(ucanopen::can_payload data)
+void Server::_handle_tpdo1(const ucanopen::can_payload& payload)
 {
 	static_assert(sizeof(CobTpdo1) == 8);
-	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(data);
+	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(payload);
 
 	int16_t current{message.current};
 	_current = 0.1 * current;

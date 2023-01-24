@@ -8,7 +8,7 @@ ServerTpdoService::ServerTpdoService(impl::Server* server)
 {}
 
 
-void ServerTpdoService::register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler)
+void ServerTpdoService::register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(const can_payload&)> handler)
 {
 	canid_t id = calculate_cob_id(to_cob_type(tpdo_type), _server->node_id());
 	_tpdo_list.insert({tpdo_type, {id, timeout, std::chrono::steady_clock::now(), can_payload{}, handler}});

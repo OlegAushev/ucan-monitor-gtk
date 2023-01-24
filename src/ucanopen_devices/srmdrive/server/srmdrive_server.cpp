@@ -8,13 +8,13 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 	, controller(this)
 {
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo1(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1200),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo2(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo2(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(200),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo3(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo3(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(200),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo4(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo4(payload); });
 }
 
 
@@ -46,9 +46,9 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 }
 
 
-void Server::_handle_tpdo3(ucanopen::can_payload data)
+void Server::_handle_tpdo3(const ucanopen::can_payload& payload)
 {
-	CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(data);
+	CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(payload);
 	if ((message.syslog_message_id != 0) && (message.syslog_message_id < syslog_messages.size()))
 	{
 		Logger::instance().add(syslog_messages[message.syslog_message_id]);
@@ -56,9 +56,9 @@ void Server::_handle_tpdo3(ucanopen::can_payload data)
 }
 
 
-void Server::_handle_tpdo4(ucanopen::can_payload data)
+void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 {
-	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(data);
+	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
 	_errors = message.errors;
 	_warnings = message.warnings;
 }

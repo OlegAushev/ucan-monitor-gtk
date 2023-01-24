@@ -10,13 +10,13 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 	_server_values.fill(0);
 
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo1(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo2(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo2(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo3(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo3(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
-			[this](ucanopen::can_payload data) { this->_handle_tpdo4(data); });
+			[this](ucanopen::can_payload payload) { this->_handle_tpdo4(payload); });
 
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
 			[this](){ return this->_create_rpdo1(); });
@@ -29,9 +29,9 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 }
 
 
-void Server::_handle_tpdo4(ucanopen::can_payload data)
+void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 {
-	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(data);
+	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
 	_errors = message.errors;
 	_warnings = message.warnings;
 }

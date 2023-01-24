@@ -18,12 +18,12 @@ private:
 		std::chrono::milliseconds timeout;
 		std::chrono::time_point<std::chrono::steady_clock> timepoint;
 		can_payload data;
-		std::function<void(can_payload)> handler;
+		std::function<void(const can_payload&)> handler;
 	};
 	std::map<TpdoType, Message> _tpdo_list;
 public:
 	ServerTpdoService(impl::Server* server);
-	void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(can_payload)> handler);
+	void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(const can_payload&)> handler);
 	void update_node_id();
 
 	bool is_ok(TpdoType tpdo_type) const

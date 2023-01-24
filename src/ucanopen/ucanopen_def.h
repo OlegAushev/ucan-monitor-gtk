@@ -22,7 +22,7 @@ using can_payload = std::array<uint8_t, 8>;
 
 
 template <typename T>
-inline can_payload to_payload(T message)
+inline can_payload to_payload(const T& message)
 {
 	static_assert(sizeof(T) <= 8);
 	can_payload payload{};
@@ -32,7 +32,7 @@ inline can_payload to_payload(T message)
 
 
 template <typename T>
-inline T from_payload(can_payload payload)
+inline T from_payload(const can_payload& payload)
 {
 	static_assert(sizeof(T) <= 8);
 	T message;
@@ -315,7 +315,7 @@ struct CobSdo
 
 	CobSdo() = default;
 
-	CobSdo(can_payload payload)
+	CobSdo(const can_payload& payload)
 	{
 		memcpy(this, payload.data(), sizeof(CobSdo));
 	}
@@ -412,7 +412,7 @@ struct ObjectDictionaryConfig
 };
 
 
-inline can_frame create_frame(CobType cob_type, NodeId node_id, can_payload payload)
+inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payload& payload)
 {
 	can_frame frame;
 	frame.can_id = calculate_cob_id(cob_type, node_id);
@@ -422,7 +422,7 @@ inline can_frame create_frame(CobType cob_type, NodeId node_id, can_payload payl
 }
 
 
-inline can_frame create_frame(canid_t id, unsigned char len, can_payload payload)
+inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& payload)
 {
 	can_frame frame;
 	frame.can_id = id;
