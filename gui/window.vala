@@ -36,20 +36,25 @@ public class Window : Gtk.ApplicationWindow
 	{
 		switch (Backend.Ucanopen.server)
 		{
-		case "SRM Drive":
-			scrolledwindow_control_panel.child = new SrmDrive.ControlPanel();
-			scrolledwindow_control_panel.child.add_css_class("background");
-			scrolledwindow_data_tables.child = new SrmDrive.DataTables();
-			break;
-		case "LaunchPad":
-			scrolledwindow_control_panel.child = new LaunchPad.ControlPanel();
-			scrolledwindow_control_panel.child.add_css_class("background");
-			scrolledwindow_data_tables.child = new LaunchPad.DataTables();
-			break;
-		case "BMS Main":
-			scrolledwindow_data_tables.child = new BmsMain.DataTables();
-			break;
-		default:
+			case "SRM Drive":
+				scrolledwindow_control_panel.child = new SrmDrive.ControlPanel();
+				scrolledwindow_control_panel.child.add_css_class("background");
+				scrolledwindow_data_tables.child = new SrmDrive.DataTables();
+				break;
+			case "CRD600":
+				scrolledwindow_control_panel.child = new Crd600.ControlPanel();
+				scrolledwindow_control_panel.child.add_css_class("background");
+				scrolledwindow_data_tables.child = new Crd600.DataTables();
+				break;
+			case "LaunchPad":
+				scrolledwindow_control_panel.child = new LaunchPad.ControlPanel();
+				scrolledwindow_control_panel.child.add_css_class("background");
+				scrolledwindow_data_tables.child = new LaunchPad.DataTables();
+				break;
+			case "BMS Main":
+				scrolledwindow_data_tables.child = new BmsMain.DataTables();
+				break;
+			default:
 		}
 	}
 }

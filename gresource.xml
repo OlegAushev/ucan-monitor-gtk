@@ -6,15 +6,24 @@
 		<file>gui/components/tableboolentry.ui</file>
 		<file>gui/components/tablecheckentry.ui</file>
 		<file>gui/components/tableentry.ui</file>
+
 		<file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
+
+		<file>gui/ucanopen_devices/crd600/crd600_controlpanel.ui</file>
+		<file>gui/ucanopen_devices/crd600/crd600_datatables.ui</file>
+
 		<file>gui/ucanopen_devices/launchpad/launchpad_controlpanel.ui</file>
 		<file>gui/ucanopen_devices/launchpad/launchpad_datatables.ui</file>
+
 		<file>gui/ucanopen_devices/srmdrive/srmdrive_controlpanel.ui</file>
 		<file>gui/ucanopen_devices/srmdrive/srmdrive_datatables.ui</file>
+
 		<file>gui/template/template_widget.ui</file>
+
 		<file>gui/ucanopen/ucanopen_heartbeatindicator.ui</file>
 		<file>gui/ucanopen/ucanopen_serverconfiguration.ui</file>
 		<file>gui/ucanopen/ucanopen_watchchart.ui</file>
+
 		<file>gui/widgets/systemstatus.ui</file>
 		<file>gui/canbuspreferences.ui</file>
 		<file>gui/selectserver.ui</file>
