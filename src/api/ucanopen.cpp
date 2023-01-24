@@ -125,18 +125,18 @@ void ucanopen_server_get_nmt_state(const char* server_name, char* buf, size_t le
 {
 	switch (ucanopen_client->server(server_name)->nmt_state())
 	{
-	case ucanopen::NmtState::initialization:
-		strncpy(buf, "init", len);
-		break;
-	case ucanopen::NmtState::stopped:
-		strncpy(buf, "stopped", len);
-		break;
-	case ucanopen::NmtState::operational:
-		strncpy(buf, "run", len);
-		break;
-	case ucanopen::NmtState::pre_operational:
-		strncpy(buf, "pre-run", len);
-		break;
+		case ucanopen::NmtState::initialization:
+			strncpy(buf, "init", len);
+			break;
+		case ucanopen::NmtState::stopped:
+			strncpy(buf, "stopped", len);
+			break;
+		case ucanopen::NmtState::operational:
+			strncpy(buf, "run", len);
+			break;
+		case ucanopen::NmtState::pre_operational:
+			strncpy(buf, "pre-run", len);
+			break;
 	}
 }
 

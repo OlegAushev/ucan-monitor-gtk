@@ -52,21 +52,21 @@ void Server::_handle_frame(const can_frame& frame)
 		SdoType sdo_type;
 		switch (sdo_message.cs)
 		{
-		case cs_codes::sdo_scs_read:
-			if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
-			{
-				sdo_type = SdoType::response_to_exec;
-			}
-			else
-			{
-				sdo_type = SdoType::response_to_read;
-			}
-			break;
-		case cs_codes::sdo_scs_write:
-			sdo_type = SdoType::response_to_write;
-			break;
-		default:
-			return;
+			case cs_codes::sdo_scs_read:
+				if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
+				{
+					sdo_type = SdoType::response_to_exec;
+				}
+				else
+				{
+					sdo_type = SdoType::response_to_read;
+				}
+				break;
+			case cs_codes::sdo_scs_write:
+				sdo_type = SdoType::response_to_write;
+				break;
+			default:
+				return;
 		}
 		
 		// handle watch data

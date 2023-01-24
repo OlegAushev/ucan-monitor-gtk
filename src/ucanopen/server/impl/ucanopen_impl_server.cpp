@@ -71,34 +71,34 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 	switch (entry_iter->second.data_type)
 	{
-	case OD_BOOL:
-		if (value == "TRUE" || value == "true" || value == "ON" || value == "on" || value == "1")
-			sdo_data = CobSdoData(true);
-		else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
-			sdo_data = CobSdoData(true);
-		else
+		case OD_BOOL:
+			if (value == "TRUE" || value == "true" || value == "ON" || value == "on" || value == "1")
+				sdo_data = CobSdoData(true);
+			else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
+				sdo_data = CobSdoData(true);
+			else
+				return ODAccessStatus::fail;
+			break;
+		case OD_INT16:
+			sdo_data = CobSdoData(int16_t(std::stoi(value)));
+			break;
+		case OD_INT32:
+			sdo_data = CobSdoData(int32_t(std::stoi(value)));
+			break;
+		case OD_UINT16:
+			sdo_data = CobSdoData(uint16_t(std::stoul(value)));
+			break;
+		case OD_UINT32:
+			sdo_data = CobSdoData(uint32_t(std::stoul(value)));
+			break;
+		case OD_FLOAT32:
+			sdo_data = CobSdoData(float(std::stof(value)));
+			break;
+		case OD_ENUM16:
+			sdo_data = CobSdoData(uint16_t(std::stoi(value)));
+			break;
+		default:
 			return ODAccessStatus::fail;
-		break;
-	case OD_INT16:
-		sdo_data = CobSdoData(int16_t(std::stoi(value)));
-		break;
-	case OD_INT32:
-		sdo_data = CobSdoData(int32_t(std::stoi(value)));
-		break;
-	case OD_UINT16:
-		sdo_data = CobSdoData(uint16_t(std::stoul(value)));
-		break;
-	case OD_UINT32:
-		sdo_data = CobSdoData(uint32_t(std::stoul(value)));
-		break;
-	case OD_FLOAT32:
-		sdo_data = CobSdoData(float(std::stof(value)));
-		break;
-	case OD_ENUM16:
-		sdo_data = CobSdoData(uint16_t(std::stoi(value)));
-		break;
-	default:
-		return ODAccessStatus::fail;
 	}
 
 	CobSdo message{};

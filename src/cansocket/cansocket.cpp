@@ -110,21 +110,21 @@ Error Socket::connect(const std::string& interface, int bitrate)
 
 	switch (pkexec_retval)
 	{
-	case 0:
-		error = Error::no_error;
-		break;
-	case 1:
-		error = Error::invalid_argument;
-		break;
-	case 2:
-		error = Error::device_not_found;
-		break;
-	case 3:
-		error = Error::socket_can_failed;
-		break;
-	default:
-		error = Error::script_exec_failed;
-		break;
+		case 0:
+			error = Error::no_error;
+			break;
+		case 1:
+			error = Error::invalid_argument;
+			break;
+		case 2:
+			error = Error::device_not_found;
+			break;
+		case 3:
+			error = Error::socket_can_failed;
+			break;
+		default:
+			error = Error::script_exec_failed;
+			break;
 	}
 
 	if (error != Error::no_error)
@@ -208,23 +208,23 @@ Error Socket::recv(can_frame& frame)
 	int ret = poll(&_recv_fd, 1, _recv_timeout.count());
 	switch (ret)
 	{
-	case -1:
-		return Error::recv_error;
-		break;
-	case 0:
-		return Error::recv_timeout;
-		break;
-	default:
-		byte_count = ::read(_socket, &frame, sizeof(can_frame));
-		if (byte_count < 0)
-		{
+		case -1:
 			return Error::recv_error;
-		}
-		else
-		{
-			return Error::no_error;
-		}
-		break;
+			break;
+		case 0:
+			return Error::recv_timeout;
+			break;
+		default:
+			byte_count = ::read(_socket, &frame, sizeof(can_frame));
+			if (byte_count < 0)
+			{
+				return Error::recv_error;
+			}
+			else
+			{
+				return Error::no_error;
+			}
+			break;
 	}
 }
 

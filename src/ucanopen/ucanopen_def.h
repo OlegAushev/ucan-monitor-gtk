@@ -260,42 +260,42 @@ public:
 	{
 		switch (type)
 		{
-		case ucanopen::OD_BOOL:
-			return bool32() ? "true" : "false";
-		case ucanopen::OD_INT16:
-			return std::to_string(i16());
-		case ucanopen::OD_INT32:
-			return std::to_string(i32());
-		case ucanopen::OD_UINT16:
-			return std::to_string(u16());
-		case ucanopen::OD_UINT32:
-			return std::to_string(u32());
-		case ucanopen::OD_FLOAT32:
-			{
-				std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
-				std::array<char, 16> buf;
-				if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
-						ec == std::errc())
+			case ucanopen::OD_BOOL:
+				return bool32() ? "true" : "false";
+			case ucanopen::OD_INT16:
+				return std::to_string(i16());
+			case ucanopen::OD_INT32:
+				return std::to_string(i32());
+			case ucanopen::OD_UINT16:
+				return std::to_string(u16());
+			case ucanopen::OD_UINT32:
+				return std::to_string(u32());
+			case ucanopen::OD_FLOAT32:
 				{
-					return std::string(buf.begin(), ptr);
+					std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
+					std::array<char, 16> buf;
+					if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
+							ec == std::errc())
+					{
+						return std::string(buf.begin(), ptr);
+					}
+					else
+					{
+						return std::make_error_code(ec).message();
+					}
 				}
-				else
+			case ucanopen::OD_ENUM16:
+				return std::to_string(u16());
+			case ucanopen::OD_EXEC:
+				return std::string();
+			case ucanopen::OD_STRING_4CHARS:
 				{
-					return std::make_error_code(ec).message();
+					uint32_t strRaw = u32();
+					char cstr[5];
+					memcpy(cstr, &strRaw, 4);
+					cstr[4] = '\0';
+					return std::string(cstr);
 				}
-			}
-		case ucanopen::OD_ENUM16:
-			return std::to_string(u16());
-		case ucanopen::OD_EXEC:
-			return std::string();
-		case ucanopen::OD_STRING_4CHARS:
-			{
-				uint32_t strRaw = u32();
-				char cstr[5];
-				memcpy(cstr, &strRaw, 4);
-				cstr[4] = '\0';
-				return std::string(cstr);
-			}
 		}
 		return std::string();
 	}
