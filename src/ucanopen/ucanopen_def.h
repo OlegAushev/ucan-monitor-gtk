@@ -441,7 +441,7 @@ enum class ODExecStatus
 };
 
 
-enum class ODRequestStatus
+enum class ODAccessStatus
 {
 	success = 0,
 	fail = 1,

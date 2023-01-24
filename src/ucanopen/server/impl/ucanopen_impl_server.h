@@ -38,10 +38,10 @@ public:
 	NodeId node_id() const { return _node_id; }
 	NmtState nmt_state() const { return _nmt_state; }
 
-	ODRequestStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
-	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data);
-	ODRequestStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
-	ODRequestStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
+	ODAccessStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
+	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data);
+	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
+	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 protected:
 	ObjectDictionary::const_iterator _find_od_entry(
 		std::string_view category,
@@ -61,13 +61,13 @@ protected:
 	struct check_write_perm{};
 	struct check_exec_perm{};
 
-	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 					ObjectDictionary::const_iterator& entry_iter, check_read_perm);
 
-	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 					ObjectDictionary::const_iterator& entry_iter, check_write_perm);
 	
-	ODRequestStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 					ObjectDictionary::const_iterator& entry_iter, check_exec_perm);
 };
 

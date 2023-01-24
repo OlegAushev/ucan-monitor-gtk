@@ -19,11 +19,11 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 }
 
 
-ODRequestStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
+ODAccessStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	ObjectDictionary::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_read_perm{});
-	if (status != ODRequestStatus::success)
+	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
@@ -34,15 +34,15 @@ ODRequestStatus impl::Server::read(std::string_view category, std::string_view s
 	message.cs = cs_codes::sdo_ccs_read;
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
-ODRequestStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data)
+ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data)
 {
 	ObjectDictionary::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
-	if (status != ODRequestStatus::success)
+	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
@@ -54,15 +54,15 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 	message.data = sdo_data;
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
-ODRequestStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
+ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	ObjectDictionary::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
-	if (status != ODRequestStatus::success)
+	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
@@ -77,7 +77,7 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
 			sdo_data = CobSdoData(true);
 		else
-			return ODRequestStatus::fail;
+			return ODAccessStatus::fail;
 		break;
 	case OD_INT16:
 		sdo_data = CobSdoData(int16_t(std::stoi(value)));
@@ -98,7 +98,7 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 		sdo_data = CobSdoData(uint16_t(std::stoi(value)));
 		break;
 	default:
-		return ODRequestStatus::fail;
+		return ODAccessStatus::fail;
 	}
 
 	CobSdo message{};
@@ -108,15 +108,15 @@ ODRequestStatus impl::Server::write(std::string_view category, std::string_view 
 	message.data = sdo_data;
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
-ODRequestStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
+ODAccessStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	ObjectDictionary::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_exec_perm{});
-	if (status != ODRequestStatus::success)
+	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
@@ -135,11 +135,11 @@ ODRequestStatus impl::Server::exec(std::string_view category, std::string_view s
 	}
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
-ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 				ObjectDictionary::const_iterator& entry_iter, check_read_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
@@ -148,23 +148,23 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::fail;
+		return ODAccessStatus::fail;
 	}
 	else if (entry_iter->second.has_read_permission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-		return ODRequestStatus::no_access;
+		return ODAccessStatus::no_access;
 	}
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
 
 
 
-ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 				ObjectDictionary::const_iterator& entry_iter, check_write_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
@@ -173,20 +173,20 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::fail;;
+		return ODAccessStatus::fail;;
 	}
 	else if (entry_iter->second.has_write_permission() == false)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no access." << std::endl;
-		return ODRequestStatus::no_access;
+		return ODAccessStatus::no_access;
 	}
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 
-ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 				ObjectDictionary::const_iterator& entry_iter, check_exec_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
@@ -195,16 +195,16 @@ ODRequestStatus impl::Server::_find_od_entry(std::string_view category, std::str
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry." << std::endl;
-		return ODRequestStatus::fail;
+		return ODAccessStatus::fail;
 	}
 	else if (entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
 	{
 		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry." << std::endl;
-		return ODRequestStatus::no_access;
+		return ODAccessStatus::no_access;
 	}
-	return ODRequestStatus::success;
+	return ODAccessStatus::success;
 }
 
 } // namespace ucanopen
