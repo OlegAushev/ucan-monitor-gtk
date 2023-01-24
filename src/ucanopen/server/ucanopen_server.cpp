@@ -11,7 +11,12 @@ Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Soc
 	, rpdo_service(this)
 	, watch_service(this, dictionary, dictionary_config)
 	, config_service(this, dictionary, dictionary_config)
-{}
+	, sdo_service(this, &watch_service)
+{
+	_frame_handling_services.push_back(&sdo_service);
+	_frame_handling_services.push_back(&tpdo_service);
+	_frame_handling_services.push_back(&heartbeat_service);
+}
 
 
 void Server::_set_node_id(NodeId node_id)
@@ -23,6 +28,7 @@ void Server::_set_node_id(NodeId node_id)
 	heartbeat_service.update_node_id();
 	tpdo_service.update_node_id();
 	rpdo_service.update_node_id();
+	sdo_service.update_node_id();
 }
 
 
@@ -35,49 +41,13 @@ void Server::_send()
 
 void Server::_handle_frame(const can_frame& frame)
 {
-	if (tpdo_service.handle_frame(frame))
+	for (auto service : _frame_handling_services)
 	{
-		return;
-	}
-	else if (frame.can_id == calculate_cob_id(CobType::tsdo, _node_id))
-	{
-		CobSdo sdo_message(frame.data);
-		ODEntryKey key = {sdo_message.index, sdo_message.subindex};
-		auto od_entry = _dictionary.find(key);
-		if (od_entry == _dictionary.end())
+		auto status = service->handle_frame(frame);
+		if (status == HandlingStatus::success)
 		{
-			return;
+			break;
 		}
-
-		SdoType sdo_type;
-		switch (sdo_message.cs)
-		{
-			case cs_codes::sdo_scs_read:
-				if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
-				{
-					sdo_type = SdoType::response_to_exec;
-				}
-				else
-				{
-					sdo_type = SdoType::response_to_read;
-				}
-				break;
-			case cs_codes::sdo_scs_write:
-				sdo_type = SdoType::response_to_write;
-				break;
-			default:
-				return;
-		}
-		
-		// handle watch data
-		watch_service.handle_frame(sdo_type, od_entry, sdo_message.data);
-
-		// server-specific TSDO handling
-		_handle_tsdo(sdo_type, od_entry, sdo_message.data);
-	}
-	else if (heartbeat_service.handle_frame(frame))
-	{
-		return;
 	}	
 }
 

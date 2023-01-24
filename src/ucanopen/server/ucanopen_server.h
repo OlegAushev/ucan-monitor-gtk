@@ -7,6 +7,7 @@
 #include "services/ucanopen_server_rpdo.h"
 #include "services/ucanopen_server_watch.h"
 #include "services/ucanopen_server_config.h"
+#include "services/ucanopen_server_sdo.h"
 #include <atomic>
 #include <functional>
 #include <chrono>
@@ -24,7 +25,7 @@ public:
 	ServerRpdoService rpdo_service;
 	ServerWatchService watch_service;
 	ServerConfigService config_service;
-
+	ServerSdoService sdo_service;
 public:
 	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
 			const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config);
@@ -33,6 +34,8 @@ private:
 	void _send();
 	void _handle_frame(const can_frame& frame);
 	void _set_node_id(NodeId nodeId);
+
+	std::vector<impl::FrameHandlingService*> _frame_handling_services;
 };
 
 } // namespace ucanopen

@@ -7,7 +7,7 @@
 
 namespace ucanopen {
 
-class ServerTpdoService
+class ServerTpdoService : public impl::FrameHandlingService
 {
 private:
 	impl::Server* const _server;
@@ -38,7 +38,7 @@ public:
 		return _tpdo_list.at(tpdo_type).payload;
 	}
 
-	bool handle_frame(const can_frame& frame)
+	virtual HandlingStatus handle_frame(const can_frame& frame)
 	{
 		for (auto& [tpdo_type, message] : _tpdo_list)
 		{
@@ -49,9 +49,9 @@ public:
 			std::copy(frame.data, std::next(frame.data, frame.can_dlc), payload.begin());
 			message.payload = payload;
 			message.handler(payload);
-			return true;
+			return HandlingStatus::success;
 		}
-		return false;
+		return HandlingStatus::invalid_id;
 	}
 };
 

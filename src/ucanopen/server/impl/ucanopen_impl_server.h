@@ -10,6 +10,7 @@ namespace ucanopen {
 class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;
+class ServerSdoService;
 
 
 namespace impl {
@@ -19,6 +20,7 @@ class Server
 	friend class ucanopen::ServerHeartbeatService;
 	friend class ucanopen::ServerTpdoService;
 	friend class ucanopen::ServerRpdoService;
+	friend class ucanopen::ServerSdoService;
 protected:
 	std::string _name = "unnamed";
 	NodeId _node_id;
@@ -69,6 +71,24 @@ protected:
 	
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 					ObjectDictionary::const_iterator& entry_iter, check_exec_perm);
+};
+
+} // namespace impl
+
+enum class HandlingStatus
+{
+	success,
+	fail,
+	invalid_id
+};
+
+
+namespace impl {
+
+class FrameHandlingService
+{
+public:
+	virtual HandlingStatus handle_frame(const can_frame& frame) = 0;
 };
 
 } // namespace impl

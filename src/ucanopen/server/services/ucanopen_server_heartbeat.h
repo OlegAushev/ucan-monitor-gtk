@@ -6,7 +6,7 @@
 
 namespace ucanopen {
 
-class ServerHeartbeatService
+class ServerHeartbeatService : public impl::FrameHandlingService
 {
 private:
 	impl::Server* const _server;
@@ -24,13 +24,13 @@ public:
 
 	void update_node_id();
 
-	bool handle_frame(const can_frame& frame)
+	virtual HandlingStatus handle_frame(const can_frame& frame)
 	{
-		if (frame.can_id != _id) return false;
+		if (frame.can_id != _id) return HandlingStatus::invalid_id;
 		
 		_timepoint = std::chrono::steady_clock::now();
 		_server->_nmt_state = static_cast<NmtState>(frame.data[0]);
-		return true;
+		return HandlingStatus::success;
 	}
 };
 
