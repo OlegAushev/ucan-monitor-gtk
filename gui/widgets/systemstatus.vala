@@ -19,7 +19,7 @@ public class SystemStatus : Adw.Bin
 	private size_t _error_code_byte_count;
 	private Adw.PreferencesGroup[] error_bytes;
 	private TableBoolEntry[] error_bits;
-	private uint _error_code = 0;
+	private uint? _error_code = null;
 
 	private const size_t _warning_name_count_max = 32;
 	private const size_t _warning_name_len_max = 64;
@@ -28,7 +28,7 @@ public class SystemStatus : Adw.Bin
 	private size_t _warning_code_byte_count;
 	private Adw.PreferencesGroup[] warning_bytes;
 	private TableBoolEntry[] warning_bits;
-	private uint _warning_code = 0;
+	private uint? _warning_code = null;
 
 
 	public SystemStatus() {}

@@ -15,21 +15,13 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Button button_reset_device;
 
 	[GtkChild]
-	private unowned SpinButtonScale slider_client_tpdo1;
+	private unowned SpinButtonScale slider_speed1;
 	[GtkChild]
-	private unowned SpinButtonScale slider_client_tpdo2;
+	private unowned SpinButtonScale slider_torque1;
 	[GtkChild]
-	private unowned SpinButtonScale slider_client_tpdo3;
+	private unowned SpinButtonScale slider_speed2;
 	[GtkChild]
-	private unowned SpinButtonScale slider_client_tpdo4;
-	[GtkChild]
-	private unowned SpinButtonScale slider_server_rpdo1;
-	[GtkChild]
-	private unowned SpinButtonScale slider_server_rpdo2;
-	[GtkChild]
-	private unowned SpinButtonScale slider_server_rpdo3;
-	[GtkChild]
-	private unowned SpinButtonScale slider_server_rpdo4;
+	private unowned SpinButtonScale slider_torque2;
 
 	public ControlPanel() {}
 
@@ -53,7 +45,7 @@ public class ControlPanel : Adw.Bin
 			dialog.present();
 		});
 
-		slider_client_tpdo1.adjustment->value_changed.connect(() => {
+		/*slider_client_tpdo1.adjustment->value_changed.connect(() => {
 			launchpad_set_client_value(0, slider_client_tpdo1.value);
 		});
 		slider_client_tpdo2.adjustment->value_changed.connect(() => {
@@ -77,7 +69,7 @@ public class ControlPanel : Adw.Bin
 		});
 		slider_server_rpdo4.adjustment->value_changed.connect(() => {
 			launchpad_set_server_value(3, slider_server_rpdo4.value);
-		});
+		});*/
 	}
 }
 	

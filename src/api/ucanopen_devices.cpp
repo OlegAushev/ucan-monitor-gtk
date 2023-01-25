@@ -1,9 +1,11 @@
-#include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
-#include "ucanopen_devices/launchpad/server/launchpad_server.h"
 #include "ucanopen_devices/srmdrive/server/srmdrive_server.h"
+#include "ucanopen_devices/crd600/server/crd600_server.h"
+#include "ucanopen_devices/launchpad/server/launchpad_server.h"
+#include "ucanopen_devices/bmsmain/server/bmsmain_server.h"
 
 
 extern std::shared_ptr<srmdrive::Server> srmdrive_server;
+extern std::shared_ptr<crd600::Server> crd600_server;
 extern std::shared_ptr<launchpad::Server> launchpad_server;
 extern std::shared_ptr<bmsmain::Server> bmsmain_server;
 
@@ -26,6 +28,21 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** buf, siz
 		}
 
 		return srmdrive::error_list.size();
+	}
+	else if (std::string(server_name) == "CRD600")
+	{
+		if (crd600::error_list.size() > count_max)
+		{
+			return 0;
+		}
+
+		size_t i = 0;
+		for (auto error : crd600::error_list)
+		{
+			strncpy(buf[i++], error.data(), len_max);
+		}
+
+		return crd600::error_list.size();
 	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
@@ -67,6 +84,21 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** buf, s
 
 		return srmdrive::warning_list.size();
 	}
+	else if (std::string(server_name) == "CRD600")
+	{
+		if (crd600::warning_list.size() > count_max)
+		{
+			return 0;
+		}
+
+		size_t i = 0;
+		for (auto error : crd600::warning_list)
+		{
+			strncpy(buf[i++], error.data(), len_max);
+		}
+
+		return crd600::warning_list.size();
+	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
 		if (launchpad::warning_list.size() > count_max)
@@ -96,6 +128,10 @@ unsigned int ucanopen_devices_get_error_code(const char* server_name)
 	{
 		return srmdrive_server->errors();
 	}
+	else if (std::string(server_name) == "CRD600")
+	{
+		return crd600_server->errors();
+	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
 		return launchpad_server->errors();
@@ -113,6 +149,10 @@ unsigned int ucanopen_devices_get_warning_code(const char* server_name)
 	if (std::string(server_name) == "SRM Drive")
 	{
 		return srmdrive_server->warnings();
+	}
+	else if (std::string(server_name) == "CRD600")
+	{
+		return crd600_server->warnings();
 	}
 	else if (std::string(server_name) == "LaunchPad")
 	{
