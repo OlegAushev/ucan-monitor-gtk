@@ -10,17 +10,19 @@ namespace crd600 {
 
 struct CobTpdo1
 {
-	uint16_t status_run1 : 1;		// bit 0
-	uint16_t status_run2 : 1;		// bit 1
-	uint16_t status_fault : 1;		// bit 2
-	uint16_t status_warning : 1;		// bit 3
-	uint16_t status_overheat : 1;		// bit 4
-	uint16_t reference_type1 : 1;		// bit 5
-	uint16_t reference_type2 : 1;		// bit 6
-	uint16_t control_loop_type : 1;		// bit 7
-	uint16_t _status_reserved : 8;
-	uint16_t drive_state1 : 8;
-	uint16_t drive_state2 : 8;
+	uint16_t counter : 2;
+	uint16_t status_drive1_run : 1;
+	uint16_t status_drive2_run : 1;
+	uint16_t status_error : 1;
+	uint16_t status_warning : 1;
+	uint16_t status_overheat : 1;
+	uint16_t drive1_ref : 1;
+	uint16_t drive2_ref : 1;
+	uint16_t control_loop_type : 1;
+	uint16_t two_motors : 1;
+	uint16_t _status_reserved : 5;
+	uint16_t drive1_state : 8;
+	uint16_t drive2_state : 8;
 	uint32_t _reserved : 32;
 };
 
@@ -112,6 +114,20 @@ inline const std::vector<std::string_view> warning_list = {
 	"can_bus_error",
 	"can_bus_overrun",
 	"can_bus_connection_lost",
+};
+
+
+inline const std::vector<std::string> drive_states = {
+	"standby",
+	"idle",
+	"startup",
+	"ready",
+	"preparing",
+	"start",
+	"run",
+	"stop",
+	"shutdown",
+	"eval"
 };
 
 

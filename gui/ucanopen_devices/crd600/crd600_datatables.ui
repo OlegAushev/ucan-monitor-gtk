@@ -64,6 +64,96 @@
 								<property name="entry-chars">16</property>
 							</object>
 						</child>
+						<child>
+							<object class="TableEntry" id="entry_drive1_state">
+								<property name="title">Drive1 State</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entry_drive1_ref">
+								<property name="title">Drive1 Ref</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableBoolEntry" id="entry_drive1_run">
+								<property name="title">Drive1 Run</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+								<property name="true-text">1</property>
+								<property name="false-text">0</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entry_drive2_state">
+								<property name="title">Drive2 State</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entry_drive2_ref">
+								<property name="title">Drive2 Ref</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableBoolEntry" id="entry_drive2_run">
+								<property name="title">Drive2 Run</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+								<property name="true-text">1</property>
+								<property name="false-text">0</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableBoolEntry" id="entry_error_status">
+								<property name="title">Error</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+								<property name="true-text">1</property>
+								<property name="false-text">0</property>
+								<property name="true-css-class">error</property>
+								<property name="false-css-class">success</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableBoolEntry" id="entry_warning_status">
+								<property name="title">Warning</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+								<property name="true-text">1</property>
+								<property name="false-text">0</property>
+								<property name="true-css-class">error</property>
+								<property name="false-css-class">success</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableBoolEntry" id="entry_overheat_status">
+								<property name="title">Overheat</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+								<property name="true-text">1</property>
+								<property name="false-text">0</property>
+								<property name="true-css-class">error</property>
+								<property name="false-css-class">success</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entry_control_loop_type">
+								<property name="title">Control Loop</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
 					</object>
 				</child>
 

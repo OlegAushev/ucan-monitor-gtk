@@ -133,7 +133,7 @@ inline const std::vector<std::string> drive_states = {
 	"cal pwrup",
 	"cal",
 	"eval",
-} ;
+};
 
 
 inline const std::vector<std::string_view> error_list = {

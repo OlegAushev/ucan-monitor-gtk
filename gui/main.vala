@@ -68,6 +68,18 @@ extern void srmdrive_controller_set_emergency_enabled(bool is_enabled);
 extern void srmdrive_controller_set_torque(double val_pu);
 extern void srmdrive_controller_set_speed(double val);
 
+// crd600
+extern void crd600_tpdo1_get_drive1_state(char* buf, size_t len);
+extern void crd600_tpdo1_get_drive2_state(char* buf, size_t len);
+extern void crd600_tpdo1_get_drive1_ref(char* buf, size_t len);
+extern void crd600_tpdo1_get_drive2_ref(char* buf, size_t len);
+extern bool crd600_tpdo1_get_drive1_run();
+extern bool crd600_tpdo1_get_drive2_run();
+extern bool crd600_tpdo1_get_error();
+extern bool crd600_tpdo1_get_warning();
+extern bool crd600_tpdo1_get_overheat();
+extern void crd600_tpdo1_get_control_loop_type(char* buf, size_t len);
+
 /// bmsmain21
 extern double bmsmain_tpdo1_get_voltage();
 extern double bmsmain_tpdo1_get_current();

@@ -29,7 +29,7 @@ protected:
 			ucanopen::ObjectDictionary::const_iterator entry_iter,
 			ucanopen::CobSdoData sdo_data) override final;
 private:
-	void _handle_tpdo1([[maybe_unused]] const ucanopen::can_payload& payload) {}
+	void _handle_tpdo1(const ucanopen::can_payload& payload);
 	void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}
 	void _handle_tpdo3([[maybe_unused]] const ucanopen::can_payload& payload) {}
 	void _handle_tpdo4(const ucanopen::can_payload& payload);
@@ -50,6 +50,20 @@ private:
 		//return ucanopen::to_payload<CobRpdo2>(message);
 	}
 
+public:
+	struct Tpdo1
+	{
+		bool status_drive1_run;
+		bool status_drive2_run;
+		bool status_error;
+		bool status_warning;
+		bool status_overheat;
+		std::string drive1_ref;
+		std::string drive2_ref;
+		std::string control_loop_type;
+		std::string drive1_state;
+		std::string drive2_state;
+	} tpdo1;
 };
 
 } // namespace crd600

@@ -56,6 +56,29 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 }
 
 
+void Server::_handle_tpdo1(const ucanopen::can_payload& payload)
+{
+	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(payload);
+	tpdo1.status_drive1_run = message.status_drive1_run;
+	tpdo1.status_drive2_run = message.status_drive2_run;
+	tpdo1.status_error = message.status_error;
+	tpdo1.status_warning = message.status_warning;
+	tpdo1.status_overheat = message.status_overheat;
+	tpdo1.drive1_ref = (message.drive1_ref == 0) ? "speed" : "torque";
+	tpdo1.drive2_ref = (message.drive2_ref == 0) ? "speed" : "torque";
+	tpdo1.control_loop_type = (message.control_loop_type == 0) ? "open" : "closed";
+
+	auto get_drive_state = [](unsigned int id)
+	{
+		if (id >= drive_states.size()) return std::string("n/a");
+		return drive_states[id];
+	};
+
+	tpdo1.drive1_state = get_drive_state(message.drive1_state);
+	tpdo1.drive2_state = get_drive_state(message.drive2_state);
+}
+
+
 void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 {
 	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
