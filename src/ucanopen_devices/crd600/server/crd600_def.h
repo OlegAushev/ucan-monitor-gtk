@@ -49,18 +49,30 @@ struct CobTpdo4
 
 struct CobRpdo1
 {
-	uint16_t run : 1;
-	uint32_t _reserved1 : 31;
-	uint16_t emergency_stop : 1;
+	uint32_t counter : 2;
+	uint32_t drive1_run : 1;
+	uint32_t drive2_run : 1;
+	uint32_t _reserved1 : 28;
+	uint32_t emergency_stop : 1;
 	uint32_t _reserved2 : 31;
 };
 
+
 struct CobRpdo2
 {
-	int16_t speed1;
-	int16_t torque1;
-	int16_t speed2;
-	int16_t torque2;
+	int16_t drive1_speed_ref;
+	int16_t drive1_torque_ref;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
+};
+
+
+struct CobRpdo3
+{
+	int16_t drive2_speed_ref;
+	int16_t drive2_torque_ref;
+	uint32_t counter : 2;
+	uint32_t _reserved : 30;
 };
 
 
