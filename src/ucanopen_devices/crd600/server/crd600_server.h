@@ -18,7 +18,6 @@ class Server : public ucanopen::Server
 private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;
-
 public:
 	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 	
@@ -34,23 +33,19 @@ private:
 	void _handle_tpdo3([[maybe_unused]] const ucanopen::can_payload& payload) {}
 	void _handle_tpdo4(const ucanopen::can_payload& payload);
 
-	ucanopen::can_payload _create_rpdo1()
-	{
-		//static unsigned int counter = 0;
-		//CobRpdo1 message{.counter = counter, ._reserved = 0, .value = _server_values[0]};
-		//counter = (counter + 1) % 4;
-		//return ucanopen::to_payload<CobRpdo1>(message);
-	}
-
-	ucanopen::can_payload _create_rpdo2()
-	{
-		//static unsigned int counter = 0;
-		//CobRpdo2 message{.counter = counter, ._reserved = 0, .value = _server_values[1]};
-		//counter = (counter + 1) % 4;
-		//return ucanopen::to_payload<CobRpdo2>(message);
-	}
+	ucanopen::can_payload _create_rpdo1();
+	ucanopen::can_payload _create_rpdo2();
+	ucanopen::can_payload _create_rpdo3();
 
 public:
+	bool drive1_run = false;
+	bool drive2_run = false;
+	bool emergency_stop = false;
+	int16_t drive1_speed_ref = 0;
+	int16_t drive1_torque_ref = 0;
+	int16_t drive2_speed_ref = 0;
+	int16_t drive2_torque_ref = 0;
+	
 	struct Tpdo1
 	{
 		bool status_drive1_run;

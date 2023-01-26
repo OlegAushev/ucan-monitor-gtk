@@ -10,6 +10,15 @@ namespace Crd600 {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
+	private unowned Gtk.Switch switch_power;
+	[GtkChild]
+	private unowned Gtk.Switch switch_drive1_run;
+	[GtkChild]
+	private unowned Gtk.Switch switch_drive2_run;
+	[GtkChild]
+	private unowned Gtk.Switch switch_emergency;
+
+	[GtkChild]
 	private unowned Gtk.Button button_reset_errors;
 	[GtkChild]
 	private unowned Gtk.Button button_reset_device;
@@ -27,6 +36,26 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
+		switch_power.notify["state"].connect((s, p) => {
+			crd600_set_power_enabled(switch_power.state);
+		});
+
+		switch_drive1_run.notify["state"].connect((s, p) => {
+			crd600_set_drive1_run_enabled(switch_drive1_run.state);
+		});
+
+		switch_drive2_run.notify["state"].connect((s, p) => {
+			crd600_set_drive2_run_enabled(switch_drive2_run.state);
+		});
+
+		switch_emergency.notify["state"].connect((s, p) => {
+			crd600_set_emergency_enabled(switch_emergency.state);
+		});
+
+
+
+
+
 		button_reset_errors.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "system", "syslog", "reset_errors");
 		});

@@ -16,10 +16,12 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(120),
 			[this](ucanopen::can_payload payload) { this->_handle_tpdo4(payload); });
 
-	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
+	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(50),
 			[this](){ return this->_create_rpdo1(); });
 	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo2, std::chrono::milliseconds(50),
 			[this](){ return this->_create_rpdo2(); });
+	rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo3, std::chrono::milliseconds(50),
+			[this](){ return this->_create_rpdo3(); });
 }
 
 
@@ -58,15 +60,15 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 
 void Server::_handle_tpdo1(const ucanopen::can_payload& payload)
 {
-	CobTpdo1 message = ucanopen::from_payload<CobTpdo1>(payload);
-	tpdo1.status_drive1_run = message.status_drive1_run;
-	tpdo1.status_drive2_run = message.status_drive2_run;
-	tpdo1.status_error = message.status_error;
-	tpdo1.status_warning = message.status_warning;
-	tpdo1.status_overheat = message.status_overheat;
-	tpdo1.drive1_ref = (message.drive1_ref == 0) ? "speed" : "torque";
-	tpdo1.drive2_ref = (message.drive2_ref == 0) ? "speed" : "torque";
-	tpdo1.control_loop_type = (message.control_loop_type == 0) ? "open" : "closed";
+	CobTpdo1 tpdo = ucanopen::from_payload<CobTpdo1>(payload);
+	tpdo1.status_drive1_run = tpdo.status_drive1_run;
+	tpdo1.status_drive2_run = tpdo.status_drive2_run;
+	tpdo1.status_error = tpdo.status_error;
+	tpdo1.status_warning = tpdo.status_warning;
+	tpdo1.status_overheat = tpdo.status_overheat;
+	tpdo1.drive1_ref = (tpdo.drive1_ref == 0) ? "speed" : "torque";
+	tpdo1.drive2_ref = (tpdo.drive2_ref == 0) ? "speed" : "torque";
+	tpdo1.control_loop_type = (tpdo.control_loop_type == 0) ? "open" : "closed";
 
 	auto get_drive_state = [](unsigned int id)
 	{
@@ -74,16 +76,58 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload)
 		return drive_states[id];
 	};
 
-	tpdo1.drive1_state = get_drive_state(message.drive1_state);
-	tpdo1.drive2_state = get_drive_state(message.drive2_state);
+	tpdo1.drive1_state = get_drive_state(tpdo.drive1_state);
+	tpdo1.drive2_state = get_drive_state(tpdo.drive2_state);
 }
 
 
 void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 {
-	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
-	_errors = message.errors;
-	_warnings = message.warnings;
+	CobTpdo4 tpdo = ucanopen::from_payload<CobTpdo4>(payload);
+	_errors = tpdo.errors;
+	_warnings = tpdo.warnings;
+}
+
+
+ucanopen::can_payload Server::_create_rpdo1()
+{
+	static unsigned int counter = 0;
+	CobRpdo1 rpdo{};
+
+	rpdo.counter = counter;
+	rpdo.drive1_run = drive1_run;
+	rpdo.drive2_run = drive2_run;
+	rpdo.emergency_stop = emergency_stop;
+
+	counter = (counter + 1) % 4;
+	return ucanopen::to_payload<CobRpdo1>(rpdo);
+}
+
+
+ucanopen::can_payload Server::_create_rpdo2()
+{
+	static unsigned int counter = 0;
+	CobRpdo2 rpdo{};
+
+	rpdo.counter = counter;
+	rpdo.drive1_speed_ref = drive1_speed_ref;
+	rpdo.drive1_torque_ref = drive1_torque_ref;
+
+	counter = (counter + 1) % 4;
+	return ucanopen::to_payload<CobRpdo2>(rpdo);
+}
+
+ucanopen::can_payload Server::_create_rpdo3()
+{
+	static unsigned int counter = 0;
+	CobRpdo3 rpdo{};
+
+	rpdo.counter = counter;
+	rpdo.drive2_speed_ref = drive2_speed_ref;
+	rpdo.drive2_torque_ref = drive2_torque_ref;
+
+	counter = (counter + 1) % 4;
+	return ucanopen::to_payload<CobRpdo3>(rpdo);
 }
 
 }

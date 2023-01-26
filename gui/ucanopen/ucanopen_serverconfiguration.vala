@@ -125,7 +125,7 @@ public class ServerConfiguration : Adw.Bin
 			dialog.set_response_appearance("cancel", DESTRUCTIVE);
 			dialog.set_response_appearance("continue", SUGGESTED);
 			dialog.response["continue"].connect(() => {
-				ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "APPLY PARAMETERS");
+				ucanopen_server_exec(Backend.Ucanopen.server, "system", "config", "apply");
 			});
 			dialog.present();	
 		});
@@ -139,7 +139,7 @@ public class ServerConfiguration : Adw.Bin
 			dialog.set_response_appearance("cancel", DESTRUCTIVE);
 			dialog.set_response_appearance("continue", SUGGESTED);
 			dialog.response["continue"].connect(() => {
-				ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET PARAMETERS");
+				ucanopen_server_exec(Backend.Ucanopen.server, "system", "config", "reset_to_default");
 			});
 			dialog.present();		
 		});

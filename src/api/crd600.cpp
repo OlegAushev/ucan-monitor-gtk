@@ -16,6 +16,35 @@ void register_crd600_server(std::shared_ptr<crd600::Server> crd600_server_)
 
 extern "C" {
 
+extern void crd600_set_power_enabled(bool is_enabled)
+{
+	if (is_enabled)
+	{
+		crd600_server->exec("control", "drive", "powerup");
+	}
+	else
+	{
+		crd600_server->exec("control", "drive", "powerdown");
+	}
+}
+
+extern void crd600_set_drive1_run_enabled(bool is_enabled)
+{
+	crd600_server->drive1_run = is_enabled;
+}
+
+extern void crd600_set_drive2_run_enabled(bool is_enabled)
+{
+	crd600_server->drive2_run = is_enabled;
+}
+
+extern void crd600_set_emergency_enabled(bool is_enabled)
+{
+	crd600_server->emergency_stop = is_enabled;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void crd600_tpdo1_get_drive1_state(char* buf, size_t len)
 {
 	strncpy(buf, crd600_server->tpdo1.drive1_state.c_str(), len);

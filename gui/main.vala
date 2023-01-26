@@ -69,6 +69,11 @@ extern void srmdrive_controller_set_torque(double val_pu);
 extern void srmdrive_controller_set_speed(double val);
 
 // crd600
+extern void crd600_set_power_enabled(bool is_enabled);
+extern void crd600_set_drive1_run_enabled(bool is_enabled);
+extern void crd600_set_drive2_run_enabled(bool is_enabled);
+extern void crd600_set_emergency_enabled(bool is_enabled);
+
 extern void crd600_tpdo1_get_drive1_state(char* buf, size_t len);
 extern void crd600_tpdo1_get_drive2_state(char* buf, size_t len);
 extern void crd600_tpdo1_get_drive1_ref(char* buf, size_t len);
