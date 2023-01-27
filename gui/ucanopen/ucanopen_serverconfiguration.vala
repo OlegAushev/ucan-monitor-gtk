@@ -62,59 +62,57 @@ public class ServerConfiguration : Adw.Bin
 		size_t _categories_count = ucanopen_server_get_config_categories(Backend.Ucanopen.server,
 				_categories, _categories_count_max, _categories_len_max);
 
-		if (_categories_count == 0)
+		if (_categories_count != 0)
 		{
-			return;
-		}
-
-		for (size_t i = 0; i < _categories_count; ++i)
-		{
-			_categories_model.append(_categories[i]);
-		}
-
-		size_t _entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
-				_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
-		for (size_t i = 0; i < _entries_count; ++i)
-		{
-			_entries_model.append(_entries[i]);
-		}
-
-		comborow_category.notify["selected"].connect((s,p) => {
-			for (size_t i = 0; i < _entries_count; ++i)
+			for (size_t i = 0; i < _categories_count; ++i)
 			{
-				_entries_model.remove(0);
+				_categories_model.append(_categories[i]);
 			}
 
-			_entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
+			size_t _entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
 					_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
 			for (size_t i = 0; i < _entries_count; ++i)
 			{
 				_entries_model.append(_entries[i]);
-			}	
-		});
-
-		button_read.clicked.connect(() => {
-			ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
-					_categories[comborow_category.selected], _entries[comborow_entry.selected]);
-		});
-
-		button_write.clicked.connect(() => {
-			float val;
-			bool is_number = float.try_parse(entryrow_value.text, out val);
-			if (is_number && entryrow_value.text.length != 0)
-			{
-				ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
-						_categories[comborow_category.selected], _entries[comborow_entry.selected],
-						entryrow_value.text);
 			}
-			else
-			{
-				string message = string.join(null, "Bad value: ", entryrow_value.text);
-				Adw.Toast toast = new Adw.Toast(message);
-				toast.timeout = 1;
-				toast_overlay.add_toast(toast);
-			}
-		});
+
+			comborow_category.notify["selected"].connect((s,p) => {
+				for (size_t i = 0; i < _entries_count; ++i)
+				{
+					_entries_model.remove(0);
+				}
+
+				_entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
+						_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
+				for (size_t i = 0; i < _entries_count; ++i)
+				{
+					_entries_model.append(_entries[i]);
+				}	
+			});
+
+			button_read.clicked.connect(() => {
+				ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
+						_categories[comborow_category.selected], _entries[comborow_entry.selected]);
+			});
+
+			button_write.clicked.connect(() => {
+				float val;
+				bool is_number = float.try_parse(entryrow_value.text, out val);
+				if (is_number && entryrow_value.text.length != 0)
+				{
+					ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
+							_categories[comborow_category.selected], _entries[comborow_entry.selected],
+							entryrow_value.text);
+				}
+				else
+				{
+					string message = string.join(null, "Bad value: ", entryrow_value.text);
+					Adw.Toast toast = new Adw.Toast(message);
+					toast.timeout = 1;
+					toast_overlay.add_toast(toast);
+				}
+			});
+		}
 
 		button_apply.clicked.connect(() => {
 			Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
