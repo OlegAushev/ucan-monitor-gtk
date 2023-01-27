@@ -36,7 +36,6 @@ private:
 	ucanopen::can_payload _create_rpdo1();
 	ucanopen::can_payload _create_rpdo2();
 	ucanopen::can_payload _create_rpdo3();
-
 public:
 	bool drive1_run = false;
 	bool drive2_run = false;
@@ -45,7 +44,31 @@ public:
 	int16_t drive1_torque_ref = 0;
 	int16_t drive2_speed_ref = 0;
 	int16_t drive2_torque_ref = 0;
-	
+
+	void set_drive1_speed_ref(double val)
+	{
+		if (fabs(val) > 8000.0) return;
+		drive1_speed_ref = val;
+	}
+
+	void set_drive2_speed_ref(double val)
+	{
+		if (fabs(val) > 8000.0) return;
+		drive2_speed_ref = val;
+	}
+
+	void set_drive1_torque_ref(double val_pu)
+	{
+		if (fabs(val_pu) > 1.0) return;
+		drive1_torque_ref = 32767.0 * val_pu;
+	}
+
+	void set_drive2_torque_ref(double val_pu)
+	{
+		if (fabs(val_pu) > 1.0) return;
+		drive2_torque_ref = 32767.0 * val_pu;
+	}
+
 	struct Tpdo1
 	{
 		bool status_drive1_run;

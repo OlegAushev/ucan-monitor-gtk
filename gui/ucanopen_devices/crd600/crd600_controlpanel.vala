@@ -52,10 +52,6 @@ public class ControlPanel : Adw.Bin
 			crd600_set_emergency_enabled(switch_emergency.state);
 		});
 
-
-
-
-
 		button_reset_errors.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "system", "syslog", "reset_errors");
 		});
@@ -74,31 +70,21 @@ public class ControlPanel : Adw.Bin
 			dialog.present();
 		});
 
-		/*slider_client_tpdo1.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(0, slider_client_tpdo1.value);
+		slider_speed1.adjustment->value_changed.connect(() => {
+			crd600_set_drive1_speed_ref(slider_speed1.value);
 		});
-		slider_client_tpdo2.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(1, slider_client_tpdo2.value);
-		});
-		slider_client_tpdo3.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(2, slider_client_tpdo3.value);
-		});
-		slider_client_tpdo4.adjustment->value_changed.connect(() => {
-			launchpad_set_client_value(3, slider_client_tpdo4.value);
+		
+		slider_torque1.adjustment->value_changed.connect(() => {
+			crd600_set_drive1_torque_ref(slider_torque1.value / 100.0);
 		});
 
-		slider_server_rpdo1.adjustment->value_changed.connect(() => {
-			launchpad_set_server_value(0, slider_server_rpdo1.value);
+		slider_speed2.adjustment->value_changed.connect(() => {
+			crd600_set_drive2_speed_ref(slider_speed2.value);
 		});
-		slider_server_rpdo2.adjustment->value_changed.connect(() => {
-			launchpad_set_server_value(1, slider_server_rpdo2.value);
+		
+		slider_torque2.adjustment->value_changed.connect(() => {
+			crd600_set_drive2_torque_ref(slider_torque2.value / 100.0);
 		});
-		slider_server_rpdo3.adjustment->value_changed.connect(() => {
-			launchpad_set_server_value(2, slider_server_rpdo3.value);
-		});
-		slider_server_rpdo4.adjustment->value_changed.connect(() => {
-			launchpad_set_server_value(3, slider_server_rpdo4.value);
-		});*/
 	}
 }
 	
