@@ -65,15 +65,22 @@
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entry_drive1_state">
-								<property name="title">Drive1 State</property>
+							<object class="TableEntry" id="entry_drive1_ref">
+								<property name="title">Drive1 Ref</property>
 								<property name="subtitle"></property>
 								<property name="entry-chars">10</property>
 							</object>
 						</child>
 						<child>
-							<object class="TableEntry" id="entry_drive1_ref">
-								<property name="title">Drive1 Ref</property>
+							<object class="TableEntry" id="entry_drive2_ref">
+								<property name="title">Drive2 Ref</property>
+								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+						<child>
+							<object class="TableEntry" id="entry_drive1_state">
+								<property name="title">Drive1 State</property>
 								<property name="subtitle"></property>
 								<property name="entry-chars">10</property>
 							</object>
@@ -92,13 +99,6 @@
 						<child>
 							<object class="TableEntry" id="entry_drive2_state">
 								<property name="title">Drive2 State</property>
-								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
-							</object>
-						</child>
-						<child>
-							<object class="TableEntry" id="entry_drive2_ref">
-								<property name="title">Drive2 Ref</property>
 								<property name="subtitle"></property>
 								<property name="entry-chars">10</property>
 							</object>
