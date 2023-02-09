@@ -23,7 +23,7 @@ protected:
 
 	virtual void _handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entryIt,
-			ucanopen::CobSdoData data) override final;
+			ucanopen::ExpeditedSdoData data) override final;
 private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;

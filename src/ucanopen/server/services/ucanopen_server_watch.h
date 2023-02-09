@@ -40,7 +40,7 @@ public:
 		}
 	}
 
-	bool handle_frame(SdoType sdo_type, ObjectDictionary::const_iterator od_entry, CobSdoData sdo_data)
+	bool handle_frame(SdoType sdo_type, ObjectDictionary::const_iterator od_entry, ExpeditedSdoData sdo_data)
 	{
 		if ((od_entry->second.category == watch_category) && (sdo_type == SdoType::response_to_read))
 		{

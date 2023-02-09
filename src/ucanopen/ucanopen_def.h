@@ -203,18 +203,18 @@ enum ODEntryAccessPermission
 };
 
 
-class CobSdoData
+class ExpeditedSdoData
 {
 private:
 	uint32_t _data = 0;
 public:
-	CobSdoData() = default;
-	CobSdoData(bool val) { memcpy(&_data, &val, sizeof(val)); }
-	CobSdoData(int16_t val) { memcpy(&_data, &val, sizeof(val)); }
-	CobSdoData(int32_t val) { memcpy(&_data, &val, sizeof(_data)); }
-	CobSdoData(uint16_t val) { memcpy(&_data, &val, sizeof(val)); }
-	CobSdoData(uint32_t val) { memcpy(&_data, &val, sizeof(_data)); }
-	CobSdoData(float val) { memcpy(&_data, &val, sizeof(_data)); }
+	ExpeditedSdoData() = default;
+	ExpeditedSdoData(bool val) { memcpy(&_data, &val, sizeof(val)); }
+	ExpeditedSdoData(int16_t val) { memcpy(&_data, &val, sizeof(val)); }
+	ExpeditedSdoData(int32_t val) { memcpy(&_data, &val, sizeof(_data)); }
+	ExpeditedSdoData(uint16_t val) { memcpy(&_data, &val, sizeof(val)); }
+	ExpeditedSdoData(uint32_t val) { memcpy(&_data, &val, sizeof(_data)); }
+	ExpeditedSdoData(float val) { memcpy(&_data, &val, sizeof(_data)); }
 
 	bool bool32() const
 	{
@@ -302,7 +302,7 @@ public:
 };
 
 
-struct CobSdo
+struct ExpeditedSdo
 {
 	uint32_t data_size_indicated : 1;
 	uint32_t expedited_transfer : 1;
@@ -311,41 +311,41 @@ struct CobSdo
 	uint32_t cs : 3;
 	uint32_t index : 16;
 	uint32_t subindex : 8;
-	CobSdoData data = {};
+	ExpeditedSdoData data = {};
 
-	CobSdo() = default;
+	ExpeditedSdo() = default;
 
-	CobSdo(const can_payload& payload)
+	ExpeditedSdo(const can_payload& payload)
 	{
-		memcpy(this, payload.data(), sizeof(CobSdo));
+		memcpy(this, payload.data(), sizeof(ExpeditedSdo));
 	}
 
-	CobSdo(const uint8_t* data)
+	ExpeditedSdo(const uint8_t* data)
 	{
-		memcpy(this, data, sizeof(CobSdo));
+		memcpy(this, data, sizeof(ExpeditedSdo));
 	}
 
 	uint64_t all() const
 	{
 		uint64_t data = 0;
-		memcpy(&data, this, sizeof(CobSdo));
+		memcpy(&data, this, sizeof(ExpeditedSdo));
 		return data;
 	}
 
 	can_payload to_payload() const
 	{
 		can_payload payload;
-		memcpy(payload.data(), this, sizeof(CobSdo));
+		memcpy(payload.data(), this, sizeof(ExpeditedSdo));
 		return payload;
 	}
 };
 
 
-namespace cs_codes {
-const uint32_t sdo_ccs_write = 1;
-const uint32_t sdo_scs_write = 3;
-const uint32_t sdo_ccs_read = 2;
-const uint32_t sdo_scs_read = 2;
+namespace sdo_cs_codes {
+const uint32_t ccs_init_write = 1;
+const uint32_t scs_init_write = 3;
+const uint32_t ccs_init_read = 2;
+const uint32_t scs_init_read = 2;
 }
 
 

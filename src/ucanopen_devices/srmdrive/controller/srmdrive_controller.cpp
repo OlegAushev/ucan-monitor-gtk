@@ -47,7 +47,7 @@ void Controller::set_speed(double val)
 {
 	_speed_ref = val;
 	//std::cout << "[srmdrive] Speed reference: " << _speed_ref << "rpm" << std::endl;
-	_drive_server->write("WATCH", "WATCH", "SPEED_RPM", ucanopen::CobSdoData(_speed_ref));
+	_drive_server->write("WATCH", "WATCH", "SPEED_RPM", ucanopen::ExpeditedSdoData(_speed_ref));
 }
 
 

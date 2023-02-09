@@ -26,7 +26,7 @@ public:
 protected:
 	virtual void _handle_tsdo(ucanopen::SdoType sdo_type,
 			ucanopen::ObjectDictionary::const_iterator entry_iter,
-			ucanopen::CobSdoData sdo_data) override final;
+			ucanopen::ExpeditedSdoData sdo_data) override final;
 private:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);
 	void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}

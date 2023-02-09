@@ -20,7 +20,7 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 
 void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			ucanopen::ObjectDictionary::const_iterator entry_iter,
-			ucanopen::CobSdoData sdo_data)
+			ucanopen::ExpeditedSdoData sdo_data)
 {
 	if (entry_iter->second.category == watch_service.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
 	{

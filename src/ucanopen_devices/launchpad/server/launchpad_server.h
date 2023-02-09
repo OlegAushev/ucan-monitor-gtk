@@ -61,7 +61,7 @@ protected:
 
 	virtual void _handle_tsdo(ucanopen::SdoType sdo_type,
 			ucanopen::ObjectDictionary::const_iterator entry_iter,
-			ucanopen::CobSdoData sdo_data) override final;
+			ucanopen::ExpeditedSdoData sdo_data) override final;
 public:
 	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 

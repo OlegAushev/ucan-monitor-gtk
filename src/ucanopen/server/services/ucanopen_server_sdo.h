@@ -21,7 +21,7 @@ public:
 	{
 		if (frame.can_id != _id) return HandlingStatus::invalid_id;
 		
-		CobSdo sdo_message(frame.data);
+		ExpeditedSdo sdo_message(frame.data);
 		ODEntryKey key = {sdo_message.index, sdo_message.subindex};
 		auto od_entry = _server->_dictionary.find(key);
 		if (od_entry == _server->_dictionary.end())
@@ -32,7 +32,7 @@ public:
 		SdoType sdo_type;
 		switch (sdo_message.cs)
 		{
-			case cs_codes::sdo_scs_read:
+			case sdo_cs_codes::scs_init_read:
 				if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
 				{
 					sdo_type = SdoType::response_to_exec;
@@ -42,7 +42,7 @@ public:
 					sdo_type = SdoType::response_to_read;
 				}
 				break;
-			case cs_codes::sdo_scs_write:
+			case sdo_cs_codes::scs_init_write:
 				sdo_type = SdoType::response_to_write;
 				break;
 			default:

@@ -31,7 +31,7 @@ protected:
 
 	NmtState _nmt_state = NmtState::stopped;
 protected:
-	virtual void _handle_tsdo(SdoType, ObjectDictionary::const_iterator, CobSdoData) = 0;	
+	virtual void _handle_tsdo(SdoType, ObjectDictionary::const_iterator, ExpeditedSdoData) = 0;	
 public:
 	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary);
@@ -41,7 +41,7 @@ public:
 	NmtState nmt_state() const { return _nmt_state; }
 
 	ODAccessStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
-	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, CobSdoData sdo_data);
+	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data);
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 protected:
