@@ -7,6 +7,14 @@
 
 namespace ucanopen {
 
+enum class ODAccessStatus
+{
+	success = 0,
+	fail = 1,
+	no_access = 2
+};
+
+
 class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;

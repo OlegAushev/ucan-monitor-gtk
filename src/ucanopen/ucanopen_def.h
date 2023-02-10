@@ -195,12 +195,14 @@ enum ODEntryDataType
 };
 
 
-enum ODEntryAccessPermission
-{
-	OD_ACCESS_RW,
-	OD_ACCESS_RO,
-	OD_ACCESS_WO,
-};
+namespace sdo_cs_codes {
+const uint32_t client_init_write = 1;
+const uint32_t server_init_write = 3;
+const uint32_t client_init_read = 2;
+const uint32_t server_init_read = 2;
+
+const uint32_t abort = 4;
+}
 
 
 class ExpeditedSdoData
@@ -325,13 +327,6 @@ struct ExpeditedSdo
 		memcpy(this, data, sizeof(ExpeditedSdo));
 	}
 
-	uint64_t all() const
-	{
-		uint64_t data = 0;
-		memcpy(&data, this, sizeof(ExpeditedSdo));
-		return data;
-	}
-
 	can_payload to_payload() const
 	{
 		can_payload payload;
@@ -341,12 +336,35 @@ struct ExpeditedSdo
 };
 
 
-namespace sdo_cs_codes {
-const uint32_t ccs_init_write = 1;
-const uint32_t scs_init_write = 3;
-const uint32_t ccs_init_read = 2;
-const uint32_t scs_init_read = 2;
-}
+struct AbortSdo
+{
+	uint32_t _reserved : 5;
+	uint32_t cs : 3;
+	uint32_t index : 16;
+	uint32_t subindex : 8;
+	uint32_t error_code;
+	AbortSdo()
+	{
+		memset(this, 0, sizeof(AbortSdo));
+		cs = sdo_cs_codes::abort;
+	}
+};
+
+
+enum class SdoAbortCode : uint32_t
+{
+	no_error 			= 0,
+	invalid_cs 			= 0x05040001,
+	unsupported_access 		= 0x06010000,
+	read_access_wo 			= 0x06010001,
+	write_access_ro 		= 0x06010002,
+	no_object 			= 0x06020000,
+	hardware_error 			= 0x06060000,
+	general_error 			= 0x08000000,
+	data_store_error 		= 0x08000020,
+	local_control_error 		= 0x08000021,
+	state_error 			= 0x08000022
+};;
 
 
 enum class SdoType
@@ -354,6 +372,15 @@ enum class SdoType
 	response_to_read,
 	response_to_write,
 	response_to_exec,
+	abort
+};
+
+
+enum ODEntryAccessPermission
+{
+	OD_ACCESS_RW,
+	OD_ACCESS_RO,
+	OD_ACCESS_WO,
 };
 
 
@@ -430,23 +457,6 @@ inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& 
 	std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
 	return frame;	
 }
-
-
-enum class ODExecStatus
-{
-	success = 0,
-	fail = 1,
-	in_progress = 2,
-	started = 3
-};
-
-
-enum class ODAccessStatus
-{
-	success = 0,
-	fail = 1,
-	no_access = 2
-};
 
 } // namespace ucanopen
 

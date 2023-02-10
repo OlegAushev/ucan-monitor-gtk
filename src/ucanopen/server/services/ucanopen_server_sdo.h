@@ -32,7 +32,7 @@ public:
 		SdoType sdo_type;
 		switch (sdo_message.cs)
 		{
-			case sdo_cs_codes::scs_init_read:
+			case sdo_cs_codes::server_init_read:
 				if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
 				{
 					sdo_type = SdoType::response_to_exec;
@@ -42,8 +42,18 @@ public:
 					sdo_type = SdoType::response_to_read;
 				}
 				break;
-			case sdo_cs_codes::scs_init_write:
-				sdo_type = SdoType::response_to_write;
+			case sdo_cs_codes::server_init_write:
+				if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
+				{
+					sdo_type = SdoType::response_to_exec;
+				}
+				else
+				{
+					sdo_type = SdoType::response_to_write;
+				}	
+				break;
+			case sdo_cs_codes::abort:
+				sdo_type = SdoType::abort;
 				break;
 			default:
 				return HandlingStatus::fail;

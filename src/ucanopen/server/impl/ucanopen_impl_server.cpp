@@ -29,7 +29,7 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 	}
 
 	ExpeditedSdo message{};
-	message.cs = sdo_cs_codes::ccs_init_read;
+	message.cs = sdo_cs_codes::client_init_read;
 	message.index = entry_iter->first.index;
 	message.subindex = entry_iter->first.subindex;
 
@@ -48,7 +48,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 	}
 
 	ExpeditedSdo message{};
-	message.cs = sdo_cs_codes::ccs_init_write;
+	message.cs = sdo_cs_codes::client_init_write;
 	message.expedited_transfer = 1;
 	message.data_size_indicated = 1;
 	message.data_empty_bytes = 0;
@@ -105,7 +105,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 	}
 
 	ExpeditedSdo message{};
-	message.cs = sdo_cs_codes::ccs_init_write;
+	message.cs = sdo_cs_codes::client_init_write;
 	message.expedited_transfer = 1;
 	message.data_size_indicated = 1;
 	message.data_empty_bytes = 0;
@@ -130,11 +130,11 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 	ExpeditedSdo message{};
 	if (entry_iter->second.has_read_permission())
 	{
-		message.cs = sdo_cs_codes::ccs_init_read;
+		message.cs = sdo_cs_codes::client_init_read;
 	}
 	else if (entry_iter->second.has_write_permission())
 	{
-		message.cs = sdo_cs_codes::ccs_init_write;
+		message.cs = sdo_cs_codes::client_init_write;
 		message.expedited_transfer = 1;
 		message.data_size_indicated = 1;
 		message.data_empty_bytes = 0;
