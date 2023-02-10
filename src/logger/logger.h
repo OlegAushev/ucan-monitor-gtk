@@ -5,6 +5,7 @@
 #include <string>
 #include <mutex>
 #include <cstring>
+#include <iostream>
 
 
 class Logger final
@@ -26,6 +27,7 @@ public:
 
 	void add(std::string message)
 	{
+		std::cout << message << std::endl;
 		std::lock_guard<std::mutex> lock(_mutex);
 		_messages.push_back(message);
 	}
