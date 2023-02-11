@@ -6,6 +6,7 @@
 #include <cstring>
 #include <string>
 #include <string_view>
+#include <sstream>
 #include <charconv>
 #include <array>
 #include <ios>
@@ -205,6 +206,9 @@ const uint32_t abort = 4;
 }
 
 
+// TODO inline get_cs_code 
+
+
 class ExpeditedSdoData
 {
 private:
@@ -364,7 +368,22 @@ enum class SdoAbortCode : uint32_t
 	data_store_error 		= 0x08000020,
 	local_control_error 		= 0x08000021,
 	state_error 			= 0x08000022
-};;
+};
+
+
+const std::map<SdoAbortCode, std::string_view> sdo_abort_messages = {
+	{SdoAbortCode::no_error, "no error"},
+	{SdoAbortCode::invalid_cs, "client/server command specifier not valid or unknown"},
+	{SdoAbortCode::unsupported_access, "unsupported access to an object"},
+	{SdoAbortCode::read_access_wo, "attempt to read a write-only object"},
+	{SdoAbortCode::write_access_ro, "attempt to write a read-only object"},
+	{SdoAbortCode::no_object, "object does not exist in the object dictionary"},
+	{SdoAbortCode::hardware_error, "access failed due to a hardware error"},
+	{SdoAbortCode::general_error, "general error"},
+	{SdoAbortCode::data_store_error, "data cannot be transferred or stored to the application"},
+	{SdoAbortCode::local_control_error, "data cannot be transferred or stored to the application because of local control"},
+	{SdoAbortCode::state_error, "data cannot be transferred or stored to the application because of the present device state"}
+};
 
 
 enum class SdoType

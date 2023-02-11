@@ -38,21 +38,7 @@ public:
 		return _tpdo_list.at(tpdo_type).payload;
 	}
 
-	virtual HandlingStatus handle_frame(const can_frame& frame)
-	{
-		for (auto& [tpdo_type, message] : _tpdo_list)
-		{
-			if (frame.can_id != message.id) continue;
-
-			message.timepoint = std::chrono::steady_clock::now();
-			can_payload payload{};
-			std::copy(frame.data, std::next(frame.data, frame.can_dlc), payload.begin());
-			message.payload = payload;
-			message.handler(payload);
-			return HandlingStatus::success;
-		}
-		return HandlingStatus::invalid_id;
-	}
+	virtual HandlingStatus handle_frame(const can_frame& frame);
 };
 
 } // namespace ucanopen
