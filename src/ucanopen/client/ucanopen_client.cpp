@@ -11,7 +11,7 @@ Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
 	_sync_info.timepoint = std::chrono::steady_clock::now();
 	_heartbeat_info.timepoint = std::chrono::steady_clock::now();
 
-	std::cout << "[ucanopen] Starting aux thread..." << std::endl;
+	Log() << "[ucanopen] Starting aux thread...";
 
 	std::future<void> future_exit = _signal_exit_run_thread.get_future();
 	_thread_run = std::thread(&Client::_run, this, std::move(future_exit));
@@ -22,7 +22,7 @@ Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
 
 Client::~Client()
 {
-	std::cout << "[ucanopen] Sending signal to aux thread to stop..." << std::endl;
+	Log() << "[ucanopen] Sending signal to aux thread to stop...";
 	_signal_exit_run_thread.set_value();
 	_thread_run.join();
 }
@@ -30,29 +30,34 @@ Client::~Client()
 
 void Client::set_node_id(NodeId node_id)
 {
-	std::cout << "[ucanopen] Setting client ID = " << node_id.value()
+	std::stringstream msg;
+	msg << "[ucanopen] Setting client ID = " << node_id.value()
 			<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{
-		std::cout << "failed: invalid ID." << std::endl;
+		msg << "failed: invalid ID.";
+		Log() << msg;
 		return;
 	}
 
 	if (!_is_free(node_id))
 	{
-		std::cout << "failed: already occupied ID." << std::endl;
+		msg << "failed: already occupied ID.";
+		Log() << msg;
 		return;
 	}
 	
 	_node_id = node_id;
-	std::cout << "done." << std::endl;
+	msg << "done.";
+	Log() << msg;
 }
 
 
 void Client::register_server(std::shared_ptr<Server> server)
 {
-	std::cout << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
+	std::stringstream msg;
+	msg << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
 			<< std::hex << server->node_id().value() << std::dec << " to client... ";
 
 	auto server_same_name = std::find_if(_servers.begin(), _servers.end(), 
@@ -62,7 +67,8 @@ void Client::register_server(std::shared_ptr<Server> server)
 		});
 	if (server_same_name != _servers.end())
 	{
-		std::cout << "failed: server with that name already added to client." << std::endl;
+		msg << "failed: server with that name already added to client.";
+		Log() << msg;
 		return;
 	}
 
@@ -73,38 +79,44 @@ void Client::register_server(std::shared_ptr<Server> server)
 		});
 	if (server_same_id != _servers.end())
 	{
-		std::cout << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
-				<< " already added to client."  << std::endl;
+		msg << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
+				<< " already added to client.";
+		Log() << msg;
 		return;
 	}
 
 	if (server->node_id() == _node_id)
 	{
-		std::cout << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec << std::endl;
+		msg << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec;
+		Log() << msg;
 		return;
 	}
 
 	_servers.insert(server);
 	_calculate_recvid(server);
 
-	std::cout << "done." << std::endl;
+	msg << "done.";
+	Log() << msg;
 }
 
 
 void Client::set_server_node_id(std::string_view name, NodeId node_id)
 {
-	std::cout << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
+	std::stringstream msg;
+	msg << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
 				<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{
-		std::cout << "failed: invalid ID." << std::endl;
+		msg << "failed: invalid ID.";
+		Log() << msg;
 		return;
 	}
 
 	if (!_is_free(node_id))
 	{
-		std::cout << "failed: already occupied ID." << std::endl;
+		msg << "failed: already occupied ID.";
+		Log() << msg;
 		return;
 	}
 
@@ -115,7 +127,8 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id)
 		});
 	if (server_iter == _servers.end())
 	{
-		std::cout << "failed: no such server found." << std::endl;
+		msg << "failed: no such server found.";
+		Log() << msg;
 		return;
 	}
 
@@ -136,13 +149,16 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id)
 
 	_calculate_recvid(*server_iter);
 
-	std::cout << "done." << std::endl;
+	msg << "done.";
+	Log() << msg;
 }
 
 
 void Client::_run(std::future<void> future_exit)
 {
-	std::cout << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << std::endl;
+	std::stringstream msg;
+	msg << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id();
+	Log() << msg;
 
 	while (future_exit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
@@ -195,7 +211,7 @@ void Client::_run(std::future<void> future_exit)
 		}
 	}
 
-	std::cout << "[ucanopen] Aux thread stopped." << std::endl;
+	Log() << "[ucanopen] Aux thread stopped.";
 }
 
 

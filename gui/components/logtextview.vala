@@ -29,8 +29,8 @@ public class LogTextView : Adw.Bin
 
 	public bool update()
 	{
-		string message = string.nfill(128, '\0');;
-		if (log_get_message(message, 128))
+		string message = string.nfill(256, '\0');;
+		if (log_get_message(message, 256))
 		{
 			Gtk.TextIter end_iter;
 			_textbuffer.get_end_iter(out end_iter);

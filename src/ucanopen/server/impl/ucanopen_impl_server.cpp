@@ -153,16 +153,20 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.end())
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no such OD entry." << std::endl;
+				<< " - no such OD entry.";
+		Log() << msg;
 		return ODAccessStatus::fail;
 	}
 	else if (entry_iter->second.has_read_permission() == false)
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot read "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no access." << std::endl;
+				<< " - no access.";
+		Log() << msg;
 		return ODAccessStatus::no_access;
 	}
 	return ODAccessStatus::success;
@@ -178,16 +182,20 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.end())
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no such OD entry." << std::endl;
+				<< " - no such OD entry.";
+		Log() << msg;
 		return ODAccessStatus::fail;;
 	}
 	else if (entry_iter->second.has_write_permission() == false)
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot write "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no access." << std::endl;
+				<< " - no access.";
+		Log() << msg;
 		return ODAccessStatus::no_access;
 	}
 	return ODAccessStatus::success;
@@ -200,16 +208,20 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.end())
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no such OD entry." << std::endl;
+				<< " - no such OD entry.";
+		Log() << msg;
 		return ODAccessStatus::fail;
 	}
 	else if (entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
 	{
-		std::cout << "[ucanopen] '" << _name << "' server: cannot execute "
+		std::stringstream msg;
+		msg << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - not executable OD entry." << std::endl;
+				<< " - not executable OD entry.";
+		Log() << msg;
 		return ODAccessStatus::no_access;
 	}
 	return ODAccessStatus::success;

@@ -32,7 +32,9 @@ std::promise<void> signal_exit_main;
 extern "C" 
 int backend_main_loop(std::future<void> futureExit)
 {
-	std::cout << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << std::endl;
+	std::stringstream msg;
+	msg << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id();
+	Log() << msg;
 
 	auto can_socket = std::make_shared<can::Socket>();
 	api::register_can_socket(can_socket);
@@ -93,7 +95,7 @@ int backend_main_loop(std::future<void> futureExit)
 
 	backend_ucanopen_server_config_category = ucanopen_client->server(server_name)->config_service.config_category.data();
 
-	std::cout << "[backend] Backend ready." << std::endl;
+	Log() << "[backend] Backend ready.";
 	backend_is_ready = true;
 
 	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
@@ -101,7 +103,7 @@ int backend_main_loop(std::future<void> futureExit)
 
 	}
 
-	std::cout << "[backend] Main loop thread stopped." << std::endl;
+	Log() << "[backend] Main loop thread stopped.";
 	return 0;
 }
 
@@ -109,8 +111,10 @@ int backend_main_loop(std::future<void> futureExit)
 extern "C"
 int backend_main_enter()
 {
-	std::cout << "[backend] Thread id: " << std::this_thread::get_id() << std::endl;
-	std::cout << "[backend] Starting new thread for main loop..." << std::endl;
+	std::stringstream msg;
+	msg << "[backend] Thread id: " << std::this_thread::get_id();
+	Log() << msg;
+	Log() << "[backend] Starting new thread for main loop...";
 
 	std::future<void> futureExit = signal_exit_main.get_future();
 	thread_main = std::thread(backend_main_loop, std::move(futureExit));
@@ -121,7 +125,7 @@ int backend_main_enter()
 extern "C"
 void backend_main_exit()
 {
-	std::cout << "[backend] Sending signal to main loop thread to stop..." << std::endl;
+	Log() << "[backend] Sending signal to main loop thread to stop...";
 
 	signal_exit_main.set_value();
 	thread_main.join();

@@ -13,6 +13,8 @@
 #include <chrono>
 #include <map>
 
+#include <log/log.h>
+
 
 namespace ucanopen {
 
@@ -85,23 +87,29 @@ public:
 
 	void enable_sync()
 	{
-		std::cout << "[ucanopen] Enabling client SYNC messages (period = " << _sync_info.period << ")... ";	
+		std::stringstream msg;
+		msg << "[ucanopen] Enabling client SYNC messages (period = " << _sync_info.period << ")... ";	
 		_sync_info.is_enabled = true;
-		std::cout << "done." << std::endl;
+		msg << "done.";
+		Log() << msg;
 	}
 
 	void disable_sync()
 	{
-		std::cout << "[ucanopen] Disabling client SYNC messages... ";
+		std::stringstream msg;
+		msg << "[ucanopen] Disabling client SYNC messages... ";
 		_sync_info.is_enabled = false;
-		std::cout << "done." << std::endl;
+		msg << "done.";
+		Log() << msg;
 	}
 
 	void set_sync_period(std::chrono::milliseconds period)
 	{
-		std::cout << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
+		std::stringstream msg;
+		msg << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
 		_sync_info.period = period;
-		std::cout << "done." << std::endl;
+		msg << "done.";
+		Log() << msg;
 	}
 
 	void set_heartbeat_period(std::chrono::milliseconds period)
@@ -116,16 +124,20 @@ public:
 
 	void enable_tpdo()
 	{
-		std::cout << "[ucanopen] Enabling client TPDO messages... ";
+		std::stringstream msg;
+		msg << "[ucanopen] Enabling client TPDO messages... ";
 		_is_tpdo_enabled = true;
-		std::cout << "done." << std::endl;
+		msg << "done.";
+		Log() << msg;
 	}
 
 	void disable_tpdo()
 	{
-		std::cout << "[ucanopen] Disabling client TPDO messages... ";
+		std::stringstream msg;
+		msg << "[ucanopen] Disabling client TPDO messages... ";
 		_is_tpdo_enabled = false;
-		std::cout << "done." << std::endl;
+		msg << "done.";
+		Log() << msg;
 	}
 
 	void enable_server_rpdo()
