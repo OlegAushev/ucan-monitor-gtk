@@ -59,7 +59,7 @@ extern void ucanopen_server_write(string server_name, string category, string su
 extern void ucanopen_server_exec(string server_name, string category, string subcategory, string name);
 
 // logger
-extern bool logger_get_message(string buf, size_t len);
+extern bool log_get_message(string buf, size_t len);
 
 // srmdrive
 extern void srmdrive_controller_set_power_enabled(bool is_enabled);

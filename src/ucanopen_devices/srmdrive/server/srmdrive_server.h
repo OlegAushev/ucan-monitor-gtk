@@ -4,7 +4,7 @@
 #include "ucanopen/server/ucanopen_server.h"
 #include "srmdrive_def.h"
 #include "../controller/srmdrive_controller.h"
-#include "logger/logger.h"
+#include "log/log.h"
 
 
 namespace srmdrive {

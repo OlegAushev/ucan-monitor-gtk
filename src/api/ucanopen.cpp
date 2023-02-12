@@ -1,5 +1,5 @@
 #include "ucanopen/client/ucanopen_client.h"
-#include "logger/logger.h"
+#include "log/log.h"
 #include <cassert>
 
 
@@ -165,7 +165,7 @@ void ucanopen_server_write(const char* server_name, const char* category, const 
 {
 	std::stringstream sstr;
 		sstr << "[" << category << "/write] " << subcategory << "::" << name << " = " << value << ", updating...";
-	Logger::instance().add(sstr.str());
+	Log() << sstr.str();
 	ucanopen_client->server(server_name)->write(category, subcategory, name, std::string(value));
 }
 

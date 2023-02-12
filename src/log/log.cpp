@@ -1,11 +1,11 @@
-#include "logger.h"
+#include "log.h"
 
 
 extern "C" {
 
-bool logger_get_message(char* buf, size_t len)
+bool log_get_message(char* buf, size_t len)
 {
-	std::string message = Logger::instance().pop();
+	std::string message = Log().pop();
 	if (message.empty())
 	{
 		return false;

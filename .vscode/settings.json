@@ -68,7 +68,8 @@
 		"future": "cpp",
 		"charconv": "cpp",
 		"complex": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"syncstream": "cpp"
 	},
 	"[Log]": {
 		"editor.fontSize": 12

@@ -7,18 +7,22 @@ Socket::Socket()
 {
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
-	std::cout << "[cansocket] Searching for SocketCAN checking script... ";
+	std::stringstream msg;
+	msg << "[cansocket] Searching for SocketCAN checking script... ";
 	std::filesystem::path script_path = _find_script("socketcan_check.sh");
 	if (script_path.empty())
 	{
-		std::cout << "WARNING: not found." << std::endl;
+		msg << "WARNING: not found.";
 		return;
 	}
-	std::cout << "found: " << script_path << std::endl;
+	msg << "found: " << script_path;
+	Log() << msg;
+	msg.str("");
 
 	/* RUN SCRIPT */
 	std::string cmd = "sh " + script_path.string() + " " + "can0";
-	std::cout << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"" << std::endl;
+	msg << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"";
+	Log() << msg;
 
 	int script_retval = system(cmd.c_str());
 	if (script_retval == 0)
@@ -40,18 +44,18 @@ Socket::~Socket()
 Error Socket::_create_socket(const std::string& interface)
 {
 	/* CREATE SOCKET */
-	std::cout << "[cansocket] Creating socket..." << std::endl;
+	Log() << "[cansocket] Creating socket...";
 	_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (_socket < 0)
 	{
-		std::cout << "[cansocket] ERROR: socket creation failed." << std::endl;
+		Log() << "[cansocket] ERROR: socket creation failed.";
 		return Error::socket_creation_failed;
 	}
 
 	std::strcpy(_ifr.ifr_name, interface.c_str());
 	if (ioctl(_socket, SIOCGIFINDEX, &_ifr) < 0)
 	{
-		std::cout << "[cansocket] ERROR: interface retrieving failed." << std::endl;
+		Log() << "[cansocket] ERROR: interface retrieving failed.";
 		return Error::interface_retrieving_failed;
 	}
 
@@ -66,14 +70,14 @@ Error Socket::_create_socket(const std::string& interface)
 
 	if (bind(_socket, (sockaddr*)&_addr, sizeof(_addr)) < 0)
 	{
-		std::cout << "[cansocket] ERROR: socket binding failed." << std::endl;
+		Log() << "[cansocket] ERROR: socket binding failed.";
 		return Error::socket_binding_failed;
 	}
 
 	_recv_fd.fd = _socket;
 	_recv_fd.events = POLLIN;
 
-	std::cout << "[cansocket] Socket created." << std::endl;
+	Log() << "[cansocket] Socket created.";
 	return Error::no_error;
 }
 
@@ -92,18 +96,23 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	std::lock_guard<std::mutex> lock2(_recv_mutex);
 
 	/* FIND SCRIPT */
-	std::cout << "[cansocket] Searching for SocketCAN enabling script... ";
+	std::stringstream msg;
+	msg << "[cansocket] Searching for SocketCAN enabling script... ";
 	std::filesystem::path script_path = _find_script("socketcan_enable.sh");
 	if (script_path.empty())
 	{
-		std::cout << "ERROR: not found." << std::endl;
+		msg << "ERROR: not found.";
 		return Error::script_not_found;
 	}
-	std::cout << "found: " << script_path << std::endl;
+	msg << "found: " << script_path;
+	Log() << msg;
+	msg.str("");
 
 	/* RUN SCRIPT */
 	std::string cmd = "pkexec sh " + script_path.string() + " " + interface + " " + std::to_string(bitrate);
-	std::cout << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"" << std::endl;
+	msg << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"";
+	Log() << msg;
+	msg.str("");
 
 	int pkexec_retval = system(cmd.c_str());
 	Error error;
@@ -129,7 +138,8 @@ Error Socket::connect(const std::string& interface, int bitrate)
 
 	if (error != Error::no_error)
 	{
-		std::cout << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << std::endl;
+		msg << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error);
+		Log() << msg;
 		return error;
 	}
 
@@ -141,7 +151,7 @@ Error Socket::disconnect()
 {
 	if (_socket < 0)
 	{
-		std::cout << "[cansocket] No socket to close." << std::endl;
+		Log() << "[cansocket] No socket to close.";
 		return Error::no_error;
 	}
 
@@ -150,12 +160,12 @@ Error Socket::disconnect()
 
 	if (close(_socket) < 0)
 	{
-		std::cout << "[cansocket] ERROR: socket closing failed." << std::endl;
+		Log() << "[cansocket] ERROR: socket closing failed.";
 		return Error::socket_closing_failed;
 	}
 	else
 	{
-		std::cout << "[cansocket] Socket closed." << std::endl;
+		Log() << "[cansocket] Socket closed.";
 		_socket = -1;
 		return Error::no_error;
 	}

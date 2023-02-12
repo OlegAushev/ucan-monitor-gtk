@@ -11,13 +11,15 @@
 #include <cstring>
 #include <poll.h>
 
-#include <iostream>
 #include <string>
+#include <sstream>
 #include <set>
 #include <filesystem>
 #include <thread>
 #include <mutex>
 #include <chrono>
+
+#include <log/log.h>
 
 
 namespace can {
