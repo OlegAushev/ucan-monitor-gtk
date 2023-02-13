@@ -206,7 +206,10 @@ const uint32_t abort = 4;
 }
 
 
-// TODO inline get_cs_code 
+inline uint32_t get_cs_code(const can_frame& frame)
+{
+	return frame.data[0] >> 5;
+}
 
 
 class ExpeditedSdoData
@@ -347,10 +350,28 @@ struct AbortSdo
 	uint32_t index : 16;
 	uint32_t subindex : 8;
 	uint32_t error_code;
+
 	AbortSdo()
 	{
 		memset(this, 0, sizeof(AbortSdo));
 		cs = sdo_cs_codes::abort;
+	}
+
+	AbortSdo(const can_payload& payload)
+	{
+		memcpy(this, payload.data(), sizeof(AbortSdo));
+	}
+
+	AbortSdo(const uint8_t* data)
+	{
+		memcpy(this, data, sizeof(AbortSdo));
+	}
+
+	can_payload to_payload() const
+	{
+		can_payload payload;
+		memcpy(payload.data(), this, sizeof(AbortSdo));
+		return payload;
 	}
 };
 

@@ -18,13 +18,13 @@ void ServerHeartbeatService::update_node_id()
 }
 
 
-HandlingStatus ServerHeartbeatService::handle_frame(const can_frame& frame)
+int ServerHeartbeatService::handle_frame(const can_frame& frame)
 {
-	if (frame.can_id != _id) return HandlingStatus::invalid_id;
+	if (frame.can_id != _id) return 1;
 	
 	_timepoint = std::chrono::steady_clock::now();
 	_server->_nmt_state = static_cast<NmtState>(frame.data[0]);
-	return HandlingStatus::success;
+	return 0;
 }
 
 } // namespace ucanopen

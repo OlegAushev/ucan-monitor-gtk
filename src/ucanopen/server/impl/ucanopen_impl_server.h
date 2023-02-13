@@ -82,22 +82,11 @@ protected:
 					ObjectDictionary::const_iterator& entry_iter, check_exec_perm);
 };
 
-} // namespace impl
-
-enum class HandlingStatus
-{
-	success,
-	fail,
-	invalid_id
-};
-
-
-namespace impl {
 
 class FrameHandlingService
 {
 public:
-	virtual HandlingStatus handle_frame(const can_frame& frame) = 0;
+	virtual int handle_frame(const can_frame& frame) = 0;
 };
 
 } // namespace impl
