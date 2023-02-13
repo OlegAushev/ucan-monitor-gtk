@@ -31,17 +31,13 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 	}
 	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_read)
 	{
-		std::stringstream msg;
-		msg << "[" << entry_iter->second.category << "/read] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " = " << sdo_data.to_string(entry_iter->second.data_type);
-		Log() << msg;
+		Log() << "[" << entry_iter->second.category << "/read] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " = " << sdo_data.to_string(entry_iter->second.data_type) << '\n';
 	}
 	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_write)
 	{
-		std::stringstream msg;
-		msg << "[" << entry_iter->second.category << "/write] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " updated.";
-		Log() << msg;
+		Log() << "[" << entry_iter->second.category << "/write] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " updated.\n";
 	}
 }
 
@@ -51,7 +47,7 @@ void Server::_handle_tpdo3(const ucanopen::can_payload& payload)
 	CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(payload);
 	if ((message.syslog_message_id != 0) && (message.syslog_message_id < syslog_messages.size()))
 	{
-		Log() << syslog_messages[message.syslog_message_id];
+		Log() << syslog_messages[message.syslog_message_id] << '\n';
 	}
 }
 

@@ -11,7 +11,7 @@ Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
 	_sync_info.timepoint = std::chrono::steady_clock::now();
 	_heartbeat_info.timepoint = std::chrono::steady_clock::now();
 
-	Log() << "[ucanopen] Starting aux thread...";
+	Log() << "[ucanopen] Starting aux thread...\n";
 
 	std::future<void> future_exit = _signal_exit_run_thread.get_future();
 	_thread_run = std::thread(&Client::_run, this, std::move(future_exit));
@@ -22,7 +22,7 @@ Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
 
 Client::~Client()
 {
-	Log() << "[ucanopen] Sending signal to aux thread to stop...";
+	Log() << "[ucanopen] Sending signal to aux thread to stop...\n";
 	_signal_exit_run_thread.set_value();
 	_thread_run.join();
 }
@@ -30,34 +30,29 @@ Client::~Client()
 
 void Client::set_node_id(NodeId node_id)
 {
-	std::stringstream msg;
-	msg << "[ucanopen] Setting client ID = " << node_id.value()
+	Log() << "[ucanopen] Setting client ID = " << node_id.value()
 			<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{
-		msg << "failed: invalid ID.";
-		Log() << msg;
+		Log() << "failed: invalid ID.\n";
 		return;
 	}
 
 	if (!_is_free(node_id))
 	{
-		msg << "failed: already occupied ID.";
-		Log() << msg;
+		Log() << "failed: already occupied ID.\n";
 		return;
 	}
 	
 	_node_id = node_id;
-	msg << "done.";
-	Log() << msg;
+	Log() << "done.\n";
 }
 
 
 void Client::register_server(std::shared_ptr<Server> server)
 {
-	std::stringstream msg;
-	msg << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
+	Log() << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
 			<< std::hex << server->node_id().value() << std::dec << " to client... ";
 
 	auto server_same_name = std::find_if(_servers.begin(), _servers.end(), 
@@ -67,8 +62,7 @@ void Client::register_server(std::shared_ptr<Server> server)
 		});
 	if (server_same_name != _servers.end())
 	{
-		msg << "failed: server with that name already added to client.";
-		Log() << msg;
+		Log() << "failed: server with that name already added to client.\n";
 		return;
 	}
 
@@ -79,44 +73,38 @@ void Client::register_server(std::shared_ptr<Server> server)
 		});
 	if (server_same_id != _servers.end())
 	{
-		msg << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
-				<< " already added to client.";
-		Log() << msg;
+		Log() << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
+				<< " already added to client.\n";
 		return;
 	}
 
 	if (server->node_id() == _node_id)
 	{
-		msg << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec;
-		Log() << msg;
+		Log() << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec << '\n';
 		return;
 	}
 
 	_servers.insert(server);
 	_calculate_recvid(server);
 
-	msg << "done.";
-	Log() << msg;
+	Log() << "done.\n";
 }
 
 
 void Client::set_server_node_id(std::string_view name, NodeId node_id)
 {
-	std::stringstream msg;
-	msg << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
+	Log() << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
 				<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{
-		msg << "failed: invalid ID.";
-		Log() << msg;
+		Log() << "failed: invalid ID.\n";
 		return;
 	}
 
 	if (!_is_free(node_id))
 	{
-		msg << "failed: already occupied ID.";
-		Log() << msg;
+		Log() << "failed: already occupied ID.\n";
 		return;
 	}
 
@@ -127,8 +115,7 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id)
 		});
 	if (server_iter == _servers.end())
 	{
-		msg << "failed: no such server found.";
-		Log() << msg;
+		Log() << "failed: no such server found.\n";
 		return;
 	}
 
@@ -149,16 +136,13 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id)
 
 	_calculate_recvid(*server_iter);
 
-	msg << "done.";
-	Log() << msg;
+	Log() << "done.\n";
 }
 
 
 void Client::_run(std::future<void> future_exit)
 {
-	std::stringstream msg;
-	msg << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id();
-	Log() << msg;
+	Log() << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << '\n';
 
 	while (future_exit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
@@ -211,7 +195,7 @@ void Client::_run(std::future<void> future_exit)
 		}
 	}
 
-	Log() << "[ucanopen] Aux thread stopped.";
+	Log() << "[ucanopen] Aux thread stopped.\n";
 }
 
 

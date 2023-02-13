@@ -12,7 +12,6 @@
 #include <poll.h>
 
 #include <string>
-#include <sstream>
 #include <set>
 #include <filesystem>
 #include <thread>

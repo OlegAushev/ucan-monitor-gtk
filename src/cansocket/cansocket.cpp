@@ -7,22 +7,18 @@ Socket::Socket()
 {
 	// check can0: may be interface is already enabled
 	/* FIND SCRIPT */
-	std::stringstream msg;
-	msg << "[cansocket] Searching for SocketCAN checking script... ";
+	Log() << "[cansocket] Searching for SocketCAN checking script... ";
 	std::filesystem::path script_path = _find_script("socketcan_check.sh");
 	if (script_path.empty())
 	{
-		msg << "WARNING: not found.";
+		Log() << "WARNING: not found.\n";
 		return;
 	}
-	msg << "found: " << script_path;
-	Log() << msg;
-	msg.str("");
+	Log() << "found: " << script_path << '\n';
 
 	/* RUN SCRIPT */
 	std::string cmd = "sh " + script_path.string() + " " + "can0";
-	msg << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"";
-	Log() << msg;
+	Log() << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"\n";
 
 	int script_retval = system(cmd.c_str());
 	if (script_retval == 0)
@@ -44,18 +40,18 @@ Socket::~Socket()
 Error Socket::_create_socket(const std::string& interface)
 {
 	/* CREATE SOCKET */
-	Log() << "[cansocket] Creating socket...";
+	Log() << "[cansocket] Creating socket... ";
 	_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
 	if (_socket < 0)
 	{
-		Log() << "[cansocket] ERROR: socket creation failed.";
+		Log() << "ERROR: socket creation failed.\n";
 		return Error::socket_creation_failed;
 	}
 
 	std::strcpy(_ifr.ifr_name, interface.c_str());
 	if (ioctl(_socket, SIOCGIFINDEX, &_ifr) < 0)
 	{
-		Log() << "[cansocket] ERROR: interface retrieving failed.";
+		Log() << "ERROR: interface retrieving failed.\n";
 		return Error::interface_retrieving_failed;
 	}
 
@@ -70,14 +66,14 @@ Error Socket::_create_socket(const std::string& interface)
 
 	if (bind(_socket, (sockaddr*)&_addr, sizeof(_addr)) < 0)
 	{
-		Log() << "[cansocket] ERROR: socket binding failed.";
+		Log() << "ERROR: socket binding failed.\n";
 		return Error::socket_binding_failed;
 	}
 
 	_recv_fd.fd = _socket;
 	_recv_fd.events = POLLIN;
 
-	Log() << "[cansocket] Socket created.";
+	Log() << "done.\n";
 	return Error::no_error;
 }
 
@@ -96,27 +92,21 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	std::lock_guard<std::mutex> lock2(_recv_mutex);
 
 	/* FIND SCRIPT */
-	std::stringstream msg;
-	msg << "[cansocket] Searching for SocketCAN enabling script... ";
+	Log() << "[cansocket] Searching for SocketCAN enabling script... ";
 	std::filesystem::path script_path = _find_script("socketcan_enable.sh");
 	if (script_path.empty())
 	{
-		msg << "ERROR: not found.";
+		Log() << "ERROR: not found.\n";
 		return Error::script_not_found;
 	}
-	msg << "found: " << script_path;
-	Log() << msg;
-	msg.str("");
+	Log() << "found: " << script_path << '\n';
 
 	/* RUN SCRIPT */
 	std::string cmd = "pkexec sh " + script_path.string() + " " + interface + " " + std::to_string(bitrate);
-	msg << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"";
-	Log() << msg;
-	msg.str("");
+	Log() << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"\n";
 
 	int pkexec_retval = system(cmd.c_str());
 	Error error;
-
 	switch (pkexec_retval)
 	{
 		case 0:
@@ -138,8 +128,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 
 	if (error != Error::no_error)
 	{
-		msg << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error);
-		Log() << msg;
+		Log() << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << '\n';
 		return error;
 	}
 
@@ -151,7 +140,7 @@ Error Socket::disconnect()
 {
 	if (_socket < 0)
 	{
-		Log() << "[cansocket] No socket to close.";
+		Log() << "[cansocket] No socket to close.\n";
 		return Error::no_error;
 	}
 
@@ -160,12 +149,12 @@ Error Socket::disconnect()
 
 	if (close(_socket) < 0)
 	{
-		Log() << "[cansocket] ERROR: socket closing failed.";
+		Log() << "[cansocket] ERROR: socket closing failed.\n";
 		return Error::socket_closing_failed;
 	}
 	else
 	{
-		Log() << "[cansocket] Socket closed.";
+		Log() << "[cansocket] Socket closed.\n";
 		_socket = -1;
 		return Error::no_error;
 	}
