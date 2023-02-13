@@ -94,7 +94,7 @@ public class Application : Adw.Application
 		ucanopen_client_set_sync_enabled(WindowCanBusPreferences.sync_state);
 		ucanopen_client_set_watch_period(WindowCanBusPreferences.watch_period);
 		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.watch_state);
-		message("[gui] Backend ready.");
+		message("[gui] Backend is ready.");
 
 		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));
 
@@ -106,7 +106,7 @@ public class Application : Adw.Application
 			win = new CanMonitor.Window(this);
 		}
 		win.present();
-		message("[gui] GUI ready.");
+		message("[gui] GUI is ready.");
 	}
 }
 

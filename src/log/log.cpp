@@ -5,13 +5,15 @@ extern "C" {
 
 bool log_get_message(char* buf, size_t len)
 {
-	std::string message = Log().pop();
-	if (message.empty())
+	if (Log::_stream.getline(buf, len))
 	{
+		return true;
+	}
+	else
+	{
+		Log::_stream.clear();
 		return false;
 	}
-	strncpy(buf, message.c_str(), len);
-	return true;
 } 
 
 }

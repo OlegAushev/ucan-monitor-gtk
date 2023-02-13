@@ -9,14 +9,16 @@
 #include <syncstream>
 
 
+extern "C" bool log_get_message(char* buf, size_t len);
+
+
 class Log final
 {
-	//friend Log& operator<<(Log&& log, const std::string& s);
-	//friend void operator<<(Log&& log, const std::stringstream& ss);
+	friend bool log_get_message(char* buf, size_t len);
 private:
+	static inline std::stringstream _stream;
 	static inline std::deque<std::string> _messages;
 	static inline std::mutex _mutex;
-
 public:
 	Log() = default;
 	Log(const Log& other) = delete;
@@ -38,16 +40,14 @@ public:
 	Log& operator<<(const T& msg)
 	{
 		std::cout << msg;
-		std::lock_guard<std::mutex> lock(_mutex);
-		//_messages.push_back(s);
+		_stream << msg;
 		return *this;
 	}
 
-	Log& operator<<(const std::stringstream& ss)
+	Log& operator<<(const std::stringstream& sstr)
 	{
-		std::cout << ss.str();
-		std::lock_guard<std::mutex> lock(_mutex);
-		//log._messages.push_back(ss.str());
+		std::cout << sstr.str();
+		_stream << sstr.str();
 		return *this;
 	}
 };

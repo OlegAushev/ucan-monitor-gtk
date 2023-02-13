@@ -82,16 +82,16 @@ struct CobClientTpdo4
 
 inline const std::vector<std::string> syslog_messages = {
 	"No message",
-	"[syslog] Boot CPU1...",
-	"[syslog] Boot CPU1 - success.",
-	"[syslog] Boot CPU2...",
-	"[syslog] Boot CPU2 - success.",
-	"[syslog] CPU1 is ready.",
-	"[syslog] CPU2 is ready.",
-	"[syslog] Device is ready.",
-	"[syslog] Device is busy.",
-	"[syslog] Resetting device...",
-	"[syslog] SDO request lost.",
+	"[Launchpad::syslog] Boot CPU1...",
+	"[Launchpad::syslog] Boot CPU1 - success.",
+	"[Launchpad::syslog] Boot CPU2...",
+	"[Launchpad::syslog] Boot CPU2 - success.",
+	"[Launchpad::syslog] CPU1 is ready.",
+	"[Launchpad::syslog] CPU2 is ready.",
+	"[Launchpad::syslog] Device is ready.",
+	"[Launchpad::syslog] Device is busy.",
+	"[Launchpad::syslog] Resetting device...",
+	"[Launchpad::syslog] SDO request lost.",
 };
 
 
