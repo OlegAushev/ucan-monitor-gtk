@@ -28,16 +28,16 @@ public:
 
 	void enable()
 	{
-		std::cout << "[ucanopen] Enabling '" << _server->name() << "' server RPDO messages... ";
+		Log() << "[ucanopen] Enabling '" << _server->name() << "' server RPDO messages... ";
 		_is_enabled = true;
-		std::cout << "done." << std::endl;
+		Log() << "done.\n";
 	}
 
 	void disable() 
 	{
-		std::cout << "[ucanopen] Disabling '" << _server->name() << "' server RPDO messages... ";
+		Log() << "[ucanopen] Disabling '" << _server->name() << "' server RPDO messages... ";
 		_is_enabled = false;
-		std::cout << "done." << std::endl;
+		Log() << "done.\n";
 	}
 
 	void send()
