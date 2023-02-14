@@ -41,8 +41,8 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
-	auto entry_iter = _server->_dictionary.find(key);
-	if (entry_iter == _server->_dictionary.end())
+	auto entry_iter = _server->dictionary().entries.find(key);
+	if (entry_iter == _server->dictionary().entries.end())
 	{
 		return 3;
 	}
@@ -57,7 +57,7 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 	else
 	{
 		sdo_type = SdoType::response_to_read;
-		if (entry_iter->second.category != _watch_service->watch_category)
+		if (entry_iter->second.category != _server->dictionary().config.watch_category)
 		{
 			Log() << "[ucanopen/read] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
 					<< " = " << sdo.data.to_string(entry_iter->second.data_type) << '\n';
@@ -78,8 +78,8 @@ int ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
-	auto entry_iter = _server->_dictionary.find(key);
-	if (entry_iter == _server->_dictionary.end())
+	auto entry_iter = _server->dictionary().entries.find(key);
+	if (entry_iter == _server->dictionary().entries.end())
 	{
 		return 3;
 	}

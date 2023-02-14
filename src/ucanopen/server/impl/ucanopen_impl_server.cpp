@@ -9,19 +9,19 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 	, _socket(socket)
 	, _dictionary(dictionary)
 {
-	for (const auto& [key, entry] : _dictionary)
+	for (const auto& [key, entry] : _dictionary.entries)
 	{
 		// create aux dictionary for faster search by {category, subcategory, name}
 		_dictionary_aux.insert({
 				{entry.category, entry.subcategory, entry.name},
-				_dictionary.find(key)});
+				_dictionary.entries.find(key)});
 	}
 }
 
 
 ODAccessStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ObjectDictionary::const_iterator entry_iter;
+	ObjectDictionaryEntries::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_read_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -42,7 +42,7 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data)
 {
-	ObjectDictionary::const_iterator entry_iter;
+	ObjectDictionaryEntries::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -67,7 +67,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
-	ObjectDictionary::const_iterator entry_iter;
+	ObjectDictionaryEntries::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -126,7 +126,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ObjectDictionary::const_iterator entry_iter;
+	ObjectDictionaryEntries::const_iterator entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_exec_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -156,10 +156,10 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionary::const_iterator& entry_iter, check_read_perm)
+				ObjectDictionaryEntries::const_iterator& entry_iter, check_read_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.end())
+	if (entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
@@ -178,10 +178,10 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionary::const_iterator& entry_iter, check_write_perm)
+				ObjectDictionaryEntries::const_iterator& entry_iter, check_write_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.end())
+	if (entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
@@ -200,10 +200,10 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionary::const_iterator& entry_iter, check_exec_perm)
+				ObjectDictionaryEntries::const_iterator& entry_iter, check_exec_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.end())
+	if (entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 

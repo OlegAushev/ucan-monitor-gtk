@@ -3,14 +3,13 @@
 
 namespace ucanopen {
 
-ServerConfigService::ServerConfigService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config)
-	: config_category(dictionary_config.config_category)
-	, _server(server)
+ServerConfigService::ServerConfigService(impl::Server* server)
+	: _server(server)
 {
-	for (const auto& [key, entry] : dictionary)
+	for (const auto& [key, entry] : server->dictionary().entries)
 	{
 		// create conf entries list
-		if (entry.category == config_category)
+		if (entry.category == server->dictionary().config.config_category)
 		{
 			_entries_list[entry.subcategory].push_back(entry.name);
 		}

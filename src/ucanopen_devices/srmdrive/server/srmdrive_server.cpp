@@ -4,7 +4,7 @@
 namespace srmdrive {
 
 Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
-	: ucanopen::Server(name, node_id, socket, object_dictionary, object_dictionary_config)
+	: ucanopen::Server(name, node_id, socket, object_dictionary)
 	, controller(this)
 {
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
@@ -18,11 +18,11 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 }
 
 
-void Server::_handle_tsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionary::const_iterator entry_iter,
+void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
+			ucanopen::ObjectDictionaryEntries::const_iterator entry_iter,
 			ucanopen::ExpeditedSdoData sdo_data)
 {
-	if (entry_iter->second.category == watch_service.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
+	if (entry_iter->second.category == _dictionary.config.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
 	{
 		if (entry_iter->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size())
 		{

@@ -467,15 +467,22 @@ inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
 }
 
 
-using ObjectDictionary = std::map<ODEntryKey, ODEntryValue>;
-using ObjectDictionaryAux = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
-
-
 struct ObjectDictionaryConfig
 {
 	std::string_view watch_category;
 	std::string_view watch_subcategory;
 	std::string_view config_category;
+};
+
+
+using ObjectDictionaryEntries = std::map<ODEntryKey, ODEntryValue>;
+using ObjectDictionaryAux = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
+
+
+struct ObjectDictionary
+{
+	ObjectDictionaryConfig config;
+	ObjectDictionaryEntries entries;
 };
 
 

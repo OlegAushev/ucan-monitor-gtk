@@ -91,7 +91,7 @@ int backend_main_loop(std::future<void> futureExit)
 		api::register_bmsmain_server(bmsmain_server);
 	}
 
-	backend_ucanopen_server_config_category = ucanopen_client->server(server_name)->config_service.config_category.data();
+	backend_ucanopen_server_config_category = ucanopen_client->server(server_name)->dictionary().config.config_category.data();
 
 	Log() << "[backend] Backend is ready.\n";
 	backend_is_ready = true;

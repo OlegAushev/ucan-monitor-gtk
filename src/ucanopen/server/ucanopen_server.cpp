@@ -3,14 +3,13 @@
 
 namespace ucanopen {
 
-Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
-		const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config)
+Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket, const ObjectDictionary& dictionary)
 	: impl::Server(name, node_id, socket, dictionary)
 	, heartbeat_service(this, std::chrono::milliseconds(2000))
 	, tpdo_service(this)
 	, rpdo_service(this)
-	, watch_service(this, dictionary, dictionary_config)
-	, config_service(this, dictionary, dictionary_config)
+	, watch_service(this)
+	, config_service(this)
 	, sdo_service(this, &watch_service)
 {
 	_frame_handling_services.push_back(&sdo_service);

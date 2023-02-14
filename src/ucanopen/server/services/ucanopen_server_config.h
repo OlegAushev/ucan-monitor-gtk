@@ -10,13 +10,11 @@ namespace ucanopen {
 
 class ServerConfigService
 {
-public:
-	const std::string_view config_category;
 private:
 	impl::Server* const _server;
 	std::map<std::string_view, std::vector<std::string_view>> _entries_list;
 public:
-	ServerConfigService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config);
+	ServerConfigService(impl::Server* server);
 
 	std::map<std::string_view, std::vector<std::string_view>> entries_list() const
 	{

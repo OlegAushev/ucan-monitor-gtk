@@ -6,14 +6,13 @@ namespace srmdrive {
 using namespace ucanopen;
 
 
-extern const ucanopen::ObjectDictionaryConfig object_dictionary_config = {
+extern const ucanopen::ObjectDictionary object_dictionary = {
+.config = {
 	.watch_category = "WATCH",
 	.watch_subcategory = "WATCH",
 	.config_category = "CONFIG"
-};
-
-
-extern const ucanopen::ObjectDictionary object_dictionary = {	
+},
+.entries = {
 {{0x1008, 0x00}, {"SYSTEM", "INFO", "DEVICE_NAME", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
 {{0x5FFF, 0x00}, {"SYSTEM", "INFO", "SOFTWARE_VERSION", "", OD_UINT32, OD_ACCESS_RO}},
 {{0x5FFF, 0x01}, {"SYSTEM", "INFO", "BUILD_CONFIGURATION", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
@@ -111,6 +110,7 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2105, 0x01}, {"CONFIG",	"POSSENS",	"CAL_S_CURRENT",	"A",	OD_FLOAT32, 	OD_ACCESS_RW}},
 {{0x2105, 0x02}, {"CONFIG",	"POSSENS",	"CAL_F_CURRENT",	"A",	OD_FLOAT32, 	OD_ACCESS_RW}},
 {{0x2105, 0x03}, {"CONFIG",	"POSSENS",	"CAL_SPEED_RPM",	"rpm",	OD_FLOAT32, 	OD_ACCESS_RW}},
+}
 };
 
 } // namespace srmdrive

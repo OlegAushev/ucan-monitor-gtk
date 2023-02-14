@@ -25,7 +25,7 @@ public:
 	uint16_t warnings() const { return _warnings; }
 protected:
 	virtual void _handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ObjectDictionary::const_iterator entry_iter,
+			ucanopen::ObjectDictionaryEntries::const_iterator entry_iter,
 			ucanopen::ExpeditedSdoData sdo_data) override final;
 private:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);

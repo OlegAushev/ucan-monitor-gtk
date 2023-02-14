@@ -39,22 +39,23 @@ protected:
 	ObjectDictionaryAux _dictionary_aux;
 
 	NmtState _nmt_state = NmtState::stopped;
-protected:
-	virtual void _handle_tsdo(SdoType, ObjectDictionary::const_iterator, ExpeditedSdoData) = 0;	
 public:
 	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
 		const ObjectDictionary& dictionary);
-
+	
 	std::string_view name() const { return _name; }
 	NodeId node_id() const { return _node_id; }
 	NmtState nmt_state() const { return _nmt_state; }
+	const ObjectDictionary& dictionary() const { return _dictionary; }
 
 	ODAccessStatus read(std::string_view category, std::string_view subcategory, std::string_view name);
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data);
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 protected:
-	ObjectDictionary::const_iterator _find_od_entry(
+	virtual void _handle_tsdo(SdoType, ObjectDictionaryEntries::const_iterator, ExpeditedSdoData) = 0;
+
+	ObjectDictionaryEntries::const_iterator _find_od_entry(
 		std::string_view category,
 		std::string_view subcategory,
 		std::string_view name)
@@ -62,7 +63,7 @@ protected:
 		auto iter = _dictionary_aux.find({category, subcategory, name});
 		if (iter == _dictionary_aux.end())
 		{
-			return _dictionary.end();
+			return _dictionary.entries.end();
 		}
 		return iter->second;
 	}
@@ -73,13 +74,13 @@ protected:
 	struct check_exec_perm{};
 
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionary::const_iterator& entry_iter, check_read_perm);
+					ObjectDictionaryEntries::const_iterator& entry_iter, check_read_perm);
 
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionary::const_iterator& entry_iter, check_write_perm);
+					ObjectDictionaryEntries::const_iterator& entry_iter, check_write_perm);
 	
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionary::const_iterator& entry_iter, check_exec_perm);
+					ObjectDictionaryEntries::const_iterator& entry_iter, check_exec_perm);
 };
 
 

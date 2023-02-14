@@ -11,9 +11,6 @@ namespace ucanopen {
 
 class ServerWatchService
 {
-public:
-	const std::string_view watch_category;
-	const std::string_view watch_subcategory;
 private:
 	impl::Server* const _server;
 	bool _is_enabled = false;
@@ -23,7 +20,7 @@ private:
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(impl::Server* server, const ObjectDictionary& dictionary, const ObjectDictionaryConfig& dictionary_config);
+	ServerWatchService(impl::Server* server);
 
 	void send()
 	{
@@ -33,21 +30,21 @@ public:
 			if (now - _timepoint >= _period)
 			{
 				static size_t i = 0;
-				_server->read(watch_category, watch_subcategory, _entries_list[i]);
+				_server->read(_server->dictionary().config.watch_category, _server->dictionary().config.watch_subcategory, _entries_list[i]);
 				_timepoint = now;
 				i = (i + 1) % _entries_list.size();
 			}
 		}
 	}
 
-	bool handle_frame(SdoType sdo_type, ObjectDictionary::const_iterator od_entry, ExpeditedSdoData sdo_data)
+	bool handle_frame(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
 	{
-		if ((od_entry->second.category == watch_category) && (sdo_type == SdoType::response_to_read))
+		if ((entry_iter->second.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read))
 		{
-			if (od_entry->second.data_type != OD_ENUM16)
+			if (entry_iter->second.data_type != OD_ENUM16)
 			{
 				std::lock_guard<std::mutex> lock(_mutex);
-				_data[od_entry->second.name] = sdo_data.to_string(od_entry->second.data_type);
+				_data[entry_iter->second.name] = sdo_data.to_string(entry_iter->second.data_type);
 			}
 			return true;
 		}

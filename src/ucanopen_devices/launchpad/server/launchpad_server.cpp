@@ -4,7 +4,7 @@
 namespace launchpad {
 
 Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
-	: ucanopen::Server(name, node_id, socket, object_dictionary, object_dictionary_config)
+	: ucanopen::Server(name, node_id, socket, object_dictionary)
 {
 	_client_values.fill(0);
 	_server_values.fill(0);
@@ -37,8 +37,8 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 }
 
 
-void Server::_handle_tsdo(ucanopen::SdoType sdoType,
-			ucanopen::ObjectDictionary::const_iterator entry_iter,
+void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
+			ucanopen::ObjectDictionaryEntries::const_iterator entry_iter,
 			ucanopen::ExpeditedSdoData data)
 {
 	if (entry_iter->second.name == "syslog_message")
@@ -49,7 +49,7 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			Log() << syslog_messages[message_id] << '\n';
 		}
 	}
-	else if (entry_iter->second.category == watch_service.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
+	else if (entry_iter->second.category == _dictionary.config.config_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
 	{
 		
 	}
