@@ -163,7 +163,6 @@ void ucanopen_server_read(const char* server_name, const char* category, const c
 
 void ucanopen_server_write(const char* server_name, const char* category, const char* subcategory, const char* name, const char* value)
 {
-	Log() << "[" << category << "/write] " << subcategory << "::" << name << " = " << value << ", updating...";
 	ucanopen_client->server(server_name)->write(category, subcategory, name, std::string(value));
 }
 
