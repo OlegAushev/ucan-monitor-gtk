@@ -34,8 +34,11 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 	message.subindex = entry_iter->first.subindex;
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	Log() << "[ucanopen/read] Read " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
-			<< " request sent...\n";
+	if (entry_iter->second.category != _dictionary.config.watch_category)
+	{
+		Log() << "[ucanopen/read] Read " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " request sent...\n";
+	}
 	return ODAccessStatus::success;
 }
 
