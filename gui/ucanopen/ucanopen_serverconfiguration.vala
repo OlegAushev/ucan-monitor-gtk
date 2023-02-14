@@ -24,7 +24,7 @@ public class ServerConfiguration : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Button button_apply;
 	[GtkChild]
-	private unowned Gtk.Button button_reset;
+	private unowned Gtk.Button button_restore;
 
 
 	private const size_t _categories_count_max = 32;
@@ -128,16 +128,16 @@ public class ServerConfiguration : Adw.Bin
 			dialog.present();	
 		});
 
-		button_reset.clicked.connect(() => {
+		button_restore.clicked.connect(() => {
 			Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
 					"Warning!",
-					"All configuration parameters will be reset to default values.");
+					"Default configuration parameters will be restored.");
 			dialog.add_response("cancel", "Cancel");
 			dialog.add_response("continue", "Continue");
 			dialog.set_response_appearance("cancel", DESTRUCTIVE);
 			dialog.set_response_appearance("continue", SUGGESTED);
 			dialog.response["continue"].connect(() => {
-				ucanopen_server_exec(Backend.Ucanopen.server, "system", "config", "reset_to_default");
+				ucanopen_server_exec(Backend.Ucanopen.server, "system", "config", "restore_default");
 			});
 			dialog.present();		
 		});

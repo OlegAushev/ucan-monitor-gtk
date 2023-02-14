@@ -117,7 +117,7 @@ int ServerSdoService::_handle_abort(const can_frame& frame)
 	{
 		error_msg = "reason unknown";
 	}
-	Log() << "[ucanopen] SDO transfer aborted: " << error_msg << "(error code: 0x" << std::hex << abort_sdo.error_code << std::dec << ")\n";
+	Log() << "[ucanopen] SDO transfer aborted: " << error_msg << " (error code: 0x" << std::hex << abort_sdo.error_code << std::dec << ")\n";
 
 	return 0;
 }

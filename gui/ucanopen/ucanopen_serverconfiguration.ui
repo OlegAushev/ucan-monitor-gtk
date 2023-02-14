@@ -51,8 +51,8 @@
 								<child>
 									<object class="AdwActionRow">
 										<child type="prefix">
-											<object class="GtkButton" id="button_reset">
-												<property name="label">Reset All to Default</property>
+											<object class="GtkButton" id="button_restore">
+												<property name="label">Restore</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
 												<property name="width-request">200</property>
