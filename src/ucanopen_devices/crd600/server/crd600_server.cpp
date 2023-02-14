@@ -41,16 +41,6 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 	{
 		
 	}
-	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_read)
-	{
-		Log() << "[" << entry_iter->second.category << "/read] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " = " << data.to_string(entry_iter->second.data_type) << '\n';
-	}
-	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_write)
-	{
-		Log() << "[" << entry_iter->second.category << "/write] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " updated.\n";
-	}
 }
 
 

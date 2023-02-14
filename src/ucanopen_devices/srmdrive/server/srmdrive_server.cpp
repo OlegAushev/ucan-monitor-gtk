@@ -29,16 +29,6 @@ void Server::_handle_tsdo(ucanopen::SdoType sdoType,
 			watch_service.set_value(entry_iter->second.name, drive_states[sdo_data.u32()]);
 		}
 	}
-	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_read)
-	{
-		Log() << "[" << entry_iter->second.category << "/read] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " = " << sdo_data.to_string(entry_iter->second.data_type) << '\n';
-	}
-	else if (entry_iter->second.category == config_service.config_category && sdoType == ucanopen::SdoType::response_to_write)
-	{
-		Log() << "[" << entry_iter->second.category << "/write] " << entry_iter->second.subcategory << "::" << entry_iter->second.name
-				<< " updated.\n";
-	}
 }
 
 

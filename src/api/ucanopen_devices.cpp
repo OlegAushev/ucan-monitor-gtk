@@ -14,7 +14,7 @@ extern "C" {
 
 size_t ucanopen_devices_get_error_names(const char* server_name, char** buf, size_t count_max, size_t len_max)
 {
-	if (std::string(server_name) == "SRM Drive")
+	if (std::string(server_name) == "SRM-Drive")
 	{
 		if (srmdrive::error_list.size() > count_max)
 		{
@@ -59,7 +59,7 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** buf, siz
 
 		return launchpad::error_list.size();
 	}
-	else if (std::string(server_name) == "BMS Main")
+	else if (std::string(server_name) == "BMS-Main")
 	{
 		// TODO
 	}
@@ -69,7 +69,7 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** buf, siz
 
 size_t ucanopen_devices_get_warning_names(const char* server_name, char** buf, size_t count_max, size_t len_max)
 {
-	if (std::string(server_name) == "SRM Drive")
+	if (std::string(server_name) == "SRM-Drive")
 	{
 		if (srmdrive::warning_list.size() > count_max)
 		{
@@ -114,7 +114,7 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** buf, s
 
 		return launchpad::warning_list.size();
 	}
-	else if (std::string(server_name) == "BMS Main")
+	else if (std::string(server_name) == "BMS-Main")
 	{
 		// TODO
 	}
@@ -124,7 +124,7 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** buf, s
 
 unsigned int ucanopen_devices_get_error_code(const char* server_name)
 {
-	if (std::string(server_name) == "SRM Drive")
+	if (std::string(server_name) == "SRM-Drive")
 	{
 		return srmdrive_server->errors();
 	}
@@ -136,7 +136,7 @@ unsigned int ucanopen_devices_get_error_code(const char* server_name)
 	{
 		return launchpad_server->errors();
 	}
-	else if (std::string(server_name) == "BMS Main")
+	else if (std::string(server_name) == "BMS-Main")
 	{
 		// TODO
 	}
@@ -146,7 +146,7 @@ unsigned int ucanopen_devices_get_error_code(const char* server_name)
 
 unsigned int ucanopen_devices_get_warning_code(const char* server_name)
 {
-	if (std::string(server_name) == "SRM Drive")
+	if (std::string(server_name) == "SRM-Drive")
 	{
 		return srmdrive_server->warnings();
 	}
@@ -158,7 +158,7 @@ unsigned int ucanopen_devices_get_warning_code(const char* server_name)
 	{
 		return launchpad_server->warnings();
 	}
-	else if (std::string(server_name) == "BMS Main")
+	else if (std::string(server_name) == "BMS-Main")
 	{
 		// TODO
 	}

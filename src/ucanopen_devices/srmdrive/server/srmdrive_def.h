@@ -103,20 +103,20 @@ struct CobRpdo4
 
 inline const std::vector<std::string> syslog_messages = {
 	"No message",
-	"[syslog] Device boot - success.",
-	"[syslog] Device is busy.",
-	"[syslog] Reset device...",
-	"[syslog] Read configs from EEPROM - success.",
-	"[syslog] Read configs from EEPROM - fail.",
-	"[syslog] Reset configs - success.",
-	"[syslog] Reset configs - fail.",
-	"[syslog] Apply configs - success.",
-	"[syslog] Apply configs - fail.",
-	"[syslog] Position sensor calibration - success.",
-	"[syslog] Position sensor calibration - fail.",
-	"[syslog] Write calibration data to EEPROM - success.",
-	"[syslog] Write calibration data to EEPROM - fail.",
-	"[syslog] Operation cannot be performed."	
+	"[SRM-Drive::syslog] Device boot - success.",
+	"[SRM-Drive::syslog] Device is busy.",
+	"[SRM-Drive::syslog] Reset device...",
+	"[SRM-Drive::syslog] Read configs from EEPROM - success.",
+	"[SRM-Drive::syslog] Read configs from EEPROM - fail.",
+	"[SRM-Drive::syslog] Reset configs - success.",
+	"[SRM-Drive::syslog] Reset configs - fail.",
+	"[SRM-Drive::syslog] Apply configs - success.",
+	"[SRM-Drive::syslog] Apply configs - fail.",
+	"[SRM-Drive::syslog] Position sensor calibration - success.",
+	"[SRM-Drive::syslog] Position sensor calibration - fail.",
+	"[SRM-Drive::syslog] Write calibration data to EEPROM - success.",
+	"[SRM-Drive::syslog] Write calibration data to EEPROM - fail.",
+	"[SRM-Drive::syslog] Operation cannot be performed."	
 };
 
 

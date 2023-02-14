@@ -41,27 +41,34 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
-	auto od_entry = _server->_dictionary.find(key);
-	if (od_entry == _server->_dictionary.end())
+	auto entry_iter = _server->_dictionary.find(key);
+	if (entry_iter == _server->_dictionary.end())
 	{
 		return 3;
 	}
 
 	SdoType sdo_type;
-	if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
+	if (entry_iter->second.data_type == ODEntryDataType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
+		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " executed.\n";
 	}
 	else
 	{
 		sdo_type = SdoType::response_to_read;
+		if (entry_iter->second.category != _watch_service->watch_category)
+		{
+			Log() << "[ucanopen/read] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+					<< " = " << sdo.data.to_string(entry_iter->second.data_type) << '\n';
+		}
 	}
 
 	// handle watch data
-	_watch_service->handle_frame(sdo_type, od_entry, sdo.data);
+	_watch_service->handle_frame(sdo_type, entry_iter, sdo.data);
 
 	// server-specific TSDO handling
-	_server->_handle_tsdo(sdo_type, od_entry, sdo.data);
+	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
 	
 	return 0;
 }
@@ -71,24 +78,28 @@ int ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
-	auto od_entry = _server->_dictionary.find(key);
-	if (od_entry == _server->_dictionary.end())
+	auto entry_iter = _server->_dictionary.find(key);
+	if (entry_iter == _server->_dictionary.end())
 	{
 		return 3;
 	}
 
 	SdoType sdo_type;
-	if (od_entry->second.data_type == ODEntryDataType::OD_EXEC)
+	if (entry_iter->second.data_type == ODEntryDataType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
+		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " executed.\n";
 	}
 	else
 	{
 		sdo_type = SdoType::response_to_write;
+		Log() << "[ucanopen/write] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+				<< " updated.\n";
 	}
 
 	// server-specific TSDO handling
-	_server->_handle_tsdo(sdo_type, od_entry, sdo.data);
+	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
 
 	return 0;
 }
