@@ -13,9 +13,9 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 	.config_category = "CONFIG"
 },
 .entries = {
-{{0x1008, 0x00}, {"SYSTEM", "INFO", "DEVICE_NAME", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
+{{0x1008, 0x00}, {"SYSTEM", "INFO", "DEVICE_NAME", "", OD_STRING, OD_ACCESS_RO}},
 {{0x5FFF, 0x00}, {"SYSTEM", "INFO", "SOFTWARE_VERSION", "", OD_UINT32, OD_ACCESS_RO}},
-{{0x5FFF, 0x01}, {"SYSTEM", "INFO", "BUILD_CONFIGURATION", "", OD_STRING_4CHARS, OD_ACCESS_RO}},
+{{0x5FFF, 0x01}, {"SYSTEM", "INFO", "BUILD_CONFIGURATION", "", OD_STRING, OD_ACCESS_RO}},
 
 {{0x4242, 0x00}, {"SYSTEM", "SYSLOG", "SYSLOG_MSG", "", OD_UINT32, OD_ACCESS_RO}},
 
