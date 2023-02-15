@@ -3,8 +3,9 @@
 
 namespace ucanopen {
 
-ServerWatchService::ServerWatchService(impl::Server* server)
-	: _server(server)
+ServerWatchService::ServerWatchService(impl::Server* server, impl::SdoPublisher* sdo_publisher)
+	: impl::SdoSubscriber(sdo_publisher)
+	, _server(server)
 {
 	_timepoint = std::chrono::steady_clock::now();
 

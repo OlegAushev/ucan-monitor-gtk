@@ -8,9 +8,9 @@ Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Soc
 	, heartbeat_service(this, std::chrono::milliseconds(2000))
 	, tpdo_service(this)
 	, rpdo_service(this)
-	, watch_service(this)
+	, sdo_service(this)
+	, watch_service(this, &sdo_service)
 	, config_service(this)
-	, sdo_service(this, &watch_service)
 {
 	_frame_handling_services.push_back(&sdo_service);
 	_frame_handling_services.push_back(&tpdo_service);

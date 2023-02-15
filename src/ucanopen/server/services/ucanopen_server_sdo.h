@@ -7,14 +7,13 @@
 
 namespace ucanopen {
 
-class ServerSdoService : public impl::FrameHandlingService
+class ServerSdoService : public impl::FrameHandlingService, public impl::SdoPublisher
 {
 private:
 	impl::Server* const _server;
-	ServerWatchService* const _watch_service;
 	canid_t _id;
 public:
-	ServerSdoService(impl::Server* server, ServerWatchService* watch_service);
+	ServerSdoService(impl::Server* server);
 	void update_node_id();
 
 	virtual int handle_frame(const can_frame& frame);

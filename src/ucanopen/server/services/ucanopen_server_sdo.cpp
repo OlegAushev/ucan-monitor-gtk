@@ -3,9 +3,8 @@
 
 namespace ucanopen {
 
-ServerSdoService::ServerSdoService(impl::Server* server, ServerWatchService* watch_service)
+ServerSdoService::ServerSdoService(impl::Server* server)
 	: _server(server)
-	, _watch_service(watch_service)
 {
 	_id = calculate_cob_id(CobType::tsdo, _server->node_id());
 }
@@ -64,8 +63,12 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 		}
 	}
 
+	for (auto& subscriber : _subscriber_list)
+	{
+		subscriber->handle_sdo(sdo_type, entry_iter, sdo.data);
+	}
 	// handle watch data
-	_watch_service->handle_frame(sdo_type, entry_iter, sdo.data);
+	//_watch_service->handle_sdo(sdo_type, entry_iter, sdo.data);
 
 	// server-specific TSDO handling
 	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);

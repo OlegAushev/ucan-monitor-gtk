@@ -23,9 +23,9 @@ public:
 	ServerHeartbeatService heartbeat_service;
 	ServerTpdoService tpdo_service;
 	ServerRpdoService rpdo_service;
+	ServerSdoService sdo_service;
 	ServerWatchService watch_service;
 	ServerConfigService config_service;
-	ServerSdoService sdo_service;
 public:
 	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket, const ObjectDictionary& dictionary);
 	virtual ~Server() = default;

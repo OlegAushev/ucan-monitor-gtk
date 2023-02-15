@@ -9,7 +9,7 @@
 
 namespace ucanopen {
 
-class ServerWatchService
+class ServerWatchService : public impl::SdoSubscriber
 {
 private:
 	impl::Server* const _server;
@@ -20,7 +20,7 @@ private:
 	mutable std::mutex _mutex;
 	std::map<std::string_view, std::string> _data;
 public:
-	ServerWatchService(impl::Server* server);
+	ServerWatchService(impl::Server* server, impl::SdoPublisher* sdo_publisher);
 
 	void send()
 	{
@@ -37,7 +37,7 @@ public:
 		}
 	}
 
-	bool handle_frame(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
+	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
 	{
 		if ((entry_iter->second.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read))
 		{
@@ -46,9 +46,9 @@ public:
 				std::lock_guard<std::mutex> lock(_mutex);
 				_data[entry_iter->second.name] = sdo_data.to_string(entry_iter->second.data_type);
 			}
-			return true;
+			return 0;
 		}
-		return false;
+		return 1;
 	}
 
 	void enable()

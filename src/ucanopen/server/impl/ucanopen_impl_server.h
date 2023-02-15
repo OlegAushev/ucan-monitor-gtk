@@ -4,6 +4,7 @@
 #include "../../ucanopen_def.h" 
 #include <cansocket/cansocket.h>
 #include <log/log.h>
+#include <list>
 
 
 namespace ucanopen {
@@ -88,6 +89,39 @@ class FrameHandlingService
 {
 public:
 	virtual int handle_frame(const can_frame& frame) = 0;
+};
+
+
+class SdoSubscriber;
+
+
+class SdoPublisher
+{
+public:
+	virtual ~SdoPublisher() = default;
+	void register_subscriber(SdoSubscriber* subscriber) { _subscriber_list.push_back(subscriber); }
+	void unregister_subscriber(SdoSubscriber* subscriber) { _subscriber_list.remove(subscriber); }
+protected:
+	std::list<SdoSubscriber*> _subscriber_list;
+};
+
+
+class SdoSubscriber
+{
+private:
+	SdoPublisher* _publisher;
+public:
+	SdoSubscriber(SdoPublisher* publisher)
+		: _publisher(publisher)
+	{
+		_publisher->register_subscriber(this);
+	}
+	virtual ~SdoSubscriber()
+	{
+		_publisher->unregister_subscriber(this);
+	}
+	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data) = 0;
+	void unsubscribe() { _publisher->unregister_subscriber(this); }
 };
 
 } // namespace impl
