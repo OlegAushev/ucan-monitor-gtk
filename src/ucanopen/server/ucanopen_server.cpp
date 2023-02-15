@@ -50,5 +50,19 @@ void Server::_handle_frame(const can_frame& frame)
 	}	
 }
 
+
+uint32_t Server::get_serial_number()
+{
+	std::promise<void> signal_terminate;
+	utils::SerialNumberGetter sn_getter(this, &sdo_service);
+	std::future<uint32_t> sn_future = std::async(&utils::SerialNumberGetter::get, &sn_getter, signal_terminate.get_future());
+	if (sn_future.wait_for(std::chrono::milliseconds(1000)) != std::future_status::ready)
+	{
+		signal_terminate.set_value();
+		return 0;
+	}
+	return sn_future.get();
+}
+
 } // namespace ucanopen
 

@@ -30,7 +30,7 @@ std::promise<void> signal_exit_main;
 
 
 extern "C" 
-int backend_main_loop(std::future<void> futureExit)
+int backend_main_loop(std::future<void> signal_exit)
 {
 	Log() << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << '\n';
 
@@ -96,7 +96,7 @@ int backend_main_loop(std::future<void> futureExit)
 	Log() << "[backend] Backend is ready.\n";
 	backend_is_ready = true;
 
-	while (futureExit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
+	while (signal_exit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
 	{
 
 	}
@@ -109,11 +109,11 @@ int backend_main_loop(std::future<void> futureExit)
 extern "C"
 int backend_main_enter()
 {
-	Log() << "[backend] Thread id: " << std::this_thread::get_id() << '\n';
+	Log() << "[backend] GUI thread id: " << std::this_thread::get_id() << '\n';
 	Log() << "[backend] Starting new thread for main loop...\n";
 
-	std::future<void> futureExit = signal_exit_main.get_future();
-	thread_main = std::thread(backend_main_loop, std::move(futureExit));
+	std::future<void> signal_exit = signal_exit_main.get_future();
+	thread_main = std::thread(backend_main_loop, std::move(signal_exit));
 	return 0;
 }
 

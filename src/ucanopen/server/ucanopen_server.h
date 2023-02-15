@@ -8,6 +8,7 @@
 #include "services/ucanopen_server_watch.h"
 #include "services/ucanopen_server_config.h"
 #include "services/ucanopen_server_sdo.h"
+#include "utils/ucanopen_server_od_utils.h"
 #include <atomic>
 #include <functional>
 #include <chrono>
@@ -35,6 +36,8 @@ private:
 	void _set_node_id(NodeId nodeId);
 
 	std::vector<impl::FrameHandlingService*> _frame_handling_services;
+public:
+	uint32_t get_serial_number();
 };
 
 } // namespace ucanopen

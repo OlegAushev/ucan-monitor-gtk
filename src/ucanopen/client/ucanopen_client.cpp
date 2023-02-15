@@ -13,8 +13,8 @@ Client::Client(NodeId node_id, std::shared_ptr<can::Socket> socket)
 
 	Log() << "[ucanopen] Starting aux thread...\n";
 
-	std::future<void> future_exit = _signal_exit_run_thread.get_future();
-	_thread_run = std::thread(&Client::_run, this, std::move(future_exit));
+	std::future<void> signal_exit = _signal_exit_run_thread.get_future();
+	_thread_run = std::thread(&Client::_run, this, std::move(signal_exit));
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	_nmt_state = NmtState::operational;
 }
@@ -140,11 +140,11 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id)
 }
 
 
-void Client::_run(std::future<void> future_exit)
+void Client::_run(std::future<void> signal_exit)
 {
 	Log() << "[ucanopen] Aux thread started. Thread id: " << std::this_thread::get_id() << '\n';
 
-	while (future_exit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+	while (signal_exit.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
 		auto now = std::chrono::steady_clock::now();
 
