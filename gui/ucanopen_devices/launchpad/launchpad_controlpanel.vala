@@ -36,7 +36,7 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		button_reset_errors.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "system", "syslog", "reset_errors");
+			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_errors");
 		});
 
 		button_reset_device.clicked.connect(() => {
@@ -48,7 +48,7 @@ public class ControlPanel : Adw.Bin
 			dialog.set_response_appearance("cancel", DESTRUCTIVE);
 			dialog.set_response_appearance("continue", SUGGESTED);
 			dialog.response["continue"].connect(() => {
-				ucanopen_server_exec(Backend.Ucanopen.server, "system", "device", "reset_device");
+				ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
 			});
 			dialog.present();
 		});
