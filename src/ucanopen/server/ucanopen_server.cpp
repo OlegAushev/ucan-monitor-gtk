@@ -59,7 +59,21 @@ uint32_t Server::get_serial_number()
 	if (sn_future.wait_for(std::chrono::milliseconds(1000)) != std::future_status::ready)
 	{
 		signal_terminate.set_value();
-		return 0;
+		return sn_future.get();
+	}
+	return sn_future.get();
+}
+
+
+std::string Server::get_device_name()
+{
+	std::promise<void> signal_terminate;
+	utils::DeviceNameGetter device_name_getter(this, &sdo_service);
+	std::future<std::string> sn_future = std::async(&utils::DeviceNameGetter::get, &device_name_getter, signal_terminate.get_future());
+	if (sn_future.wait_for(std::chrono::milliseconds(1000)) != std::future_status::ready)
+	{
+		signal_terminate.set_value();
+		return sn_future.get();
 	}
 	return sn_future.get();
 }

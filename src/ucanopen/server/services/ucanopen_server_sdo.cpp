@@ -67,8 +67,6 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 	{
 		subscriber->handle_sdo(sdo_type, entry_iter, sdo.data);
 	}
-	// handle watch data
-	//_watch_service->handle_sdo(sdo_type, entry_iter, sdo.data);
 
 	// server-specific TSDO handling
 	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);

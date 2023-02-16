@@ -38,6 +38,7 @@ private:
 	std::vector<impl::FrameHandlingService*> _frame_handling_services;
 public:
 	uint32_t get_serial_number();
+	std::string get_device_name();
 };
 
 } // namespace ucanopen
