@@ -65,24 +65,28 @@ void crd600_set_drive2_torque_ref(double val_pu)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void crd600_tpdo1_get_drive1_state(char* buf, size_t len)
+void crd600_tpdo1_get_drive1_state(char* retbuf, size_t bufsize)
 {
-	strncpy(buf, crd600_server->tpdo1.drive1_state.c_str(), len);
+	retbuf[0] = '\0';
+	strncat(retbuf, crd600_server->tpdo1.drive1_state.c_str(), bufsize-1);
 }
 
-void crd600_tpdo1_get_drive2_state(char* buf, size_t len)
+void crd600_tpdo1_get_drive2_state(char* retbuf, size_t bufsize)
 {
-	strncpy(buf, crd600_server->tpdo1.drive2_state.c_str(), len);
+	retbuf[0] = '\0';
+	strncat(retbuf, crd600_server->tpdo1.drive2_state.c_str(), bufsize-1);
 }
 
-void crd600_tpdo1_get_drive1_ref(char* buf, size_t len)
+void crd600_tpdo1_get_drive1_ref(char* retbuf, size_t bufsize)
 {
-	strncpy(buf, crd600_server->tpdo1.drive1_ref.c_str(), len);
+	retbuf[0] = '\0';
+	strncat(retbuf, crd600_server->tpdo1.drive1_ref.c_str(), bufsize-1);
 }
 
-void crd600_tpdo1_get_drive2_ref(char* buf, size_t len)
+void crd600_tpdo1_get_drive2_ref(char* retbuf, size_t bufsize)
 {
-	strncpy(buf, crd600_server->tpdo1.drive2_ref.c_str(), len);
+	retbuf[0] = '\0';
+	strncat(retbuf, crd600_server->tpdo1.drive2_ref.c_str(), bufsize-1);
 }
 
 bool crd600_tpdo1_get_drive1_run()
@@ -110,9 +114,10 @@ bool crd600_tpdo1_get_overheat()
 	return crd600_server->tpdo1.status_overheat;
 }
 
-void crd600_tpdo1_get_control_loop_type(char* buf, size_t len)
+void crd600_tpdo1_get_control_loop_type(char* retbuf, size_t bufsize)
 {
-	strncpy(buf, crd600_server->tpdo1.control_loop_type.c_str(), len);
+	retbuf[0] = '\0';
+	strncat(retbuf, crd600_server->tpdo1.control_loop_type.c_str(), bufsize-1);
 }
 
 }

@@ -72,16 +72,16 @@ void ucanopen_client_set_watch_period(int period)
 }
 
 
-void ucanopen_server_get_watch_value(const char* server_name, const char* watch_name, char* buf, size_t len)
+void ucanopen_server_get_watch_value(const char* server_name, const char* watch_name, char* retbuf, size_t bufsize)
 {
-	ucanopen_client->server(server_name)->watch_service.value(watch_name, buf, len);
+	ucanopen_client->server(server_name)->watch_service.value(watch_name, retbuf, bufsize);
 }
 
 
-size_t ucanopen_server_get_config_categories(const char* server_name, char** buf, size_t count_max, size_t len_max)
+size_t ucanopen_server_get_config_categories(const char* server_name, char** retbuf, size_t str_count, size_t str_size)
 {
-	size_t ret = ucanopen_client->server(server_name)->config_service.entries_list().size();
-	if (ret >= count_max)
+	size_t retval = ucanopen_client->server(server_name)->config_service.entries_list().size();
+	if (retval >= str_count)
 	{
 		return 0;
 	}
@@ -89,18 +89,19 @@ size_t ucanopen_server_get_config_categories(const char* server_name, char** buf
 	size_t i = 0;
 	for (auto [category, names] : ucanopen_client->server(server_name)->config_service.entries_list())
 	{
-		strncpy(buf[i++], category.data(), len_max);
+		retbuf[i][0] = '\0';
+		strncat(retbuf[i++], category.data(), str_size);
 	}
 
-	return ret;
+	return retval;
 }
 
 
-size_t ucanopen_server_get_config_entries(const char* server_name, const char* category, char** buf, size_t count_max, size_t len_max)
+size_t ucanopen_server_get_config_entries(const char* server_name, const char* category, char** retbuf, size_t str_count, size_t str_size)
 {
 	auto entries = ucanopen_client->server(server_name)->config_service.entries_list().at(category);
-	size_t ret = entries.size();
-	if (ret >= count_max)
+	size_t retval = entries.size();
+	if (retval >= str_count)
 	{
 		return 0;
 	}
@@ -108,10 +109,11 @@ size_t ucanopen_server_get_config_entries(const char* server_name, const char* c
 	size_t i = 0;
 	for (auto entry : entries)
 	{
-		strncpy(buf[i++], entry.data(), len_max);
+		retbuf[i][0] = '\0';
+		strncat(retbuf[i++], entry.data(), str_size);
 	}
 
-	return ret;
+	return retval;
 }
 
 
@@ -121,21 +123,22 @@ bool ucanopen_server_is_heartbeat_ok(const char* server_name)
 }
 
 
-void ucanopen_server_get_nmt_state(const char* server_name, char* buf, size_t len)
+void ucanopen_server_get_nmt_state(const char* server_name, char* retbuf, size_t bufsize)
 {
+	retbuf[0] = '\0';
 	switch (ucanopen_client->server(server_name)->nmt_state())
 	{
 		case ucanopen::NmtState::initialization:
-			strncpy(buf, "init", len);
+			strncat(retbuf, "init", bufsize-1);
 			break;
 		case ucanopen::NmtState::stopped:
-			strncpy(buf, "stopped", len);
+			strncat(retbuf, "stopped", bufsize-1);
 			break;
 		case ucanopen::NmtState::operational:
-			strncpy(buf, "run", len);
+			strncat(retbuf, "run", bufsize-1);
 			break;
 		case ucanopen::NmtState::pre_operational:
-			strncpy(buf, "pre-run", len);
+			strncat(retbuf, "pre-run", bufsize-1);
 			break;
 	}
 }
@@ -170,6 +173,20 @@ void ucanopen_server_write(const char* server_name, const char* category, const 
 void ucanopen_server_exec(const char* server_name, const char* category, const char* subcategory, const char* name)
 {
 	ucanopen_client->server(server_name)->exec(category, subcategory, name);
+}
+
+
+unsigned int ucanopen_server_get_serial_number(const char* server_name)
+{
+	return ucanopen_client->server(server_name)->get_serial_number();
+}
+
+
+void ucanopen_server_get_device_name(const char* server_name, char* retbuf, size_t bufsize)
+{
+	auto device_name = ucanopen_client->server(server_name)->get_device_name();
+	retbuf[0] = '\0';
+	strncat(retbuf, device_name.data(), bufsize-1);
 }
 
 }

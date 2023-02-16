@@ -18,23 +18,10 @@ class Log final
 private:
 	static inline std::stringstream _stream;
 	static inline std::deque<std::string> _messages;
-	static inline std::mutex _mutex;
 public:
 	Log() = default;
 	Log(const Log& other) = delete;
 	Log& operator=(const Log& other) = delete;
-
-	std::string pop()
-	{
-		std::lock_guard<std::mutex> lock(_mutex);
-		if (_messages.empty())
-		{
-			return std::string{};
-		}
-		std::string message = _messages.front();
-		_messages.pop_front();
-		return message;
-	}
 
 	template <typename T>
 	Log& operator<<(const T& msg)

@@ -17,7 +17,7 @@ private:
 	std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
 	std::chrono::time_point<std::chrono::steady_clock> _timepoint;
 	std::vector<std::string_view> _entries_list;
-	mutable std::mutex _mutex;
+	mutable std::mutex _data_access_mutex;
 	std::map<std::string_view, std::string> _data;
 public:
 	ServerWatchService(impl::Server* server, impl::SdoPublisher* sdo_publisher);
@@ -43,7 +43,7 @@ public:
 		{
 			if (entry_iter->second.data_type != OD_ENUM16)
 			{
-				std::lock_guard<std::mutex> lock(_mutex);
+				std::lock_guard<std::mutex> lock(_data_access_mutex);
 				_data[entry_iter->second.name] = sdo_data.to_string(entry_iter->second.data_type);
 			}
 			return 0;
@@ -77,9 +77,9 @@ public:
 		return _entries_list;
 	}
 
-	std::string value(std::string_view watchName) const
+	std::string value(std::string_view watch_name) const
 	{
-		auto it = _data.find(watchName);
+		auto it = _data.find(watch_name);
 		if (it == _data.end())
 		{
 			return "n/a";
@@ -87,23 +87,25 @@ public:
 		return it->second;
 	}
 
-	void value(std::string_view watchName, char* buf, size_t len) const
+	void value(std::string_view watch_name, char* retbuf, size_t bufsize) const
 	{
-		auto it = _data.find(watchName);
+		retbuf[0] = '\0';
+		auto it = _data.find(watch_name);
 		if (it == _data.end())
 		{
 			const char* str = "n/a";
-			std::strncpy(buf, str, len);
+			std::strncat(retbuf, str, bufsize-1);
 			return;
 		}
-		std::lock_guard<std::mutex> lock(_mutex);
-		std::strncpy(buf, it->second.c_str(), len);
+		std::lock_guard<std::mutex> lock(_data_access_mutex);
+		std::strncat(retbuf, it->second.c_str(), bufsize-1);
 	}
 
-	void set_value(std::string_view watchName, std::string value)
+	void set_value(std::string_view watch_name, std::string val)
 	{
-		if (!_data.contains(watchName)) return;
-		_data[watchName] = value;
+		if (!_data.contains(watch_name)) return;
+		std::lock_guard<std::mutex> lock(_data_access_mutex);
+		_data[watch_name] = val;
 	}
 };
 
