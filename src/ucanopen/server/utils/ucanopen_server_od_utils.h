@@ -29,16 +29,29 @@ class StringReader : public impl::SdoSubscriber
 {
 private:
 	impl::Server* const _server;
-
-	std::string_view _category;
-	std::string_view _subcategory;
-	std::string_view _name;
+	ODEntryIter _entry;
 
 	std::vector<char> _charbuf;
 	std::string _result = "n/a";
 	bool _ready = false;
 public:
 	StringReader(impl::Server* server, impl::SdoPublisher* publisher,
+			std::string_view category, std::string_view subcategory, std::string_view name);
+	std::string get(std::future<void> signal_terminate) const;
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
+};
+
+
+class NumvalReader : public impl::SdoSubscriber
+{
+private:
+	impl::Server* const _server;
+	ODEntryIter _entry;
+
+	std::string _result = "n/a";
+	bool _ready = false;
+public:
+	NumvalReader(impl::Server* server, impl::SdoPublisher* publisher,
 			std::string_view category, std::string_view subcategory, std::string_view name);
 	std::string get(std::future<void> signal_terminate) const;
 	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);

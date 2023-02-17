@@ -56,12 +56,26 @@ std::string Server::read_string(std::string_view category, std::string_view subc
 {
 	std::promise<void> signal_terminate;
 	utils::StringReader reader(this, &sdo_service, category, subcategory, name);
-	std::future<std::string> future_string = std::async(&utils::StringReader::get, &reader, signal_terminate.get_future());
-	if (future_string.wait_for(timeout) != std::future_status::ready)
+	std::future<std::string> future_result = std::async(&utils::StringReader::get, &reader, signal_terminate.get_future());
+	if (future_result.wait_for(timeout) != std::future_status::ready)
 	{
 		signal_terminate.set_value();
 	}
-	return future_string.get();
+	return future_result.get();
+}
+
+
+std::string Server::read_numval(std::string_view category, std::string_view subcategory, std::string_view name,
+				std::chrono::milliseconds timeout)
+{
+	std::promise<void> signal_terminate;
+	utils::NumvalReader reader(this, &sdo_service, category, subcategory, name);
+	std::future<std::string> future_result = std::async(&utils::NumvalReader::get, &reader, signal_terminate.get_future());
+	if (future_result.wait_for(timeout) != std::future_status::ready)
+	{
+		signal_terminate.set_value();
+	}
+	return future_result.get();
 }
 
 
