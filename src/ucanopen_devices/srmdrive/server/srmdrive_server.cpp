@@ -5,6 +5,7 @@ namespace srmdrive {
 
 Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, node_id, socket, object_dictionary)
+	, ucanopen::SdoSubscriber(&sdo_service)
 	, controller(this)
 {
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
@@ -18,7 +19,7 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 }
 
 
-void Server::_handle_tsdo(ucanopen::ODEntryIter entry,
+ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
 				ucanopen::SdoType sdo_type,
 				ucanopen::ExpeditedSdoData sdo_data)
 {

@@ -13,7 +13,7 @@ extern const ucanopen::ObjectDictionary object_dictionary;
 extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 
-class Server : public ucanopen::Server
+class Server : public ucanopen::Server, public ucanopen::SdoSubscriber
 {
 private:
 	std::array<float, 4> _client_values;
@@ -59,9 +59,9 @@ protected:
 		return ucanopen::to_payload<CobRpdo4>(message);
 	}
 
-	virtual void _handle_tsdo(ucanopen::ODEntryIter entry,
+	virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
 					ucanopen::SdoType sdo_type,
-					ucanopen::ExpeditedSdoData sdo_data) override final;
+					ucanopen::ExpeditedSdoData sdo_data) override;
 public:
 	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 

@@ -5,6 +5,7 @@ namespace launchpad {
 
 Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
 	: ucanopen::Server(name, node_id, socket, object_dictionary)
+	, ucanopen::SdoSubscriber(&sdo_service)
 {
 	_client_values.fill(0);
 	_server_values.fill(0);
@@ -37,7 +38,7 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 }
 
 
-void Server::_handle_tsdo(ucanopen::ODEntryIter entry,
+ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
 				ucanopen::SdoType sdo_type,
 				ucanopen::ExpeditedSdoData data)
 {

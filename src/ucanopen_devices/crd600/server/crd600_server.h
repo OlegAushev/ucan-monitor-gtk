@@ -13,7 +13,7 @@ extern const ucanopen::ObjectDictionary object_dictionary;
 extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 
-class Server : public ucanopen::Server
+class Server : public ucanopen::Server, public ucanopen::SdoSubscriber
 {
 private:
 	uint32_t _errors = 0;
@@ -24,9 +24,9 @@ public:
 	uint32_t errors() const { return _errors; }
 	uint16_t warnings() const { return _warnings; }
 protected:
-	virtual void _handle_tsdo(ucanopen::ODEntryIter entry,
+	virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
 					ucanopen::SdoType sdo_type,
-					ucanopen::ExpeditedSdoData sdo_data) override final;
+					ucanopen::ExpeditedSdoData sdo_data) override;
 private:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);
 	void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}

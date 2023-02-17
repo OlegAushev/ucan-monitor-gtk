@@ -39,7 +39,7 @@ class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;
 class ServerSdoService;
-
+class SdoSubscriber;
 
 namespace impl {
 
@@ -89,8 +89,6 @@ public:
 					ODEntryIter& ret_entry, traits::check_write_perm);
 	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
 					ODEntryIter& ret_entry, traits::check_exec_perm);
-protected:
-	virtual void _handle_tsdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;
 };
 
 
@@ -101,7 +99,7 @@ public:
 };
 
 
-class SdoSubscriber;
+
 
 
 class SdoPublisher
@@ -114,13 +112,15 @@ protected:
 	std::list<SdoSubscriber*> _subscriber_list;
 };
 
+} // namespace impl
+
 
 class SdoSubscriber
 {
 private:
-	SdoPublisher* _publisher;
+	impl::SdoPublisher* _publisher;
 public:
-	SdoSubscriber(SdoPublisher* publisher)
+	SdoSubscriber(impl::SdoPublisher* publisher)
 		: _publisher(publisher)
 	{
 		_publisher->register_subscriber(this);
@@ -132,8 +132,6 @@ public:
 	virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;
 	void unsubscribe() { _publisher->unregister_subscriber(this); }
 };
-
-} // namespace impl
 
 } // namespace ucanopen
 

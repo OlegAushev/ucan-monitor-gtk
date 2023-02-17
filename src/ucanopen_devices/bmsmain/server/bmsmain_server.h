@@ -18,10 +18,6 @@ private:
 
 protected:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);
-
-	virtual void _handle_tsdo([[maybe_unused]] ucanopen::ODEntryIter entry,
-					[[maybe_unused]] ucanopen::SdoType sdo_type,
-					[[maybe_unused]] ucanopen::ExpeditedSdoData sdo_data) override final {}
 public:
 	Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 

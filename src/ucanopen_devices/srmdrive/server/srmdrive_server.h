@@ -13,7 +13,7 @@ extern const ucanopen::ObjectDictionary object_dictionary;
 extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 
-class Server : public ucanopen::Server
+class Server : public ucanopen::Server, public ucanopen::SdoSubscriber
 {
 protected:
 	void _handle_tpdo1([[maybe_unused]] const ucanopen::can_payload& payload) {}
@@ -21,7 +21,7 @@ protected:
 	void _handle_tpdo3(const ucanopen::can_payload& payload);
 	void _handle_tpdo4(const ucanopen::can_payload& payload);
 
-	virtual void _handle_tsdo(ucanopen::ODEntryIter entry,
+	virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
 					ucanopen::SdoType sdo_type,
 					ucanopen::ExpeditedSdoData data) override final;
 private:

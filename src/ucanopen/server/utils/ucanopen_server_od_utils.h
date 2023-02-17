@@ -10,14 +10,14 @@ namespace ucanopen {
 
 namespace utils {
 
-class SerialNumberGetter : public impl::SdoSubscriber
+class SerialNumberGetter : public SdoSubscriber
 {
 private:
 	impl::Server* const _server;
 	uint32_t _serial_number = 0;
 public:
 	SerialNumberGetter(impl::Server* server, impl::SdoPublisher* publisher)
-		: impl::SdoSubscriber(publisher)
+		: SdoSubscriber(publisher)
 		, _server(server)
 	{}
 	uint32_t get(std::future<void> signal_terminate) const;
@@ -25,7 +25,7 @@ public:
 };
 
 
-class StringReader : public impl::SdoSubscriber
+class StringReader : public SdoSubscriber
 {
 private:
 	impl::Server* const _server;
@@ -42,7 +42,7 @@ public:
 };
 
 
-class NumvalReader : public impl::SdoSubscriber
+class NumvalReader : public SdoSubscriber
 {
 private:
 	impl::Server* const _server;

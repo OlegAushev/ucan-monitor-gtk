@@ -9,7 +9,7 @@
 
 namespace ucanopen {
 
-class ServerWatchService : public impl::SdoSubscriber
+class ServerWatchService : public SdoSubscriber
 {
 private:
 	impl::Server* const _server;

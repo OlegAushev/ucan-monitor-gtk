@@ -68,9 +68,6 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 	{
 		subscriber->handle_sdo(entry, sdo_type, sdo.data);
 	}
-
-	// server-specific TSDO handling
-	_server->_handle_tsdo(entry, sdo_type, sdo.data);
 	
 	return FrameHandlingStatus::success;
 }
@@ -101,8 +98,10 @@ FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& f
 				<< " updated.\n";
 	}
 
-	// server-specific TSDO handling
-	_server->_handle_tsdo(entry, sdo_type, sdo.data);
+	for (auto& subscriber : _subscriber_list)
+	{
+		subscriber->handle_sdo(entry, sdo_type, sdo.data);
+	}
 
 	return FrameHandlingStatus::success;
 }

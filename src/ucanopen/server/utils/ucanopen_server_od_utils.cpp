@@ -32,7 +32,7 @@ FrameHandlingStatus SerialNumberGetter::handle_sdo(ODEntryIter entry, SdoType sd
 
 StringReader::StringReader(impl::Server* server, impl::SdoPublisher* publisher,
 				std::string_view category, std::string_view subcategory, std::string_view name)
-	: impl::SdoSubscriber(publisher)
+	: SdoSubscriber(publisher)
 	, _server(server)
 {
 	if (_server->find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success)
@@ -96,7 +96,7 @@ FrameHandlingStatus StringReader::handle_sdo(ODEntryIter entry, SdoType sdo_type
 
 NumvalReader::NumvalReader(impl::Server* server, impl::SdoPublisher* publisher,
 				std::string_view category, std::string_view subcategory, std::string_view name)
-	: impl::SdoSubscriber(publisher)
+	: SdoSubscriber(publisher)
 	, _server(server)
 {
 	if (_server->find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success)
