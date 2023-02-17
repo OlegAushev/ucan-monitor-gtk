@@ -25,8 +25,8 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 }
 
 
-void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ObjectDictionaryEntries::const_iterator entry_iter,
+void Server::_handle_tsdo([[maybe_unused]] ucanopen::SdoType sdo_type,
+			ucanopen::ODEntryIter entry_iter,
 			ucanopen::ExpeditedSdoData data)
 {
 	if (entry_iter->second.name == "syslog_message")

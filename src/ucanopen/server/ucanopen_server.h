@@ -39,6 +39,8 @@ private:
 public:
 	uint32_t get_serial_number();
 	std::string get_device_name();
+
+	//std::string read_string();
 };
 
 } // namespace ucanopen

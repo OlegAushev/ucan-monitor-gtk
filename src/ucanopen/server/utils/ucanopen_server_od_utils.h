@@ -21,7 +21,7 @@ public:
 		, _server(server)
 	{}
 	uint32_t get(std::future<void> signal_terminate) const;
-	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data);
+	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
 };
 
 
@@ -38,8 +38,19 @@ public:
 		, _server(server)
 	{}	
 	std::string get(std::future<void> signal_terminate) const;
-	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data);
+	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
 };
+
+
+class StringReader : public impl::SdoSubscriber
+{
+private:
+	//impl::Server* const _server;
+	//std::vector<char> _char_vec;
+	//std::string _result = "n/a";
+	//bool _ready = false;
+};
+
 
 }
 

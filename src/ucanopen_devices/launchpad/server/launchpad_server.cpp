@@ -38,7 +38,7 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 
 
 void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ObjectDictionaryEntries::const_iterator entry_iter,
+			ucanopen::ODEntryIter entry_iter,
 			ucanopen::ExpeditedSdoData data)
 {
 	if (entry_iter->second.name == "syslog_message")

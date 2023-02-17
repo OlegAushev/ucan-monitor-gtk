@@ -54,9 +54,9 @@ public:
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 protected:
-	virtual void _handle_tsdo(SdoType, ObjectDictionaryEntries::const_iterator, ExpeditedSdoData) = 0;
+	virtual void _handle_tsdo(SdoType, ODEntryIter, ExpeditedSdoData) = 0;
 
-	ObjectDictionaryEntries::const_iterator _find_od_entry(
+	ODEntryIter _find_od_entry(
 		std::string_view category,
 		std::string_view subcategory,
 		std::string_view name)
@@ -75,13 +75,13 @@ protected:
 	struct check_exec_perm{};
 
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionaryEntries::const_iterator& entry_iter, check_read_perm);
+					ODEntryIter& ret_entry_iter, check_read_perm);
 
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionaryEntries::const_iterator& entry_iter, check_write_perm);
+					ODEntryIter& ret_entry_iter, check_write_perm);
 	
 	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ObjectDictionaryEntries::const_iterator& entry_iter, check_exec_perm);
+					ODEntryIter& ret_entry_iter, check_exec_perm);
 };
 
 
@@ -120,7 +120,7 @@ public:
 	{
 		_publisher->unregister_subscriber(this);
 	}
-	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data) = 0;
+	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data) = 0;
 	void unsubscribe() { _publisher->unregister_subscriber(this); }
 };
 

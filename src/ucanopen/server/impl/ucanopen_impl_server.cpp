@@ -21,7 +21,7 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 
 ODAccessStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ObjectDictionaryEntries::const_iterator entry_iter;
+	ODEntryIter entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_read_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -45,7 +45,7 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data)
 {
-	ObjectDictionaryEntries::const_iterator entry_iter;
+	ODEntryIter entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -70,7 +70,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
-	ObjectDictionaryEntries::const_iterator entry_iter;
+	ODEntryIter entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -129,7 +129,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ObjectDictionaryEntries::const_iterator entry_iter;
+	ODEntryIter entry_iter;
 	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_exec_perm{});
 	if (status != ODAccessStatus::success)
 	{
@@ -159,7 +159,7 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionaryEntries::const_iterator& entry_iter, check_read_perm)
+				ODEntryIter& entry_iter, check_read_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.entries.end())
@@ -181,7 +181,7 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionaryEntries::const_iterator& entry_iter, check_write_perm)
+				ODEntryIter& entry_iter, check_write_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.entries.end())
@@ -203,7 +203,7 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ObjectDictionaryEntries::const_iterator& entry_iter, check_exec_perm)
+				ODEntryIter& entry_iter, check_exec_perm)
 {
 	entry_iter = _find_od_entry(category, subcategory, name);
 	if (entry_iter == _dictionary.entries.end())

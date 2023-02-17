@@ -477,6 +477,7 @@ struct ObjectDictionaryConfig
 
 using ObjectDictionaryEntries = std::map<ODEntryKey, ODEntryValue>;
 using ObjectDictionaryAux = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
+using ODEntryIter = ObjectDictionaryEntries::const_iterator;
 
 
 struct ObjectDictionary

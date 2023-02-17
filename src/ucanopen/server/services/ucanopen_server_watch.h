@@ -37,7 +37,7 @@ public:
 		}
 	}
 
-	virtual int handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
+	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 	{
 		if ((entry_iter->second.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read))
 		{

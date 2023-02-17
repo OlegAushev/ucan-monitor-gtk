@@ -15,7 +15,7 @@ uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const
 		return _serial_number;
 	}
 
-int SerialNumberGetter::handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
+int SerialNumberGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 {
 	if (sdo_type == SdoType::response_to_read
 		&& entry_iter->second.category == "sys"
@@ -38,7 +38,7 @@ std::string DeviceNameGetter::get(std::future<void> signal_terminate) const
 	return _device_name;
 }
 
-int DeviceNameGetter::handle_sdo(SdoType sdo_type, ObjectDictionaryEntries::const_iterator entry_iter, ExpeditedSdoData sdo_data)
+int DeviceNameGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 {
 	if (sdo_type == SdoType::response_to_read
 		&& entry_iter->second.category == "sys"
