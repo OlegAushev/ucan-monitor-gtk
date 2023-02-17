@@ -87,7 +87,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 			else if (value == "FALSE" || value == "false" || value == "OFF" || value == "off" || value == "0")
 				sdo_data = ExpeditedSdoData(true);
 			else
-				return ODAccessStatus::fail;
+				return ODAccessStatus::invalid_value;
 			break;
 		case OD_INT16:
 			sdo_data = ExpeditedSdoData(int16_t(std::stoi(value)));
@@ -108,7 +108,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 			sdo_data = ExpeditedSdoData(uint16_t(std::stoi(value)));
 			break;
 		default:
-			return ODAccessStatus::fail;
+			return ODAccessStatus::invalid_value;
 	}
 
 	ExpeditedSdo message{};
@@ -159,66 +159,66 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& entry_iter, check_read_perm)
+				ODEntryIter& ret_entry_iter, check_read_perm)
 {
-	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.entries.end())
+	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
-		return ODAccessStatus::fail;
+		return ODAccessStatus::not_found;
 	}
-	else if (entry_iter->second.has_read_permission() == false)
+	else if (ret_entry_iter->second.has_read_permission() == false)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no access.\n";
-		return ODAccessStatus::no_access;
+				<< " - access denied.\n";
+		return ODAccessStatus::access_denied;
 	}
 	return ODAccessStatus::success;
 }
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& entry_iter, check_write_perm)
+				ODEntryIter& ret_entry_iter, check_write_perm)
 {
-	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.entries.end())
+	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
-		return ODAccessStatus::fail;;
+		return ODAccessStatus::not_found;;
 	}
-	else if (entry_iter->second.has_write_permission() == false)
+	else if (ret_entry_iter->second.has_write_permission() == false)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
-				<< " - no access.\n";
-		return ODAccessStatus::no_access;
+				<< " - access denied.\n";
+		return ODAccessStatus::access_denied;
 	}
 	return ODAccessStatus::success;
 }
 
 
 ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& entry_iter, check_exec_perm)
+				ODEntryIter& ret_entry_iter, check_exec_perm)
 {
-	entry_iter = _find_od_entry(category, subcategory, name);
-	if (entry_iter == _dictionary.entries.end())
+	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
-		return ODAccessStatus::fail;
+		return ODAccessStatus::not_found;
 	}
-	else if (entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
+	else if (ret_entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - not executable OD entry.\n";
-		return ODAccessStatus::no_access;
+		return ODAccessStatus::access_denied;
 	}
 	return ODAccessStatus::success;
 }

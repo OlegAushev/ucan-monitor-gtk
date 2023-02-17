@@ -43,7 +43,7 @@ void Server::_handle_frame(const can_frame& frame)
 	for (auto service : _frame_handling_services)
 	{
 		auto status = service->handle_frame(frame);
-		if (status == 0)
+		if (status == FrameHandlingStatus::success)
 		{
 			break;
 		}

@@ -16,11 +16,11 @@ public:
 	ServerSdoService(impl::Server* server);
 	void update_node_id();
 
-	virtual int handle_frame(const can_frame& frame);
+	virtual FrameHandlingStatus handle_frame(const can_frame& frame);
 private:
-	int _handle_read_expedited(const can_frame& frame);
-	int _handle_write_expedited(const can_frame& frame);
-	int _handle_abort(const can_frame& frame);
+	FrameHandlingStatus _handle_read_expedited(const can_frame& frame);
+	FrameHandlingStatus _handle_write_expedited(const can_frame& frame);
+	FrameHandlingStatus _handle_abort(const can_frame& frame);
 };
 
 } // namespace ucanopen

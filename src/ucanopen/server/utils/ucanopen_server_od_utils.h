@@ -21,7 +21,7 @@ public:
 		, _server(server)
 	{}
 	uint32_t get(std::future<void> signal_terminate) const;
-	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
 };
 
 
@@ -38,7 +38,7 @@ public:
 		, _server(server)
 	{}	
 	std::string get(std::future<void> signal_terminate) const;
-	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
 };
 
 

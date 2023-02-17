@@ -15,7 +15,7 @@ uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const
 		return _serial_number;
 	}
 
-int SerialNumberGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+FrameHandlingStatus SerialNumberGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 {
 	if (sdo_type == SdoType::response_to_read
 		&& entry_iter->second.category == "sys"
@@ -23,9 +23,9 @@ int SerialNumberGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, Exp
 		&& entry_iter->second.name == "serial_number")
 	{
 		_serial_number = sdo_data.u32();
-		return 0;
+		return FrameHandlingStatus::success;
 	}
-	return 1;
+	return FrameHandlingStatus::irrelevant_frame;
 }
 
 
@@ -38,7 +38,7 @@ std::string DeviceNameGetter::get(std::future<void> signal_terminate) const
 	return _device_name;
 }
 
-int DeviceNameGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+FrameHandlingStatus DeviceNameGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 {
 	if (sdo_type == SdoType::response_to_read
 		&& entry_iter->second.category == "sys"
@@ -63,9 +63,9 @@ int DeviceNameGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, Exped
 			_server->read("sys", "info", "device_name");
 		}
 
-		return 0;
+		return FrameHandlingStatus::success;
 	}
-	return 1;
+	return FrameHandlingStatus::irrelevant_frame;
 }
 
 } // namespace utils

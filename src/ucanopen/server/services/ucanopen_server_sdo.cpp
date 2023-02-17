@@ -16,9 +16,9 @@ void ServerSdoService::update_node_id()
 }
 
 
-int ServerSdoService::handle_frame(const can_frame& frame)
+FrameHandlingStatus ServerSdoService::handle_frame(const can_frame& frame)
 {
-	if (frame.can_id != _id) return 1;
+	if (frame.can_id != _id) return FrameHandlingStatus::id_mismatch;
 	
 	uint32_t cs_code = get_cs_code(frame);
 
@@ -31,19 +31,19 @@ int ServerSdoService::handle_frame(const can_frame& frame)
 		case sdo_cs_codes::abort:
 			return _handle_abort(frame);
 		default:
-			return 2;
+			return FrameHandlingStatus::invalid_format;
 	}
 }
 
 
-int ServerSdoService::_handle_read_expedited(const can_frame& frame)
+FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
 	auto entry_iter = _server->dictionary().entries.find(key);
 	if (entry_iter == _server->dictionary().entries.end())
 	{
-		return 3;
+		return FrameHandlingStatus::object_not_found;
 	}
 
 	SdoType sdo_type;
@@ -71,18 +71,18 @@ int ServerSdoService::_handle_read_expedited(const can_frame& frame)
 	// server-specific TSDO handling
 	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
 	
-	return 0;
+	return FrameHandlingStatus::success;
 }
 
 
-int ServerSdoService::_handle_write_expedited(const can_frame& frame)
+FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
 	ODEntryKey key = {sdo.index, sdo.subindex};
 	auto entry_iter = _server->dictionary().entries.find(key);
 	if (entry_iter == _server->dictionary().entries.end())
 	{
-		return 3;
+		return FrameHandlingStatus::object_not_found;
 	}
 
 	SdoType sdo_type;
@@ -102,11 +102,11 @@ int ServerSdoService::_handle_write_expedited(const can_frame& frame)
 	// server-specific TSDO handling
 	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
 
-	return 0;
+	return FrameHandlingStatus::success;
 }
 
 
-int ServerSdoService::_handle_abort(const can_frame& frame)
+FrameHandlingStatus ServerSdoService::_handle_abort(const can_frame& frame)
 {
 	AbortSdo abort_sdo(frame.data);
 	std::string error_msg;
@@ -120,7 +120,7 @@ int ServerSdoService::_handle_abort(const can_frame& frame)
 	}
 	Log() << "[ucanopen] SDO transfer aborted: " << error_msg << " (error code: 0x" << std::hex << abort_sdo.error_code << std::dec << ")\n";
 
-	return 0;
+	return FrameHandlingStatus::success;
 }
 
 } // namespace ucanopen

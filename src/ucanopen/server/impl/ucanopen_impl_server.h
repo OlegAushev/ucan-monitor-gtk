@@ -11,9 +11,20 @@ namespace ucanopen {
 
 enum class ODAccessStatus
 {
-	success = 0,
-	fail = 1,
-	no_access = 2
+	success,
+	not_found,
+	access_denied,
+	invalid_value
+};
+
+
+enum class FrameHandlingStatus
+{
+	success,
+	id_mismatch,
+	invalid_format,
+	object_not_found,
+	irrelevant_frame
 };
 
 
@@ -88,7 +99,7 @@ protected:
 class FrameHandlingService
 {
 public:
-	virtual int handle_frame(const can_frame& frame) = 0;
+	virtual FrameHandlingStatus handle_frame(const can_frame& frame) = 0;
 };
 
 
@@ -120,7 +131,7 @@ public:
 	{
 		_publisher->unregister_subscriber(this);
 	}
-	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data) = 0;
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data) = 0;
 	void unsubscribe() { _publisher->unregister_subscriber(this); }
 };
 

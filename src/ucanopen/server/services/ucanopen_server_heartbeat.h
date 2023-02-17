@@ -24,7 +24,7 @@ public:
 
 	void update_node_id();
 	
-	virtual int handle_frame(const can_frame& frame);
+	virtual FrameHandlingStatus handle_frame(const can_frame& frame);
 };
 
 } // namespace ucanopen

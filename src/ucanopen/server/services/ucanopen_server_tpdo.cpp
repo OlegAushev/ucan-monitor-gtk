@@ -24,7 +24,7 @@ void ServerTpdoService::update_node_id()
 }
 
 
-int ServerTpdoService::handle_frame(const can_frame& frame)
+FrameHandlingStatus ServerTpdoService::handle_frame(const can_frame& frame)
 {
 	for (auto& [tpdo_type, message] : _tpdo_list)
 	{
@@ -35,9 +35,9 @@ int ServerTpdoService::handle_frame(const can_frame& frame)
 		std::copy(frame.data, std::next(frame.data, frame.can_dlc), payload.begin());
 		message.payload = payload;
 		message.handler(payload);
-		return 0;
+		return FrameHandlingStatus::success;
 	}
-	return 1;
+	return FrameHandlingStatus::id_mismatch;
 }
 
 } // namespace ucanopen

@@ -37,7 +37,7 @@ public:
 		}
 	}
 
-	virtual int handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
 	{
 		if ((entry_iter->second.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read))
 		{
@@ -46,9 +46,9 @@ public:
 				std::lock_guard<std::mutex> lock(_data_access_mutex);
 				_data[entry_iter->second.name] = sdo_data.to_string(entry_iter->second.data_type);
 			}
-			return 0;
+			return FrameHandlingStatus::success;
 		}
-		return 1;
+		return FrameHandlingStatus::irrelevant_frame;
 	}
 
 	void enable()
