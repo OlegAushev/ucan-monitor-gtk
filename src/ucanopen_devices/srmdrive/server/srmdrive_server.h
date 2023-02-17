@@ -21,9 +21,9 @@ protected:
 	void _handle_tpdo3(const ucanopen::can_payload& payload);
 	void _handle_tpdo4(const ucanopen::can_payload& payload);
 
-	virtual void _handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ODEntryIter entryIt,
-			ucanopen::ExpeditedSdoData data) override final;
+	virtual void _handle_tsdo(ucanopen::ODEntryIter entry,
+					ucanopen::SdoType sdo_type,
+					ucanopen::ExpeditedSdoData data) override final;
 private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;

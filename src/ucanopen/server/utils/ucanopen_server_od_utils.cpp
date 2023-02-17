@@ -16,12 +16,12 @@ uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const
 }
 
 
-FrameHandlingStatus SerialNumberGetter::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+FrameHandlingStatus SerialNumberGetter::handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data)
 {
 	if (sdo_type == SdoType::response_to_read
-		&& entry_iter->second.category == "sys"
-		&& entry_iter->second.subcategory == "info"
-		&& entry_iter->second.name == "serial_number")
+		&& entry->second.category == "sys"
+		&& entry->second.subcategory == "info"
+		&& entry->second.name == "serial_number")
 	{
 		_serial_number = sdo_data.u32();
 		return FrameHandlingStatus::success;
@@ -65,9 +65,9 @@ std::string StringReader::get(std::future<void> signal_terminate) const
 	return _result;
 }
 
-FrameHandlingStatus StringReader::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+FrameHandlingStatus StringReader::handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data)
 {
-	if (sdo_type == SdoType::response_to_read && entry_iter == _entry)
+	if (sdo_type == SdoType::response_to_read && entry == _entry)
 	{
 		std::array<char, 4> char_arr;
 		memcpy(char_arr.data(), &sdo_data, 4);
@@ -130,9 +130,9 @@ std::string NumvalReader::get(std::future<void> signal_terminate) const
 }
 
 
-FrameHandlingStatus NumvalReader::handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+FrameHandlingStatus NumvalReader::handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data)
 {
-	if (sdo_type == SdoType::response_to_read && entry_iter == _entry)
+	if (sdo_type == SdoType::response_to_read && entry == _entry)
 	{
 		_result = sdo_data.to_string(_entry->second.type);
 		_ready = true;

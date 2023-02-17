@@ -18,15 +18,15 @@ Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_pt
 }
 
 
-void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ODEntryIter entry_iter,
-			ucanopen::ExpeditedSdoData sdo_data)
+void Server::_handle_tsdo(ucanopen::ODEntryIter entry,
+				ucanopen::SdoType sdo_type,
+				ucanopen::ExpeditedSdoData sdo_data)
 {
-	if (entry_iter->second.category == _dictionary.config.watch_category && entry_iter->second.type == ucanopen::OD_ENUM16)
+	if (entry->second.category == _dictionary.config.watch_category && entry->second.type == ucanopen::OD_ENUM16)
 	{
-		if (entry_iter->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size())
+		if (entry->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size())
 		{
-			watch_service.set_value(entry_iter->second.name, drive_states[sdo_data.u32()]);
+			watch_service.set_value(entry->second.name, drive_states[sdo_data.u32()]);
 		}
 	}
 }

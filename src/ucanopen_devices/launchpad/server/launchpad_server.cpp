@@ -37,11 +37,11 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 }
 
 
-void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ODEntryIter entry_iter,
-			ucanopen::ExpeditedSdoData data)
+void Server::_handle_tsdo(ucanopen::ODEntryIter entry,
+				ucanopen::SdoType sdo_type,
+				ucanopen::ExpeditedSdoData data)
 {
-	if (entry_iter->second.name == "syslog_message")
+	if (entry->second.name == "syslog_message")
 	{
 		auto message_id = data.u32();
 		if ((message_id != 0) && (message_id < syslog_messages.size()))
@@ -49,7 +49,7 @@ void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
 			Log() << syslog_messages[message_id] << '\n';
 		}
 	}
-	else if (entry_iter->second.category == _dictionary.config.config_category && entry_iter->second.type == ucanopen::OD_ENUM16)
+	else if (entry->second.category == _dictionary.config.config_category && entry->second.type == ucanopen::OD_ENUM16)
 	{
 		
 	}

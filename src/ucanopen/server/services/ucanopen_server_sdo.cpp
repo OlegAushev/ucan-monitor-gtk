@@ -39,13 +39,13 @@ FrameHandlingStatus ServerSdoService::handle_frame(const can_frame& frame)
 FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	auto entry_iter = _server->dictionary().entries.find({sdo.index, sdo.subindex});
-	if (entry_iter == _server->dictionary().entries.end())
+	auto entry = _server->dictionary().entries.find({sdo.index, sdo.subindex});
+	if (entry == _server->dictionary().entries.end())
 	{
 		return FrameHandlingStatus::object_not_found;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 
 	SdoType sdo_type;
 	if (object.type == ODObjectType::OD_EXEC)
@@ -66,11 +66,11 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 
 	for (auto& subscriber : _subscriber_list)
 	{
-		subscriber->handle_sdo(sdo_type, entry_iter, sdo.data);
+		subscriber->handle_sdo(entry, sdo_type, sdo.data);
 	}
 
 	// server-specific TSDO handling
-	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
+	_server->_handle_tsdo(entry, sdo_type, sdo.data);
 	
 	return FrameHandlingStatus::success;
 }
@@ -79,13 +79,13 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	auto entry_iter = _server->dictionary().entries.find({sdo.index, sdo.subindex});
-	if (entry_iter == _server->dictionary().entries.end())
+	auto entry = _server->dictionary().entries.find({sdo.index, sdo.subindex});
+	if (entry == _server->dictionary().entries.end())
 	{
 		return FrameHandlingStatus::object_not_found;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 
 	SdoType sdo_type;
 	if (object.type == ODObjectType::OD_EXEC)
@@ -102,7 +102,7 @@ FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& f
 	}
 
 	// server-specific TSDO handling
-	_server->_handle_tsdo(sdo_type, entry_iter, sdo.data);
+	_server->_handle_tsdo(entry, sdo_type, sdo.data);
 
 	return FrameHandlingStatus::success;
 }

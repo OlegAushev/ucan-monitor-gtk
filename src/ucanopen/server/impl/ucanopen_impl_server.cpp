@@ -21,14 +21,14 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 
 ODAccessStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ODEntryIter entry_iter;
-	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_read_perm{});
+	ODEntryIter entry;
+	auto status = find_od_entry(category, subcategory, name, entry, traits::check_read_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 
 	ExpeditedSdo message{};
 	message.cs = sdo_cs_codes::client_init_read;
@@ -47,14 +47,14 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data)
 {
-	ODEntryIter entry_iter;
-	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_write_perm{});
+	ODEntryIter entry;
+	auto status = find_od_entry(category, subcategory, name, entry, traits::check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 
 	ExpeditedSdo message{};
 	message.cs = sdo_cs_codes::client_init_write;
@@ -74,14 +74,14 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
-	ODEntryIter entry_iter;
-	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_write_perm{});
+	ODEntryIter entry;
+	auto status = find_od_entry(category, subcategory, name, entry, traits::check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 	ExpeditedSdoData sdo_data;
 
 	switch (object.type)
@@ -134,14 +134,14 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 ODAccessStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
-	ODEntryIter entry_iter;
-	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_exec_perm{});
+	ODEntryIter entry;
+	auto status = find_od_entry(category, subcategory, name, entry, traits::check_exec_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
 	}
 
-	const auto& [key, object] = *entry_iter;
+	const auto& [key, object] = *entry;
 
 	ExpeditedSdo message{};
 	if (object.has_read_permission())
@@ -166,17 +166,17 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 
 
 ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, traits::check_read_perm)
+				ODEntryIter& ret_entry, traits::check_read_perm)
 {
-	ret_entry_iter = find_od_entry(category, subcategory, name);
-	if (ret_entry_iter == _dictionary.entries.end())
+	ret_entry = find_od_entry(category, subcategory, name);
+	if (ret_entry == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
 		return ODAccessStatus::not_found;
 	}
-	else if (ret_entry_iter->second.has_read_permission() == false)
+	else if (ret_entry->second.has_read_permission() == false)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
 				<< category << "::" << subcategory << "::" << name 
@@ -188,17 +188,17 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
 
 
 ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, traits::check_write_perm)
+				ODEntryIter& ret_entry, traits::check_write_perm)
 {
-	ret_entry_iter = find_od_entry(category, subcategory, name);
-	if (ret_entry_iter == _dictionary.entries.end())
+	ret_entry = find_od_entry(category, subcategory, name);
+	if (ret_entry == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
 		return ODAccessStatus::not_found;;
 	}
-	else if (ret_entry_iter->second.has_write_permission() == false)
+	else if (ret_entry->second.has_write_permission() == false)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
 				<< category << "::" << subcategory << "::" << name 
@@ -210,17 +210,17 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
 
 
 ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, traits::check_exec_perm)
+				ODEntryIter& ret_entry, traits::check_exec_perm)
 {
-	ret_entry_iter = find_od_entry(category, subcategory, name);
-	if (ret_entry_iter == _dictionary.entries.end())
+	ret_entry = find_od_entry(category, subcategory, name);
+	if (ret_entry == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 
 				<< " - no such OD entry.\n";
 		return ODAccessStatus::not_found;
 	}
-	else if (ret_entry_iter->second.type != ODObjectType::OD_EXEC)
+	else if (ret_entry->second.type != ODObjectType::OD_EXEC)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 

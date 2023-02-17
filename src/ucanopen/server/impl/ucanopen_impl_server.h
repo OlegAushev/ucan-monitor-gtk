@@ -84,13 +84,13 @@ public:
 	}
 
 	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, traits::check_read_perm);
+					ODEntryIter& ret_entry, traits::check_read_perm);
 	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, traits::check_write_perm);
+					ODEntryIter& ret_entry, traits::check_write_perm);
 	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, traits::check_exec_perm);
+					ODEntryIter& ret_entry, traits::check_exec_perm);
 protected:
-	virtual void _handle_tsdo(SdoType, ODEntryIter, ExpeditedSdoData) = 0;
+	virtual void _handle_tsdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;
 };
 
 
@@ -129,7 +129,7 @@ public:
 	{
 		_publisher->unregister_subscriber(this);
 	}
-	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data) = 0;
+	virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;
 	void unsubscribe() { _publisher->unregister_subscriber(this); }
 };
 

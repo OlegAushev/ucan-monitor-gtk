@@ -37,9 +37,9 @@ public:
 		}
 	}
 
-	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data)
+	virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data)
 	{
-		const auto& [key, object] = *entry_iter;
+		const auto& [key, object] = *entry;
 
 		if ((object.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read))
 		{

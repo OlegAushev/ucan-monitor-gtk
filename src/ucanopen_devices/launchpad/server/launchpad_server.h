@@ -59,9 +59,9 @@ protected:
 		return ucanopen::to_payload<CobRpdo4>(message);
 	}
 
-	virtual void _handle_tsdo(ucanopen::SdoType sdo_type,
-			ucanopen::ODEntryIter entry_iter,
-			ucanopen::ExpeditedSdoData sdo_data) override final;
+	virtual void _handle_tsdo(ucanopen::ODEntryIter entry,
+					ucanopen::SdoType sdo_type,
+					ucanopen::ExpeditedSdoData sdo_data) override final;
 public:
 	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
 
