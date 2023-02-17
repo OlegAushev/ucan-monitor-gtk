@@ -28,6 +28,13 @@ enum class FrameHandlingStatus
 };
 
 
+namespace traits {
+struct check_read_perm{};
+struct check_write_perm{};
+struct check_exec_perm{};
+}
+
+
 class ServerHeartbeatService;
 class ServerTpdoService;
 class ServerRpdoService;
@@ -35,6 +42,7 @@ class ServerSdoService;
 
 
 namespace impl {
+
 
 class Server
 {
@@ -64,13 +72,8 @@ public:
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data);
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
-protected:
-	virtual void _handle_tsdo(SdoType, ODEntryIter, ExpeditedSdoData) = 0;
-
-	ODEntryIter _find_od_entry(
-		std::string_view category,
-		std::string_view subcategory,
-		std::string_view name)
+public:
+	ODEntryIter find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name)
 	{
 		auto iter = _dictionary_aux.find({category, subcategory, name});
 		if (iter == _dictionary_aux.end())
@@ -80,19 +83,14 @@ protected:
 		return iter->second;
 	}
 
-	// traits
-	struct check_read_perm{};
-	struct check_write_perm{};
-	struct check_exec_perm{};
-
-	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, check_read_perm);
-
-	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, check_write_perm);
-	
-	ODAccessStatus _find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-					ODEntryIter& ret_entry_iter, check_exec_perm);
+	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ODEntryIter& ret_entry_iter, traits::check_read_perm);
+	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ODEntryIter& ret_entry_iter, traits::check_write_perm);
+	ODAccessStatus find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+					ODEntryIter& ret_entry_iter, traits::check_exec_perm);
+protected:
+	virtual void _handle_tsdo(SdoType, ODEntryIter, ExpeditedSdoData) = 0;
 };
 
 

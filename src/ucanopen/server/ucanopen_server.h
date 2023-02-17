@@ -38,9 +38,8 @@ private:
 	std::vector<impl::FrameHandlingService*> _frame_handling_services;
 public:
 	uint32_t get_serial_number();
-	std::string get_device_name();
-
-	//std::string read_string();
+	std::string read_string(std::string_view category, std::string_view subcategory, std::string_view name,
+					std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
 };
 
 } // namespace ucanopen

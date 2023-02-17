@@ -25,32 +25,24 @@ public:
 };
 
 
-class DeviceNameGetter : public impl::SdoSubscriber
-{
-private:
-	impl::Server* const _server;
-	std::vector<char> _char_vec;
-	std::string _device_name = "n/a";
-	bool _ready = false;
-public:
-	DeviceNameGetter(impl::Server* server, impl::SdoPublisher* publisher)
-		: impl::SdoSubscriber(publisher)
-		, _server(server)
-	{}	
-	std::string get(std::future<void> signal_terminate) const;
-	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
-};
-
-
 class StringReader : public impl::SdoSubscriber
 {
 private:
-	//impl::Server* const _server;
-	//std::vector<char> _char_vec;
-	//std::string _result = "n/a";
-	//bool _ready = false;
-};
+	impl::Server* const _server;
 
+	std::string_view _category;
+	std::string_view _subcategory;
+	std::string_view _name;
+
+	std::vector<char> _charbuf;
+	std::string _result = "n/a";
+	bool _ready = false;
+public:
+	StringReader(impl::Server* server, impl::SdoPublisher* publisher,
+			std::string_view category, std::string_view subcategory, std::string_view name);
+	std::string get(std::future<void> signal_terminate) const;
+	virtual FrameHandlingStatus handle_sdo(SdoType sdo_type, ODEntryIter entry_iter, ExpeditedSdoData sdo_data);
+};
 
 }
 

@@ -51,6 +51,20 @@ void Server::_handle_frame(const can_frame& frame)
 }
 
 
+std::string Server::read_string(std::string_view category, std::string_view subcategory, std::string_view name,
+				std::chrono::milliseconds timeout)
+{
+	std::promise<void> signal_terminate;
+	utils::StringReader reader(this, &sdo_service, category, subcategory, name);
+	std::future<std::string> future_string = std::async(&utils::StringReader::get, &reader, signal_terminate.get_future());
+	if (future_string.wait_for(timeout) != std::future_status::ready)
+	{
+		signal_terminate.set_value();
+	}
+	return future_string.get();
+}
+
+
 uint32_t Server::get_serial_number()
 {
 	std::promise<void> signal_terminate;
@@ -64,19 +78,6 @@ uint32_t Server::get_serial_number()
 	return sn_future.get();
 }
 
-
-std::string Server::get_device_name()
-{
-	std::promise<void> signal_terminate;
-	utils::DeviceNameGetter device_name_getter(this, &sdo_service);
-	std::future<std::string> sn_future = std::async(&utils::DeviceNameGetter::get, &device_name_getter, signal_terminate.get_future());
-	if (sn_future.wait_for(std::chrono::milliseconds(1000)) != std::future_status::ready)
-	{
-		signal_terminate.set_value();
-		return sn_future.get();
-	}
-	return sn_future.get();
-}
 
 } // namespace ucanopen
 

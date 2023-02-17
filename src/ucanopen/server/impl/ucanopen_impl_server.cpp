@@ -22,7 +22,7 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 ODAccessStatus impl::Server::read(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	ODEntryIter entry_iter;
-	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_read_perm{});
+	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_read_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
@@ -48,7 +48,7 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, ExpeditedSdoData sdo_data)
 {
 	ODEntryIter entry_iter;
-	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
+	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
@@ -75,7 +75,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 ODAccessStatus impl::Server::write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value)
 {
 	ODEntryIter entry_iter;
-	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_write_perm{});
+	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_write_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
@@ -135,7 +135,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 ODAccessStatus impl::Server::exec(std::string_view category, std::string_view subcategory, std::string_view name)
 {
 	ODEntryIter entry_iter;
-	auto status = _find_od_entry(category, subcategory, name, entry_iter, check_exec_perm{});
+	auto status = find_od_entry(category, subcategory, name, entry_iter, traits::check_exec_perm{});
 	if (status != ODAccessStatus::success)
 	{
 		return status;
@@ -165,10 +165,10 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 }
 
 
-ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, check_read_perm)
+ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+				ODEntryIter& ret_entry_iter, traits::check_read_perm)
 {
-	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	ret_entry_iter = find_od_entry(category, subcategory, name);
 	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot read "
@@ -187,10 +187,10 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 }
 
 
-ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, check_write_perm)
+ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+				ODEntryIter& ret_entry_iter, traits::check_write_perm)
 {
-	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	ret_entry_iter = find_od_entry(category, subcategory, name);
 	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot write "
@@ -209,10 +209,10 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 }
 
 
-ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
-				ODEntryIter& ret_entry_iter, check_exec_perm)
+ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name,
+				ODEntryIter& ret_entry_iter, traits::check_exec_perm)
 {
-	ret_entry_iter = _find_od_entry(category, subcategory, name);
+	ret_entry_iter = find_od_entry(category, subcategory, name);
 	if (ret_entry_iter == _dictionary.entries.end())
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "

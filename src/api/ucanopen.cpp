@@ -182,11 +182,13 @@ unsigned int ucanopen_server_get_serial_number(const char* server_name)
 }
 
 
-void ucanopen_server_get_device_name(const char* server_name, char* retbuf, size_t bufsize)
+void ucanopen_server_read_string(const char* server_name, 
+				const char* category, const char* subcategory, const char* name, unsigned int timeout_ms,
+				char* retbuf, size_t bufsize)
 {
-	auto device_name = ucanopen_client->server(server_name)->get_device_name();
+	std::string ret = ucanopen_client->server(server_name)->read_string(category, subcategory, name, std::chrono::milliseconds(timeout_ms));
 	retbuf[0] = '\0';
-	strncat(retbuf, device_name.data(), bufsize-1);
+	strncat(retbuf, ret.data(), bufsize-1);
 }
 
 }
