@@ -9,11 +9,11 @@ impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<ca
 	, _socket(socket)
 	, _dictionary(dictionary)
 {
-	for (const auto& [key, entry] : _dictionary.entries)
+	for (const auto& [key, object] : _dictionary.entries)
 	{
 		// create aux dictionary for faster search by {category, subcategory, name}
 		_dictionary_aux.insert({
-				{entry.category, entry.subcategory, entry.name},
+				{object.category, object.subcategory, object.name},
 				_dictionary.entries.find(key)});
 	}
 }
@@ -62,7 +62,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 	message.data = sdo_data;
 
 	Log() << "[ucanopen/write] Write " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
-			<< " = " << sdo_data.to_string(entry_iter->second.data_type) << " request sent...\n";
+			<< " = " << sdo_data.to_string(entry_iter->second.type) << " request sent...\n";
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
 	return ODAccessStatus::success;
 }
@@ -79,7 +79,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 
 	ExpeditedSdoData sdo_data;
 
-	switch (entry_iter->second.data_type)
+	switch (entry_iter->second.type)
 	{
 		case OD_BOOL:
 			if (value == "TRUE" || value == "true" || value == "ON" || value == "on" || value == "1")
@@ -213,7 +213,7 @@ ODAccessStatus impl::Server::_find_od_entry(std::string_view category, std::stri
 				<< " - no such OD entry.\n";
 		return ODAccessStatus::not_found;
 	}
-	else if (ret_entry_iter->second.data_type != ODEntryDataType::OD_EXEC)
+	else if (ret_entry_iter->second.type != ODObjectType::OD_EXEC)
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 

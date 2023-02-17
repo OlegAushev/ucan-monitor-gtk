@@ -49,7 +49,7 @@ void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
 			Log() << syslog_messages[message_id] << '\n';
 		}
 	}
-	else if (entry_iter->second.category == _dictionary.config.config_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
+	else if (entry_iter->second.category == _dictionary.config.config_category && entry_iter->second.type == ucanopen::OD_ENUM16)
 	{
 		
 	}

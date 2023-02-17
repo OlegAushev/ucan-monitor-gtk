@@ -182,7 +182,7 @@ inline TpdoType opposite_pdo(RpdoType type)
 }
 
 
-enum ODEntryDataType
+enum ODObjectType
 {
 	OD_BOOL,
 	OD_INT16,
@@ -265,7 +265,7 @@ public:
 		return val;
 	}
 
-	std::string to_string(ODEntryDataType type) const
+	std::string to_string(ODObjectType type) const
 	{
 		switch (type)
 		{
@@ -416,7 +416,7 @@ enum class SdoType
 };
 
 
-enum ODEntryAccessPermission
+enum ODObjectAccessPermission
 {
 	OD_ACCESS_RW,
 	OD_ACCESS_RO,
@@ -424,34 +424,34 @@ enum ODEntryAccessPermission
 };
 
 
-struct ODEntryKey
+struct ODObjectKey
 {
 	unsigned int index;
 	unsigned int subindex;
 };
 
 
-inline bool operator<(const ODEntryKey& lhs, const ODEntryKey& rhs)
+inline bool operator<(const ODObjectKey& lhs, const ODObjectKey& rhs)
 {
 	return (lhs.index < rhs.index) || ((lhs.index == rhs.index) && (lhs.subindex < rhs.subindex));
 }
 
 
-struct ODEntryValue
+struct ODObject
 {
 	std::string_view category;
 	std::string_view subcategory;
 	std::string_view name;
 	std::string_view unit;
-	ODEntryDataType data_type;
-	ODEntryAccessPermission access_permission;
+	ODObjectType type;
+	ODObjectAccessPermission access_permission;
 
 	bool has_read_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }
 	bool has_write_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_WO); }
 };
 
 
-struct ODEntryValueAux
+struct ODObjectAux
 {
 	std::string_view category;
 	std::string_view subcategory;
@@ -459,7 +459,7 @@ struct ODEntryValueAux
 };
 
 
-inline bool operator<(const ODEntryValueAux& lhs, const ODEntryValueAux& rhs)
+inline bool operator<(const ODObjectAux& lhs, const ODObjectAux& rhs)
 {
 	return (lhs.category < rhs.category) 
 			|| ((lhs.category == rhs.category) && (lhs.subcategory < rhs.subcategory))
@@ -475,9 +475,9 @@ struct ObjectDictionaryConfig
 };
 
 
-using ObjectDictionaryEntries = std::map<ODEntryKey, ODEntryValue>;
-using ObjectDictionaryAux = std::map<ODEntryValueAux, std::map<ODEntryKey, ODEntryValue>::const_iterator>;
+using ObjectDictionaryEntries = std::map<ODObjectKey, ODObject>;
 using ODEntryIter = ObjectDictionaryEntries::const_iterator;
+using ObjectDictionaryAux = std::map<ODObjectAux, ODEntryIter>;
 
 
 struct ObjectDictionary

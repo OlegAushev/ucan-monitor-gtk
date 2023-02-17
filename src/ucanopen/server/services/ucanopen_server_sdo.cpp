@@ -39,7 +39,7 @@ FrameHandlingStatus ServerSdoService::handle_frame(const can_frame& frame)
 FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	ODEntryKey key = {sdo.index, sdo.subindex};
+	ODObjectKey key = {sdo.index, sdo.subindex};
 	auto entry_iter = _server->dictionary().entries.find(key);
 	if (entry_iter == _server->dictionary().entries.end())
 	{
@@ -47,7 +47,7 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 	}
 
 	SdoType sdo_type;
-	if (entry_iter->second.data_type == ODEntryDataType::OD_EXEC)
+	if (entry_iter->second.type == ODObjectType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
 		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
@@ -59,7 +59,7 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 		if (entry_iter->second.category != _server->dictionary().config.watch_category)
 		{
 			Log() << "[ucanopen/read] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
-					<< " = " << sdo.data.to_string(entry_iter->second.data_type) << '\n';
+					<< " = " << sdo.data.to_string(entry_iter->second.type) << '\n';
 		}
 	}
 
@@ -78,7 +78,7 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	ODEntryKey key = {sdo.index, sdo.subindex};
+	ODObjectKey key = {sdo.index, sdo.subindex};
 	auto entry_iter = _server->dictionary().entries.find(key);
 	if (entry_iter == _server->dictionary().entries.end())
 	{
@@ -86,7 +86,7 @@ FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& f
 	}
 
 	SdoType sdo_type;
-	if (entry_iter->second.data_type == ODEntryDataType::OD_EXEC)
+	if (entry_iter->second.type == ODObjectType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
 		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name

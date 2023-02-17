@@ -22,7 +22,7 @@ void Server::_handle_tsdo(ucanopen::SdoType sdo_type,
 			ucanopen::ODEntryIter entry_iter,
 			ucanopen::ExpeditedSdoData sdo_data)
 {
-	if (entry_iter->second.category == _dictionary.config.watch_category && entry_iter->second.data_type == ucanopen::OD_ENUM16)
+	if (entry_iter->second.category == _dictionary.config.watch_category && entry_iter->second.type == ucanopen::OD_ENUM16)
 	{
 		if (entry_iter->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size())
 		{

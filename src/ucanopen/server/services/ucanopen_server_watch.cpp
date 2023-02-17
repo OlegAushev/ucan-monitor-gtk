@@ -9,13 +9,13 @@ ServerWatchService::ServerWatchService(impl::Server* server, impl::SdoPublisher*
 {
 	_timepoint = std::chrono::steady_clock::now();
 
-	for (const auto& [key, entry] : _server->dictionary().entries)
+	for (const auto& [key, object] : _server->dictionary().entries)
 	{
 		// create watch entries list and data map
-		if (entry.category == _server->dictionary().config.watch_category)
+		if (object.category == _server->dictionary().config.watch_category)
 		{
-			_entries_list.push_back(entry.name);
-			_data.insert({entry.name, "..."});
+			_entries_list.push_back(object.name);
+			_data.insert({object.name, "..."});
 		}
 	}
 }
