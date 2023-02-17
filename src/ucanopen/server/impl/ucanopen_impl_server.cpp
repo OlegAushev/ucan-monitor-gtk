@@ -28,15 +28,17 @@ ODAccessStatus impl::Server::read(std::string_view category, std::string_view su
 		return status;
 	}
 
+	const auto& [key, object] = *entry_iter;
+
 	ExpeditedSdo message{};
 	message.cs = sdo_cs_codes::client_init_read;
-	message.index = entry_iter->first.index;
-	message.subindex = entry_iter->first.subindex;
+	message.index = key.index;
+	message.subindex = key.subindex;
 
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
-	if (entry_iter->second.category != _dictionary.config.watch_category)
+	if (object.category != _dictionary.config.watch_category)
 	{
-		Log() << "[ucanopen/read] Read " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+		Log() << "[ucanopen/read] Read " << object.category << "::" << object.subcategory << "::" << object.name
 				<< " request sent...\n";
 	}
 	return ODAccessStatus::success;
@@ -52,17 +54,19 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 		return status;
 	}
 
+	const auto& [key, object] = *entry_iter;
+
 	ExpeditedSdo message{};
 	message.cs = sdo_cs_codes::client_init_write;
 	message.expedited_transfer = 1;
 	message.data_size_indicated = 1;
 	message.data_empty_bytes = 0;
-	message.index = entry_iter->first.index;
-	message.subindex = entry_iter->first.subindex;
+	message.index = key.index;
+	message.subindex = key.subindex;
 	message.data = sdo_data;
 
-	Log() << "[ucanopen/write] Write " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
-			<< " = " << sdo_data.to_string(entry_iter->second.type) << " request sent...\n";
+	Log() << "[ucanopen/write] Write " << object.category << "::" << object.subcategory << "::" << object.name
+			<< " = " << sdo_data.to_string(object.type) << " request sent...\n";
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
 	return ODAccessStatus::success;
 }
@@ -77,9 +81,10 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 		return status;
 	}
 
+	const auto& [key, object] = *entry_iter;
 	ExpeditedSdoData sdo_data;
 
-	switch (entry_iter->second.type)
+	switch (object.type)
 	{
 		case OD_BOOL:
 			if (value == "TRUE" || value == "true" || value == "ON" || value == "on" || value == "1")
@@ -116,11 +121,11 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
 	message.expedited_transfer = 1;
 	message.data_size_indicated = 1;
 	message.data_empty_bytes = 0;
-	message.index = entry_iter->first.index;
-	message.subindex = entry_iter->first.subindex;
+	message.index = key.index;
+	message.subindex = key.subindex;
 	message.data = sdo_data;
 
-	Log() << "[ucanopen/write] Write " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+	Log() << "[ucanopen/write] Write " << object.category << "::" << object.subcategory << "::" << object.name
 			<< " = " << value << " request sent...\n";
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
 	return ODAccessStatus::success;
@@ -136,22 +141,24 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 		return status;
 	}
 
+	const auto& [key, object] = *entry_iter;
+
 	ExpeditedSdo message{};
-	if (entry_iter->second.has_read_permission())
+	if (object.has_read_permission())
 	{
 		message.cs = sdo_cs_codes::client_init_read;
 	}
-	else if (entry_iter->second.has_write_permission())
+	else if (object.has_write_permission())
 	{
 		message.cs = sdo_cs_codes::client_init_write;
 		message.expedited_transfer = 1;
 		message.data_size_indicated = 1;
 		message.data_empty_bytes = 0;
 	}
-	message.index = entry_iter->first.index;
-	message.subindex = entry_iter->first.subindex;
+	message.index = key.index;
+	message.subindex = key.subindex;
 
-	Log() << "[ucanopen/exec] Execute " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+	Log() << "[ucanopen/exec] Execute " << object.category << "::" << object.subcategory << "::" << object.name
 				<< " request sent...\n";
 	_socket->send(create_frame(CobType::rsdo, _node_id, message.to_payload()));
 	return ODAccessStatus::success;

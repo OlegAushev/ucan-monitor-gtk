@@ -39,27 +39,28 @@ FrameHandlingStatus ServerSdoService::handle_frame(const can_frame& frame)
 FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	ODObjectKey key = {sdo.index, sdo.subindex};
-	auto entry_iter = _server->dictionary().entries.find(key);
+	auto entry_iter = _server->dictionary().entries.find({sdo.index, sdo.subindex});
 	if (entry_iter == _server->dictionary().entries.end())
 	{
 		return FrameHandlingStatus::object_not_found;
 	}
 
+	const auto& [key, object] = *entry_iter;
+
 	SdoType sdo_type;
-	if (entry_iter->second.type == ODObjectType::OD_EXEC)
+	if (object.type == ODObjectType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
-		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+		Log() << "[ucanopen/exec] " << object.category << "::" << object.subcategory << "::" << object.name
 				<< " executed.\n";
 	}
 	else
 	{
 		sdo_type = SdoType::response_to_read;
-		if (entry_iter->second.category != _server->dictionary().config.watch_category)
+		if (object.category != _server->dictionary().config.watch_category)
 		{
-			Log() << "[ucanopen/read] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
-					<< " = " << sdo.data.to_string(entry_iter->second.type) << '\n';
+			Log() << "[ucanopen/read] " << object.category << "::" << object.subcategory << "::" << object.name
+					<< " = " << sdo.data.to_string(object.type) << '\n';
 		}
 	}
 
@@ -78,24 +79,25 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
 FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& frame)
 {
 	ExpeditedSdo sdo(frame.data);
-	ODObjectKey key = {sdo.index, sdo.subindex};
-	auto entry_iter = _server->dictionary().entries.find(key);
+	auto entry_iter = _server->dictionary().entries.find({sdo.index, sdo.subindex});
 	if (entry_iter == _server->dictionary().entries.end())
 	{
 		return FrameHandlingStatus::object_not_found;
 	}
 
+	const auto& [key, object] = *entry_iter;
+
 	SdoType sdo_type;
-	if (entry_iter->second.type == ODObjectType::OD_EXEC)
+	if (object.type == ODObjectType::OD_EXEC)
 	{
 		sdo_type = SdoType::response_to_exec;
-		Log() << "[ucanopen/exec] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+		Log() << "[ucanopen/exec] " << object.category << "::" << object.subcategory << "::" << object.name
 				<< " executed.\n";
 	}
 	else
 	{
 		sdo_type = SdoType::response_to_write;
-		Log() << "[ucanopen/write] " << entry_iter->second.category << "::" << entry_iter->second.subcategory << "::" << entry_iter->second.name
+		Log() << "[ucanopen/write] " << object.category << "::" << object.subcategory << "::" << object.name
 				<< " updated.\n";
 	}
 
