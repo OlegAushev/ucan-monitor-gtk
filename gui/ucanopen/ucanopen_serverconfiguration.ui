@@ -92,6 +92,19 @@
 						<child>
 							<object class="AdwPreferencesGroup">
 								<property name="title">Configuration</property>
+								<property name="header-suffix">
+									<object class="GtkButton" id="button_refresh_value">
+									  	<property name="child">
+											<object class="AdwButtonContent">
+										  		<property name="icon-name">view-refresh-symbolic</property>
+										  		<property name="label" translatable="yes">Refresh</property>
+											</object>
+									  	</property>
+									  	<style>
+											<class name="flat"/>
+										</style>
+									</object>
+								</property>
 								
 								<child>
 									<object class="AdwComboRow" id="comborow_category">
@@ -101,16 +114,16 @@
 								</child>
 
 								<child>
-									<object class="AdwComboRow" id="comborow_entry">
-										<property name="title">Entry</property>
+									<object class="AdwComboRow" id="comborow_object">
+										<property name="title">Object</property>
 										<property name="width-request">400</property>
-										<child type="suffix">
+										<!--child type="suffix">
 											<object class="GtkButton" id="button_read">
 												<property name="label">Read</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
 											</object>
-										</child>
+										</child-->
 									</object>
 								</child>
 
@@ -118,14 +131,15 @@
 									<object class="AdwEntryRow" id="entryrow_value">
 										<property name="title">Value</property>
 										<property name="input-purpose">number</property>
+										<property name="show-apply-button">true</property>
 
-										<child type="suffix">
+										<!--child type="suffix">
 											<object class="GtkButton" id="button_write">
 												<property name="label">Write</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
 											</object>
-										</child>
+										</child-->
 									</object>
 								</child>
 

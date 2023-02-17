@@ -87,7 +87,7 @@ size_t ucanopen_server_get_config_categories(const char* server_name, char** ret
 	}
 
 	size_t i = 0;
-	for (auto [category, names] : ucanopen_client->server(server_name)->config_service.entries_list())
+	for (auto [category, objects] : ucanopen_client->server(server_name)->config_service.entries_list())
 	{
 		retbuf[i][0] = '\0';
 		strncat(retbuf[i++], category.data(), str_size);
@@ -97,20 +97,20 @@ size_t ucanopen_server_get_config_categories(const char* server_name, char** ret
 }
 
 
-size_t ucanopen_server_get_config_entries(const char* server_name, const char* category, char** retbuf, size_t str_count, size_t str_size)
+size_t ucanopen_server_get_config_objects(const char* server_name, const char* category, char** retbuf, size_t str_count, size_t str_size)
 {
-	auto entries = ucanopen_client->server(server_name)->config_service.entries_list().at(category);
-	size_t retval = entries.size();
+	auto objects = ucanopen_client->server(server_name)->config_service.entries_list().at(category);
+	size_t retval = objects.size();
 	if (retval >= str_count)
 	{
 		return 0;
 	}
 	
 	size_t i = 0;
-	for (auto entry : entries)
+	for (auto object : objects)
 	{
 		retbuf[i][0] = '\0';
-		strncat(retbuf[i++], entry.data(), str_size);
+		strncat(retbuf[i++], object.data(), str_size);
 	}
 
 	return retval;

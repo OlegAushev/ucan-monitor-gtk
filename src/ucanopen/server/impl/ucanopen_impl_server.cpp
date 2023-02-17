@@ -144,17 +144,10 @@ ODAccessStatus impl::Server::exec(std::string_view category, std::string_view su
 	const auto& [key, object] = *entry;
 
 	ExpeditedSdo message{};
-	if (object.has_read_permission())
-	{
-		message.cs = sdo_cs_codes::client_init_read;
-	}
-	else if (object.has_write_permission())
-	{
-		message.cs = sdo_cs_codes::client_init_write;
-		message.expedited_transfer = 1;
-		message.data_size_indicated = 1;
-		message.data_empty_bytes = 0;
-	}
+	message.cs = sdo_cs_codes::client_init_write;
+	message.expedited_transfer = 1;
+	message.data_size_indicated = 1;
+	message.data_empty_bytes = 0;
 	message.index = key.index;
 	message.subindex = key.subindex;
 
@@ -220,7 +213,8 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
 				<< " - no such OD entry.\n";
 		return ODAccessStatus::not_found;
 	}
-	else if (ret_entry->second.type != ODObjectType::OD_EXEC)
+	else if ((ret_entry->second.type != ODObjectType::OD_EXEC)
+			|| (ret_entry->second.has_write_permission() == false))
 	{
 		Log() << "[ucanopen] '" << _name << "' server: cannot execute "
 				<< category << "::" << subcategory << "::" << name 

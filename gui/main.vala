@@ -49,7 +49,7 @@ extern void ucanopen_client_set_watch_enabled(bool is_enabled);
 extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* retbuf, size_t bufsize);
 extern size_t ucanopen_server_get_config_categories(string server_name, char** retbuf, size_t str_count, size_t str_size);
-extern size_t ucanopen_server_get_config_entries(string server_name, string category, char** retbuf, size_t str_count, size_t str_size);
+extern size_t ucanopen_server_get_config_objects(string server_name, string category, char** retbuf, size_t str_count, size_t str_size);
 extern bool ucanopen_server_is_heartbeat_ok(string server_name);
 extern void ucanopen_server_get_nmt_state(string server_name, char* retbuf, size_t bufsize);
 extern bool ucanopen_server_is_tpdo_ok(string server_name, uint tpdo_num);

@@ -22,13 +22,17 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 
 {{0x1018, 0x04}, {"sys", "info", "serial_number", "", OD_UINT32, OD_ACCESS_RO}},
 
+{{0x2000, 0x01}, {"sys", "ctl", "reset_device", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2000, 0x02}, {"sys", "ctl", "reset_errors", "", OD_EXEC, OD_ACCESS_WO}},
 
-{{0x2000, 0x00}, {"sys", "ctl", "reset_device", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2000, 0x01}, {"sys", "ctl", "reset_errors", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
+{{0x5000, 0x02}, {"watch", "watch", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
 
-{{0x5000, 0x00}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
-{{0x5000, 0x01}, {"watch", "watch", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
-
+{{0x3000, 0x01}, {"config", "group 1", "parameter 1", "", OD_UINT32, OD_ACCESS_RW}},
+{{0x3000, 0x02}, {"config", "group 1", "parameter 2", "", OD_FLOAT32, OD_ACCESS_RW}},
+{{0x3001, 0x01}, {"config", "group 2", "parameter 3", "", OD_UINT32, OD_ACCESS_RW}},
+{{0x3001, 0x02}, {"config", "group 2", "parameter 4", "", OD_FLOAT32, OD_ACCESS_RW}},
+{{0x3001, 0x03}, {"config", "group 2", "parameter 5", "", OD_UINT32, OD_ACCESS_RW}},
 }
 };
 

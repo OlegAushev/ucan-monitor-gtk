@@ -25,16 +25,14 @@ public class ServerConfiguration : Adw.Bin
 
 	[GtkChild]
 	private unowned Adw.ComboRow comborow_category;
-	
 	[GtkChild]
-	private unowned Adw.ComboRow comborow_entry;
+	private unowned Adw.ComboRow comborow_object;
 	[GtkChild]
-	private unowned Gtk.Button button_read;
-	
+	private unowned Gtk.Button button_refresh_value;
 	[GtkChild]
 	private unowned Adw.EntryRow entryrow_value;
-	[GtkChild]
-	private unowned Gtk.Button button_write;
+	//[GtkChild]
+	//private unowned Gtk.Button button_write;
 	
 	[GtkChild]
 	private unowned Gtk.Button button_apply;
@@ -42,17 +40,15 @@ public class ServerConfiguration : Adw.Bin
 	private unowned Gtk.Button button_restore;
 
 
-	private const size_t _categories_count_max = 32;
-	private const size_t _categories_len_max = 32;
-	private string _categories[_categories_count_max];
-	private size_t _categories_count;
+	private const size_t _category_count_max = 32;
+	private const size_t _category_str_size = 32;
+	private string _categories[_category_count_max];
 	private Gtk.StringList _categories_model;
 
-	private const size_t _entries_count_max = 32;
-	private const size_t _entries_len_max = 32;
-	private string _entries[_entries_count_max];
-	private size_t _entries_count;
-	private Gtk.StringList _entries_model;
+	private const size_t _object_count_max = 32;
+	private const size_t _object_str_size = 32;
+	private string _objects[_object_count_max];
+	private Gtk.StringList _objects_model;
 
 
 	public ServerConfiguration() {}
@@ -72,74 +68,42 @@ public class ServerConfiguration : Adw.Bin
 		});
 
 
-		for (size_t i = 0; i < _categories_count_max; ++i)
+		for (size_t i = 0; i < _category_count_max; ++i)
 		{
-			_categories[i] = string.nfill(_categories_len_max, '\0');
+			_categories[i] = string.nfill(_category_str_size, '\0');
 		}
 
-		for (size_t i = 0; i < _entries_count_max; ++i)
+		for (size_t i = 0; i < _object_count_max; ++i)
 		{
-			_entries[i] = string.nfill(_entries_len_max, '\0');
+			_objects[i] = string.nfill(_object_str_size, '\0');
 		}
 
 		_categories_model = new Gtk.StringList(null);
 		comborow_category.model = _categories_model;
-		_entries_model = new Gtk.StringList(null);
-		comborow_entry.model = _entries_model;
+		_objects_model = new Gtk.StringList(null);
+		comborow_object.model = _objects_model;
 
-		size_t _categories_count = ucanopen_server_get_config_categories(Backend.Ucanopen.server,
-				_categories, _categories_count_max, _categories_len_max);
+		size_t category_count = ucanopen_server_get_config_categories(Backend.Ucanopen.server,
+				_categories, _category_count_max, _category_str_size);
 
-		if (_categories_count != 0)
+		if (category_count != 0)
 		{
-			for (size_t i = 0; i < _categories_count; ++i)
+			for (size_t i = 0; i < category_count; ++i)
 			{
 				_categories_model.append(_categories[i]);
 			}
 
-			size_t _entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
-					_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
-			for (size_t i = 0; i < _entries_count; ++i)
+			size_t object_count = ucanopen_server_get_config_objects(Backend.Ucanopen.server,
+					_categories[comborow_category.selected], _objects, _object_count_max, _object_str_size);
+			for (size_t i = 0; i < object_count; ++i)
 			{
-				_entries_model.append(_entries[i]);
+				_objects_model.append(_objects[i]);
 			}
 
-			comborow_category.notify["selected"].connect((s,p) => {
-				for (size_t i = 0; i < _entries_count; ++i)
-				{
-					_entries_model.remove(0);
-				}
-
-				_entries_count = ucanopen_server_get_config_entries(Backend.Ucanopen.server,
-						_categories[comborow_category.selected], _entries, _entries_count_max, _entries_len_max);
-				for (size_t i = 0; i < _entries_count; ++i)
-				{
-					_entries_model.append(_entries[i]);
-				}	
-			});
-
-			button_read.clicked.connect(() => {
-				ucanopen_server_read(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
-						_categories[comborow_category.selected], _entries[comborow_entry.selected]);
-			});
-
-			button_write.clicked.connect(() => {
-				float val;
-				bool is_number = float.try_parse(entryrow_value.text, out val);
-				if (is_number && entryrow_value.text.length != 0)
-				{
-					ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
-							_categories[comborow_category.selected], _entries[comborow_entry.selected],
-							entryrow_value.text);
-				}
-				else
-				{
-					string message = string.join(null, "Bad value: ", entryrow_value.text);
-					Adw.Toast toast = new Adw.Toast(message);
-					toast.timeout = 1;
-					toast_overlay.add_toast(toast);
-				}
-			});
+			comborow_category.notify["selected"].connect(on_category_selected);
+			comborow_object.notify["selected"].connect(on_object_selected);
+			button_refresh_value.clicked.connect(on_value_refresh);
+			entryrow_value.apply.connect(on_value_write);
 		}
 
 		button_apply.clicked.connect(() => {
@@ -169,6 +133,57 @@ public class ServerConfiguration : Adw.Bin
 			});
 			dialog.present();		
 		});
+	}
+
+	void on_object_selected()
+	{
+		string buf = string.nfill(32, '\0');
+		ucanopen_server_read_numval(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
+				_categories[comborow_category.selected], _objects[comborow_object.selected],
+				500, buf, 32);
+		entryrow_value.text = buf;
+	}
+
+	void on_category_selected()
+	{
+		comborow_object.notify["selected"].disconnect(on_object_selected);
+		_objects_model.splice(0, _objects_model.get_n_items(), null);
+		size_t object_count = ucanopen_server_get_config_objects(Backend.Ucanopen.server,
+				_categories[comborow_category.selected], _objects, _object_count_max, _object_str_size);
+		for (size_t i = 0; i < object_count; ++i)
+		{
+			_objects_model.append(_objects[i]);
+		}
+		comborow_object.notify["selected"].connect(on_object_selected);
+		on_object_selected();
+	}
+
+	void on_value_refresh()
+	{
+		string buf = string.nfill(32, '\0');
+		ucanopen_server_read_numval(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
+				_categories[comborow_category.selected], _objects[comborow_object.selected],
+				500, buf, 32);
+		entryrow_value.text = buf;
+	}
+
+	void on_value_write()
+	{
+		float val;
+		bool is_number = float.try_parse(entryrow_value.text, out val);
+		if (is_number && entryrow_value.text.length != 0)
+		{
+			ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
+					_categories[comborow_category.selected], _objects[comborow_object.selected],
+					entryrow_value.text);
+		}
+		else
+		{
+			string message = string.join(null, "Bad value: ", entryrow_value.text);
+			Adw.Toast toast = new Adw.Toast(message);
+			toast.timeout = 1;
+			toast_overlay.add_toast(toast);
+		}
 	}
 }
 
