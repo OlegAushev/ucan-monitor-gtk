@@ -11,16 +11,31 @@ public class ServerConfiguration : Adw.Bin
 {
 	[GtkChild]
 	private unowned Adw.ToastOverlay toast_overlay;
+
+	[GtkChild]
+	private unowned Gtk.Button button_refresh_about;
+	[GtkChild]
+	private unowned Gtk.Label label_device_name;
+	[GtkChild]
+	private unowned Gtk.Label label_hardware_version;
+	[GtkChild]
+	private unowned Gtk.Label label_firmware_version;
+	[GtkChild]
+	private unowned Gtk.Label label_serial_number;
+
 	[GtkChild]
 	private unowned Adw.ComboRow comborow_category;
+	
 	[GtkChild]
 	private unowned Adw.ComboRow comborow_entry;
 	[GtkChild]
 	private unowned Gtk.Button button_read;
+	
 	[GtkChild]
 	private unowned Adw.EntryRow entryrow_value;
 	[GtkChild]
 	private unowned Gtk.Button button_write;
+	
 	[GtkChild]
 	private unowned Gtk.Button button_apply;
 	[GtkChild]
@@ -44,6 +59,19 @@ public class ServerConfiguration : Adw.Bin
 
 	construct
 	{
+		button_refresh_about.clicked.connect(() => {
+			string buf = string.nfill(32, '0');
+			ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "device_name", 500, buf, 32);
+			label_device_name.label = buf;
+			ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "hardware_version", 500, buf, 32);
+			label_hardware_version.label = buf;
+			ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "firmware_version", 500, buf, 32);
+			label_firmware_version.label = buf;
+			ucanopen_server_read_numval(Backend.Ucanopen.server, "sys", "info", "serial_number", 500, buf, 32);
+			label_serial_number.label = buf;
+		});
+
+
 		for (size_t i = 0; i < _categories_count_max; ++i)
 		{
 			_categories[i] = string.nfill(_categories_len_max, '\0');

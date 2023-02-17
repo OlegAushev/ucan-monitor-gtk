@@ -31,7 +31,7 @@
 					</object>
 				</child>
 				<!-- LOG BUTTON -->
-				<child type="end">
+				<child type="start">
 					<object class="GtkToggleButton">
 						<property name="icon-name">media-view-subtitles-symbolic</property>
 						<property name="active" bind-source="log_textview" bind-property="visible" bind-flags="sync-create|bidirectional"/>

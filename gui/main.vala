@@ -47,19 +47,22 @@ extern void ucanopen_client_set_sync_enabled(bool is_enabled);
 extern void ucanopen_client_set_sync_period(int period);
 extern void ucanopen_client_set_watch_enabled(bool is_enabled);
 extern void ucanopen_client_set_watch_period(int period);
-extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* buf, size_t len);
-extern size_t ucanopen_server_get_config_categories(string server_name, char** buf, size_t count_max, size_t len_max);
-extern size_t ucanopen_server_get_config_entries(string server_name, string category, char** buf, size_t count_max, size_t len_max);
+extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* retbuf, size_t bufsize);
+extern size_t ucanopen_server_get_config_categories(string server_name, char** retbuf, size_t str_count, size_t str_size);
+extern size_t ucanopen_server_get_config_entries(string server_name, string category, char** retbuf, size_t str_count, size_t str_size);
 extern bool ucanopen_server_is_heartbeat_ok(string server_name);
-extern void ucanopen_server_get_nmt_state(string server_name, char* buf, size_t len);
+extern void ucanopen_server_get_nmt_state(string server_name, char* retbuf, size_t bufsize);
 extern bool ucanopen_server_is_tpdo_ok(string server_name, uint tpdo_num);
 extern ulong ucanopen_server_get_tpdo_data(string server_name, uint tpdo_num);
 extern void ucanopen_server_read(string server_name, string category, string subcategory, string name);
 extern void ucanopen_server_write(string server_name, string category, string subcategory, string name, string value);
 extern void ucanopen_server_exec(string server_name, string category, string subcategory, string name);
 
+extern void ucanopen_server_read_string(string server_name, string category, string subcategory, string name, uint timeout_ms, char* retbuf, size_t bufsize);
+extern void ucanopen_server_read_numval(string server_name, string category, string subcategory, string name, uint timeout_ms, char* retbuf, size_t bufsize);
+
 // logger
-extern bool log_get_message(string buf, size_t len);
+extern bool log_get_message(string retbuf, size_t bufsize);
 
 // srmdrive
 extern void srmdrive_controller_set_power_enabled(bool is_enabled);
@@ -78,16 +81,16 @@ extern void crd600_set_drive2_speed_ref(double val);
 extern void crd600_set_drive1_torque_ref(double val_pu);
 extern void crd600_set_drive2_torque_ref(double val_pu);
 
-extern void crd600_tpdo1_get_drive1_state(char* buf, size_t len);
-extern void crd600_tpdo1_get_drive2_state(char* buf, size_t len);
-extern void crd600_tpdo1_get_drive1_ref(char* buf, size_t len);
-extern void crd600_tpdo1_get_drive2_ref(char* buf, size_t len);
+extern void crd600_tpdo1_get_drive1_state(char* retbuf, size_t bufsize);
+extern void crd600_tpdo1_get_drive2_state(char* retbuf, size_t bufsize);
+extern void crd600_tpdo1_get_drive1_ref(char* retbuf, size_t bufsize);
+extern void crd600_tpdo1_get_drive2_ref(char* retbuf, size_t bufsize);
 extern bool crd600_tpdo1_get_drive1_run();
 extern bool crd600_tpdo1_get_drive2_run();
 extern bool crd600_tpdo1_get_error();
 extern bool crd600_tpdo1_get_warning();
 extern bool crd600_tpdo1_get_overheat();
-extern void crd600_tpdo1_get_control_loop_type(char* buf, size_t len);
+extern void crd600_tpdo1_get_control_loop_type(char* retbuf, size_t bufsize);
 
 /// bmsmain21
 extern double bmsmain_tpdo1_get_voltage();
@@ -101,8 +104,8 @@ extern void launchpad_set_client_value(uint tpdo_num, double value);
 extern void launchpad_set_server_value(uint rpdo_num, double value);
 
 /// ucanopen_devices
-extern size_t ucanopen_devices_get_error_names(string server_name, char** buf, size_t count_max, size_t len_max);
-extern size_t ucanopen_devices_get_warning_names(string server_name, char** buf, size_t count_max, size_t len_max);
+extern size_t ucanopen_devices_get_error_names(string server_name, char** bufsize, size_t str_count, size_t str_size);
+extern size_t ucanopen_devices_get_warning_names(string server_name, char** bufsize, size_t str_count, size_t str_size);
 extern uint ucanopen_devices_get_error_code(string server_name);
 extern uint ucanopen_devices_get_warning_code(string server_name);
 

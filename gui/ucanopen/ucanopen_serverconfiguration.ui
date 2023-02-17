@@ -5,9 +5,90 @@
 		<child>
 			<object class="AdwToastOverlay" id="toast_overlay">
 				<property name="child">
-
-
 					<object class="AdwPreferencesPage">
+						<child>
+							<object class="AdwPreferencesGroup">
+								<property name="title">About</property>
+								<property name="header-suffix">
+									<object class="GtkButton" id="button_refresh_about">
+									  	<property name="child">
+											<object class="AdwButtonContent">
+										  		<property name="icon-name">view-refresh-symbolic</property>
+										  		<property name="label" translatable="yes">Refresh</property>
+											</object>
+									  	</property>
+									  	<style>
+											<class name="flat"/>
+										</style>
+									</object>
+								</property>
+			  
+								<child>
+									<object class="AdwActionRow">
+										<child type="prefix">
+											<object class="GtkLabel">
+												<property name="label">Device Name</property>
+											</object>
+										</child>
+
+										<child type="suffix">
+											<object class="GtkLabel" id="label_device_name">
+												<property name="label">n/a</property>
+											</object>
+										</child>
+									</object>
+								</child>
+
+								<child>
+									<object class="AdwActionRow">
+										<child type="prefix">
+											<object class="GtkLabel">
+												<property name="label">Hardware Version</property>
+											</object>
+										</child>
+
+										<child type="suffix">
+											<object class="GtkLabel" id="label_hardware_version">
+												<property name="label">n/a</property>
+											</object>
+										</child>
+									</object>
+								</child>
+
+								<child>
+									<object class="AdwActionRow">
+										<child type="prefix">
+											<object class="GtkLabel">
+												<property name="label">Firmware Version</property>
+											</object>
+										</child>
+
+										<child type="suffix">
+											<object class="GtkLabel" id="label_firmware_version">
+												<property name="label">n/a</property>
+											</object>
+										</child>
+									</object>
+								</child>
+
+								<child>
+									<object class="AdwActionRow">
+										<child type="prefix">
+											<object class="GtkLabel">
+												<property name="label">Device S/N</property>
+											</object>
+										</child>
+
+										<child type="suffix">
+											<object class="GtkLabel" id="label_serial_number">
+												<property name="label">n/a</property>
+											</object>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+
 						<child>
 							<object class="AdwPreferencesGroup">
 								<property name="title">Configuration</property>

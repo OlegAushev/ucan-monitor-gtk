@@ -191,5 +191,15 @@ void ucanopen_server_read_string(const char* server_name,
 	strncat(retbuf, ret.data(), bufsize-1);
 }
 
+
+void ucanopen_server_read_numval(const char* server_name, 
+				const char* category, const char* subcategory, const char* name, unsigned int timeout_ms,
+				char* retbuf, size_t bufsize)
+{
+	std::string ret = ucanopen_client->server(server_name)->read_numval(category, subcategory, name, std::chrono::milliseconds(timeout_ms));
+	retbuf[0] = '\0';
+	strncat(retbuf, ret.data(), bufsize-1);
+}
+
 }
 
