@@ -421,6 +421,7 @@ enum ODObjectAccessPermission
 	OD_ACCESS_RW,
 	OD_ACCESS_RO,
 	OD_ACCESS_WO,
+	OD_ACCESS_CONST
 };
 
 
@@ -446,7 +447,7 @@ struct ODObject
 	ODObjectType type;
 	ODObjectAccessPermission access_permission;
 
-	bool has_read_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_RO); }
+	bool has_read_permission() const { return access_permission != OD_ACCESS_WO; }
 	bool has_write_permission() const { return (access_permission == OD_ACCESS_RW) || (access_permission == OD_ACCESS_WO); }
 };
 
