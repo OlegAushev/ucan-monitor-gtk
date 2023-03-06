@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "../impl/ucanopen_impl_server.h"
-#include "ucanopen_server_watch.h"
+#include "../impl/impl_server.h"
+#include "server_watch_service.h"
 
 
 namespace ucanopen {

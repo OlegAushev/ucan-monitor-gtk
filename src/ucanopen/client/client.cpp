@@ -1,4 +1,4 @@
-#include "ucanopen_client.h"
+#include "client.h"
 
 
 namespace ucanopen {

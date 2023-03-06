@@ -2,7 +2,7 @@
 
 
 #include "../ucanopen_def.h"
-#include "../server/ucanopen_server.h"
+#include "../server/server.h"
 #include <cansocket/cansocket.h>
 #include <sstream>
 #include <iomanip>

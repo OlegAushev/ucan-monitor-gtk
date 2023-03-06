@@ -1,14 +1,14 @@
 #pragma once
 
 
-#include "impl/ucanopen_impl_server.h"
-#include "services/ucanopen_server_heartbeat.h"
-#include "services/ucanopen_server_tpdo.h"
-#include "services/ucanopen_server_rpdo.h"
-#include "services/ucanopen_server_watch.h"
-#include "services/ucanopen_server_config.h"
-#include "services/ucanopen_server_sdo.h"
-#include "utils/ucanopen_server_od_utils.h"
+#include "impl/impl_server.h"
+#include "services/server_heartbeat_service.h"
+#include "services/server_tpdo_service.h"
+#include "services/server_rpdo_service.h"
+#include "services/server_watch_service.h"
+#include "services/server_config_service.h"
+#include "services/server_sdo_service.h"
+#include "utils/server_od_utils.h"
 #include <atomic>
 #include <functional>
 #include <chrono>

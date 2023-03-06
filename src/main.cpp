@@ -1,4 +1,4 @@
-#include <ucanopen/client/ucanopen_client.h>
+#include <ucanopen/client/client.h>
 #include <ucanopen_devices/srmdrive/server/srmdrive_server.h>
 #include <ucanopen_devices/crd600/server/crd600_server.h>
 #include <ucanopen_devices/launchpad/server/launchpad_server.h>

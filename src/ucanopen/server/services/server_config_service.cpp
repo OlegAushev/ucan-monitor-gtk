@@ -1,4 +1,4 @@
-#include "ucanopen_server_config.h"
+#include "server_config_service.h"
 
 
 namespace ucanopen {

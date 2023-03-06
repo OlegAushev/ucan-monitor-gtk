@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <ucanopen/server/ucanopen_server.h>
+#include <ucanopen/server/server.h>
 #include "crd600_def.h"
 #include <log/log.h>
 

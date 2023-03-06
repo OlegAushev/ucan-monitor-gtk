@@ -1,4 +1,4 @@
-#include "ucanopen_impl_server.h"
+#include "impl_server.h"
 
 
 namespace ucanopen {

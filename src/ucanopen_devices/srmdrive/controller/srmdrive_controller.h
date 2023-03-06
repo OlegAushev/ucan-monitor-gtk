@@ -2,7 +2,7 @@
 
 
 #include <algorithm>
-#include "ucanopen/server/ucanopen_server.h"
+#include "ucanopen/server/server.h"
 #include "../server/srmdrive_def.h"
 
 

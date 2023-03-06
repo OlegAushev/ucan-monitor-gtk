@@ -1,4 +1,4 @@
-#include "ucanopen/client/ucanopen_client.h"
+#include "ucanopen/client/client.h"
 #include "log/log.h"
 #include <cassert>
 

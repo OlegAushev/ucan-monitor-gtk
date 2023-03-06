@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "ucanopen/server/ucanopen_server.h"
+#include "ucanopen/server/server.h"
 #include "srmdrive_def.h"
 #include "../controller/srmdrive_controller.h"
 #include "log/log.h"

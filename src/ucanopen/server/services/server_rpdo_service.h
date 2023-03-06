@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../impl/ucanopen_impl_server.h"
+#include "../impl/impl_server.h"
 #include <functional>
 
 

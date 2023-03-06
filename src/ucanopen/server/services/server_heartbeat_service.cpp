@@ -1,4 +1,4 @@
-#include "ucanopen_server_heartbeat.h"
+#include "server_heartbeat_service.h"
 
 
 namespace ucanopen {
