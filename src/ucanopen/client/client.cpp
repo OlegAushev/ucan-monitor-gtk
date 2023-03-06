@@ -30,8 +30,8 @@ Client::~Client()
 
 void Client::set_node_id(NodeId node_id)
 {
-	Log() << "[ucanopen] Setting client ID = " << node_id.value()
-			<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
+	Log() << "[ucanopen] Setting client ID = " << node_id.get()
+			<< " (0x" << std::hex << node_id.get() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{
@@ -53,7 +53,7 @@ void Client::set_node_id(NodeId node_id)
 void Client::register_server(std::shared_ptr<Server> server)
 {
 	Log() << "[ucanopen] Adding '" << server->name() << "' server ID 0x" 
-			<< std::hex << server->node_id().value() << std::dec << " to client... ";
+			<< std::hex << server->node_id().get() << std::dec << " to client... ";
 
 	auto server_same_name = std::find_if(_servers.begin(), _servers.end(), 
 		[server](const auto& s)
@@ -73,14 +73,14 @@ void Client::register_server(std::shared_ptr<Server> server)
 		});
 	if (server_same_id != _servers.end())
 	{
-		Log() << "failed: server with ID 0x" << std::hex << server->node_id().value() << std::dec
+		Log() << "failed: server with ID 0x" << std::hex << server->node_id().get() << std::dec
 				<< " already added to client.\n";
 		return;
 	}
 
 	if (server->node_id() == _node_id)
 	{
-		Log() << "failed: client has the same ID 0x" << std::hex << server->node_id().value() << std::dec << '\n';
+		Log() << "failed: client has the same ID 0x" << std::hex << server->node_id().get() << std::dec << '\n';
 		return;
 	}
 
@@ -93,8 +93,8 @@ void Client::register_server(std::shared_ptr<Server> server)
 
 void Client::set_server_node_id(std::string_view name, NodeId node_id)
 {
-	Log() << "[ucanopen] Setting '" << name << "' server ID = " << node_id.value()
-				<< " (0x" << std::hex << node_id.value() << std::dec << ")... ";
+	Log() << "[ucanopen] Setting '" << name << "' server ID = " << node_id.get()
+				<< " (0x" << std::hex << node_id.get() << std::dec << ")... ";
 
 	if (!node_id.is_valid())
 	{

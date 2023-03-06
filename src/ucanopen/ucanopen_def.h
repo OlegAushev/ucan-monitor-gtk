@@ -48,12 +48,12 @@ private:
 	unsigned int _value;
 public:
 	explicit NodeId(unsigned int value) : _value(value) {}
-	unsigned int value() const { return _value; }
+	unsigned int get() const { return _value; }
 	bool is_valid() const { return (_value >= 1) && (_value <= 127); }
 };
 
 
-inline bool operator==(const NodeId& lhs, const NodeId& rhs) { return lhs.value() == rhs.value(); }
+inline bool operator==(const NodeId& lhs, const NodeId& rhs) { return lhs.get() == rhs.get(); }
 
 
 enum class NmtState
@@ -113,7 +113,7 @@ inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id)
 	{
 		return cob_function_codes[static_cast<size_t>(cob_type)];
 	}
-	return cob_function_codes[static_cast<size_t>(cob_type)] + node_id.value();
+	return cob_function_codes[static_cast<size_t>(cob_type)] + node_id.get();
 }
 
 

@@ -18,7 +18,7 @@ extern "C" {
 
 unsigned int ucanopen_client_get_node_id()
 {
-	return ucanopen_client->node_id().value();
+	return ucanopen_client->node_id().get();
 }
 
 
