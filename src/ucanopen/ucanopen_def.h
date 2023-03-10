@@ -378,7 +378,7 @@ struct AbortSdo
 
 enum class SdoAbortCode : uint32_t
 {
-	none 				= 0,
+	no_error 				= 0,
 	invalid_cs 			= 0x05040001,
 	unsupported_access 		= 0x06010000,
 	read_access_wo 			= 0x06010001,
@@ -393,7 +393,7 @@ enum class SdoAbortCode : uint32_t
 
 
 const std::map<SdoAbortCode, std::string_view> sdo_abort_messages = {
-	{SdoAbortCode::none, "no error"},
+	{SdoAbortCode::no_error, "no error"},
 	{SdoAbortCode::invalid_cs, "client/server command specifier not valid or unknown"},
 	{SdoAbortCode::unsupported_access, "unsupported access to an object"},
 	{SdoAbortCode::read_access_wo, "attempt to read a write-only object"},
