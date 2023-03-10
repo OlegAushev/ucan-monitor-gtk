@@ -71,7 +71,7 @@ void Controller::_run(std::future<void> future_exit)
 		/* RECV */
 		can_frame frame;
 		can::Error error = _socket->recv(frame);
-		while (error == can::Error::no_error)
+		while (error == can::Error::none)
 		{
 			(void) std::async(&Controller::_on_frame_received, this, frame);
 			error = _socket->recv(frame);

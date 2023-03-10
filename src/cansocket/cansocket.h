@@ -25,7 +25,7 @@ namespace can {
 
 enum class Error
 {
-	no_error,
+	none,
 	invalid_argument,
 	script_not_found,
 	device_not_found,

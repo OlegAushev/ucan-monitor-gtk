@@ -23,7 +23,7 @@ Socket::Socket()
 	int script_retval = system(cmd.c_str());
 	if (script_retval == 0)
 	{
-		if (_create_socket("can0") != Error::no_error)
+		if (_create_socket("can0") != Error::none)
 		{
 			_socket = -1;
 		}
@@ -74,7 +74,7 @@ Error Socket::_create_socket(const std::string& interface)
 	_recv_fd.events = POLLIN;
 
 	Log() << "done.\n";
-	return Error::no_error;
+	return Error::none;
 }
 
 
@@ -110,7 +110,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 	switch (pkexec_retval)
 	{
 		case 0:
-			error = Error::no_error;
+			error = Error::none;
 			break;
 		case 1:
 			error = Error::invalid_argument;
@@ -126,7 +126,7 @@ Error Socket::connect(const std::string& interface, int bitrate)
 			break;
 	}
 
-	if (error != Error::no_error)
+	if (error != Error::none)
 	{
 		Log() << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << '\n';
 		return error;
@@ -141,7 +141,7 @@ Error Socket::disconnect()
 	if (_socket < 0)
 	{
 		Log() << "[cansocket] No socket to close.\n";
-		return Error::no_error;
+		return Error::none;
 	}
 
 	std::lock_guard<std::mutex> lock1(_send_mutex);
@@ -156,7 +156,7 @@ Error Socket::disconnect()
 	{
 		Log() << "[cansocket] Socket closed.\n";
 		_socket = -1;
-		return Error::no_error;
+		return Error::none;
 	}
 }
 
@@ -189,7 +189,7 @@ Error Socket::send(const can_frame& frame)
 	{
 		return Error::send_error;
 	}
-	return Error::no_error;
+	return Error::none;
 }
 
 
@@ -221,7 +221,7 @@ Error Socket::recv(can_frame& frame)
 			}
 			else
 			{
-				return Error::no_error;
+				return Error::none;
 			}
 			break;
 	}
