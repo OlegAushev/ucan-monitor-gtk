@@ -14,13 +14,13 @@ if (NOT DEFINED post_configure_dir)
 	set(post_configure_dir ${CMAKE_BINARY_DIR}/generated)
 endif ()
 
-set(pre_configure_file ${pre_configure_dir}/git_version.cpp.in)
-set(post_configure_file ${post_configure_dir}/git_version.cpp)
+set(pre_configure_file ${pre_configure_dir}/git_info.cpp.in)
+set(post_configure_file ${post_configure_dir}/git_info.cpp)
 
 
 #
 #
-function(CheckGitWrite git_describe git_hash git_diff git_branch)
+function(GitInfoWrite git_describe git_hash git_diff git_branch)
 	file(WRITE ${CMAKE_BINARY_DIR}/git-state.txt
 		${git_describe}\n
 		${git_hash}\n
@@ -32,7 +32,7 @@ endfunction()
 
 #
 #
-function(CheckGitVersion)
+function(GitInfoCheck)
 	execute_process(
 		COMMAND git describe --tags --long --always #--dirty=-dirty
 		WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
@@ -69,41 +69,41 @@ function(CheckGitVersion)
 		file(MAKE_DIRECTORY ${post_configure_dir})
 	endif ()
 
-	if (NOT EXISTS ${post_configure_dir}/git_version.h)
-		file(COPY ${pre_configure_dir}/git_version.h DESTINATION ${post_configure_dir})
+	if (NOT EXISTS ${post_configure_dir}/git_info.h)
+		file(COPY ${pre_configure_dir}/git_info.h DESTINATION ${post_configure_dir})
 	endif()
 
-	CheckGitWrite(${GIT_DESCRIBE} ${GIT_HASH} "${GIT_DIFF}" ${GIT_BRANCH})
+	GitInfoWrite(${GIT_DESCRIBE} ${GIT_HASH} "${GIT_DIFF}" ${GIT_BRANCH})
 	configure_file(${pre_configure_file} ${post_configure_file} @ONLY)
 endfunction()
 
 
 #
 #
-function(CheckGitSetup)
-	add_custom_target(AlwaysCheckGit
+function(GitInfoSetup)
+	add_custom_target(AlwaysCheckGitInfo
 		COMMAND ${CMAKE_COMMAND}
-		-DRUN_CHECK_GIT_VERSION=1
+		-DRUN_CHECK_GIT_INFO=1
 		-Dpre_configure_dir=${pre_configure_dir}
 		-Dpost_configure_file=${post_configure_dir}
-		-P ${CURRENT_LIST_DIR}/CheckGit.cmake
+		-P ${CURRENT_LIST_DIR}/GitInfo.cmake
 		BYPRODUCTS ${post_configure_file}
-		COMMENT "Checking git, generating git-version.cpp"
+		COMMENT "Checking git, generating git_info.cpp"
 	)
 
-	add_library(git-version ${CMAKE_BINARY_DIR}/generated/git_version.cpp)
-	target_include_directories(git-version PUBLIC ${CMAKE_BINARY_DIR}/generated)
-	add_dependencies(git-version AlwaysCheckGit)
+	add_library(git-info ${CMAKE_BINARY_DIR}/generated/git_info.cpp)
+	target_include_directories(git-info PUBLIC ${CMAKE_BINARY_DIR}/generated)
+	add_dependencies(git-info AlwaysCheckGitInfo)
 
-	CheckGitVersion()
+	GitInfoCheck()
 endfunction()
 
 
 #
 #
 # This is used to run this function from an external cmake process.
-if (RUN_CHECK_GIT_VERSION)
-	CheckGitVersion()
+if (RUN_CHECK_GIT_INFO)
+	GitInfoCheck()
 endif ()
 
 

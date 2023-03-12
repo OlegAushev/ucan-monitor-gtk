@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.12)
 
 project(ucan-monitor VERSION 0.1)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/check-git)
-include(CheckGit)
-CheckGitSetup()
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/git-info)
+include(GitInfo)
+GitInfoSetup()
 
 ################################################################################
 # Threads
@@ -118,7 +118,7 @@ target_link_libraries(${executable}
 )
 
 target_link_libraries(${executable}
-	git-version
+	git-info
 )
 
 target_link_libraries(${executable}
