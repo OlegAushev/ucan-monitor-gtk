@@ -63,7 +63,7 @@ protected:
 					ucanopen::SdoType sdo_type,
 					ucanopen::ExpeditedSdoData sdo_data) override;
 public:
-	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
+	Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name);
 
 	void set_client_value(ucanopen::TpdoType tpdo_type, double value) { _client_values[static_cast<size_t>(tpdo_type)] = value; }
 	void set_server_value(ucanopen::RpdoType rpdo_type, double value) { _server_values[static_cast<size_t>(rpdo_type)] = value; }

@@ -3,8 +3,8 @@
 
 namespace launchpad {
 
-Server::Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket)
-	: ucanopen::Server(name, node_id, socket, object_dictionary)
+Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name)
+	: ucanopen::Server(socket, node_id, name, object_dictionary)
 	, ucanopen::SdoSubscriber(&sdo_service)
 {
 	_client_values.fill(0);

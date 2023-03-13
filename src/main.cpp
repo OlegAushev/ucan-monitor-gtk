@@ -48,7 +48,7 @@ int backend_main_loop(std::future<void> signal_exit)
 	std::string server_name(backend_ucanopen_server);
 	if (server_name == "SRM-Drive")
 	{
-		srmdrive_server = std::make_shared<srmdrive::Server>(server_name, ucanopen::NodeId(0x01), can_socket);
+		srmdrive_server = std::make_shared<srmdrive::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
 		ucanopen_client->register_server(srmdrive_server);
 		
 		auto callback_create_tpdo1 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo1(); };
@@ -61,14 +61,14 @@ int backend_main_loop(std::future<void> signal_exit)
 	}
 	else if (server_name == "CRD600")
 	{
-		crd600_server = std::make_shared<crd600::Server>(server_name, ucanopen::NodeId(0x01), can_socket);
+		crd600_server = std::make_shared<crd600::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
 		ucanopen_client->register_server(crd600_server);
 
 		api::register_crd600_server(crd600_server);
 	}
 	else if (server_name == "LaunchPad")
 	{
-		launchpad_server = std::make_shared<launchpad::Server>(server_name, ucanopen::NodeId(0x142), can_socket);
+		launchpad_server = std::make_shared<launchpad::Server>(can_socket, ucanopen::NodeId(0x142), server_name);
 		ucanopen_client->register_server(launchpad_server);
 
 		auto callback_create_tpdo1 = [launchpad_server](){ return launchpad_server->create_client_tpdo1(); };
@@ -85,7 +85,7 @@ int backend_main_loop(std::future<void> signal_exit)
 	}
 	else if (server_name == "BMS-Main")
 	{
-		bmsmain_server = std::make_shared<bmsmain::Server>(server_name, ucanopen::NodeId(0x20), can_socket);
+		bmsmain_server = std::make_shared<bmsmain::Server>(can_socket, ucanopen::NodeId(0x20), server_name);
 		ucanopen_client->register_server(bmsmain_server);
 
 		api::register_bmsmain_server(bmsmain_server);

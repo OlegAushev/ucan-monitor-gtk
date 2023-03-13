@@ -60,8 +60,7 @@ protected:
 
 	NmtState _nmt_state = NmtState::stopped;
 public:
-	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket,
-		const ObjectDictionary& dictionary);
+	Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::string& name, const ObjectDictionary& dictionary);
 	
 	std::string_view name() const { return _name; }
 	NodeId node_id() const { return _node_id; }

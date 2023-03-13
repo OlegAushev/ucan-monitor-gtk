@@ -19,7 +19,7 @@ private:
 protected:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);
 public:
-	Server(const std::string& name, ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
+	Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name);
 
 	double current() const { return _current; }
 	double voltage() const { return _voltage; }

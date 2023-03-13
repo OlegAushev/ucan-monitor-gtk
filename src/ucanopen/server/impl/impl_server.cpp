@@ -3,7 +3,7 @@
 
 namespace ucanopen {
 
-impl::Server::Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket, const ObjectDictionary& dictionary)
+impl::Server::Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::string& name, const ObjectDictionary& dictionary)
 	: _name(name)
 	, _node_id(node_id)
 	, _socket(socket)

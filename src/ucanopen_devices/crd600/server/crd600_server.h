@@ -19,7 +19,7 @@ private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;
 public:
-	Server(const std::string& name,	ucanopen::NodeId node_id, std::shared_ptr<can::Socket> socket);
+	Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name);
 	
 	uint32_t errors() const { return _errors; }
 	uint16_t warnings() const { return _warnings; }

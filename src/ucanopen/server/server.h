@@ -28,7 +28,7 @@ public:
 	ServerWatchService watch_service;
 	ServerConfigService config_service;
 public:
-	Server(const std::string& name, NodeId node_id, std::shared_ptr<can::Socket> socket, const ObjectDictionary& dictionary);
+	Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::string& name, const ObjectDictionary& dictionary);
 	virtual ~Server() = default;
 private:	
 	void _send();
