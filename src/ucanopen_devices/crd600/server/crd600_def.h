@@ -8,8 +8,7 @@
 
 namespace crd600 {
 
-struct CobTpdo1
-{
+struct CobTpdo1 {
 	uint16_t counter : 2;
 	uint16_t status_drive1_run : 1;
 	uint16_t status_drive2_run : 1;
@@ -27,28 +26,24 @@ struct CobTpdo1
 };
 
 
-struct CobTpdo2
-{
+struct CobTpdo2 {
 	uint64_t _reserved;
 };
 
 
-struct CobTpdo3
-{
+struct CobTpdo3 {
 	uint64_t _reserved;
 };
 
 
-struct CobTpdo4
-{
+struct CobTpdo4 {
 	uint64_t counter : 2;
 	uint64_t errors : 31;
 	uint64_t warnings : 31;
 };
 
 
-struct CobRpdo1
-{
+struct CobRpdo1 {
 	uint32_t counter : 2;
 	uint32_t drive1_run : 1;
 	uint32_t drive2_run : 1;
@@ -58,8 +53,7 @@ struct CobRpdo1
 };
 
 
-struct CobRpdo2
-{
+struct CobRpdo2 {
 	int16_t drive1_speed_ref;
 	int16_t drive1_torque_ref;
 	uint32_t counter : 2;
@@ -67,8 +61,7 @@ struct CobRpdo2
 };
 
 
-struct CobRpdo3
-{
+struct CobRpdo3 {
 	int16_t drive2_speed_ref;
 	int16_t drive2_torque_ref;
 	uint32_t counter : 2;
@@ -141,7 +134,6 @@ inline const std::vector<std::string> drive_states = {
 	"shutdown",
 	"eval"
 };
-
 
 } // namespcae crd600
 

@@ -7,8 +7,7 @@
 
 namespace bmsmain {
 
-class Server : public ucanopen::Server
-{
+class Server : public ucanopen::Server {
 private:
 	double _current = 0;
 	double _voltage = 0;

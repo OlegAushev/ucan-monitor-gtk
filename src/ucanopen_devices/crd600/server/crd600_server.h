@@ -8,13 +8,11 @@
 
 namespace crd600 {
 
-
 extern const ucanopen::ObjectDictionary object_dictionary;
 extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 
-class Server : public ucanopen::Server, public ucanopen::SdoSubscriber
-{
+class Server : public ucanopen::Server, public ucanopen::SdoSubscriber {
 private:
 	uint32_t _errors = 0;
 	uint16_t _warnings = 0;
@@ -25,8 +23,8 @@ public:
 	uint16_t warnings() const { return _warnings; }
 protected:
 	virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
-					ucanopen::SdoType sdo_type,
-					ucanopen::ExpeditedSdoData sdo_data) override;
+														ucanopen::SdoType sdo_type,
+														ucanopen::ExpeditedSdoData sdo_data) override;
 private:
 	void _handle_tpdo1(const ucanopen::can_payload& payload);
 	void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}
@@ -45,32 +43,27 @@ public:
 	int16_t drive2_speed_ref = 0;
 	int16_t drive2_torque_ref = 0;
 
-	void set_drive1_speed_ref(double val)
-	{
+	void set_drive1_speed_ref(double val) {
 		if (fabs(val) > 8000.0) return;
 		drive1_speed_ref = val;
 	}
 
-	void set_drive2_speed_ref(double val)
-	{
+	void set_drive2_speed_ref(double val) {
 		if (fabs(val) > 8000.0) return;
 		drive2_speed_ref = val;
 	}
 
-	void set_drive1_torque_ref(double val_pu)
-	{
+	void set_drive1_torque_ref(double val_pu) {
 		if (fabs(val_pu) > 1.0) return;
 		drive1_torque_ref = 32767.0 * val_pu;
 	}
 
-	void set_drive2_torque_ref(double val_pu)
-	{
+	void set_drive2_torque_ref(double val_pu) {
 		if (fabs(val_pu) > 1.0) return;
 		drive2_torque_ref = 32767.0 * val_pu;
 	}
 
-	struct Tpdo1
-	{
+	struct Tpdo1 {
 		bool status_drive1_run;
 		bool status_drive2_run;
 		bool status_error;

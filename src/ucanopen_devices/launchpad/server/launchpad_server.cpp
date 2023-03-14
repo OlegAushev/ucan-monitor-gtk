@@ -4,9 +4,8 @@
 namespace launchpad {
 
 Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name)
-	: ucanopen::Server(socket, node_id, name, object_dictionary)
-	, ucanopen::SdoSubscriber(&sdo_service)
-{
+		: ucanopen::Server(socket, node_id, name, object_dictionary)
+		, ucanopen::SdoSubscriber(&sdo_service) {
 	_client_values.fill(0);
 	_server_values.fill(0);
 
@@ -30,8 +29,7 @@ Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, co
 }
 
 
-void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
-{
+void Server::_handle_tpdo4(const ucanopen::can_payload& payload) {
 	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
 	_errors = message.errors;
 	_warnings = message.warnings;
@@ -39,19 +37,14 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
 
 
 ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
-				ucanopen::SdoType sdo_type,
-				ucanopen::ExpeditedSdoData data)
-{
-	if (entry->second.name == "syslog_message")
-	{
+													ucanopen::SdoType sdo_type,
+													ucanopen::ExpeditedSdoData data) {
+	if (entry->second.name == "syslog_message") {
 		auto message_id = data.u32();
-		if ((message_id != 0) && (message_id < syslog_messages.size()))
-		{
+		if ((message_id != 0) && (message_id < syslog_messages.size())) {
 			Log() << syslog_messages[message_id] << '\n';
 		}
-	}
-	else if (entry->second.category == _dictionary.config.config_category && entry->second.type == ucanopen::OD_ENUM16)
-	{
+	} else if (entry->second.category == _dictionary.config.config_category && entry->second.type == ucanopen::OD_ENUM16) {
 		
 	}
 }

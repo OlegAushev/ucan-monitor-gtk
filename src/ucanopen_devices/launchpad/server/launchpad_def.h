@@ -8,72 +8,63 @@
 
 namespace launchpad {
 
-struct CobTpdo4
-{
+struct CobTpdo4 {
 	uint64_t counter : 2;
 	uint64_t errors : 31;
 	uint64_t warnings : 31;
 };
 
 
-struct CobRpdo1
-{
+struct CobRpdo1 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobRpdo2
-{
+struct CobRpdo2 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobRpdo3
-{
+struct CobRpdo3 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobRpdo4
-{
+struct CobRpdo4 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobClientTpdo1
-{
+struct CobClientTpdo1 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobClientTpdo2
-{
+struct CobClientTpdo2 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobClientTpdo3
-{
+struct CobClientTpdo3 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;
 };
 
 
-struct CobClientTpdo4
-{
+struct CobClientTpdo4 {
 	uint32_t counter : 2;
 	uint32_t _reserved : 30;
 	float value;

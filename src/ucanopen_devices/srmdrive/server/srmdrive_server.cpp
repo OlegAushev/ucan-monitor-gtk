@@ -4,10 +4,9 @@
 namespace srmdrive {
 
 Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name)
-	: ucanopen::Server(socket, node_id, name, object_dictionary)
-	, ucanopen::SdoSubscriber(&sdo_service)
-	, controller(this)
-{
+		: ucanopen::Server(socket, node_id, name, object_dictionary)
+		, ucanopen::SdoSubscriber(&sdo_service)
+		, controller(this) {
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(200),
 			[this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
 	tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1200),
@@ -20,31 +19,25 @@ Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, co
 
 
 ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
-				ucanopen::SdoType sdo_type,
-				ucanopen::ExpeditedSdoData sdo_data)
-{
-	if (entry->second.category == _dictionary.config.watch_category && entry->second.type == ucanopen::OD_ENUM16)
-	{
-		if (entry->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size())
-		{
+													ucanopen::SdoType sdo_type,
+													ucanopen::ExpeditedSdoData sdo_data) {
+	if (entry->second.category == _dictionary.config.watch_category && entry->second.type == ucanopen::OD_ENUM16) {
+		if (entry->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size()) {
 			watch_service.set_value(entry->second.name, drive_states[sdo_data.u32()]);
 		}
 	}
 }
 
 
-void Server::_handle_tpdo3(const ucanopen::can_payload& payload)
-{
+void Server::_handle_tpdo3(const ucanopen::can_payload& payload) {
 	CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(payload);
-	if ((message.syslog_message_id != 0) && (message.syslog_message_id < syslog_messages.size()))
-	{
+	if ((message.syslog_message_id != 0) && (message.syslog_message_id < syslog_messages.size())) {
 		Log() << syslog_messages[message.syslog_message_id] << '\n';
 	}
 }
 
 
-void Server::_handle_tpdo4(const ucanopen::can_payload& payload)
-{
+void Server::_handle_tpdo4(const ucanopen::can_payload& payload) {
 	CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
 	_errors = message.errors;
 	_warnings = message.warnings;

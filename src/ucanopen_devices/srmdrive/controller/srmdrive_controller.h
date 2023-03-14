@@ -8,8 +8,7 @@
 
 namespace srmdrive {
 
-class Controller
-{
+class Controller {
 private:
 	ucanopen::Server* _drive_server;
 

@@ -6,11 +6,7 @@
 
 namespace bmsmain {
 
-/**
- * @brief
- */
-struct CobTpdo1
-{
+struct CobTpdo1 {
 	uint32_t discrete_inputs : 8;
 	uint32_t current : 16;
 	uint32_t temp_min : 8;

@@ -10,8 +10,7 @@
 
 namespace srmdrive {
 
-struct CobTpdo1
-{
+struct CobTpdo1 {
 	uint16_t status_run : 1;	// bit 0
 	uint16_t status_fault : 1;	// bit 1
 	uint16_t status_warning : 1;	// bit 2
@@ -27,8 +26,7 @@ struct CobTpdo1
 };
 
 
-struct CobTpdo2
-{
+struct CobTpdo2 {
 	uint8_t temp_motor_s : 8;
 	uint8_t _reserved1 : 8;
 	uint8_t voltage_out : 8;
@@ -42,8 +40,7 @@ struct CobTpdo2
 };
 
 
-struct CobTpdo3
-{
+struct CobTpdo3 {
 	uint8_t voltage_pos_housing : 8;
 	uint8_t voltage_neg_housing : 8;
 	uint16_t status_reserved1 : 1;			// bit 0
@@ -58,8 +55,7 @@ struct CobTpdo3
 };
 
 
-struct CobTpdo4
-{
+struct CobTpdo4 {
 	uint32_t errors : 32;
 	uint16_t _reserved : 16;
 	uint16_t warnings : 16;
@@ -67,8 +63,7 @@ struct CobTpdo4
 };
 
 
-struct CobRpdo1
-{
+struct CobRpdo1 {
 	uint16_t run : 1;
 	uint32_t _reserved1 : 31;
 	uint16_t emergency_stop : 1;
@@ -79,8 +74,7 @@ struct CobRpdo1
 };
 
 
-struct CobRpdo2
-{
+struct CobRpdo2 {
 	int8_t torque_obsolete : 8;
 	uint8_t _reserved1 : 8;
 	int16_t torque : 16;
@@ -89,14 +83,12 @@ struct CobRpdo2
 };
 
 
-struct CobRpdo3
-{
+struct CobRpdo3 {
 	uint64_t data;
 };
 
 
-struct CobRpdo4
-{
+struct CobRpdo4 {
 	uint64_t data;
 };
 
