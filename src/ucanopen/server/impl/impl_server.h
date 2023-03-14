@@ -9,8 +9,7 @@
 
 namespace ucanopen {
 
-enum class ODAccessStatus
-{
+enum class ODAccessStatus {
 	success,
 	not_found,
 	access_denied,
@@ -18,8 +17,7 @@ enum class ODAccessStatus
 };
 
 
-enum class FrameHandlingStatus
-{
+enum class FrameHandlingStatus {
 	success,
 	id_mismatch,
 	invalid_format,
@@ -44,8 +42,7 @@ class SdoSubscriber;
 namespace impl {
 
 
-class Server
-{
+class Server {
 	friend class ucanopen::ServerHeartbeatService;
 	friend class ucanopen::ServerTpdoService;
 	friend class ucanopen::ServerRpdoService;
@@ -72,11 +69,9 @@ public:
 	ODAccessStatus write(std::string_view category, std::string_view subcategory, std::string_view name, std::string value);
 	ODAccessStatus exec(std::string_view category, std::string_view subcategory, std::string_view name);
 public:
-	ODEntryIter find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name)
-	{
+	ODEntryIter find_od_entry(std::string_view category, std::string_view subcategory, std::string_view name) {
 		auto iter = _dictionary_aux.find({category, subcategory, name});
-		if (iter == _dictionary_aux.end())
-		{
+		if (iter == _dictionary_aux.end()) {
 			return _dictionary.entries.end();
 		}
 		return iter->second;
@@ -91,18 +86,13 @@ public:
 };
 
 
-class FrameHandlingService
-{
+class FrameHandlingService {
 public:
 	virtual FrameHandlingStatus handle_frame(const can_frame& frame) = 0;
 };
 
 
-
-
-
-class SdoPublisher
-{
+class SdoPublisher {
 public:
 	virtual ~SdoPublisher() = default;
 	void register_subscriber(SdoSubscriber* subscriber) { _subscriber_list.push_back(subscriber); }
@@ -114,18 +104,15 @@ protected:
 } // namespace impl
 
 
-class SdoSubscriber
-{
+class SdoSubscriber {
 private:
 	impl::SdoPublisher* _publisher;
 public:
 	SdoSubscriber(impl::SdoPublisher* publisher)
-		: _publisher(publisher)
-	{
+			: _publisher(publisher) {
 		_publisher->register_subscriber(this);
 	}
-	virtual ~SdoSubscriber()
-	{
+	virtual ~SdoSubscriber() {
 		_publisher->unregister_subscriber(this);
 	}
 	virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;

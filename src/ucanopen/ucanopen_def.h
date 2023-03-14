@@ -18,13 +18,11 @@
 
 namespace ucanopen {
 
-
 using can_payload = std::array<uint8_t, 8>;
 
 
 template <typename T>
-inline can_payload to_payload(const T& message)
-{
+inline can_payload to_payload(const T& message) {
 	static_assert(sizeof(T) <= 8);
 	can_payload payload{};
 	memcpy(payload.data(), &message, sizeof(T));
@@ -33,8 +31,7 @@ inline can_payload to_payload(const T& message)
 
 
 template <typename T>
-inline T from_payload(const can_payload& payload)
-{
+inline T from_payload(const can_payload& payload) {
 	static_assert(sizeof(T) <= 8);
 	T message;
 	memcpy(&message, payload.data(), sizeof(T));
@@ -42,8 +39,7 @@ inline T from_payload(const can_payload& payload)
 }
 
 
-class NodeId
-{
+class NodeId {
 private:
 	unsigned int _value;
 public:
@@ -56,8 +52,7 @@ public:
 inline bool operator==(const NodeId& lhs, const NodeId& rhs) { return lhs.get() == rhs.get(); }
 
 
-enum class NmtState
-{
+enum class NmtState {
 	initialization = 0x00,
 	stopped = 0x04,
 	operational = 0x05,
@@ -65,8 +60,7 @@ enum class NmtState
 };
 
 
-enum class CobType
-{
+enum class CobType {
 	nmt,
 	sync,
 	emcy,
@@ -107,10 +101,8 @@ constexpr std::array<canid_t, cob_type_count> cob_function_codes = {
 };
 
 
-inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id)
-{
-	if ((cob_type == CobType::nmt) || (cob_type == CobType::sync) || (cob_type == CobType::time))
-	{
+inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id) {
+	if ((cob_type == CobType::nmt) || (cob_type == CobType::sync) || (cob_type == CobType::time)) {
 		return cob_function_codes[static_cast<size_t>(cob_type)];
 	}
 	return cob_function_codes[static_cast<size_t>(cob_type)] + node_id.get();
@@ -136,8 +128,7 @@ constexpr std::array<unsigned int, cob_type_count> cob_sizes = {
 };
 
 
-enum class TpdoType
-{
+enum class TpdoType {
 	tpdo1,
 	tpdo2,
 	tpdo3,
@@ -145,16 +136,14 @@ enum class TpdoType
 };
 
 
-inline CobType to_cob_type(TpdoType tpdo_type)
-{
+inline CobType to_cob_type(TpdoType tpdo_type) {
 	return static_cast<CobType>(
 		static_cast<unsigned int>(CobType::tpdo1) + 2 * static_cast<unsigned int>(tpdo_type)
 	);
 }
 
 
-enum class RpdoType
-{
+enum class RpdoType {
 	rpdo1,
 	rpdo2,
 	rpdo3,
@@ -162,28 +151,24 @@ enum class RpdoType
 };
 
 
-inline CobType to_cob_type(RpdoType rpdo_type)
-{
+inline CobType to_cob_type(RpdoType rpdo_type) {
 	return static_cast<CobType>(
 		static_cast<unsigned int>(CobType::rpdo1) + 2 * static_cast<unsigned int>(rpdo_type)
 	);
 }
 
 
-inline RpdoType opposite_pdo(TpdoType type)
-{
+inline RpdoType opposite_pdo(TpdoType type) {
 	return static_cast<RpdoType>(type);
 }
 
 
-inline TpdoType opposite_pdo(RpdoType type)
-{
+inline TpdoType opposite_pdo(RpdoType type) {
 	return static_cast<TpdoType>(type);
 }
 
 
-enum ODObjectType
-{
+enum ODObjectType {
 	OD_BOOL,
 	OD_INT16,
 	OD_INT32,
@@ -206,14 +191,12 @@ const uint32_t abort = 4;
 }
 
 
-inline uint32_t get_cs_code(const can_frame& frame)
-{
+inline uint32_t get_cs_code(const can_frame& frame) {
 	return frame.data[0] >> 5;
 }
 
 
-class ExpeditedSdoData
-{
+class ExpeditedSdoData {
 private:
 	uint32_t _data = 0;
 public:
@@ -225,94 +208,80 @@ public:
 	ExpeditedSdoData(uint32_t val) { memcpy(&_data, &val, sizeof(_data)); }
 	ExpeditedSdoData(float val) { memcpy(&_data, &val, sizeof(_data)); }
 
-	bool bool32() const
-	{
+	bool bool32() const {
 		return _data;
 	}
 
-	int16_t i16() const
-	{
+	int16_t i16() const {
 		int16_t val;
 		memcpy(&val, &_data, sizeof(int16_t));
 		return val;
 	}
 
-	int32_t i32() const
-	{
+	int32_t i32() const {
 		int32_t val;
 		memcpy(&val, &_data, sizeof(int32_t));
 		return val;
 	}
 
-	uint16_t u16() const
-	{ 
+	uint16_t u16() const { 
 		uint16_t val;
 		memcpy(&val, &_data, sizeof(uint16_t));
 		return val;
 	}
 
-	uint32_t u32() const
-	{ 
+	uint32_t u32() const { 
 		uint32_t val;
 		memcpy(&val, &_data, sizeof(uint32_t));
 		return val;
 	}
 	
-	float f32() const
-	{ 
+	float f32() const { 
 		float val;
 		memcpy(&val, &_data, sizeof(float));
 		return val;
 	}
 
-	std::string to_string(ODObjectType type) const
-	{
-		switch (type)
-		{
-			case ucanopen::OD_BOOL:
-				return bool32() ? "true" : "false";
-			case ucanopen::OD_INT16:
-				return std::to_string(i16());
-			case ucanopen::OD_INT32:
-				return std::to_string(i32());
-			case ucanopen::OD_UINT16:
-				return std::to_string(u16());
-			case ucanopen::OD_UINT32:
-				return std::to_string(u32());
-			case ucanopen::OD_FLOAT32:
-				{
-					std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
-					std::array<char, 16> buf;
-					if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
-							ec == std::errc())
-					{
-						return std::string(buf.begin(), ptr);
-					}
-					else
-					{
-						return std::make_error_code(ec).message();
-					}
-				}
-			case ucanopen::OD_ENUM16:
-				return std::to_string(u16());
-			case ucanopen::OD_EXEC:
-				return std::string();
-			case ucanopen::OD_STRING:
-				{
-					uint32_t strRaw = u32();
-					char cstr[5];
-					memcpy(cstr, &strRaw, 4);
-					cstr[4] = '\0';
-					return std::string(cstr);
-				}
+	std::string to_string(ODObjectType type) const {
+		switch (type) {
+		case ucanopen::OD_BOOL:
+			return bool32() ? "true" : "false";
+		case ucanopen::OD_INT16:
+			return std::to_string(i16());
+		case ucanopen::OD_INT32:
+			return std::to_string(i32());
+		case ucanopen::OD_UINT16:
+			return std::to_string(u16());
+		case ucanopen::OD_UINT32:
+			return std::to_string(u32());
+		case ucanopen::OD_FLOAT32: {
+			std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
+			std::array<char, 16> buf;
+			if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
+					ec == std::errc()) {
+				return std::string(buf.begin(), ptr);
+			} else {
+				return std::make_error_code(ec).message();
+			}
+		}
+		case ucanopen::OD_ENUM16:
+			return std::to_string(u16());
+		case ucanopen::OD_EXEC:
+			return std::string();
+		case ucanopen::OD_STRING: {
+			uint32_t strRaw = u32();
+			char cstr[5];
+			memcpy(cstr, &strRaw, 4);
+			cstr[4] = '\0';
+			return std::string(cstr);
+		}
 		}
 		return std::string();
 	}
 };
 
 
-struct ExpeditedSdo
-{
+struct ExpeditedSdo {
 	uint32_t data_size_indicated : 1;
 	uint32_t expedited_transfer : 1;
 	uint32_t data_empty_bytes : 2;
@@ -324,18 +293,15 @@ struct ExpeditedSdo
 
 	ExpeditedSdo() = default;
 
-	ExpeditedSdo(const can_payload& payload)
-	{
+	ExpeditedSdo(const can_payload& payload) {
 		memcpy(this, payload.data(), sizeof(ExpeditedSdo));
 	}
 
-	ExpeditedSdo(const uint8_t* data)
-	{
+	ExpeditedSdo(const uint8_t* data) {
 		memcpy(this, data, sizeof(ExpeditedSdo));
 	}
 
-	can_payload to_payload() const
-	{
+	can_payload to_payload() const {
 		can_payload payload;
 		memcpy(payload.data(), this, sizeof(ExpeditedSdo));
 		return payload;
@@ -343,32 +309,27 @@ struct ExpeditedSdo
 };
 
 
-struct AbortSdo
-{
+struct AbortSdo {
 	uint32_t _reserved : 5;
 	uint32_t cs : 3;
 	uint32_t index : 16;
 	uint32_t subindex : 8;
 	uint32_t error_code;
 
-	AbortSdo()
-	{
+	AbortSdo() {
 		memset(this, 0, sizeof(AbortSdo));
 		cs = sdo_cs_codes::abort;
 	}
 
-	AbortSdo(const can_payload& payload)
-	{
+	AbortSdo(const can_payload& payload) {
 		memcpy(this, payload.data(), sizeof(AbortSdo));
 	}
 
-	AbortSdo(const uint8_t* data)
-	{
+	AbortSdo(const uint8_t* data) {
 		memcpy(this, data, sizeof(AbortSdo));
 	}
 
-	can_payload to_payload() const
-	{
+	can_payload to_payload() const {
 		can_payload payload;
 		memcpy(payload.data(), this, sizeof(AbortSdo));
 		return payload;
@@ -376,8 +337,7 @@ struct AbortSdo
 };
 
 
-enum class SdoAbortCode : uint32_t
-{
+enum class SdoAbortCode : uint32_t {
 	no_error 				= 0,
 	invalid_cs 			= 0x05040001,
 	unsupported_access 		= 0x06010000,
@@ -407,8 +367,7 @@ const std::map<SdoAbortCode, std::string_view> sdo_abort_messages = {
 };
 
 
-enum class SdoType
-{
+enum class SdoType {
 	response_to_read,
 	response_to_write,
 	response_to_exec,
@@ -416,8 +375,7 @@ enum class SdoType
 };
 
 
-enum ODObjectAccessPermission
-{
+enum ODObjectAccessPermission {
 	OD_ACCESS_RW,
 	OD_ACCESS_RO,
 	OD_ACCESS_WO,
@@ -425,21 +383,18 @@ enum ODObjectAccessPermission
 };
 
 
-struct ODObjectKey
-{
+struct ODObjectKey {
 	unsigned int index;
 	unsigned int subindex;
 };
 
 
-inline bool operator<(const ODObjectKey& lhs, const ODObjectKey& rhs)
-{
+inline bool operator<(const ODObjectKey& lhs, const ODObjectKey& rhs) {
 	return (lhs.index < rhs.index) || ((lhs.index == rhs.index) && (lhs.subindex < rhs.subindex));
 }
 
 
-struct ODObject
-{
+struct ODObject {
 	std::string_view category;
 	std::string_view subcategory;
 	std::string_view name;
@@ -452,24 +407,21 @@ struct ODObject
 };
 
 
-struct ODObjectAux
-{
+struct ODObjectAux {
 	std::string_view category;
 	std::string_view subcategory;
 	std::string_view name;
 };
 
 
-inline bool operator<(const ODObjectAux& lhs, const ODObjectAux& rhs)
-{
+inline bool operator<(const ODObjectAux& lhs, const ODObjectAux& rhs) {
 	return (lhs.category < rhs.category) 
 			|| ((lhs.category == rhs.category) && (lhs.subcategory < rhs.subcategory))
 			|| ((lhs.category == rhs.category) && (lhs.subcategory == rhs.subcategory) && (lhs.name < rhs.name));
 }
 
 
-struct ObjectDictionaryConfig
-{
+struct ObjectDictionaryConfig {
 	std::string_view watch_category;
 	std::string_view watch_subcategory;
 	std::string_view config_category;
@@ -481,15 +433,13 @@ using ODEntryIter = ObjectDictionaryEntries::const_iterator;
 using ObjectDictionaryAux = std::map<ODObjectAux, ODEntryIter>;
 
 
-struct ObjectDictionary
-{
+struct ObjectDictionary {
 	ObjectDictionaryConfig config;
 	ObjectDictionaryEntries entries;
 };
 
 
-inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payload& payload)
-{
+inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payload& payload) {
 	can_frame frame;
 	frame.can_id = calculate_cob_id(cob_type, node_id);
 	frame.len = cob_sizes[static_cast<size_t>(cob_type)];
@@ -498,8 +448,7 @@ inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payloa
 }
 
 
-inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& payload)
-{
+inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& payload) {
 	can_frame frame;
 	frame.can_id = id;
 	frame.len = len;

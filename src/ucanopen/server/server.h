@@ -17,8 +17,7 @@
 
 namespace ucanopen {
 
-class Server : public impl::Server
-{
+class Server : public impl::Server {
 	friend class Client;
 public:
 	ServerHeartbeatService heartbeat_service;
@@ -39,9 +38,9 @@ private:
 public:
 	uint32_t get_serial_number();
 	std::string read_string(std::string_view category, std::string_view subcategory, std::string_view name,
-					std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
+							std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
 	std::string read_numval(std::string_view category, std::string_view subcategory, std::string_view name,
-					std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
+							std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
 };
 
 } // namespace ucanopen

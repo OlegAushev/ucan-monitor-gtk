@@ -68,13 +68,13 @@ void ucanopen_server_get_watch_value(const char* server_name, const char* watch_
 
 
 size_t ucanopen_server_get_config_categories(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
-	size_t retval = ucanopen_client->server(server_name)->config_service.entries_list().size();
+	size_t retval = ucanopen_client->server(server_name)->config_service.object_list().size();
 	if (retval >= str_count) {
 		return 0;
 	}
 
 	size_t i = 0;
-	for (auto [category, objects] : ucanopen_client->server(server_name)->config_service.entries_list()) {
+	for (auto [category, objects] : ucanopen_client->server(server_name)->config_service.object_list()) {
 		retbuf[i][0] = '\0';
 		strncat(retbuf[i++], category.data(), str_size);
 	}
@@ -84,7 +84,7 @@ size_t ucanopen_server_get_config_categories(const char* server_name, char** ret
 
 
 size_t ucanopen_server_get_config_objects(const char* server_name, const char* category, char** retbuf, size_t str_count, size_t str_size) {
-	auto objects = ucanopen_client->server(server_name)->config_service.entries_list().at(category);
+	auto objects = ucanopen_client->server(server_name)->config_service.object_list().at(category);
 	size_t retval = objects.size();
 	if (retval >= str_count) {
 		return 0;
