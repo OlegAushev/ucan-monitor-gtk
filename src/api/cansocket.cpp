@@ -5,8 +5,7 @@ std::shared_ptr<can::Socket> can_socket;
 
 
 namespace api {
-void register_can_socket(std::shared_ptr<can::Socket> can_socket_)
-{
+void register_can_socket(std::shared_ptr<can::Socket> can_socket_) {
 	can_socket = can_socket_;
 }
 }
@@ -14,10 +13,8 @@ void register_can_socket(std::shared_ptr<can::Socket> can_socket_)
 
 extern "C" {
 
-void cansocket_connect(const char* interface, int bitrate)
-{
-	if (can_socket == nullptr)
-	{
+void cansocket_connect(const char* interface, int bitrate) {
+	if (can_socket == nullptr) {
 		return;
 	}
 
@@ -25,10 +22,8 @@ void cansocket_connect(const char* interface, int bitrate)
 }
 
 
-void cansocket_disconnect()
-{
-	if (can_socket == nullptr)
-	{
+void cansocket_disconnect() {
+	if (can_socket == nullptr) {
 		return;
 	}
 

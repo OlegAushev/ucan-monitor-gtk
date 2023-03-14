@@ -30,8 +30,7 @@ std::promise<void> signal_exit_main;
 
 
 extern "C" 
-int backend_main_loop(std::future<void> signal_exit)
-{
+int backend_main_loop(std::future<void> signal_exit) {
 	Log() << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << '\n';
 
 	auto can_socket = std::make_shared<can::Socket>();
@@ -46,8 +45,7 @@ int backend_main_loop(std::future<void> signal_exit)
 	std::shared_ptr<bmsmain::Server> bmsmain_server;
 
 	std::string server_name(backend_ucanopen_server);
-	if (server_name == "SRM-Drive")
-	{
+	if (server_name == "SRM-Drive") {
 		srmdrive_server = std::make_shared<srmdrive::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
 		ucanopen_client->register_server(srmdrive_server);
 		
@@ -58,16 +56,12 @@ int backend_main_loop(std::future<void> signal_exit)
 		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callback_create_tpdo2);
 
 		api::register_srmdrive_server(srmdrive_server);
-	}
-	else if (server_name == "CRD600")
-	{
+	} else if (server_name == "CRD600") {
 		crd600_server = std::make_shared<crd600::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
 		ucanopen_client->register_server(crd600_server);
 
 		api::register_crd600_server(crd600_server);
-	}
-	else if (server_name == "LaunchPad")
-	{
+	} else if (server_name == "LaunchPad") {
 		launchpad_server = std::make_shared<launchpad::Server>(can_socket, ucanopen::NodeId(0x142), server_name);
 		ucanopen_client->register_server(launchpad_server);
 
@@ -82,9 +76,7 @@ int backend_main_loop(std::future<void> signal_exit)
 		ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1000), callback_create_tpdo4);
 
 		api::register_launchpad_server(launchpad_server);
-	}
-	else if (server_name == "BMS-Main")
-	{
+	} else if (server_name == "BMS-Main") {
 		bmsmain_server = std::make_shared<bmsmain::Server>(can_socket, ucanopen::NodeId(0x20), server_name);
 		ucanopen_client->register_server(bmsmain_server);
 
@@ -96,9 +88,8 @@ int backend_main_loop(std::future<void> signal_exit)
 	Log() << "[backend] Backend is ready.\n";
 	backend_is_ready = true;
 
-	while (signal_exit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout)
-	{
-
+	while (signal_exit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout) {
+		// wait for promise to exit
 	}
 
 	Log() << "[backend] Main loop thread stopped.\n";
@@ -107,8 +98,7 @@ int backend_main_loop(std::future<void> signal_exit)
 
 
 extern "C"
-int backend_main_enter()
-{
+int backend_main_enter() {
 	Log() << "[backend] GUI thread id: " << std::this_thread::get_id() << '\n';
 	Log() << "[backend] Starting new thread for main loop...\n";
 
@@ -119,8 +109,7 @@ int backend_main_enter()
 
 
 extern "C"
-void backend_main_exit()
-{
+void backend_main_exit() {
 	Log() << "[backend] Sending signal to main loop thread to stop...\n";
 
 	signal_exit_main.set_value();

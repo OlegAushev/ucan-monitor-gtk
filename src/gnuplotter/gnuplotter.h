@@ -18,16 +18,14 @@
 #include "chrono"
 
 
-class Gnuplotter
-{
+class Gnuplotter {
 private:
 	Gnuplot _plot;
 	std::chrono::time_point<std::chrono::system_clock> _timeStart;
 	static constexpr size_t _dataSizeMax = 1000;
 	std::map<std::string, std::deque<std::pair<unsigned long, double>>> _series;
 public:
-	Gnuplotter()
-	{
+	Gnuplotter() {
 		_timeStart = std::chrono::system_clock::now();
 
 
@@ -36,15 +34,13 @@ public:
 		//_plot << "set yrange [-1:1]\n";
 	}
 
-	~Gnuplotter()
-	{
+	~Gnuplotter() {
 		_plot << "clear\n";
 		_plot << "unset output ; exit gnuplot\n";
 		system("pkill -x gnuplot_qt");
 	}
 
-	void push(std::string seriesName, double value)
-	{
+	void push(std::string seriesName, double value) {
 		if (_series[seriesName].size() >= _dataSizeMax)
 		{
 			_series[seriesName].pop_front();
@@ -53,8 +49,7 @@ public:
 		_series[seriesName].emplace_back(time.count(), value);
 	}
 
-	void update()
-	{
+	void update() {
 		const int N = 1000;
 		static double theta = 0;
 

@@ -23,8 +23,7 @@
 
 namespace can {
 
-enum class Error
-{
+enum class Error {
 	none,
 	invalid_argument,
 	script_not_found,
@@ -56,12 +55,7 @@ const std::set<std::filesystem::path> scripts_location_list = {
 } // namespace detail
 
 
-/**
- * @brief 
- * 
- */
-class Socket
-{
+class Socket {
 private:
 	int _socket = -1;
 	ifreq _ifr;
