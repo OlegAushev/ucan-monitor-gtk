@@ -8,9 +8,9 @@ using namespace ucanopen;
 
 extern const ucanopen::ObjectDictionary object_dictionary = {
 .config = {
-	.watch_category = "watch",
-	.watch_subcategory = "watch",
-	.config_category = "config"
+    .watch_category = "watch",
+    .watch_subcategory = "watch",
+    .config_category = "config"
 },
 .entries = {
 {{0x1008, 0x00}, {"sys", "info", "device_name", "", OD_STRING, OD_ACCESS_CONST}},

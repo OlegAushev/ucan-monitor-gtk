@@ -18,29 +18,29 @@
 namespace ucanopen {
 
 class Server : public impl::Server {
-	friend class Client;
+    friend class Client;
 public:
-	ServerHeartbeatService heartbeat_service;
-	ServerTpdoService tpdo_service;
-	ServerRpdoService rpdo_service;
-	ServerSdoService sdo_service;
-	ServerWatchService watch_service;
-	ServerConfigService config_service;
+    ServerHeartbeatService heartbeat_service;
+    ServerTpdoService tpdo_service;
+    ServerRpdoService rpdo_service;
+    ServerSdoService sdo_service;
+    ServerWatchService watch_service;
+    ServerConfigService config_service;
 public:
-	Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::string& name, const ObjectDictionary& dictionary);
-	virtual ~Server() = default;
+    Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::string& name, const ObjectDictionary& dictionary);
+    virtual ~Server() = default;
 private:	
-	void _send();
-	void _handle_frame(const can_frame& frame);
-	void _set_node_id(NodeId nodeId);
+    void _send();
+    void _handle_frame(const can_frame& frame);
+    void _set_node_id(NodeId nodeId);
 
-	std::vector<impl::FrameHandlingService*> _frame_handling_services;
+    std::vector<impl::FrameHandlingService*> _frame_handling_services;
 public:
-	uint32_t get_serial_number();
-	std::string read_string(std::string_view category, std::string_view subcategory, std::string_view name,
-							std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
-	std::string read_numval(std::string_view category, std::string_view subcategory, std::string_view name,
-							std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
+    uint32_t get_serial_number();
+    std::string read_string(std::string_view category, std::string_view subcategory, std::string_view name,
+                            std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
+    std::string read_numval(std::string_view category, std::string_view subcategory, std::string_view name,
+                            std::chrono::milliseconds timeout = std::chrono::milliseconds(1000));
 };
 
 } // namespace ucanopen

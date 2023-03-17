@@ -10,11 +10,11 @@ namespace ucanopen {
 
 class ServerConfigService {
 private:
-	impl::Server* const _server;
-	std::map<std::string_view, std::vector<std::string_view>> _object_list;
+    impl::Server* const _server;
+    std::map<std::string_view, std::vector<std::string_view>> _object_list;
 public:
-	ServerConfigService(impl::Server* server);
-	std::map<std::string_view, std::vector<std::string_view>> object_list() const { return _object_list; }
+    ServerConfigService(impl::Server* server);
+    std::map<std::string_view, std::vector<std::string_view>> object_list() const { return _object_list; }
 };
 
 } // namespace ucanopen
