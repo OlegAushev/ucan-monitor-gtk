@@ -72,7 +72,7 @@ struct CobClientTpdo4 {
 
 
 inline const std::vector<std::string> syslog_messages = {
-    "No message",
+    "",
     "         [LaunchPad::syslog] Boot CPU1...",
     "[  OK  ] [LaunchPad::syslog] CPU1 ready.",
     "         [LaunchPad::syslog] Boot CPU2...",
@@ -82,8 +82,8 @@ inline const std::vector<std::string> syslog_messages = {
     "[  OK  ] [LaunchPad::syslog] Device ready.",
     "[FAILED] [LaunchPad::syslog] Device busy.",
     "         [LaunchPad::syslog] Resetting device...",
-    "         [LaunchPad::syslog] Lost SDO request.",
-    "[FAILED] [LaunchPad::syslog] Cannot communicate with EEPROM (disabled).",
+    "[ WARN ] [LaunchPad::syslog] Lost SDO request.",
+    "[ WARN ] [LaunchPad::syslog] Cannot communicate with EEPROM: disabled.",
     "[  OK  ] [LaunchPad::syslog] Read settings.",
     "[FAILED] [LaunchPad::syslog] Failed to read settings.",
     "[  OK  ] [LaunchPad::syslog] Applied settings.",
