@@ -41,7 +41,7 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x3000, 0x0B}, {"config", "ucanopen", "rpdo1_id", "", OD_UINT32, OD_ACCESS_RW}},
 {{0x3000, 0x0C}, {"config", "ucanopen", "rpdo2_id", "", OD_UINT32, OD_ACCESS_RW}},
 {{0x3000, 0x0D}, {"config", "ucanopen", "rpdo3_id", "", OD_UINT32, OD_ACCESS_RW}},
-{{0x3000, 0x0E}, {"config", "ucanopen", "rpdo4_id", "", OD_UINT32, OD_ACCESS_RW}},
+{{0x3000, 0x0F}, {"config", "ucanopen", "rpdo4_id", "", OD_UINT32, OD_ACCESS_RW}},
 
 }
 };

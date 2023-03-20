@@ -31,7 +31,7 @@ std::promise<void> signal_exit_main;
 
 extern "C" 
 int backend_main_loop(std::future<void> signal_exit) {
-    Log() << "[backend] Main loop thread started. Thread id: " << std::this_thread::get_id() << '\n';
+    Log() << "Started backend main loop thread. Thread id: " << std::this_thread::get_id() << ".\n" << LogPrefix::ok;
 
     auto can_socket = std::make_shared<can::Socket>();
     api::register_can_socket(can_socket);
@@ -62,7 +62,7 @@ int backend_main_loop(std::future<void> signal_exit) {
 
         api::register_crd600_server(crd600_server);
     } else if (server_name == "LaunchPad") {
-        launchpad_server = std::make_shared<launchpad::Server>(can_socket, ucanopen::NodeId(0x142), server_name);
+        launchpad_server = std::make_shared<launchpad::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
         ucanopen_client->register_server(launchpad_server);
 
         auto callback_create_tpdo1 = [launchpad_server](){ return launchpad_server->create_client_tpdo1(); };
@@ -85,22 +85,22 @@ int backend_main_loop(std::future<void> signal_exit) {
 
     backend_ucanopen_server_config_category = ucanopen_client->server(server_name)->dictionary().config.config_category.data();
 
-    Log() << "[backend] Backend is ready.\n";
+    Log() << "Backend ready.\n" << LogPrefix::ok;
     backend_is_ready = true;
 
     while (signal_exit.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout) {
         // wait for promise to exit
     }
 
-    Log() << "[backend] Main loop thread stopped.\n";
+    Log() << "Stopped backend main loop thread.\n" << LogPrefix::ok;
     return 0;
 }
 
 
 extern "C"
 int backend_main_enter() {
-    Log() << "[backend] GUI thread id: " << std::this_thread::get_id() << '\n';
-    Log() << "[backend] Starting new thread for main loop...\n";
+    Log() << "GUI thread id: " << std::this_thread::get_id() << ".\n" << LogPrefix::align;
+    Log() << "Starting new thread for backend main loop...\n" << LogPrefix::align;
 
     std::future<void> signal_exit = signal_exit_main.get_future();
     thread_main = std::thread(backend_main_loop, std::move(signal_exit));
@@ -110,7 +110,7 @@ int backend_main_enter() {
 
 extern "C"
 void backend_main_exit() {
-    Log() << "[backend] Sending signal to main loop thread to stop...\n";
+    Log() << "Sending signal to backend main loop thread to stop...\n" << LogPrefix::align;
 
     signal_exit_main.set_value();
     thread_main.join();

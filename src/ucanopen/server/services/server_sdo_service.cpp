@@ -44,13 +44,12 @@ FrameHandlingStatus ServerSdoService::_handle_read_expedited(const can_frame& fr
     SdoType sdo_type;
     if (object.type == ODObjectType::OD_EXEC) {
         sdo_type = SdoType::response_to_exec;
-        Log() << "[ucanopen/exec] " << object.category << "::" << object.subcategory << "::" << object.name
-              << " executed.\n";
+        Log() << "Executed " << object.category << "::" << object.subcategory << "::" << object.name << ".\n" << LogPrefix::ok;
     } else {
         sdo_type = SdoType::response_to_read;
         if (object.category != _server->dictionary().config.watch_category) {
-            Log() << "[ucanopen/read] " << object.category << "::" << object.subcategory << "::" << object.name
-                  << " = " << sdo.data.to_string(object.type) << '\n';
+            Log() << object.category << "::" << object.subcategory << "::" << object.name
+                  << " = " << sdo.data.to_string(object.type) << '\n' << LogPrefix::ok;
         }
     }
 
@@ -74,12 +73,10 @@ FrameHandlingStatus ServerSdoService::_handle_write_expedited(const can_frame& f
     SdoType sdo_type;
     if (object.type == ODObjectType::OD_EXEC) {
         sdo_type = SdoType::response_to_exec;
-        Log() << "[ucanopen/exec] " << object.category << "::" << object.subcategory << "::" << object.name
-              << " executed.\n";
+        Log() << "Executed " << object.category << "::" << object.subcategory << "::" << object.name << ".\n" << LogPrefix::ok;
     } else {
         sdo_type = SdoType::response_to_write;
-        Log() << "[ucanopen/write] " << object.category << "::" << object.subcategory << "::" << object.name
-              << " updated.\n";
+        Log() << "Updated " << object.category << "::" << object.subcategory << "::" << object.name << ".\n" << LogPrefix::ok;
     }
 
     for (auto& subscriber : _subscriber_list) {
@@ -98,8 +95,8 @@ FrameHandlingStatus ServerSdoService::_handle_abort(const can_frame& frame) {
     } else {
         error_msg = "reason unknown";
     }
-    Log() << "[ucanopen] SDO transfer aborted: " << error_msg
-          << " (error code: 0x" << std::hex << abort_sdo.error_code << std::dec << ")\n";
+    Log() << "Aborted SDO transfer: " << error_msg
+          << " (error code: 0x" << std::hex << abort_sdo.error_code << std::dec << ").\n" << LogPrefix::failed;
 
     return FrameHandlingStatus::success;
 }

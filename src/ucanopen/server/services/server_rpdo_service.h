@@ -25,15 +25,13 @@ public:
     void update_node_id();
 
     void enable() {
-        Log() << "[ucanopen] Enabling '" << _server->name() << "' server RPDO messages... ";
         _is_enabled = true;
-        Log() << "done.\n";
+        Log() << "Enabled uCANopen server '" << _server->name() << "' RPDO messages.\n" << LogPrefix::ok;
     }
 
     void disable() {
-        Log() << "[ucanopen] Disabling '" << _server->name() << "' server RPDO messages... ";
         _is_enabled = false;
-        Log() << "done.\n";
+        Log() << "Disabled uCANopen server '" << _server->name() << "' RPDO messages.\n" << LogPrefix::ok;
     }
 
     void send() {

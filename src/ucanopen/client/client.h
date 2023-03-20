@@ -77,25 +77,23 @@ public:
     void set_server_node_id(std::string_view name, NodeId node_id);
 
     void enable_sync() {
-        Log() << "[ucanopen] Enabling client SYNC messages (period = " << _sync_info.period << ")... ";	
         _sync_info.is_enabled = true;
-        Log() << "done.\n";
+        Log() << "Enabled uCANopen client SYNC messages (period = " << _sync_info.period << ").\n" << LogPrefix::ok;
     }
 
     void disable_sync() {
-        Log() << "[ucanopen] Disabling client SYNC messages... ";
         _sync_info.is_enabled = false;
-        Log() << "done.\n";
+        Log() << "Disabled uCANopen client SYNC messages.\n" << LogPrefix::ok;
     }
 
     void set_sync_period(std::chrono::milliseconds period) {
-        Log() << "[ucanopen] Setting client SYNC messages period = " << period << "... ";
         _sync_info.period = period;
-        Log() << "done.\n";
+        Log() << "Set uCANopen client SYNC messages period = " << period << ".\n" << LogPrefix::ok;
     }
 
     void set_heartbeat_period(std::chrono::milliseconds period) {
         _heartbeat_info.period = period;
+        Log() << "Set uCANopen client HEARTBEAT messages period = " << period << ".\n" << LogPrefix::ok;
     }
 
     void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds period, std::function<can_payload(void)> creator) {
@@ -103,15 +101,13 @@ public:
     }
 
     void enable_tpdo() {
-        Log() << "[ucanopen] Enabling client TPDO messages... ";
         _is_tpdo_enabled = true;
-        Log() << "done.\n";
+        Log() << "Enabled uCANopen client TPDO messages.\n" << LogPrefix::ok;
     }
 
     void disable_tpdo() {
-        Log() << "[ucanopen] Disabling client TPDO messages... ";
         _is_tpdo_enabled = false;
-        Log() << "done.\n";
+        Log() << "Disabled uCANopen client TPDO messages.\n" << LogPrefix::ok;
     }
 
     void enable_server_rpdo() {

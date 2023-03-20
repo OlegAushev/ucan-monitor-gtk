@@ -49,21 +49,18 @@ public:
     }
 
     void enable() {
-        Log() << "[ucanopen] Enabling '" << _server->name() << "' server watch requests (period = " << _period << ")... ";
         _is_enabled = true;
-        Log() << "done.\n";
+        Log() << "Enabled uCANopen server '" << _server->name() << "' watch requests (period = " << _period << ").\n" << LogPrefix::ok;
     }
 
     void disable() {
-        Log() << "[ucanopen] Disabling '" << _server->name() << "' server watch requests... ";
         _is_enabled = false;
-        Log() << "done.\n";
+        Log() << "Disabled uCANopen server '" << _server->name() << "' watch requests.\n" << LogPrefix::ok;
     }
 
     void set_period(std::chrono::milliseconds period) {
-        Log() << "[ucanopen] Setting '" << _server->name() << "' server watch requests period = " << period << "... ";
         _period = period;
-        Log() << "done.\n";
+        Log() << "Set uCANopen server '" << _server->name() << "' watch requests period = " << period << ".\n" << LogPrefix::ok;
     }
 
     std::vector<std::string_view> object_list() const {
