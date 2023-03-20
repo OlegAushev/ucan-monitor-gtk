@@ -28,7 +28,7 @@ enum class Error {
     invalid_argument,
     script_not_found,
     device_not_found,
-    socket_can_failed,
+    socketcan_init_failed,
     script_exec_failed,
     socket_creation_failed,
     socket_closing_failed,

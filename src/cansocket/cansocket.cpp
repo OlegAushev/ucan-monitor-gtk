@@ -106,7 +106,7 @@ Error Socket::connect(const std::string& interface, int bitrate) {
         error = Error::device_not_found;
         break;
     case 3:
-        error = Error::socket_can_failed;
+        error = Error::socketcan_init_failed;
         break;
     default:
         error = Error::script_exec_failed;
@@ -132,10 +132,10 @@ Error Socket::disconnect() {
     std::lock_guard<std::mutex> lock2(_recv_mutex);
 
     if (close(_socket) < 0) {
-        Log() << "[cansocket] ERROR: socket closing failed.\n";
+        Log() << "[cansocket] ERROR: failed to close socket.\n";
         return Error::socket_closing_failed;
     } else {
-        Log() << "[cansocket] Socket closed.\n";
+        Log() << "[cansocket] Closed socket.\n";
         _socket = -1;
         return Error::none;
     }
