@@ -6,17 +6,17 @@ namespace can {
 Socket::Socket() {
     // check can0: may be interface is already enabled
     /* FIND SCRIPT */
-    Log() << "[cansocket] Searching for SocketCAN checking script... ";
+    Log() << "Searching for SocketCAN checking script...\n" << LogPrefix::align;
     std::filesystem::path script_path = _find_script("socketcan_check.sh");
     if (script_path.empty()) {
-        Log() << "WARNING: not found.\n";
+        Log() << "Failed to find SocketCAN checking script.\n" << LogPrefix::failed;
         return;
     }
-    Log() << "found: " << script_path << '\n';
+    Log() << "Found SocketCAN checking script: " << script_path << '\n' << LogPrefix::ok;
 
     /* RUN SCRIPT */
     std::string cmd = "sh " + script_path.string() + " " + "can0";
-    Log() << "[cansocket] Checking can0, executing system command: \"" << cmd << "\"\n";
+    Log() << "Checking SocketCAN interface can0, executing system command: \"" << cmd << "\"\n" << LogPrefix::align;
 
     int script_retval = system(cmd.c_str());
     if (script_retval == 0) {
@@ -34,16 +34,16 @@ Socket::~Socket() {
 
 Error Socket::_create_socket(const std::string& interface) {
     /* CREATE SOCKET */
-    Log() << "[cansocket] Creating socket... ";
+    Log() << "Creating CAN socket...\n" << LogPrefix::align;
     _socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
     if (_socket < 0) {
-        Log() << "ERROR: socket creation failed.\n";
+        Log() << "Failed to create CAN socket.\n" << LogPrefix::failed;
         return Error::socket_creation_failed;
     }
 
     std::strcpy(_ifr.ifr_name, interface.c_str());
     if (ioctl(_socket, SIOCGIFINDEX, &_ifr) < 0) {
-        Log() << "ERROR: interface retrieving failed.\n";
+        Log() << "Failed to retrieve CAN interface.\n" << LogPrefix::failed;
         return Error::interface_retrieving_failed;
     }
 
@@ -57,14 +57,14 @@ Error Socket::_create_socket(const std::string& interface) {
     setsockopt(_socket, SOL_CAN_RAW, CAN_RAW_FILTER, filter, sizeof(can_filter));
 
     if (bind(_socket, (sockaddr*)&_addr, sizeof(_addr)) < 0) {
-        Log() << "ERROR: socket binding failed.\n";
+        Log() << "Failed to bind CAN socket.\n" << LogPrefix::failed;
         return Error::socket_binding_failed;
     }
 
     _recv_fd.fd = _socket;
     _recv_fd.events = POLLIN;
 
-    Log() << "done.\n";
+    Log() << "Created CAN socket.\n" << LogPrefix::ok;
     return Error::none;
 }
 
@@ -81,17 +81,17 @@ Error Socket::connect(const std::string& interface, int bitrate) {
     std::lock_guard<std::mutex> lock2(_recv_mutex);
 
     /* FIND SCRIPT */
-    Log() << "[cansocket] Searching for SocketCAN enabling script... ";
+    Log() << "Searching for SocketCAN enabling script...\n" << LogPrefix::align;
     std::filesystem::path script_path = _find_script("socketcan_enable.sh");
     if (script_path.empty()) {
-        Log() << "ERROR: not found.\n";
+        Log() << "Failed to find SocketCAN enabling script.\n" << LogPrefix::failed;
         return Error::script_not_found;
     }
-    Log() << "found: " << script_path << '\n';
+    Log() << "Found SocketCAN enabling script: " << script_path << '\n' << LogPrefix::ok;
 
     /* RUN SCRIPT */
     std::string cmd = "pkexec sh " + script_path.string() + " " + interface + " " + std::to_string(bitrate);
-    Log() << "[cansocket] Enabling " << interface << ", executing system command: \"" << cmd << "\"\n";
+    Log() << "Enabling SocketCAN interface " << interface << ", executing system command: \"" << cmd << "\"\n" << LogPrefix::align;
 
     int pkexec_retval = system(cmd.c_str());
     Error error;
@@ -114,7 +114,7 @@ Error Socket::connect(const std::string& interface, int bitrate) {
     }
 
     if (error != Error::none) {
-        Log() << "[cansocket] SocketCAN interface enabling failed. Error code: " << static_cast<int>(error) << '\n';
+        Log() << "Failed to enable SocketCAN interface. Error code: " << static_cast<int>(error) << '\n' << LogPrefix::failed;
         return error;
     }
 
@@ -124,7 +124,7 @@ Error Socket::connect(const std::string& interface, int bitrate) {
 
 Error Socket::disconnect() {
     if (_socket < 0) {
-        Log() << "[cansocket] No socket to close.\n";
+        Log() << "Failed to close CAN socket: no socket.\n" << LogPrefix::failed;
         return Error::none;
     }
 
@@ -132,10 +132,10 @@ Error Socket::disconnect() {
     std::lock_guard<std::mutex> lock2(_recv_mutex);
 
     if (close(_socket) < 0) {
-        Log() << "[cansocket] ERROR: failed to close socket.\n";
+        Log() << "Failed to close CAN socket.\n" << LogPrefix::failed;
         return Error::socket_closing_failed;
     } else {
-        Log() << "[cansocket] Closed socket.\n";
+        Log() << "Closed socket.\n" << LogPrefix::ok;
         _socket = -1;
         return Error::none;
     }
