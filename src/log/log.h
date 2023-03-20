@@ -16,7 +16,6 @@ class Log final {
     friend bool log_get_message(char* buf, size_t len);
 private:
     static inline std::stringstream _stream;
-    static inline std::deque<std::string> _messages;
 public:
     Log() = default;
     Log(const Log& other) = delete;
