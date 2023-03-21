@@ -50,7 +50,7 @@
 								<child>
 									<object class="AdwActionRow">
 										<property name="activatable_widget">button_reset_errors</property>
-										<property name="title">Reset Errors</property>
+										<property name="title">Clear Errors</property>
 										<child type="suffix">
 											<object class="GtkButton" id="button_reset_errors">
 												<property name="label"></property>

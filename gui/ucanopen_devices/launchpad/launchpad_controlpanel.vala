@@ -36,7 +36,7 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		button_reset_errors.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_errors");
+			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
 		});
 
 		button_reset_device.clicked.connect(() => {

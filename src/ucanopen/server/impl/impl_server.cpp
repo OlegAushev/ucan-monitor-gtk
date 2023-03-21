@@ -158,12 +158,12 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
     if (ret_entry == _dictionary.entries.end()) {
         Log() << "Cannot read "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - no such OD entry.\n" << LogPrefix::failed;
+              << ": no such OD entry.\n" << LogPrefix::failed;
         return ODAccessStatus::not_found;
     } else if (ret_entry->second.has_read_permission() == false) {
         Log() << "Cannot read "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - access denied.\n" << LogPrefix::failed;
+              << ": access denied.\n" << LogPrefix::failed;
         return ODAccessStatus::access_denied;
     }
     return ODAccessStatus::success;
@@ -177,12 +177,12 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
     if (ret_entry == _dictionary.entries.end()) {
         Log() << "Cannot write "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - no such OD entry.\n" << LogPrefix::failed;
+              << ": no such OD entry.\n" << LogPrefix::failed;
         return ODAccessStatus::not_found;;
     } else if (ret_entry->second.has_write_permission() == false) {
         Log() << "Cannot write "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - access denied.\n" << LogPrefix::failed;
+              << ": access denied.\n" << LogPrefix::failed;
         return ODAccessStatus::access_denied;
     }
     return ODAccessStatus::success;
@@ -196,12 +196,12 @@ ODAccessStatus impl::Server::find_od_entry(std::string_view category, std::strin
     if (ret_entry == _dictionary.entries.end()) {
         Log() << "Cannot execute "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - no such OD entry.\n" << LogPrefix::failed;
+              << ": no such OD entry.\n" << LogPrefix::failed;
         return ODAccessStatus::not_found;
     } else if ((ret_entry->second.type != ODObjectType::OD_EXEC) || (ret_entry->second.has_write_permission() == false)) {
         Log() << "Cannot execute "
               << _name << "::" << category << "::" << subcategory << "::" << name 
-              << " - not executable OD entry.\n" << LogPrefix::failed;
+              << ": not executable OD entry.\n" << LogPrefix::failed;
         return ODAccessStatus::access_denied;
     }
     return ODAccessStatus::success;

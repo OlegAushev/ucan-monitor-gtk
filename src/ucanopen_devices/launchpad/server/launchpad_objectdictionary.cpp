@@ -23,7 +23,7 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x1018, 0x04}, {"sys", "info", "serial_number", "", OD_UINT32, OD_ACCESS_CONST}},
 
 {{0x2000, 0x01}, {"sys", "ctl", "reset_device", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2000, 0x02}, {"sys", "ctl", "reset_errors", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2000, 0x02}, {"sys", "ctl", "clear_errors", "", OD_EXEC, OD_ACCESS_WO}},
 
 {{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
 {{0x5000, 0x02}, {"watch", "watch", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
