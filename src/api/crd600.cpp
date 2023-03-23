@@ -17,9 +17,9 @@ extern "C" {
 
 void crd600_set_power_enabled(bool is_enabled) {
     if (is_enabled) {
-        crd600_server->exec("control", "drive", "powerup");
+        crd600_server->exec("drive", "ctl", "powerup");
     } else {
-        crd600_server->exec("control", "drive", "powerdown");
+        crd600_server->exec("drive", "ctl", "powerdown");
     }
 }
 

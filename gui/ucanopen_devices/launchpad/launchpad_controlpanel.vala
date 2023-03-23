@@ -10,7 +10,7 @@ namespace LaunchPad {
 public class ControlPanel : Adw.Bin
 {
 	[GtkChild]
-	private unowned Gtk.Button button_reset_errors;
+	private unowned Gtk.Button button_clear_errors;
 	[GtkChild]
 	private unowned Gtk.Button button_reset_device;
 
@@ -35,7 +35,7 @@ public class ControlPanel : Adw.Bin
 
 	construct
 	{
-		button_reset_errors.clicked.connect(() => {
+		button_clear_errors.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
 		});
 
