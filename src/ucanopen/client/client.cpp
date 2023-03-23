@@ -165,7 +165,7 @@ void Client::_run(std::future<void> signal_exit) {
         }
     }
 
-    Log() << "Stopped Aux uCANopen thread.\n" << LogPrefix::ok;
+    Log() << "Stopped aux uCANopen thread.\n" << LogPrefix::ok;
 }
 
 
