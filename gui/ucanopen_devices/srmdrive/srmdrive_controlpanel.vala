@@ -39,15 +39,15 @@ public class ControlPanel : Adw.Bin
 		});
 
 		button_calibrate.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "BEGIN POSITION SENSOR CALIBRATION");
+			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "calibrate");
 		});
 
 		button_invert.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "INVERT ROTATION");
+			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
 		});
 
 		button_reset.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "SYSTEM CONTROL", "SYSTEM CONTROL", "RESET DEVICE");
+			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
 		});
 		
 		slider_speed.adjustment->value_changed.connect(() => {

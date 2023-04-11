@@ -19,7 +19,7 @@ extern void register_bmsmain_server(std::shared_ptr<bmsmain::Server> bmsmain_ser
 // used in VALA code
 bool backend_is_ready = false;
 const char* backend_ucanopen_server;
-const char* backend_ucanopen_server_list[4] = {"SRM-Drive", "CRD600", "LaunchPad", "BMS-Main"};
+const char* backend_ucanopen_server_list[4] = {"SRM-Drive-80", "CRD600", "LaunchPad", "BMS-Main"};
 const char* backend_ucanopen_server_config_category;
 
 
@@ -45,7 +45,7 @@ int backend_main_loop(std::future<void> signal_exit) {
     std::shared_ptr<bmsmain::Server> bmsmain_server;
 
     std::string server_name(backend_ucanopen_server);
-    if (server_name == "SRM-Drive") {
+    if (server_name == "SRM-Drive-80") {
         srmdrive_server = std::make_shared<srmdrive::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
         ucanopen_client->register_server(srmdrive_server);
         

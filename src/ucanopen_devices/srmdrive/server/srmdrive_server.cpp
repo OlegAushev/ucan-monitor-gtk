@@ -20,12 +20,17 @@ Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, co
 
 ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
                                                  ucanopen::SdoType sdo_type,
-                                                 ucanopen::ExpeditedSdoData sdo_data) {
-    if (entry->second.category == _dictionary.config.watch_category && entry->second.type == ucanopen::OD_ENUM16) {
-        if (entry->second.name == "DRIVE_STATE" && sdo_data.u32() < drive_states.size()) {
-            watch_service.set_value(entry->second.name, drive_states[sdo_data.u32()]);
+                                                 ucanopen::ExpeditedSdoData data) {
+    if (entry->second.name == "syslog_message") {
+        auto message_id = data.u32();
+        if ((message_id != 0) && (message_id < syslog_messages.size())) {
+            Log() << syslog_messages[message_id] << '\n';
         }
+    } else if (entry->second.category == _dictionary.config.config_category && entry->second.type == ucanopen::OD_ENUM16) {
+        
     }
+
+    return ucanopen::FrameHandlingStatus::success;
 }
 
 

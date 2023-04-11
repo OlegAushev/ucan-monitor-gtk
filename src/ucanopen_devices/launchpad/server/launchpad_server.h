@@ -55,7 +55,7 @@ protected:
 
     virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
                                                      ucanopen::SdoType sdo_type,
-                                                     ucanopen::ExpeditedSdoData sdo_data) override;
+                                                     ucanopen::ExpeditedSdoData data) override;
 public:
     Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name);
 

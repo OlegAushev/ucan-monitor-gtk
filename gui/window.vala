@@ -36,7 +36,7 @@ public class Window : Gtk.ApplicationWindow
 	{
 		switch (Backend.Ucanopen.server)
 		{
-			case "SRM-Drive":
+			case "SRM-Drive-80":
 				scrolledwindow_control_panel.child = new SrmDrive.ControlPanel();
 				scrolledwindow_control_panel.child.add_css_class("background");
 				scrolledwindow_data_tables.child = new SrmDrive.DataTables();

@@ -94,37 +94,45 @@ struct CobRpdo4 {
 
 
 inline const std::vector<std::string> syslog_messages = {
-    "No message",
-    "[SRM-Drive::syslog] Device boot - success.",
-    "[SRM-Drive::syslog] Device is busy.",
-    "[SRM-Drive::syslog] Reset device...",
-    "[SRM-Drive::syslog] Read configs from EEPROM - success.",
-    "[SRM-Drive::syslog] Read configs from EEPROM - fail.",
-    "[SRM-Drive::syslog] Reset configs - success.",
-    "[SRM-Drive::syslog] Reset configs - fail.",
-    "[SRM-Drive::syslog] Apply configs - success.",
-    "[SRM-Drive::syslog] Apply configs - fail.",
-    "[SRM-Drive::syslog] Position sensor calibration - success.",
-    "[SRM-Drive::syslog] Position sensor calibration - fail.",
-    "[SRM-Drive::syslog] Write calibration data to EEPROM - success.",
-    "[SRM-Drive::syslog] Write calibration data to EEPROM - fail.",
-    "[SRM-Drive::syslog] Operation cannot be performed."	
+    "",
+    "         @syslog: Boot CPU1...",
+    "[  OK  ] @syslog: CPU1 ready.",
+    "         @syslog: Boot CPU2...",
+    "[  OK  ] @syslog: CPU2 ready.",
+    "[  OK  ] @syslog: Configured CPU1 periphery.",
+    "[  OK  ] @syslog: Configured CPU2 periphery.",
+    "[  OK  ] @syslog: Device ready.",
+    "[FAILED] @syslog: Device busy.",
+    "[FAILED] @syslog: Error occurred.",
+    "         @syslog: Resetting device...",
+    "[ WARN ] @syslog: Lost SDO request.",
+    "[ WARN ] @syslog: Cannot communicate with EEPROM: disabled.",
+    "[  OK  ] @syslog: Read settings.",
+    "[FAILED] @syslog: Failed to read settings.",
+    "[  OK  ] @syslog: Applied settings.",
+    "[FAILED] @syslog: Failed to apply settings.",
+    "[  OK  ] @syslog: Restored settings.",
+    "[FAILED] @syslog: Failed to restore settings.",
+    "[  OK  ] @syslog: Loaded default settings.",
+    "[  OK  ] @syslog: Calibration completed successfully."	
 };
 
 
 inline const std::vector<std::string> drive_states = {
-    "standby",
     "idle",
-    "pwrup",
+    "wait",
+    "standby",
+    "startup",
     "ready",
-    "prep",
+    "prepare",
     "start",
     "run",
     "stop",
-    "pwrdown",
-    "cal pwrup",
-    "cal",
-    "eval",
+    "shutdown",
+    "cal_startup",
+    "cal_stage1",
+    "cal_stage2",
+    "cal_stage3",
 };
 
 

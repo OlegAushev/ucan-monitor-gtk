@@ -24,7 +24,7 @@ public:
 protected:
     virtual ucanopen::FrameHandlingStatus handle_sdo(ucanopen::ODEntryIter entry,
                                                      ucanopen::SdoType sdo_type,
-                                                     ucanopen::ExpeditedSdoData sdo_data) override;
+                                                     ucanopen::ExpeditedSdoData data) override;
 private:
     void _handle_tpdo1(const ucanopen::can_payload& payload);
     void _handle_tpdo2([[maybe_unused]] const ucanopen::can_payload& payload) {}

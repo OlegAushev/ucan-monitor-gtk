@@ -36,6 +36,8 @@ ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
     } else if (entry->second.category == _dictionary.config.watch_category && entry->second.type == ucanopen::OD_ENUM16) {
         
     }
+
+    return ucanopen::FrameHandlingStatus::success;
 }
 
 
