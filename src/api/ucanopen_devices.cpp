@@ -13,7 +13,7 @@ extern std::shared_ptr<bmsmain::Server> bmsmain_server;
 extern "C" {
 
 size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
-    if (std::string(server_name) == "SRM-Drive") {
+    if (std::string(server_name) == "SRM-Drive-80") {
         if (srmdrive::error_list.size() > str_count) {
             return 0;
         }
@@ -57,7 +57,7 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, 
 }
 
 size_t ucanopen_devices_get_warning_names(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
-    if (std::string(server_name) == "SRM-Drive") {
+    if (std::string(server_name) == "SRM-Drive-80") {
         if (srmdrive::warning_list.size() > str_count) {
             return 0;
         }
@@ -101,7 +101,7 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** retbuf
 }
 
 unsigned int ucanopen_devices_get_error_code(const char* server_name) {
-    if (std::string(server_name) == "SRM-Drive") {
+    if (std::string(server_name) == "SRM-Drive-80") {
         return srmdrive_server->errors();
     } else if (std::string(server_name) == "CRD600") {
         return crd600_server->errors();
@@ -115,7 +115,7 @@ unsigned int ucanopen_devices_get_error_code(const char* server_name) {
 }
 
 unsigned int ucanopen_devices_get_warning_code(const char* server_name) {
-    if (std::string(server_name) == "SRM-Drive") {
+    if (std::string(server_name) == "SRM-Drive-80") {
         return srmdrive_server->warnings();
     } else if (std::string(server_name) == "CRD600") {
         return crd600_server->warnings();

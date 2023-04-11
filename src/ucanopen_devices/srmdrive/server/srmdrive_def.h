@@ -11,88 +11,69 @@
 namespace srmdrive {
 
 struct CobTpdo1 {
-    uint16_t status_run : 1;	// bit 0
-    uint16_t status_fault : 1;	// bit 1
-    uint16_t status_warning : 1;	// bit 2
-    uint16_t status_overheat : 1;	// bit 3
-    uint16_t status_reserved : 4;	// bit 4..7
-    int8_t torque : 8;
+    uint16_t counter : 2;
+    uint16_t status_run : 1;
+    uint16_t status_error : 1;
+    uint16_t status_warning : 1;
+    uint16_t status_overheat : 1;
+    uint16_t reference : 1;
+    uint16_t control_loop : 1;
+    uint16_t drive_state : 8;
+    uint16_t dc_voltage : 16;
+    int16_t torque : 16;
     int16_t speed : 16;
-    int8_t current_s : 8;
-    int8_t power : 8;
-    uint8_t voltage_dc : 8;
-    uint8_t current_f : 8;
-    CobTpdo1() = default;
 };
 
 
 struct CobTpdo2 {
-    uint8_t temp_motor_s : 8;
-    uint8_t _reserved1 : 8;
-    uint8_t voltage_out : 8;
-    uint8_t _reserved2 : 7;
-    uint16_t torque_limitation : 1;
-    uint8_t temp_motor_fw : 8;
-    uint8_t temp_heatsink : 8;
-    uint8_t tepm_case_air : 8;
-    uint8_t _reserved3 : 8;
-    CobTpdo2() = default;
+    uint16_t counter : 2;
+    uint16_t stator_current : 14;
+    uint16_t field_current;
+    uint16_t out_voltage : 8;
+    uint16_t mech_power : 8;
+    uint16_t elec_power : 8;
+    uint16_t _reserved : 8;
 };
 
 
 struct CobTpdo3 {
-    uint8_t voltage_pos_housing : 8;
-    uint8_t voltage_neg_housing : 8;
-    uint16_t status_reserved1 : 1;			// bit 0
-    uint16_t status_insulation_low : 1;		// bit 1
-    uint16_t status_insulation_low_wofilter : 1;	// bit 2
-    uint16_t status_reserved2 : 1;			// bit 3
-    uint16_t _reserved1 : 3;
-    uint16_t drive_reference : 1;
-    int8_t current_dc : 8;
-    uint32_t syslog_message_id : 32;
-    CobTpdo3() = default;
+    uint16_t counter : 2;
+    uint16_t _reserved : 14;
+    uint16_t _reserved2 : 8;
+    uint16_t pwrmodule_temp : 8;
+    uint16_t excmodule_temp : 8;
+    uint16_t exc_temp : 8;
+    uint16_t aw_temp : 8;
+    uint16_t fw_temp : 8;
 };
 
 
 struct CobTpdo4 {
-    uint32_t errors : 32;
-    uint16_t _reserved : 16;
-    uint16_t warnings : 16;
-    CobTpdo4() = default;
+    uint64_t counter : 2;
+    uint64_t errors : 31;
+    uint64_t warnings : 31;
 };
 
 
+//----------------------------------------------------------------------------------------------------------------------
 struct CobRpdo1 {
-    uint16_t run : 1;
-    uint32_t _reserved1 : 31;
-    uint16_t emergency_stop : 1;
-    uint16_t _reserved2 : 1;
-    uint16_t braking : 1;
-    uint32_t _reserved3 : 29;
-    CobRpdo1() = default;
+    uint32_t counter : 2;
+    uint32_t run : 1;
+    uint32_t _reserved1 : 29;
+    uint32_t emergency_stop : 1;
+    uint32_t _reserved2 : 31;
 };
 
 
 struct CobRpdo2 {
-    int8_t torque_obsolete : 8;
-    uint8_t _reserved1 : 8;
-    int16_t torque : 16;
-    uint32_t _reserved2 : 32;
-    CobRpdo2() = default;
+    uint32_t counter : 2;
+    uint32_t _reserved : 30;
+    int16_t torque_ref;
+    int16_t speed_ref;
 };
 
 
-struct CobRpdo3 {
-    uint64_t data;
-};
-
-
-struct CobRpdo4 {
-    uint64_t data;
-};
-
-
+//----------------------------------------------------------------------------------------------------------------------
 inline const std::vector<std::string> syslog_messages = {
     "",
     "         @syslog: Boot CPU1...",
@@ -137,42 +118,36 @@ inline const std::vector<std::string> drive_states = {
 
 
 inline const std::vector<std::string_view> error_list = {
-    "DC_UNDERVOLTAGE",		// 0x0000 0001
-    "DC_OVERVOLTAGE",		// 0x0000 0002
-    "PHASE_OVERCURRENT",		// 0x0000 0004
-    "FIELD_OVERCURRENT",		// 0x0000 0008
-    "DC_OVERCURRENT",		// 0x0000 0010
-    "DRIVER_3PH_FLT",		// 0x0000 0020
-    "DRIVER_1PH_FLT",		// 0x0000 0040
-    "JUNCTION_OVERTEMP",		// 0x0000 0080
-    "CASE_OVERTEMP",		// 0x0000 0100
-    "STATOR_OVERTEMP",		// 0x0000 0200
-    "FIELD_WINDING_OVERTEMP",	// 0x0000 0400
-    "CONNECTION_LOST",		// 0x0000 0800
-    "CAN_BUS_ERROR",		// 0x0000 1000
-    "RUNTIME_ERROR",		// 0x0000 2000
-    "EEPROM_ERROR",			// 0x0000 4000
-    "PHASE_CURRENT_SENSOR_FAULT",	// 0x0000 8000
-    "FIELD_CURRENT_SENSOR_FAULT",	// 0x0001 0000
-    "DC_CURRENT_SENSOR_FAULT",	// 0x0002 0000
-    "EMERGENCY_STOP",		// 0x0004 0000
-    "DCLINK_CHARGE_FAILURE",	// 0x0008 0000
-    "POSSENSOR_CALIBRATION_FAULT",	// 0x0010 0000
-    "MOTOR_TEMP_SENSOR_FAULT",	// 0x0020 0000
-    "BYPASS_CONTACTOR_OPENING_FAULT",	// 0x0040 0000
+    "emergency_stop",
+    "can_bus_connection_lost",
+    "dclink_charge_failure",
+    "dclink_discharge_failure",
+    "dc_undervoltage",
+    "dc_overvoltage",
+    "pwr_module_fault",
+    "exc_module_fault",
+    "pwr_overcurrent",
+    "exc_overcurrent",
+    "pwr_overtemp",
+    "exc_overtemp",
+    "pcb_overtemp",
+    "aw_overtemp",
+    "fw_overtemp",
+    "ia_sensor_fault",
+    "if_sensor_fault",
+    "eeprom_error",
 };
 
 
 inline const std::vector<std::string_view> warning_list = {
-    "DCLINK_DISCONNECTED",
-    "DCLINK_CHARGING",
-    "DCLINK_HV_AT_OPEN_CONTACTORS",
-    "CAN_BUS_WARNING",
-    "JUNCTION_OVERHEATING",
-    "CASE_OVERHEATING",
-    "STATOR_OVERHEATING",
-    "FIELD_WINDING_OVERHEATING",
-    "FLUX_WEAKENING"
+    "can_bus_error",
+    "can_bus_overrun",
+    "can_bus_connection_lost",
+    "dclink_disconnected",
+    "dclink_charging",
+    "converter_overheat",
+    "motor_overheat",
+    "flux_weakening",
 };
 
 }

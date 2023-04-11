@@ -48,18 +48,10 @@ int backend_main_loop(std::future<void> signal_exit) {
     if (server_name == "SRM-Drive-80") {
         srmdrive_server = std::make_shared<srmdrive::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
         ucanopen_client->register_server(srmdrive_server);
-        
-        auto callback_create_tpdo1 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo1(); };
-        auto callback_create_tpdo2 = [srmdrive_server](){ return srmdrive_server->controller.make_tpdo2(); };
-
-        ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(250), callback_create_tpdo1);
-        ucanopen_client->register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(100), callback_create_tpdo2);
-
         api::register_srmdrive_server(srmdrive_server);
     } else if (server_name == "CRD600") {
         crd600_server = std::make_shared<crd600::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
         ucanopen_client->register_server(crd600_server);
-
         api::register_crd600_server(crd600_server);
     } else if (server_name == "LaunchPad") {
         launchpad_server = std::make_shared<launchpad::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
@@ -79,7 +71,6 @@ int backend_main_loop(std::future<void> signal_exit) {
     } else if (server_name == "BMS-Main") {
         bmsmain_server = std::make_shared<bmsmain::Server>(can_socket, ucanopen::NodeId(0x20), server_name);
         ucanopen_client->register_server(bmsmain_server);
-
         api::register_bmsmain_server(bmsmain_server);
     }
 

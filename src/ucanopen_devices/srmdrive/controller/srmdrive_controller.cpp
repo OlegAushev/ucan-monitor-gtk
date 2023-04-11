@@ -46,21 +46,21 @@ void Controller::set_speed(double val) {
 
 
 ucanopen::can_payload Controller::make_tpdo1() {
-    CobRpdo1 message{};
+    // CobRpdo1 message{};
 
-    message.run = ((_is_run_enabled) ? 1 : 0);
-    message.emergency_stop = ((_is_emergency_enabled) ? 1 : 0);
+    // message.run = ((_is_run_enabled) ? 1 : 0);
+    // message.emergency_stop = ((_is_emergency_enabled) ? 1 : 0);
 
-    return ucanopen::to_payload(message);
+    // return ucanopen::to_payload(message);
 }
 
 
 ucanopen::can_payload Controller::make_tpdo2() {
-    CobRpdo2 message{};
+    // CobRpdo2 message{};
 
-    message.torque = ((_torque_pu_ref > 0) ? _torque_pu_ref * 32767 : _torque_pu_ref * 32768);
+    // message.torque = ((_torque_pu_ref > 0) ? _torque_pu_ref * 32767 : _torque_pu_ref * 32768);
 
-    return ucanopen::to_payload(message);
+    // return ucanopen::to_payload(message);
 }
 
 } // namespace srmdrive
