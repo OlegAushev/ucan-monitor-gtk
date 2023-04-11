@@ -63,8 +63,6 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
 	[GtkChild]
-	private unowned TableBoolEntry tpdo1_indicator;
-	[GtkChild]
 	private unowned TableBoolEntry tpdo2_indicator;
 	[GtkChild]
 	private unowned TableBoolEntry tpdo3_indicator;
@@ -72,14 +70,34 @@ public class DataTables : Adw.Bin
 	private unowned TableBoolEntry tpdo4_indicator;
 
 	[GtkChild]
-	private unowned TableEntry entry_tpdo1_raw_data;
-	[GtkChild]
 	private unowned TableEntry entry_tpdo2_raw_data;
 	[GtkChild]
 	private unowned TableEntry entry_tpdo3_raw_data;
 	[GtkChild]
 	private unowned TableEntry entry_tpdo4_raw_data;
-
+    
+    //------------------------------------------------------------------------------------------------------------------
+	[GtkChild]
+	private unowned TableBoolEntry tpdo1_indicator;
+	[GtkChild]
+	private unowned TableEntry entry_tpdo1_raw_data;
+    [GtkChild]
+	private unowned TableEntry entry_drive_state;
+    [GtkChild]
+	private unowned TableBoolEntry entry_run_status;
+    [GtkChild]
+	private unowned TableBoolEntry entry_error_status;
+    [GtkChild]
+	private unowned TableBoolEntry entry_warning_status;
+    [GtkChild]
+	private unowned TableBoolEntry entry_overheat_status;
+    [GtkChild]
+	private unowned TableEntry entry_drive_reference;
+    [GtkChild]
+	private unowned TableEntry entry_control_loop_type;
+    //------------------------------------------------------------------------------------------------------------------
+    const size_t _entry_buf_len = 10;
+	string _entry_buf = string.nfill(_entry_buf_len, '\0');
 
 	public DataTables() {}
 
