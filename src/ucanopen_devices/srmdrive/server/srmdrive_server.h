@@ -42,8 +42,8 @@ private:
     void _handle_tpdo3(const ucanopen::can_payload& payload){}
     void _handle_tpdo4(const ucanopen::can_payload& payload);
 
-    ucanopen::can_payload _create_rpdo1() { return {}; }
-    ucanopen::can_payload _create_rpdo2() { return {}; }
+    ucanopen::can_payload _create_rpdo1();
+    ucanopen::can_payload _create_rpdo2();
 
     struct Tpdo1 {
         bool status_run;
@@ -56,7 +56,9 @@ private:
         std::string dc_voltage;
         std::string torque;
         std::string speed;
-    } tpdo1;
+    } _tpdo1;
+public:
+    const Tpdo1& tpdo1() const { return _tpdo1; }
 };
 
 } // namespace srmdrive

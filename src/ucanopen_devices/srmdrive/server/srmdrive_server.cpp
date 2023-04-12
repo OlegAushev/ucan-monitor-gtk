@@ -41,22 +41,22 @@ ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
 //----------------------------------------------------------------------------------------------------------------------
 void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
     CobTpdo1 tpdo = ucanopen::from_payload<CobTpdo1>(payload);
-    tpdo1.status_run = tpdo.status_run;
-    tpdo1.status_error = tpdo.status_error;
-    tpdo1.status_warning = tpdo.status_warning;
-    tpdo1.status_overheat = tpdo.status_overheat;
-    tpdo1.reference = (tpdo.reference == 0) ? "torque" : "speed";
-    tpdo1.control_loop = (tpdo.control_loop == 0) ? "closed" : "open";
+    _tpdo1.status_run = tpdo.status_run;
+    _tpdo1.status_error = tpdo.status_error;
+    _tpdo1.status_warning = tpdo.status_warning;
+    _tpdo1.status_overheat = tpdo.status_overheat;
+    _tpdo1.reference = (tpdo.reference == 0) ? "torque" : "speed";
+    _tpdo1.control_loop = (tpdo.control_loop == 0) ? "closed" : "open";
 
     if (tpdo.drive_state >= drive_states.size()) {
-        tpdo1.drive_state = "n/a";
+        _tpdo1.drive_state = "n/a";
     } else {
-        tpdo1.drive_state = drive_states[tpdo.drive_state];
+        _tpdo1.drive_state = drive_states[tpdo.drive_state];
     }
 
-    tpdo1.dc_voltage = std::to_string(tpdo.dc_voltage);
-    tpdo1.torque = std::to_string(tpdo.torque);
-    tpdo1.speed = std::to_string(tpdo.speed);
+    _tpdo1.dc_voltage = std::to_string(tpdo.dc_voltage);
+    _tpdo1.torque = std::to_string(tpdo.torque);
+    _tpdo1.speed = std::to_string(tpdo.speed);
 }
 
 
@@ -80,6 +80,35 @@ void Server::_handle_tpdo4(const ucanopen::can_payload& payload){
 //     _errors = message.errors;
 //     _warnings = message.warnings;
 // }
+
+
+//----------------------------------------------------------------------------------------------------------------------
+ucanopen::can_payload Server::_create_rpdo1() {
+    static unsigned int counter = 0;
+    CobRpdo1 rpdo;
+
+    rpdo.counter = counter;
+    rpdo.run = _run_enabled;
+    rpdo.emergency_stop = _emergency_enabled;
+
+    counter = (counter + 1) & 0x3;
+    return ucanopen::to_payload<CobRpdo1>(rpdo);
+}
+
+
+ucanopen::can_payload Server::_create_rpdo2() {
+    static unsigned int counter = 0;
+    CobRpdo2 rpdo;
+
+    rpdo.counter = counter;
+    rpdo.torque_ref = 32767.0f * _torque_perunit_ref;
+    rpdo.speed_ref = _speed_rpm_ref;
+
+    counter = (counter + 1) & 0x3;
+    return ucanopen::to_payload<CobRpdo2>(rpdo);
+}
+
+
 
 }
 

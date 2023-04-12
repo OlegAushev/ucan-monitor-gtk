@@ -19,48 +19,6 @@ public class DataTables : Adw.Bin
 	private unowned TableEntry entry_warnings;
 
 	[GtkChild]
-	private unowned TableEntry entry_speed;
-	[GtkChild]
-	private unowned TableEntry entry_torque;
-	[GtkChild]
-	private unowned TableEntry entry_curr_s;
-	[GtkChild]
-	private unowned TableEntry entry_curr_f;
-	[GtkChild]
-	private unowned TableEntry entry_curr_d;
-	[GtkChild]
-	private unowned TableEntry entry_curr_q;
-	[GtkChild]
-	private unowned TableEntry entry_gamma;
-	[GtkChild]
-	private unowned TableEntry entry_temp_s;
-	[GtkChild]
-	private unowned TableEntry entry_temp_fw;
-	[GtkChild]
-	private unowned TableEntry entry_power_mech;
-
-	[GtkChild]
-	private unowned TableEntry entry_volt_dc;
-	[GtkChild]
-	private unowned TableEntry entry_curr_dc;
-	[GtkChild]
-	private unowned TableEntry entry_curr_pha;
-	[GtkChild]
-	private unowned TableEntry entry_curr_phb;
-	[GtkChild]
-	private unowned TableEntry entry_curr_phc;
-	[GtkChild]
-	private unowned TableEntry entry_temp_pha;
-	[GtkChild]
-	private unowned TableEntry entry_temp_phb;
-	[GtkChild]
-	private unowned TableEntry entry_temp_phc;
-	[GtkChild]
-	private unowned TableEntry entry_temp_air;
-	[GtkChild]
-	private unowned TableEntry entry_power_elec;
-
-	[GtkChild]
 	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
 	[GtkChild]
 	private unowned TableBoolEntry tpdo2_indicator;
@@ -109,8 +67,6 @@ public class DataTables : Adw.Bin
 	public bool update()
 	{
 		_update_system_data();
-		_update_motor_data();
-		_update_inverter_data();
 		_update_tpdo1_data();
 		_update_tpdo2_data();
 		_update_tpdo3_data();
@@ -156,79 +112,36 @@ public class DataTables : Adw.Bin
 		}
 	}
 
-	private void _update_motor_data()
-	{
-		string buf = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "SPEED_RPM", buf, 16);
-		entry_speed.entry_text = buf;
+	
 
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "TORQUE", buf, 16);
-		entry_torque.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "STATOR_CURRENT", buf, 16);
-		entry_curr_s.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FIELD_CURRENT", buf, 16);
-		entry_curr_f.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "D_CURRENT", buf, 16);
-		entry_curr_d.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "Q_CURRENT", buf, 16);
-		entry_curr_q.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "GAMMA_ANGLE_DEG", buf, 16);
-		entry_gamma.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_S_TEMP", buf, 16);
-		entry_temp_s.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MOTOR_FW_TEMP", buf, 16);
-		entry_temp_fw.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "MECH_POWER", buf, 16);
-		entry_power_mech.entry_text = buf;
-	}
-
-	private void _update_inverter_data()
-	{
-		string buf = string.nfill(16, '\0');
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_VOLTAGE", buf, 16);
-		entry_volt_dc.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DC_CURRENT", buf, 16);
-		entry_curr_dc.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_CURRENT", buf, 16);
-		entry_curr_pha.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_CURRENT", buf, 16);
-		entry_curr_phb.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_CURRENT", buf, 16);
-		entry_curr_phc.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHA_TEMP", buf, 16);
-		entry_temp_pha.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHB_TEMP", buf, 16);
-		entry_temp_phb.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "PHC_TEMP", buf, 16);
-		entry_temp_phc.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "CASE_TEMP", buf, 16);
-		entry_temp_air.entry_text = buf;
-
-		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "OUT_ELEC_POWER", buf, 16);
-		entry_power_elec.entry_text = buf;
-	}
+	
 
 	private void _update_tpdo1_data()
 	{
 		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
 		entry_tpdo1_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 0).to_string("%016lX");
+
+        srmdrive_tpdo1_get_drive_state(_entry_buf, _entry_buf_len);
+        entry_drive_state.entry_text = _entry_buf;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	private void _update_tpdo2_data()
 	{

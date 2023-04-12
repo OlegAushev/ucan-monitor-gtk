@@ -44,5 +44,12 @@ void srmdrive_set_speed(double value_rpm) {
     srmdrive_server->set_speed(value_rpm);
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+extern void srmdrive_tpdo1_get_drive_state(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().drive_state.c_str(), bufsize-1);
+}
+
 }
 

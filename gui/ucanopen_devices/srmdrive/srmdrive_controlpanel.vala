@@ -17,8 +17,10 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Button button_calibrate;
 	[GtkChild]
 	private unowned Gtk.Button button_invert;
+    [GtkChild]
+	private unowned Gtk.Button button_clear_errors;
 	[GtkChild]
-	private unowned Gtk.Button button_reset;
+	private unowned Gtk.Button button_reset_device;
 	[GtkChild]
 	private unowned SpinButtonScale slider_speed;
 	[GtkChild]
@@ -46,7 +48,7 @@ public class ControlPanel : Adw.Bin
 			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
 		});
 
-		button_reset.clicked.connect(() => {
+		button_reset_device.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
 		});
 		

@@ -75,12 +75,29 @@
 										</child>
 									</object>
 								</child>
+                <child>
+									<object class="AdwActionRow">
+										<property name="activatable_widget">button_clear_errors</property>
+										<property name="title">Clear Errors</property>
+										<child type="suffix">
+											<object class="GtkButton" id="button_clear_errors">
+												<property name="label"></property>
+												<property name="icon-name">dialog-warning-symbolic</property>
+												<property name="halign">center</property>
+												<property name="valign">center</property>
+												<style>
+													<class name="destructive-action"/>
+												</style>
+											</object>
+										</child>
+									</object>
+								</child>
 								<child>
 									<object class="AdwActionRow">
-										<property name="activatable_widget">button_reset</property>
+										<property name="activatable_widget">button_reset_device</property>
 										<property name="title">Reset Device</property>
 										<child type="suffix">
-											<object class="GtkButton" id="button_reset">
+											<object class="GtkButton" id="button_reset_device">
 												<property name="label"></property>
 												<property name="icon-name">view-refresh-symbolic</property>
 												<property name="halign">center</property>
