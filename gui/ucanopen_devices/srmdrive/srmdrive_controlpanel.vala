@@ -31,11 +31,11 @@ public class ControlPanel : Adw.Bin
 	construct
 	{
 		switch_power.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_power_enabled(switch_power.state);
+			srmdrive_set_power_enabled(switch_power.state);
 		});
 
 		switch_run.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_run_enabled(switch_run.state);
+			srmdrive_set_run_enabled(switch_run.state);
 		});
 
 		button_calibrate.clicked.connect(() => {
@@ -51,15 +51,15 @@ public class ControlPanel : Adw.Bin
 		});
 		
 		slider_speed.adjustment->value_changed.connect(() => {
-			srmdrive_controller_set_speed(slider_speed.value);
+			srmdrive_set_speed(slider_speed.value);
 		});
 		
 		slider_torque.adjustment->value_changed.connect(() => {
-			srmdrive_controller_set_torque(slider_torque.value / 100.0);
+			srmdrive_set_torque(slider_torque.value / 100.0);
 		});
 
 		switch_emergency.notify["state"].connect((s, p) => {
-			srmdrive_controller_set_emergency_enabled(switch_emergency.state);
+			srmdrive_set_emergency_enabled(switch_emergency.state);
 		});
 	}
 }

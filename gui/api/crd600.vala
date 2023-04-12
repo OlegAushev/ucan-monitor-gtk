@@ -1,7 +1,12 @@
-extern void crd600_set_power_enabled(bool is_enabled);
-extern void crd600_set_drive1_run_enabled(bool is_enabled);
-extern void crd600_set_drive2_run_enabled(bool is_enabled);
-extern void crd600_set_emergency_enabled(bool is_enabled);
+///
+///
+///
+
+
+extern void crd600_set_power_enabled(bool enabled);
+extern void crd600_set_drive1_run_enabled(bool enabled);
+extern void crd600_set_drive2_run_enabled(bool enabled);
+extern void crd600_set_emergency_enabled(bool enabled);
 extern void crd600_set_drive1_speed_ref(double val);
 extern void crd600_set_drive2_speed_ref(double val);
 extern void crd600_set_drive1_torque_ref(double val_pu);

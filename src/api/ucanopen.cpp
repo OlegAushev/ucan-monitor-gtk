@@ -30,8 +30,8 @@ void ucanopen_client_set_server_id(const char* server_name ,unsigned int node_id
 }
 
 
-void ucanopen_client_set_sync_enabled(bool is_enabled) {
-    is_enabled ? ucanopen_client->enable_sync() : ucanopen_client->disable_sync();
+void ucanopen_client_set_sync_enabled(bool enabled) {
+    enabled ? ucanopen_client->enable_sync() : ucanopen_client->disable_sync();
 }
 
 
@@ -41,18 +41,18 @@ void ucanopen_client_set_sync_period(int period) {
 }
 
 
-void ucanopen_client_set_tpdo_enabled(bool is_enabled) {
-    is_enabled ? ucanopen_client->enable_tpdo() : ucanopen_client->disable_tpdo();
+void ucanopen_client_set_tpdo_enabled(bool enabled) {
+    enabled ? ucanopen_client->enable_tpdo() : ucanopen_client->disable_tpdo();
 }
 
 
-void ucanopen_client_set_server_rpdo_enabled(bool is_enabled) {
-    is_enabled ? ucanopen_client->enable_server_rpdo() : ucanopen_client->disable_server_rpdo();
+void ucanopen_client_set_server_rpdo_enabled(bool enabled) {
+    enabled ? ucanopen_client->enable_server_rpdo() : ucanopen_client->disable_server_rpdo();
 }
 
 
-void ucanopen_client_set_watch_enabled(bool is_enabled) {
-    is_enabled ? ucanopen_client->enable_server_watch() : ucanopen_client->disable_server_watch();
+void ucanopen_client_set_watch_enabled(bool enabled) {
+    enabled ? ucanopen_client->enable_server_watch() : ucanopen_client->disable_server_watch();
 }
 
 

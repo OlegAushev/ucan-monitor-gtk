@@ -1,13 +1,18 @@
+///
+///
+///
+
+
 extern void cansocket_connect(string interface, int bitrate);
 extern void cansocket_disconnect();
 
 extern void ucanopen_client_set_node_id(uint node_id);
 extern void ucanopen_client_set_server_id(string server_name ,uint node_id);
-extern void ucanopen_client_set_tpdo_enabled(bool is_enabled);
-extern void ucanopen_client_set_server_rpdo_enabled(bool is_enabled);
-extern void ucanopen_client_set_sync_enabled(bool is_enabled);
+extern void ucanopen_client_set_tpdo_enabled(bool enabled);
+extern void ucanopen_client_set_server_rpdo_enabled(bool enabled);
+extern void ucanopen_client_set_sync_enabled(bool enabled);
 extern void ucanopen_client_set_sync_period(int period);
-extern void ucanopen_client_set_watch_enabled(bool is_enabled);
+extern void ucanopen_client_set_watch_enabled(bool enabled);
 extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* retbuf, size_t bufsize);
 extern size_t ucanopen_server_get_config_categories(string server_name, char** retbuf, size_t str_count, size_t str_size);
