@@ -98,5 +98,57 @@ int srmdrive_tpdo1_get_speed() {
     return srmdrive_server->tpdo1().speed;
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+unsigned int srmdrive_tpdo2_get_stator_current() {
+    return srmdrive_server->tpdo2().stator_current;
+}
+
+
+unsigned int srmdrive_tpdo2_get_field_current() {
+    return srmdrive_server->tpdo2().field_current;
+}
+
+
+unsigned int srmdrive_tpdo2_get_out_voltage() {
+    return srmdrive_server->tpdo2().out_voltage;
+}
+
+
+unsigned int srmdrive_tpdo2_get_mech_power() {
+    return srmdrive_server->tpdo2().mech_power;
+}
+
+
+unsigned int srmdrive_tpdo2_get_elec_power() {
+    return srmdrive_server->tpdo2().elec_power;
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------
+int srmdrive_tpdo3_get_pwrmodule_temp() {
+    return srmdrive_server->tpdo3().pwrmodule_temp;
+}
+
+
+int srmdrive_tpdo3_get_excmodule_temp() {
+    return srmdrive_server->tpdo3().excmodule_temp;
+}
+
+
+int srmdrive_tpdo3_get_pcb_temp() {
+    return srmdrive_server->tpdo3().pcb_temp;
+}
+
+
+int srmdrive_tpdo3_get_aw_temp() {
+    return srmdrive_server->tpdo3().aw_temp;
+}
+
+
+int srmdrive_tpdo3_get_fw_temp() {
+    return srmdrive_server->tpdo3().fw_temp;
+} 
+
 }
 

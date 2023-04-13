@@ -56,7 +56,7 @@ private:
         unsigned int dc_voltage;
         int torque;
         int speed;
-    } _tpdo1;
+    } _tpdo1{};
 
     struct Tpdo2 {
         unsigned int stator_current;
@@ -64,7 +64,7 @@ private:
         unsigned int out_voltage;
         unsigned int mech_power;
         unsigned int elec_power;
-    } _tpdo2;
+    } _tpdo2{};
 
     struct Tpdo3 {
         int pwrmodule_temp;
@@ -72,9 +72,11 @@ private:
         int pcb_temp;
         int aw_temp;
         int fw_temp;
-    } _tpdo3;
+    } _tpdo3{};
 public:
     const Tpdo1& tpdo1() const { return _tpdo1; }
+    const Tpdo2& tpdo2() const { return _tpdo2; }
+    const Tpdo3& tpdo3() const { return _tpdo3; }
 };
 
 } // namespace srmdrive

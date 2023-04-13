@@ -20,3 +20,15 @@ extern uint srmdrive_tpdo1_get_dc_voltage();
 extern int srmdrive_tpdo1_get_torque();
 extern int srmdrive_tpdo1_get_speed();
 
+extern uint srmdrive_tpdo2_get_stator_current();
+extern uint srmdrive_tpdo2_get_field_current();
+extern uint srmdrive_tpdo2_get_out_voltage();
+extern uint srmdrive_tpdo2_get_mech_power();
+extern uint srmdrive_tpdo2_get_elec_power();
+
+extern int srmdrive_tpdo3_get_pwrmodule_temp();
+extern int srmdrive_tpdo3_get_excmodule_temp();
+extern int srmdrive_tpdo3_get_pcb_temp();
+extern int srmdrive_tpdo3_get_aw_temp();
+extern int srmdrive_tpdo3_get_fw_temp();
+
