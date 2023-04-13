@@ -6,7 +6,7 @@
 namespace CanMonitor {
 
 
-[GtkTemplate (ui = "/gui/widgets/systemstatus.ui")]
+[GtkTemplate (ui = "/gui/widgets/system_status.ui")]
 public class SystemStatus : Adw.Bin
 {
 	[GtkChild]
