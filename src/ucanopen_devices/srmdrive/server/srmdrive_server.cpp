@@ -60,26 +60,31 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
 }
 
 
+void Server::_handle_tpdo2(const ucanopen::can_payload& payload) {
+    CobTpdo2 tpdo = ucanopen::from_payload<CobTpdo2>(payload);
+    _tpdo2.stator_current = tpdo.stator_current;
+    _tpdo2.field_current = tpdo.field_current;
+    _tpdo2.out_voltage = tpdo.out_voltage;
+    _tpdo2.mech_power = tpdo.mech_power;
+    _tpdo2.elec_power = tpdo.elec_power;
+}
+
+
+void Server::_handle_tpdo3(const ucanopen::can_payload& payload) {
+    CobTpdo3 tpdo = ucanopen::from_payload<CobTpdo3>(payload);
+    _tpdo3.pwrmodule_temp = int(tpdo.pwrmodule_temp) - 40;
+    _tpdo3.excmodule_temp = int(tpdo.excmodule_temp) - 40;
+    _tpdo3.pcb_temp = int(tpdo.pcb_temp) - 40;
+    _tpdo3.aw_temp = int(tpdo.aw_temp) - 40;
+    _tpdo3.fw_temp = int(tpdo.fw_temp) - 40;
+}
+
+
 void Server::_handle_tpdo4(const ucanopen::can_payload& payload){
     CobTpdo4 tpdo = ucanopen::from_payload<CobTpdo4>(payload);
     _errors = tpdo.errors;
     _warnings = tpdo.warnings;
 }
-
-
-// void Server::_handle_tpdo3(const ucanopen::can_payload& payload) {
-//     CobTpdo3 message = ucanopen::from_payload<CobTpdo3>(payload);
-//     if ((message.syslog_message_id != 0) && (message.syslog_message_id < syslog_messages.size())) {
-//         Log() << syslog_messages[message.syslog_message_id] << '\n';
-//     }
-// }
-
-
-// void Server::_handle_tpdo4(const ucanopen::can_payload& payload) {
-//     CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
-//     _errors = message.errors;
-//     _warnings = message.warnings;
-// }
 
 
 //----------------------------------------------------------------------------------------------------------------------

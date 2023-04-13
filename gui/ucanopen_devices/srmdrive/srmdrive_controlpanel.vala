@@ -48,6 +48,10 @@ public class ControlPanel : Adw.Bin
 			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
 		});
 
+        button_clear_errors.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
+        });
+
 		button_reset_device.clicked.connect(() => {
 			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
 		});

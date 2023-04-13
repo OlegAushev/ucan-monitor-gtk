@@ -38,8 +38,8 @@ public:
     void set_speed(float value_rpm) { _speed_rpm_ref = value_rpm; }
 private:
     void _handle_tpdo1(const ucanopen::can_payload& payload);
-    void _handle_tpdo2(const ucanopen::can_payload& payload){}
-    void _handle_tpdo3(const ucanopen::can_payload& payload){}
+    void _handle_tpdo2(const ucanopen::can_payload& payload);
+    void _handle_tpdo3(const ucanopen::can_payload& payload);
     void _handle_tpdo4(const ucanopen::can_payload& payload);
 
     ucanopen::can_payload _create_rpdo1();
@@ -57,6 +57,22 @@ private:
         int torque;
         int speed;
     } _tpdo1;
+
+    struct Tpdo2 {
+        unsigned int stator_current;
+        unsigned int field_current;
+        unsigned int out_voltage;
+        unsigned int mech_power;
+        unsigned int elec_power;
+    } _tpdo2;
+
+    struct Tpdo3 {
+        int pwrmodule_temp;
+        int excmodule_temp;
+        int pcb_temp;
+        int aw_temp;
+        int fw_temp;
+    } _tpdo3;
 public:
     const Tpdo1& tpdo1() const { return _tpdo1; }
 };

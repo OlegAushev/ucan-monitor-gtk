@@ -265,27 +265,25 @@
                     <property name="ulong-format">%016lX</property>
 									</object>
 								</child>
+
 								<child>
-									<object class="BasicEntry">
+									<object class="BasicEntry" id="entry_errors">
 										<property name="title">Errors</property>
 										<property name="subtitle">hex</property>
 										<property name="value-chars">10</property>
+                    <property name="uint-format">%08lX</property>
 									</object>
 								</child>
+
 								<child>
-									<object class="BasicEntry">
+									<object class="BasicEntry" id="entry_warnings">
 										<property name="title">Warnings</property>
 										<property name="subtitle">hex</property>
 										<property name="value-chars">10</property>
+                    <property name="uint-format">%08lX</property>
 									</object>
 								</child>
-								<child>
-									<object class="BasicEntry">
-										<property name="title">Warning Count</property>
-										<property name="subtitle"></property>
-										<property name="value-chars">10</property>
-									</object>
-								</child>
+
 							</object>
 						</child>
 					

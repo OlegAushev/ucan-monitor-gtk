@@ -42,7 +42,7 @@ struct CobTpdo3 {
     uint16_t _reserved2 : 8;
     uint16_t pwrmodule_temp : 8;
     uint16_t excmodule_temp : 8;
-    uint16_t exc_temp : 8;
+    uint16_t pcb_temp : 8;
     uint16_t aw_temp : 8;
     uint16_t fw_temp : 8;
 };

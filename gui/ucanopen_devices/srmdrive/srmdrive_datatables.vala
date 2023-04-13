@@ -44,16 +44,23 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned BoolEntry tpdo2_indicator;
 	[GtkChild]
+	private unowned BasicEntry entry_tpdo2_raw_data;
+   
+    //------------------------------------------------------------------------------------------------------------------    
+	[GtkChild]
 	private unowned BoolEntry tpdo3_indicator;
 	[GtkChild]
-	private unowned BoolEntry tpdo4_indicator;
-
-	[GtkChild]
-	private unowned BasicEntry entry_tpdo2_raw_data;
-	[GtkChild]
 	private unowned BasicEntry entry_tpdo3_raw_data;
+
+    //------------------------------------------------------------------------------------------------------------------    
+	[GtkChild]
+	private unowned BoolEntry tpdo4_indicator;
 	[GtkChild]
 	private unowned BasicEntry entry_tpdo4_raw_data;
+    [GtkChild]
+	private unowned BasicEntry entry_errors;
+    [GtkChild]
+	private unowned BasicEntry entry_warnings;
 
     //------------------------------------------------------------------------------------------------------------------
     private const size_t _entry_buf_len = 17;
@@ -125,6 +132,8 @@ public class DataTables : Adw.Bin
 	{
 		tpdo4_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
 		entry_tpdo4_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 3);
+        entry_errors.uint_value = ucanopen_devices_get_error_code(Backend.Ucanopen.server);
+        entry_warnings.uint_value = ucanopen_devices_get_warning_code(Backend.Ucanopen.server);
 	}
 }
 
