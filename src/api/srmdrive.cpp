@@ -46,9 +46,59 @@ void srmdrive_set_speed(double value_rpm) {
 
 
 //----------------------------------------------------------------------------------------------------------------------
-extern void srmdrive_tpdo1_get_drive_state(char* retbuf, size_t bufsize) {
+void srmdrive_tpdo1_get_drive_state(char* retbuf, size_t bufsize) {
     retbuf[0] = '\0';
     strncat(retbuf, srmdrive_server->tpdo1().drive_state.c_str(), bufsize-1);
+}
+
+
+bool srmdrive_tpdo1_get_run_status() {
+    return srmdrive_server->tpdo1().status_run;
+};
+
+
+bool srmdrive_tpdo1_get_error_status() {
+    return srmdrive_server->tpdo1().status_error;
+}
+
+
+bool srmdrive_tpdo1_get_warning_status() {
+    return srmdrive_server->tpdo1().status_warning;
+}
+
+
+bool srmdrive_tpdo1_get_overheat_status() {
+    return srmdrive_server->tpdo1().status_overheat;
+}
+
+
+void srmdrive_tpdo1_get_drive_reference(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().reference.c_str(), bufsize-1);
+}
+
+
+void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().control_loop.c_str(), bufsize-1);
+}
+
+
+void srmdrive_tpdo1_get_dc_voltage(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().dc_voltage.c_str(), bufsize-1);
+}
+
+
+void srmdrive_tpdo1_get_torque(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().torque.c_str(), bufsize-1);
+}
+
+
+void srmdrive_tpdo1_get_speed(char* retbuf, size_t bufsize) {
+    retbuf[0] = '\0';
+    strncat(retbuf, srmdrive_server->tpdo1().speed.c_str(), bufsize-1);
 }
 
 }

@@ -89,7 +89,7 @@
 							<object class="TableEntry" id="entry_drive_state">
 								<property name="title">Drive State</property>
 								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
+								<property name="entry-chars">16</property>
 							</object>
 						</child>
 
@@ -153,6 +153,30 @@
 							<object class="TableEntry" id="entry_control_loop_type">
 								<property name="title">Control Loop</property>
 								<property name="subtitle"></property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+
+            <child>
+							<object class="TableEntry" id="entry_dc_voltage">
+								<property name="title">DC Voltage</property>
+								<property name="subtitle">V</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+
+            <child>
+							<object class="TableEntry" id="entry_torque">
+								<property name="title">Torque</property>
+								<property name="subtitle">Nm</property>
+								<property name="entry-chars">10</property>
+							</object>
+						</child>
+
+            <child>
+							<object class="TableEntry" id="entry_speed">
+								<property name="title">Speed</property>
+								<property name="subtitle">rpm</property>
 								<property name="entry-chars">10</property>
 							</object>
 						</child>

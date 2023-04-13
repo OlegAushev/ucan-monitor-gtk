@@ -53,8 +53,14 @@ public class DataTables : Adw.Bin
 	private unowned TableEntry entry_drive_reference;
     [GtkChild]
 	private unowned TableEntry entry_control_loop_type;
+    [GtkChild]
+	private unowned TableEntry entry_dc_voltage;
+    [GtkChild]
+	private unowned TableEntry entry_torque;
+    [GtkChild]
+	private unowned TableEntry entry_speed;
     //------------------------------------------------------------------------------------------------------------------
-    const size_t _entry_buf_len = 10;
+    const size_t _entry_buf_len = 17;
 	string _entry_buf = string.nfill(_entry_buf_len, '\0');
 
 	public DataTables() {}
@@ -116,13 +122,32 @@ public class DataTables : Adw.Bin
 
 	
 
-	private void _update_tpdo1_data()
-	{
+	private void _update_tpdo1_data() {
 		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
 		entry_tpdo1_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 0).to_string("%016lX");
 
         srmdrive_tpdo1_get_drive_state(_entry_buf, _entry_buf_len);
         entry_drive_state.entry_text = _entry_buf;
+
+        entry_run_status.value = srmdrive_tpdo1_get_run_status();
+        entry_error_status.value = srmdrive_tpdo1_get_error_status();
+        entry_warning_status.value = srmdrive_tpdo1_get_warning_status();
+        entry_overheat_status.value = srmdrive_tpdo1_get_overheat_status();
+
+        srmdrive_tpdo1_get_drive_reference(_entry_buf, _entry_buf_len);
+        entry_drive_reference.entry_text = _entry_buf;
+
+        srmdrive_tpdo1_get_drive_loop_type(_entry_buf, _entry_buf_len);
+        entry_control_loop_type.entry_text = _entry_buf;
+
+        srmdrive_tpdo1_get_dc_voltage(_entry_buf, _entry_buf_len);
+        entry_dc_voltage.entry_text = _entry_buf;
+
+        srmdrive_tpdo1_get_torque(_entry_buf, _entry_buf_len);
+        entry_torque.entry_text = _entry_buf;
+
+        srmdrive_tpdo1_get_speed(_entry_buf, _entry_buf_len);
+        entry_speed.entry_text = _entry_buf;
 	}
 
 
