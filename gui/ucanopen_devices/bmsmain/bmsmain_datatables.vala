@@ -42,24 +42,24 @@ public class DataTables : Adw.Bin
 
 	public void update_tpdo1_data()
 	{
-		entry_voltage.text_value = bmsmain_tpdo1_get_voltage().to_string();
-		entry_current.text_value = bmsmain_tpdo1_get_current().to_string();
-		entry_temp_min.text_value = bmsmain_tpdo1_get_temp_min().to_string();
-		entry_temp_max.text_value = bmsmain_tpdo1_get_temp_max().to_string();
-		entry_charge.text_value = bmsmain_tpdo1_get_charge().to_string();
+		entry_voltage.string_value = bmsmain_tpdo1_get_voltage().to_string();
+		entry_current.string_value = bmsmain_tpdo1_get_current().to_string();
+		entry_temp_min.string_value = bmsmain_tpdo1_get_temp_min().to_string();
+		entry_temp_max.string_value = bmsmain_tpdo1_get_temp_max().to_string();
+		entry_charge.string_value = bmsmain_tpdo1_get_charge().to_string();
 
 		//string entryText = string.nfill(16, '\0');
 		/*ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);
-		entryUptime.text_value = entryText;
+		entryUptime.string_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DRIVE_STATE", entryText, 16);
-		entryState.text_value = entryText;
+		entryState.string_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FAULTS", entryText, 16);
-		entryErrors.text_value = entryText;
+		entryErrors.string_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", entryText, 16);
-		entryWarnings.text_value = entryText;*/
+		entryWarnings.string_value = entryText;*/
 	}
 
 	public void update_connection_status()

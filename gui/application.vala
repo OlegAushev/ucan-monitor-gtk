@@ -82,7 +82,7 @@ public class Application : Adw.Application
 		ucanopen_client_set_watch_enabled(WindowCanBusPreferences.watch_state);
 		message("[gui] Backend is ready.");
 
-		message(string.join(null, "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));
+		message(string.join("", "Set locale to ", Intl.setlocale(ALL, "en_US.UTF-8"), "."));
 
 		this.shutdown.connect(Backend.main_exit);
 

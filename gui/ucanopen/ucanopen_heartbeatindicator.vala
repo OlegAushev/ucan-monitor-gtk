@@ -18,7 +18,7 @@ public class HeartbeatIndicator : BasicEntry
 		if (!ucanopen_server_is_heartbeat_ok(Backend.Ucanopen.server))
 		{
 			entry_remove_css_class("success");
-			text_value = "no HB";
+			string_value = "no HB";
 			entry_add_css_class("error");
 		}
 		else
@@ -26,7 +26,7 @@ public class HeartbeatIndicator : BasicEntry
 			entry_remove_css_class("error");
 			string nmt_state = string.nfill(16, '\0');
 			ucanopen_server_get_nmt_state(Backend.Ucanopen.server, nmt_state, 16);
-			text_value = nmt_state;
+			string_value = nmt_state;
 			if (nmt_state == "run")
 			{
 				entry_add_css_class("success");

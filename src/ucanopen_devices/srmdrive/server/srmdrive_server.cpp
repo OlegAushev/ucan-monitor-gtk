@@ -54,9 +54,9 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
         _tpdo1.drive_state = drive_states[tpdo.drive_state];
     }
 
-    _tpdo1.dc_voltage = std::to_string(tpdo.dc_voltage);
-    _tpdo1.torque = std::to_string(tpdo.torque);
-    _tpdo1.speed = std::to_string(tpdo.speed);
+    _tpdo1.dc_voltage = tpdo.dc_voltage;
+    _tpdo1.torque = tpdo.torque;
+    _tpdo1.speed = tpdo.speed;
 }
 
 

@@ -53,9 +53,9 @@ private:
         std::string reference;
         std::string control_loop;
         std::string drive_state;
-        std::string dc_voltage;
-        std::string torque;
-        std::string speed;
+        unsigned int dc_voltage;
+        int torque;
+        int speed;
     } _tpdo1;
 public:
     const Tpdo1& tpdo1() const { return _tpdo1; }

@@ -84,21 +84,18 @@ void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, size_t bufsize) {
 }
 
 
-void srmdrive_tpdo1_get_dc_voltage(char* retbuf, size_t bufsize) {
-    retbuf[0] = '\0';
-    strncat(retbuf, srmdrive_server->tpdo1().dc_voltage.c_str(), bufsize-1);
+unsigned int srmdrive_tpdo1_get_dc_voltage() {
+    return srmdrive_server->tpdo1().dc_voltage;
 }
 
 
-void srmdrive_tpdo1_get_torque(char* retbuf, size_t bufsize) {
-    retbuf[0] = '\0';
-    strncat(retbuf, srmdrive_server->tpdo1().torque.c_str(), bufsize-1);
+int srmdrive_tpdo1_get_torque() {
+    return srmdrive_server->tpdo1().torque;
 }
 
 
-void srmdrive_tpdo1_get_speed(char* retbuf, size_t bufsize) {
-    retbuf[0] = '\0';
-    strncat(retbuf, srmdrive_server->tpdo1().speed.c_str(), bufsize-1);
+int srmdrive_tpdo1_get_speed() {
+    return srmdrive_server->tpdo1().speed;
 }
 
 }

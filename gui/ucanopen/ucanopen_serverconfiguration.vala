@@ -179,7 +179,7 @@ public class ServerConfiguration : Adw.Bin
 		}
 		else
 		{
-			string message = string.join(null, "Bad value: ", entryrow_value.text);
+			string message = string.join("", "Bad value: ", entryrow_value.text);
 			Adw.Toast toast = new Adw.Toast(message);
 			toast.timeout = 1;
 			toast_overlay.add_toast(toast);
