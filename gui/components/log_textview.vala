@@ -3,7 +3,7 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/logtextview.ui")]
+[GtkTemplate (ui = "/gui/components/log_textview.ui")]
 public class LogTextView : Adw.Bin
 {
 	[GtkChild]

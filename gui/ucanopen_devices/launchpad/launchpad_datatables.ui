@@ -23,15 +23,15 @@
 							<object class="UcanopenHeartbeatIndicator" id="heartbeat_indicator">
 								<property name="title">Network State</property>
 								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
+								<property name="value-chars">10</property>
 							</object>
 						</child>
 
 						<child>
-							<object class="TableEntry" id="entry_uptime">
+							<object class="BasicEntry" id="entry_uptime">
 								<property name="title">Uptime</property>
 								<property name="subtitle">s</property>
-								<property name="entry-chars">10</property>
+								<property name="value-chars">10</property>
 							</object>
 						</child>
 					</object>
@@ -46,10 +46,10 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableBoolEntry" id="tpdo1_indicator">
+							<object class="BoolEntry" id="tpdo1_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
+								<property name="value-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -58,10 +58,10 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry" id="entry_tpdo1_raw_data">
+							<object class="BasicEntry" id="entry_tpdo1_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-chars">16</property>
+								<property name="value-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -75,10 +75,10 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableBoolEntry" id="tpdo2_indicator">
+							<object class="BoolEntry" id="tpdo2_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
+								<property name="value-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -87,10 +87,10 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry" id="entry_tpdo2_raw_data">
+							<object class="BasicEntry" id="entry_tpdo2_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-chars">16</property>
+								<property name="value-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -104,10 +104,10 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableBoolEntry" id="tpdo3_indicator">
+							<object class="BoolEntry" id="tpdo3_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-chars">10</property>
+								<property name="value-chars">10</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -116,10 +116,10 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry" id="entry_tpdo3_raw_data">
+							<object class="BasicEntry" id="entry_tpdo3_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-chars">16</property>
+								<property name="value-chars">16</property>
 							</object>
 						</child>
 					</object>
@@ -133,11 +133,10 @@
 						<property name="hexpand">false</property>
 						
 						<child>
-							<object class="TableBoolEntry" id="tpdo4_indicator">
+							<object class="BoolEntry" id="tpdo4_indicator">
 								<property name="title">Connection</property>
 								<property name="subtitle"></property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">8</property>
+								<property name="value-chars">8</property>
 								<property name="true-text">ok</property>
 								<property name="false-text">bad</property>
 								<property name="true-css-class">success</property>
@@ -146,11 +145,10 @@
 						</child>
 						
 						<child>
-							<object class="TableEntry" id="entry_tpdo4_raw_data">
+							<object class="BasicEntry" id="entry_tpdo4_raw_data">
 								<property name="title">Raw Data</property>
 								<property name="subtitle">hex</property>
-								<property name="entry-width">80</property>
-								<property name="entry-chars">16</property>
+								<property name="value-chars">16</property>
 							</object>
 						</child>
 					</object>

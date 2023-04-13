@@ -3,13 +3,13 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/tablecheckentry.ui")]
-public class TableCheckEntry : Adw.ActionRow
+[GtkTemplate (ui = "/gui/components/check_entry.ui")]
+public class CheckEntry : Adw.ActionRow
 {
 	[GtkChild]
 	private unowned Gtk.CheckButton _checkbutton;
 
-	public TableCheckEntry() {}
+	public CheckEntry() {}
 
 	construct {}
 

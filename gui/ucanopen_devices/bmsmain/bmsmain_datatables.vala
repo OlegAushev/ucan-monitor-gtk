@@ -10,20 +10,20 @@ namespace BmsMain {
 public class DataTables : Adw.Bin
 {
 	[GtkChild]
-	private unowned TableEntry entry_current;
+	private unowned BasicEntry entry_current;
 	[GtkChild]
-	private unowned TableEntry entry_temp_min;
+	private unowned BasicEntry entry_temp_min;
 	[GtkChild]
-	private unowned TableEntry entry_temp_max;
+	private unowned BasicEntry entry_temp_max;
 	[GtkChild]
-	private unowned TableEntry entry_charge;
+	private unowned BasicEntry entry_charge;
 	[GtkChild]
-	private unowned TableEntry entry_voltage;
+	private unowned BasicEntry entry_voltage;
 
 	[GtkChild]
 	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
 	[GtkChild]
-	private unowned TableCheckEntry tpdo1_indicator;
+	private unowned CheckEntry tpdo1_indicator;
 
 
 	public DataTables() {}
@@ -42,24 +42,24 @@ public class DataTables : Adw.Bin
 
 	public void update_tpdo1_data()
 	{
-		entry_voltage.entry_text = bmsmain_tpdo1_get_voltage().to_string();
-		entry_current.entry_text = bmsmain_tpdo1_get_current().to_string();
-		entry_temp_min.entry_text = bmsmain_tpdo1_get_temp_min().to_string();
-		entry_temp_max.entry_text = bmsmain_tpdo1_get_temp_max().to_string();
-		entry_charge.entry_text = bmsmain_tpdo1_get_charge().to_string();
+		entry_voltage.text_value = bmsmain_tpdo1_get_voltage().to_string();
+		entry_current.text_value = bmsmain_tpdo1_get_current().to_string();
+		entry_temp_min.text_value = bmsmain_tpdo1_get_temp_min().to_string();
+		entry_temp_max.text_value = bmsmain_tpdo1_get_temp_max().to_string();
+		entry_charge.text_value = bmsmain_tpdo1_get_charge().to_string();
 
 		//string entryText = string.nfill(16, '\0');
 		/*ucanopen_server_get_watch_value(Backend.Ucanopen.server, "UPTIME", entryText, 16);
-		entryUptime.entry_text = entryText;
+		entryUptime.text_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "DRIVE_STATE", entryText, 16);
-		entryState.entry_text = entryText;
+		entryState.text_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "FAULTS", entryText, 16);
-		entryErrors.entry_text = entryText;
+		entryErrors.text_value = entryText;
 
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "WARNINGS", entryText, 16);
-		entryWarnings.entry_text = entryText;*/
+		entryWarnings.text_value = entryText;*/
 	}
 
 	public void update_connection_status()

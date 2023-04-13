@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/">
-		<file>gui/components/logtextview.ui</file>
-		<file>gui/components/spinbuttonscale.ui</file>
-		<file>gui/components/tableboolentry.ui</file>
-		<file>gui/components/tablecheckentry.ui</file>
-		<file>gui/components/tableentry.ui</file>
+		<file>gui/components/basic_entry.ui</file>
+		<file>gui/components/bool_entry.ui</file>
+		<file>gui/components/check_entry.ui</file>
+		<file>gui/components/log_textview.ui</file>
+		<file>gui/components/spinbutton_scale.ui</file>
 
 		<file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
 

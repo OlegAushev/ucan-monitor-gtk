@@ -12,47 +12,47 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
 	[GtkChild]
-	private unowned TableEntry entry_uptime;
+	private unowned BasicEntry entry_uptime;
 	////////////////////////////////////////////////////////////////////////////////
 	[GtkChild]
-	private unowned TableBoolEntry tpdo1_indicator;
+	private unowned BoolEntry tpdo1_indicator;
 	[GtkChild]
-	private unowned TableEntry entry_tpdo1_raw_data;
+	private unowned BasicEntry entry_tpdo1_raw_data;
 	[GtkChild]
-	private unowned TableEntry entry_drive1_state;
+	private unowned BasicEntry entry_drive1_state;
 	[GtkChild]
-	private unowned TableEntry entry_drive1_ref;
+	private unowned BasicEntry entry_drive1_ref;
 	[GtkChild]
-	private unowned TableBoolEntry entry_drive1_run;
+	private unowned BoolEntry entry_drive1_run;
 	[GtkChild]
-	private unowned TableEntry entry_drive2_state;
+	private unowned BasicEntry entry_drive2_state;
 	[GtkChild]
-	private unowned TableEntry entry_drive2_ref;
+	private unowned BasicEntry entry_drive2_ref;
 	[GtkChild]
-	private unowned TableBoolEntry entry_drive2_run;
+	private unowned BoolEntry entry_drive2_run;
 	[GtkChild]
-	private unowned TableBoolEntry entry_error_status;
+	private unowned BoolEntry entry_error_status;
 	[GtkChild]
-	private unowned TableBoolEntry entry_warning_status;
+	private unowned BoolEntry entry_warning_status;
 	[GtkChild]
-	private unowned TableBoolEntry entry_overheat_status;
+	private unowned BoolEntry entry_overheat_status;
 	[GtkChild]
-	private unowned TableEntry entry_control_loop_type;
+	private unowned BasicEntry entry_control_loop_type;
 	////////////////////////////////////////////////////////////////////////////////
 	[GtkChild]
-	private unowned TableBoolEntry tpdo2_indicator;
+	private unowned BoolEntry tpdo2_indicator;
 	[GtkChild]
-	private unowned TableEntry entry_tpdo2_raw_data;
+	private unowned BasicEntry entry_tpdo2_raw_data;
 	////////////////////////////////////////////////////////////////////////////////
 	[GtkChild]
-	private unowned TableBoolEntry tpdo3_indicator;
+	private unowned BoolEntry tpdo3_indicator;
 	[GtkChild]
-	private unowned TableEntry entry_tpdo3_raw_data;
+	private unowned BasicEntry entry_tpdo3_raw_data;
 	////////////////////////////////////////////////////////////////////////////////
 	[GtkChild]
-	private unowned TableBoolEntry tpdo4_indicator;
+	private unowned BoolEntry tpdo4_indicator;
 	[GtkChild]
-	private unowned TableEntry entry_tpdo4_raw_data;
+	private unowned BasicEntry entry_tpdo4_raw_data;
 	////////////////////////////////////////////////////////////////////////////////
 	const size_t _entry_buf_len = 10;
 	string _entry_buf = string.nfill(_entry_buf_len, '\0');
@@ -80,24 +80,24 @@ public class DataTables : Adw.Bin
 
 		string buf = string.nfill(16, '\0');
 		ucanopen_server_get_watch_value(Backend.Ucanopen.server, "uptime", buf, 16);
-		entry_uptime.entry_text = buf;
+		entry_uptime.text_value = buf;
 	}
 
 	private void _update_tpdo1_data()
 	{
 		tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
-		entry_tpdo1_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 0).to_string("%016lX");
+		entry_tpdo1_raw_data.text_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 0).to_string("%016lX");
 		
 		crd600_tpdo1_get_drive1_state(_entry_buf, _entry_buf_len);
-		entry_drive1_state.entry_text = _entry_buf;
+		entry_drive1_state.text_value = _entry_buf;
 		crd600_tpdo1_get_drive1_ref(_entry_buf, _entry_buf_len);
-		entry_drive1_ref.entry_text = _entry_buf;
+		entry_drive1_ref.text_value = _entry_buf;
 		entry_drive1_run.value = crd600_tpdo1_get_drive1_run();
 
 		crd600_tpdo1_get_drive2_state(_entry_buf, _entry_buf_len);
-		entry_drive2_state.entry_text = _entry_buf;
+		entry_drive2_state.text_value = _entry_buf;
 		crd600_tpdo1_get_drive2_ref(_entry_buf, _entry_buf_len);
-		entry_drive2_ref.entry_text = _entry_buf;
+		entry_drive2_ref.text_value = _entry_buf;
 		entry_drive2_run.value = crd600_tpdo1_get_drive2_run();
 
 		entry_error_status.value = crd600_tpdo1_get_error();
@@ -105,7 +105,7 @@ public class DataTables : Adw.Bin
 		entry_overheat_status.value = crd600_tpdo1_get_overheat();
 
 		crd600_tpdo1_get_control_loop_type(_entry_buf, _entry_buf_len);
-		entry_control_loop_type.entry_text = _entry_buf;
+		entry_control_loop_type.text_value = _entry_buf;
 
 
 
@@ -116,19 +116,19 @@ public class DataTables : Adw.Bin
 	private void _update_tpdo2_data()
 	{
 		tpdo2_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
-		entry_tpdo2_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 1).to_string("%016lX");
+		entry_tpdo2_raw_data.text_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 1).to_string("%016lX");
 	}
 
 	private void _update_tpdo3_data()
 	{
 		tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
-		entry_tpdo3_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 2).to_string("%016lX");
+		entry_tpdo3_raw_data.text_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 2).to_string("%016lX");
 	}
 
 	private void _update_tpdo4_data()
 	{
 		tpdo4_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
-		entry_tpdo4_raw_data.entry_text = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 3).to_string("%016lX");
+		entry_tpdo4_raw_data.text_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 3).to_string("%016lX");
 	}
 }
 

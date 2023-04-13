@@ -3,8 +3,8 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/tableboolentry.ui")]
-public class TableBoolEntry : Adw.ActionRow
+[GtkTemplate (ui = "/gui/components/bool_entry.ui")]
+public class BoolEntry : Adw.ActionRow
 {
 	[GtkChild]
 	private unowned Gtk.Entry _entry;
@@ -15,7 +15,7 @@ public class TableBoolEntry : Adw.ActionRow
 	private string _true_css_class = "opaque";
 	private string _false_css_class = "opaque";
 
-	public TableBoolEntry() {}
+	public BoolEntry() {}
 
 	construct {}
 
@@ -60,19 +60,19 @@ public class TableBoolEntry : Adw.ActionRow
 		set { _false_css_class = value; }
 	}
 
-	public int entry_width
+	public int value_width
 	{
 		get { return _entry.width_request; }
 		set { _entry.width_request = value; }
 	}
 
-	public int entry_chars
+	public int value_chars
 	{
 		get { return _entry.max_width_chars; }
 		set { _entry.max_width_chars = value; }
 	}
 
-	public float entry_xalign
+	public float value_xalign
 	{
 		get { return _entry.xalign; }
 		set { _entry.xalign = value; }

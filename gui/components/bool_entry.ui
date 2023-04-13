@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<requires lib="gtk" version="4.0" />
-	<template class="TableBoolEntry" parent="AdwActionRow">
+	<template class="BoolEntry" parent="AdwActionRow">
 		<child type="suffix">
 			<object class="GtkEntry" id="_entry">
 				<property name="hexpand">false</property>

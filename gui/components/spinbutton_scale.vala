@@ -3,7 +3,7 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/spinbuttonscale.ui")]
+[GtkTemplate (ui = "/gui/components/spinbutton_scale.ui")]
 public class SpinButtonScale : Adw.Bin
 {
 	[GtkChild]

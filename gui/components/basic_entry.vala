@@ -3,35 +3,35 @@
 ///
 
 
-[GtkTemplate (ui = "/gui/components/tableentry.ui")]
-public class TableEntry : Adw.ActionRow
+[GtkTemplate (ui = "/gui/components/basic_entry.ui")]
+public class BasicEntry : Adw.ActionRow
 {
 	[GtkChild]
 	private unowned Gtk.Entry _entry;
 
-	public TableEntry() {}
+	public BasicEntry() {}
 
 	construct {}
 
-	public string entry_text
+	public string text_value
 	{
 		get { return _entry.text; }
 		set { _entry.text = value; }
 	}
 
-	public int entry_width
+	public int value_width
 	{
 		get { return _entry.width_request; }
 		set { _entry.width_request = value; }
 	}
 
-	public int entry_chars
+	public int value_chars
 	{
 		get { return _entry.max_width_chars; }
 		set { _entry.max_width_chars = value; }
 	}
 
-	public float entry_xalign
+	public float value_xalign
 	{
 		get { return _entry.xalign; }
 		set { _entry.xalign = value; }

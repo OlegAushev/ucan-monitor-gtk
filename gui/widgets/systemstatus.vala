@@ -18,7 +18,7 @@ public class SystemStatus : Adw.Bin
 	private size_t _error_name_count;
 	private size_t _error_code_byte_count;
 	private Adw.PreferencesGroup[] error_bytes;
-	private TableBoolEntry[] error_bits;
+	private BoolEntry[] error_bits;
 	private uint? _error_code = null;
 
 	private const size_t _warning_name_count_max = 32;
@@ -27,7 +27,7 @@ public class SystemStatus : Adw.Bin
 	private size_t _warning_name_count;
 	private size_t _warning_code_byte_count;
 	private Adw.PreferencesGroup[] warning_bytes;
-	private TableBoolEntry[] warning_bits;
+	private BoolEntry[] warning_bits;
 	private uint? _warning_code = null;
 
 
@@ -46,7 +46,7 @@ public class SystemStatus : Adw.Bin
 		_error_code_byte_count = (_error_name_count + 7) / 8;
 
 		error_bytes = new Adw.PreferencesGroup[4];
-		error_bits = new TableBoolEntry[32];
+		error_bits = new BoolEntry[32];
 		for (int i = 0; i < 4; ++i)
 		{
 			error_bytes[i] = new Adw.PreferencesGroup();
@@ -57,10 +57,10 @@ public class SystemStatus : Adw.Bin
 
 			for (int j = 0; j < 8; ++j)
 			{
-				error_bits[8*i+j] = new TableBoolEntry();	
+				error_bits[8*i+j] = new BoolEntry();	
 				error_bits[8*i+j].title = _error_names[8*i+j];
 
-				error_bits[8*i+j].entry_chars = 2;
+				error_bits[8*i+j].value_chars = 2;
 				error_bits[8*i+j].true_text = "1";
 				error_bits[8*i+j].false_text = "0";
 				error_bits[8*i+j].true_css_class = "error";
@@ -81,7 +81,7 @@ public class SystemStatus : Adw.Bin
 		_warning_code_byte_count = (_warning_name_count + 7) / 8;
 
 		warning_bytes = new Adw.PreferencesGroup[4];
-		warning_bits = new TableBoolEntry[32];
+		warning_bits = new BoolEntry[32];
 		for (int i = 0; i < 4; ++i)
 		{
 			warning_bytes[i] = new Adw.PreferencesGroup();
@@ -92,10 +92,10 @@ public class SystemStatus : Adw.Bin
 
 			for (int j = 0; j < 8; ++j)
 			{
-				warning_bits[8*i+j] = new TableBoolEntry();	
+				warning_bits[8*i+j] = new BoolEntry();	
 				warning_bits[8*i+j].title = _warning_names[8*i+j];
 
-				warning_bits[8*i+j].entry_chars = 2;
+				warning_bits[8*i+j].value_chars = 2;
 				warning_bits[8*i+j].true_text = "1";
 				warning_bits[8*i+j].false_text = "0";
 				warning_bits[8*i+j].true_css_class = "error";
