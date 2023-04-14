@@ -85,7 +85,7 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x3004, 0x0A}, {"config", "converter", "kp_exc_current", "", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3004, 0x0B}, {"config", "converter", "ki_exc_current", "", OD_FLOAT32, OD_ACCESS_RW}},
 
-{{0x3005, 0x01}, {"config", "model_basic", "reference", "", OD_FLOAT32, OD_ACCESS_RW}},
+{{0x3005, 0x01}, {"config", "model_basic", "reference", "", OD_UINT32, OD_ACCESS_RW}},
 {{0x3005, 0x02}, {"config", "model_basic", "is_motor_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3005, 0x03}, {"config", "model_basic", "is_gener_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3005, 0x04}, {"config", "model_basic", "if_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
