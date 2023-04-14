@@ -19,7 +19,7 @@ public class WindowSelectServer : Gtk.ApplicationWindow
 	private Gtk.CheckButton[] buttons;
 	private Adw.ActionRow control_row;
 
-	const uint server_max_count = 10;
+	const int server_max_count = 10;
 	private Gtk.StringList _servers;
 
 	public WindowSelectServer(Gtk.Application app)
@@ -31,7 +31,7 @@ public class WindowSelectServer : Gtk.ApplicationWindow
 		});
 
 		button_ok.clicked.connect(() => {
-			for (size_t i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
+			for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
 			{
 				if (buttons[i].active)
 				{
@@ -49,7 +49,7 @@ public class WindowSelectServer : Gtk.ApplicationWindow
 		buttons = new Gtk.CheckButton[server_max_count];
 
 		_servers = new Gtk.StringList(null);
-		for (size_t i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
+		for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
 		{
 			_servers.append(Backend.Ucanopen.server_list[i]);
 

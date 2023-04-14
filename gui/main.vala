@@ -21,7 +21,7 @@ extern string server_config_category;
 }
 
 
-extern bool log_get_message(string retbuf, size_t bufsize);
+extern bool log_get_message(string retbuf, int bufsize);
 
 
 int main(string[] args)

@@ -18,7 +18,7 @@ Server::Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::s
 
 
 void Server::_set_node_id(NodeId node_id) {
-    if (!node_id.is_valid()) { return; }
+    if (!node_id.valid()) { return; }
 
     _node_id = node_id;
 

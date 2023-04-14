@@ -41,11 +41,11 @@ inline T from_payload(const can_payload& payload) {
 
 class NodeId {
 private:
-    unsigned int _value;
+    unsigned int _id;
 public:
-    explicit NodeId(unsigned int value) : _value(value) {}
-    unsigned int get() const { return _value; }
-    bool is_valid() const { return (_value >= 1) && (_value <= 127); }
+    explicit NodeId(unsigned int id) : _id(id) {}
+    unsigned int get() const { return _id; }
+    bool valid() const { return (_id >= 1) && (_id <= 127); }
 };
 
 
@@ -79,7 +79,7 @@ enum class CobType {
 };
 
 
-constexpr size_t cob_type_count = 15;
+constexpr int cob_type_count = 15;
 
 
 constexpr std::array<canid_t, cob_type_count> cob_function_codes = {
@@ -103,13 +103,13 @@ constexpr std::array<canid_t, cob_type_count> cob_function_codes = {
 
 inline canid_t calculate_cob_id(CobType cob_type, NodeId node_id) {
     if ((cob_type == CobType::nmt) || (cob_type == CobType::sync) || (cob_type == CobType::time)) {
-        return cob_function_codes[static_cast<size_t>(cob_type)];
+        return cob_function_codes[static_cast<int>(cob_type)];
     }
-    return cob_function_codes[static_cast<size_t>(cob_type)] + node_id.get();
+    return cob_function_codes[static_cast<int>(cob_type)] + node_id.get();
 }
 
 
-constexpr std::array<unsigned int, cob_type_count> cob_sizes = {
+constexpr std::array<int, cob_type_count> cob_sizes = {
     2,  // NMT
     0,  // SYNC
     2,  // EMCY
@@ -442,7 +442,7 @@ struct ObjectDictionary {
 inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payload& payload) {
     can_frame frame;
     frame.can_id = calculate_cob_id(cob_type, node_id);
-    frame.len = cob_sizes[static_cast<size_t>(cob_type)];
+    frame.len = cob_sizes[static_cast<int>(cob_type)];
     std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
     return frame;
 }

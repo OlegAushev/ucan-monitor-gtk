@@ -54,7 +54,7 @@ public class DataTables : Adw.Bin
 	[GtkChild]
 	private unowned BasicEntry entry_tpdo4_raw_data;
 	////////////////////////////////////////////////////////////////////////////////
-	private const size_t _entry_buf_len = 10;
+	private const int _entry_buf_len = 10;
 	private string _entry_buf = string.nfill(_entry_buf_len, '\0');
 
 	public DataTables() {}

@@ -12,13 +12,13 @@ extern std::shared_ptr<bmsmain::Server> bmsmain_server;
 
 extern "C" {
 
-size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
+int ucanopen_devices_get_error_names(const char* server_name, char** retbuf, int str_count, int str_size) {
     if (std::string(server_name) == "SRM-Drive-80") {
         if (srmdrive::error_list.size() > str_count) {
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : srmdrive::error_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);
@@ -30,7 +30,7 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, 
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : crd600::error_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);
@@ -42,7 +42,7 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, 
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : launchpad::error_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);
@@ -56,13 +56,13 @@ size_t ucanopen_devices_get_error_names(const char* server_name, char** retbuf, 
     return 0;
 }
 
-size_t ucanopen_devices_get_warning_names(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
+int ucanopen_devices_get_warning_names(const char* server_name, char** retbuf, int str_count, int str_size) {
     if (std::string(server_name) == "SRM-Drive-80") {
         if (srmdrive::warning_list.size() > str_count) {
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : srmdrive::warning_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);
@@ -74,7 +74,7 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** retbuf
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : crd600::warning_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);
@@ -86,7 +86,7 @@ size_t ucanopen_devices_get_warning_names(const char* server_name, char** retbuf
             return 0;
         }
 
-        size_t i = 0;
+        int i = 0;
         for (auto error : launchpad::warning_list) {
             retbuf[i][0] = '\0';
             strncat(retbuf[i++], error.data(), str_size-1);

@@ -10,7 +10,7 @@
 #include <vector>
 
 
-extern "C" bool log_get_message(char* buf, size_t len);
+extern "C" bool log_get_message(char* buf, int len);
 
 
 enum class LogPrefix {
@@ -22,7 +22,7 @@ enum class LogPrefix {
 
 
 class Log final {
-    friend bool log_get_message(char* buf, size_t len);
+    friend bool log_get_message(char* buf, int len);
 private:
     static inline std::vector _message_prefixes = {
         "",
@@ -63,7 +63,7 @@ public:
 
 private:
     void _flush(LogPrefix prefix) {
-        std::string str = _message_prefixes[static_cast<size_t>(prefix)] + _tmp_stream.str();
+        std::string str = _message_prefixes[static_cast<int>(prefix)] + _tmp_stream.str();
         _tmp_stream.str(std::string());
         std::cout << str;
         _stream << str;

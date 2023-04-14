@@ -62,18 +62,18 @@ void ucanopen_client_set_watch_period(int period) {
 }
 
 
-void ucanopen_server_get_watch_value(const char* server_name, const char* watch_name, char* retbuf, size_t bufsize) {
+void ucanopen_server_get_watch_value(const char* server_name, const char* watch_name, char* retbuf, int bufsize) {
     ucanopen_client->server(server_name)->watch_service.value(watch_name, retbuf, bufsize);
 }
 
 
-size_t ucanopen_server_get_config_categories(const char* server_name, char** retbuf, size_t str_count, size_t str_size) {
-    size_t retval = ucanopen_client->server(server_name)->config_service.object_list().size();
+int ucanopen_server_get_config_categories(const char* server_name, char** retbuf, int str_count, int str_size) {
+    int retval = ucanopen_client->server(server_name)->config_service.object_list().size();
     if (retval >= str_count) {
         return 0;
     }
 
-    size_t i = 0;
+    int i = 0;
     for (auto [category, objects] : ucanopen_client->server(server_name)->config_service.object_list()) {
         retbuf[i][0] = '\0';
         strncat(retbuf[i++], category.data(), str_size);
@@ -83,14 +83,14 @@ size_t ucanopen_server_get_config_categories(const char* server_name, char** ret
 }
 
 
-size_t ucanopen_server_get_config_objects(const char* server_name, const char* category, char** retbuf, size_t str_count, size_t str_size) {
+int ucanopen_server_get_config_objects(const char* server_name, const char* category, char** retbuf, int str_count, int str_size) {
     auto objects = ucanopen_client->server(server_name)->config_service.object_list().at(category);
-    size_t retval = objects.size();
+    int retval = objects.size();
     if (retval >= str_count) {
         return 0;
     }
     
-    size_t i = 0;
+    int i = 0;
     for (auto object : objects) {
         retbuf[i][0] = '\0';
         strncat(retbuf[i++], object.data(), str_size);
@@ -105,7 +105,7 @@ bool ucanopen_server_is_heartbeat_ok(const char* server_name) {
 }
 
 
-void ucanopen_server_get_nmt_state(const char* server_name, char* retbuf, size_t bufsize) {
+void ucanopen_server_get_nmt_state(const char* server_name, char* retbuf, int bufsize) {
     retbuf[0] = '\0';
     switch (ucanopen_client->server(server_name)->nmt_state()) {
     case ucanopen::NmtState::initialization:
@@ -158,7 +158,7 @@ unsigned int ucanopen_server_get_serial_number(const char* server_name) {
 
 void ucanopen_server_read_string(const char* server_name, 
                 const char* category, const char* subcategory, const char* name, unsigned int timeout_ms,
-                char* retbuf, size_t bufsize) {
+                char* retbuf, int bufsize) {
     std::string ret = ucanopen_client->server(server_name)->read_string(category, subcategory, name, std::chrono::milliseconds(timeout_ms));
     retbuf[0] = '\0';
     strncat(retbuf, ret.data(), bufsize-1);
@@ -167,7 +167,7 @@ void ucanopen_server_read_string(const char* server_name,
 
 void ucanopen_server_read_numval(const char* server_name, 
                 const char* category, const char* subcategory, const char* name, unsigned int timeout_ms,
-                char* retbuf, size_t bufsize) {
+                char* retbuf, int bufsize) {
     std::string ret = ucanopen_client->server(server_name)->read_numval(category, subcategory, name, std::chrono::milliseconds(timeout_ms));
     retbuf[0] = '\0';
     strncat(retbuf, ret.data(), bufsize-1);

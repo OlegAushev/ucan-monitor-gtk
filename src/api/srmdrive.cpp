@@ -46,7 +46,7 @@ void srmdrive_set_speed(double value_rpm) {
 
 
 //----------------------------------------------------------------------------------------------------------------------
-void srmdrive_tpdo1_get_drive_state(char* retbuf, size_t bufsize) {
+void srmdrive_tpdo1_get_drive_state(char* retbuf, int bufsize) {
     retbuf[0] = '\0';
     strncat(retbuf, srmdrive_server->tpdo1().drive_state.c_str(), bufsize-1);
 }
@@ -72,13 +72,13 @@ bool srmdrive_tpdo1_get_overheat_status() {
 }
 
 
-void srmdrive_tpdo1_get_drive_reference(char* retbuf, size_t bufsize) {
+void srmdrive_tpdo1_get_drive_reference(char* retbuf, int bufsize) {
     retbuf[0] = '\0';
     strncat(retbuf, srmdrive_server->tpdo1().reference.c_str(), bufsize-1);
 }
 
 
-void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, size_t bufsize) {
+void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, int bufsize) {
     retbuf[0] = '\0';
     strncat(retbuf, srmdrive_server->tpdo1().control_loop.c_str(), bufsize-1);
 }

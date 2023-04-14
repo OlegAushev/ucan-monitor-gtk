@@ -3,7 +3,7 @@
 
 extern "C" {
 
-bool log_get_message(char* buf, size_t len) {
+bool log_get_message(char* buf, int len) {
     if (Log::_stream.getline(buf, len)) {
         return true;
     }

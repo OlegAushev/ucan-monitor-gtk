@@ -83,7 +83,7 @@ public class DataTables : Adw.Bin
     private unowned BasicEntry entry_warnings;
 
     //------------------------------------------------------------------------------------------------------------------
-    private const size_t _entry_buf_len = 17;
+    private const int _entry_buf_len = 17;
     private string _entry_buf = string.nfill(_entry_buf_len, '\0');
 
     public DataTables() {}

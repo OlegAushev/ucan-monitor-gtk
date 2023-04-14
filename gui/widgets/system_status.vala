@@ -12,20 +12,20 @@ public class SystemStatus : Adw.Bin
 	[GtkChild]
 	private unowned Gtk.Grid grid;
 
-	private const size_t _error_name_count_max = 32;
-	private const size_t _error_name_len_max = 64;
+	private const int _error_name_count_max = 32;
+	private const int _error_name_len_max = 64;
 	private string _error_names[_error_name_count_max];
-	private size_t _error_name_count;
-	private size_t _error_code_byte_count;
+	private int _error_name_count;
+	private int _error_code_byte_count;
 	private Adw.PreferencesGroup[] error_bytes;
 	private BoolEntry[] error_bits;
 	private uint? _error_code = null;
 
-	private const size_t _warning_name_count_max = 32;
-	private const size_t _warning_name_len_max = 64;
+	private const int _warning_name_count_max = 32;
+	private const int _warning_name_len_max = 64;
 	private string _warning_names[_warning_name_count_max];
-	private size_t _warning_name_count;
-	private size_t _warning_code_byte_count;
+	private int _warning_name_count;
+	private int _warning_code_byte_count;
 	private Adw.PreferencesGroup[] warning_bytes;
 	private BoolEntry[] warning_bits;
 	private uint? _warning_code = null;
@@ -36,7 +36,7 @@ public class SystemStatus : Adw.Bin
 	construct
 	{
 		// errors
-		for (size_t i = 0; i < _error_name_count_max; ++i)
+		for (int i = 0; i < _error_name_count_max; ++i)
 		{
 			_error_names[i] = string.nfill(_error_name_len_max, '\0');
 		}
@@ -71,7 +71,7 @@ public class SystemStatus : Adw.Bin
 		}
 
 		// warnings
-		for (size_t i = 0; i < _warning_name_count_max; ++i)
+		for (int i = 0; i < _warning_name_count_max; ++i)
 		{
 			_warning_names[i] = string.nfill(_warning_name_len_max, '\0');
 		}

@@ -25,7 +25,7 @@ public:
         if (_is_enabled && !_object_list.empty()) {
             auto now = std::chrono::steady_clock::now();
             if (now - _timepoint >= _period) {
-                static size_t i = 0;
+                static int i = 0;
                 _server->read(_server->dictionary().config.watch_category,
                               _server->dictionary().config.watch_subcategory,
                               _object_list[i]);
@@ -75,7 +75,7 @@ public:
         return it->second;
     }
 
-    void value(std::string_view watch_name, char* retbuf, size_t bufsize) const {
+    void value(std::string_view watch_name, char* retbuf, int bufsize) const {
         retbuf[0] = '\0';
         auto it = _data.find(watch_name);
         if (it == _data.end()) {
