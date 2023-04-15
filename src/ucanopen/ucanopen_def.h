@@ -242,7 +242,7 @@ public:
         return val;
     }
 
-    std::string to_string(ODObjectType type) const {
+    std::string to_string(ODObjectType type, int precision = 6) const {
         switch (type) {
         case ucanopen::OD_BOOL:
             return bool32() ? "true" : "false";
@@ -257,7 +257,7 @@ public:
         case ucanopen::OD_FLOAT32: {
             std::chars_format format = (fabsf(f32()) >= 0.01) ? std::chars_format::fixed : std::chars_format::general;
             std::array<char, 16> buf;
-            if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, 2);
+            if (auto [ptr, ec] = std::to_chars(buf.begin(), buf.end(), f32(), format, precision);
                     ec == std::errc()) {
                 return std::string(buf.begin(), ptr);
             } else {
@@ -268,13 +268,8 @@ public:
             return std::to_string(u16());
         case ucanopen::OD_EXEC:
             return std::string();
-        case ucanopen::OD_STRING: {
-            uint32_t strRaw = u32();
-            char cstr[5];
-            memcpy(cstr, &strRaw, 4);
-            cstr[4] = '\0';
-            return std::string(cstr);
-        }
+        case ucanopen::OD_STRING:
+            return std::string();
         }
         return std::string();
     }

@@ -41,7 +41,7 @@ public:
         if ((object.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
             if (object.type != OD_ENUM16) {
                 std::lock_guard<std::mutex> lock(_data_access_mutex);
-                _data[object.name] = sdo_data.to_string(object.type);
+                _data[object.name] = sdo_data.to_string(object.type, 2);
             }
             return FrameHandlingStatus::success;
         }
