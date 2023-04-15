@@ -126,6 +126,9 @@
 						<property name="spin-digits">0</property>
 						<property name="scale-digits">0</property>
 						<property name="scale-width">200</property>
+            <style>
+              <class name="card"/>
+            </style>
 					</object>
 				</child>
 
@@ -140,6 +143,9 @@
 						<property name="spin-digits">2</property>
 						<property name="scale-digits">2</property>
 						<property name="scale-width">200</property>
+            <style>
+              <class name="card"/>
+            </style>
 					</object>
 				</child>
 
@@ -151,6 +157,20 @@
                 <property name="title">Manual Field Current</property>
                 <property name="show-enable-switch">true</property>
                 <property name="enable-expansion">false</property>
+
+                <child>
+                  <object class="SpinButtonScale" id="slider_field">
+                    <property name="lower">0</property>
+                    <property name="upper">30</property>
+                    <property name="step">0.1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">1</property>
+                    <property name="scale-digits">1</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
               </object>
             </child>
           </object>

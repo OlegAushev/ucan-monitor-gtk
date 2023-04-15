@@ -9,6 +9,9 @@ public class SpinButtonScale : Adw.Bin
 	[GtkChild]
 	private unowned Adw.PreferencesGroup _group;
 
+    [GtkChild]
+    private unowned Gtk.Box _box;
+
 	[GtkChild]
 	private unowned Gtk.Scale _scale;
 
@@ -20,10 +23,15 @@ public class SpinButtonScale : Adw.Bin
 
 	public SpinButtonScale() {}
 
+    construct {}
+
 	public string title
 	{
 		get { return _group.title; }
-		set { _group.title = value; }
+		set {
+            _group.title = value;
+            _group.margin_top = 0;
+        }
 	}
 
 	public double lower

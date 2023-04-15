@@ -21,10 +21,17 @@ public class ControlPanel : Adw.Bin
 	private unowned Gtk.Button button_clear_errors;
 	[GtkChild]
 	private unowned Gtk.Button button_reset_device;
+
 	[GtkChild]
 	private unowned SpinButtonScale slider_speed;
 	[GtkChild]
 	private unowned SpinButtonScale slider_torque;
+
+	[GtkChild]
+	private unowned Adw.ExpanderRow expanderrow_field;
+    [GtkChild]
+	private unowned SpinButtonScale slider_field;
+
 	[GtkChild]
 	private unowned Gtk.Switch switch_emergency;
 
@@ -56,6 +63,7 @@ public class ControlPanel : Adw.Bin
 			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
 		});
 		
+        //--------------------------------------------------------------------------------------------------------------
 		slider_speed.adjustment->value_changed.connect(() => {
 			srmdrive_set_speed(slider_speed.value);
 		});
@@ -64,9 +72,25 @@ public class ControlPanel : Adw.Bin
 			srmdrive_set_torque(slider_torque.value / 100.0);
 		});
 
+        //--------------------------------------------------------------------------------------------------------------
+        expanderrow_field.notify["enable-expansion"].connect((s,p) => {
+            if (expanderrow_field.enable_expansion) {
+                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_manual_field");
+            } else {
+                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "disable_manual_field");
+            }
+		});
+
+        slider_field.adjustment->value_changed.connect(() => {
+            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_field_current", slider_field.value.to_string());
+        });
+
+        //--------------------------------------------------------------------------------------------------------------
 		switch_emergency.notify["state"].connect((s, p) => {
 			srmdrive_set_emergency_enabled(switch_emergency.state);
 		});
+
+        
 	}
 }
 	

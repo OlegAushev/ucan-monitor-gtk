@@ -4,11 +4,15 @@
 	<template class="SpinButtonScale" parent="AdwBin">
 		<child>
 			<object class="AdwPreferencesGroup" id="_group">
-				<property name="hexpand">false</property>	      
+				<property name="hexpand">false</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property> 
+        <property name="margin-bottom">10</property>     
 				<child>
 					<object class="GtkBox" id="_box">
 						<property name="orientation">horizontal</property>
-						<property name="spacing">10</property>	
+						<property name="spacing">10</property>
 						<child>
 							<object class="GtkSpinButton" id="_spinbutton">
 								<property name="halign">start</property>
@@ -35,6 +39,7 @@
 			<class name="toolbar"/>
 			<class name="osd"/>
 		</style-->
+   
 	</template>
 
 	<object class="GtkAdjustment" id="_adjustment">
