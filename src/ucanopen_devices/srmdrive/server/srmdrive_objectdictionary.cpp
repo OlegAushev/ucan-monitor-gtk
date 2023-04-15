@@ -29,6 +29,10 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2001, 0x02}, {"drive", "ctl", "shutdown", "", OD_EXEC, OD_ACCESS_WO}},
 {{0x2001, 0x03}, {"drive", "ctl", "calibrate", "", OD_EXEC, OD_ACCESS_WO}},
 {{0x2001, 0x04}, {"drive", "ctl", "invert_rotdir", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x05}, {"drive", "ctl", "enable_torque_ref", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x06}, {"drive", "ctl", "enable_speed_ref", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x07}, {"drive", "ctl", "enable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x08}, {"drive", "ctl", "disable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
 
 
 {{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
@@ -85,7 +89,7 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x3004, 0x0A}, {"config", "converter", "kp_exc_current", "", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3004, 0x0B}, {"config", "converter", "ki_exc_current", "", OD_FLOAT32, OD_ACCESS_RW}},
 
-{{0x3005, 0x01}, {"config", "model_basic", "reference", "", OD_UINT32, OD_ACCESS_RW}},
+{{0x3005, 0x01}, {"config", "model_basic", "reference", "", OD_UINT32, OD_ACCESS_RO}},
 {{0x3005, 0x02}, {"config", "model_basic", "is_motor_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3005, 0x03}, {"config", "model_basic", "is_gener_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3005, 0x04}, {"config", "model_basic", "if_max", "A", OD_FLOAT32, OD_ACCESS_RW}},
@@ -105,8 +109,8 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x3006, 0x08}, {"config", "model_controllers", "ki_flux_weakening", "", OD_FLOAT32, OD_ACCESS_RW}},
 
 {{0x3007, 0x01}, {"config", "resolver", "pole_pairs", "", OD_INT16, OD_ACCESS_RW}},
-{{0x3007, 0x02}, {"config", "resolver", "install_direction", "", OD_INT16, OD_ACCESS_RW}},
-{{0x3007, 0x03}, {"config", "resolver", "install_offset", "rad", OD_FLOAT32, OD_ACCESS_RW}},
+{{0x3007, 0x02}, {"config", "resolver", "install_direction", "", OD_INT16, OD_ACCESS_RO}},
+{{0x3007, 0x03}, {"config", "resolver", "install_offset", "rad", OD_FLOAT32, OD_ACCESS_RO}},
 {{0x3007, 0x04}, {"config", "resolver", "observer_natural_freq", "rad/s", OD_FLOAT32, OD_ACCESS_RW}},
 {{0x3007, 0x05}, {"config", "resolver", "observer_damping_factor", "", OD_FLOAT32, OD_ACCESS_RW}},
 

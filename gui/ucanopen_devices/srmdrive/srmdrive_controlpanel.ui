@@ -143,6 +143,19 @@
 					</object>
 				</child>
 
+        <child>
+					<object class="AdwPreferencesGroup">
+						<property name="title">Debug</property>
+            <child>
+              <object class="AdwExpanderRow" id="expanderrow_field">
+                <property name="title">Manual Field Current</property>
+                <property name="show-enable-switch">true</property>
+                <property name="enable-expansion">false</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
 				<child>
 					<object class="AdwPreferencesGroup" id="group_emergency">
 						<property name="hexpand">false</property>
