@@ -71,9 +71,5 @@
 		"fstream": "cpp",
 		"syncstream": "cpp"
 	},
-	"[Log]": {
-		"editor.fontSize": 12
-	},
-	"terminal.integrated.fontSize": 12,
 	"cmake.buildEnvironment": {"LANG": "en"}
 }
