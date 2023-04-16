@@ -81,8 +81,8 @@
                 <property name="value-chars">10</property>
                 <property name="true-text">1</property>
                 <property name="false-text">0</property>
-                <property name="true-css-class">success</property>
-                <property name="false-css-class">error</property>
+                <property name="true-css-class">error</property>
+                <property name="false-css-class">success</property>
               </object>
             </child>
 
@@ -105,7 +105,7 @@
                 <property name="value-chars">10</property>
                 <property name="true-text">1</property>
                 <property name="false-text">0</property>
-                <property name="true-css-class">error</property>
+                <property name="true-css-class">warning</property>
                 <property name="false-css-class">success</property>
               </object>
             </child>
