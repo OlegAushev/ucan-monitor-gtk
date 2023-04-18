@@ -148,6 +148,8 @@ inline const std::vector<std::string_view> warning_list = {
     "converter_overheat",
     "motor_overheat",
     "flux_weakening",
+    "insulation_low",
+    "insulation_na",
 };
 
 }
