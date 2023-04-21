@@ -128,14 +128,14 @@ void Client::_run(std::future<void> signal_exit) {
 
         /* SYNC */
         if (_sync_info.is_enabled) {
-            if (now - _sync_info.timepoint > _sync_info.period) {
+            if (now - _sync_info.timepoint >= _sync_info.period) {
                 _socket->send(create_frame(CobType::sync, _node_id, {}));
                 _sync_info.timepoint = now;
             }
         }
 
         /* HEARTBEAT */
-        if (now - _heartbeat_info.timepoint > _heartbeat_info.period) {
+        if (now - _heartbeat_info.timepoint >= _heartbeat_info.period) {
             _socket->send(create_frame(CobType::heartbeat, _node_id, {static_cast<uint8_t>(_nmt_state)}));
             _heartbeat_info.timepoint = now;
         }
