@@ -435,7 +435,7 @@ struct ObjectDictionary {
 
 
 inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payload& payload) {
-    can_frame frame;
+    can_frame frame = {};
     frame.can_id = calculate_cob_id(cob_type, node_id);
     frame.len = cob_sizes[static_cast<int>(cob_type)];
     std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
@@ -444,7 +444,7 @@ inline can_frame create_frame(CobType cob_type, NodeId node_id, const can_payloa
 
 
 inline can_frame create_frame(canid_t id, unsigned char len, const can_payload& payload) {
-    can_frame frame;
+    can_frame frame = {};
     frame.can_id = id;
     frame.len = len;
     std::copy(payload.begin(), std::next(payload.begin(), frame.len), frame.data);
