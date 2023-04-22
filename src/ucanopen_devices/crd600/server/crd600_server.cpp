@@ -6,7 +6,7 @@ namespace crd600 {
 
 Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name)
         : ucanopen::Server(socket, node_id, name, object_dictionary)
-        , ucanopen::SdoSubscriber(&sdo_service) {
+        , ucanopen::SdoSubscriber(sdo_service) {
     tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
             [this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
     tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(60),

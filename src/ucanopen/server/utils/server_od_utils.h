@@ -12,10 +12,10 @@ namespace utils {
 
 class SerialNumberGetter : public SdoSubscriber {
 private:
-    impl::Server* const _server;
+    impl::Server& _server;
     uint32_t _serial_number = 0;
 public:
-    SerialNumberGetter(impl::Server* server, impl::SdoPublisher* publisher)
+    SerialNumberGetter(impl::Server& server, impl::SdoPublisher& publisher)
             : SdoSubscriber(publisher)
             , _server(server)
     {}
@@ -26,14 +26,14 @@ public:
 
 class StringReader : public SdoSubscriber {
 private:
-    impl::Server* const _server;
+    impl::Server& _server;
     ODEntryIter _entry;
 
     std::vector<char> _charbuf;
     std::string _result = "n/a";
     bool _ready = false;
 public:
-    StringReader(impl::Server* server, impl::SdoPublisher* publisher,
+    StringReader(impl::Server& server, impl::SdoPublisher& publisher,
                  std::string_view category, std::string_view subcategory, std::string_view name);
     std::string get(std::future<void> signal_terminate) const;
     virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data);
@@ -42,13 +42,13 @@ public:
 
 class NumvalReader : public SdoSubscriber {
 private:
-    impl::Server* const _server;
+    impl::Server& _server;
     ODEntryIter _entry;
 
     std::string _result = "n/a";
     bool _ready = false;
 public:
-    NumvalReader(impl::Server* server, impl::SdoPublisher* publisher,
+    NumvalReader(impl::Server& server, impl::SdoPublisher& publisher,
                  std::string_view category, std::string_view subcategory, std::string_view name);
     std::string get(std::future<void> signal_terminate) const;
     virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data);

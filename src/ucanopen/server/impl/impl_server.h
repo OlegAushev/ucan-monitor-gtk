@@ -89,7 +89,7 @@ public:
 };
 
 
-class FrameHandlingService {
+class FrameHandler {
 public:
     virtual FrameHandlingStatus handle_frame(const can_frame& frame) = 0;
 };
@@ -98,8 +98,8 @@ public:
 class SdoPublisher {
 public:
     virtual ~SdoPublisher() = default;
-    void register_subscriber(SdoSubscriber* subscriber) { _subscriber_list.push_back(subscriber); }
-    void unregister_subscriber(SdoSubscriber* subscriber) { _subscriber_list.remove(subscriber); }
+    void register_subscriber(SdoSubscriber& subscriber) { _subscriber_list.push_back(&subscriber); }
+    void unregister_subscriber(SdoSubscriber& subscriber) { _subscriber_list.remove(&subscriber); }
 protected:
     std::list<SdoSubscriber*> _subscriber_list;
 };
@@ -109,17 +109,17 @@ protected:
 
 class SdoSubscriber {
 private:
-    impl::SdoPublisher* _publisher;
+    impl::SdoPublisher& _publisher;
 public:
-    SdoSubscriber(impl::SdoPublisher* publisher)
+    SdoSubscriber(impl::SdoPublisher& publisher)
             : _publisher(publisher) {
-        _publisher->register_subscriber(this);
+        _publisher.register_subscriber(*this);
     }
     virtual ~SdoSubscriber() {
-        _publisher->unregister_subscriber(this);
+        _publisher.unregister_subscriber(*this);
     }
     virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) = 0;
-    void unsubscribe() { _publisher->unregister_subscriber(this); }
+    void unsubscribe() { _publisher.unregister_subscriber(*this); }
 };
 
 } // namespace ucanopen

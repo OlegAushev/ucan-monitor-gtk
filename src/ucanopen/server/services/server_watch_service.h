@@ -11,7 +11,7 @@ namespace ucanopen {
 
 class ServerWatchService : public SdoSubscriber {
 private:
-    impl::Server* const _server;
+    impl::Server& _server;
     bool _is_enabled = false;
     std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
     std::chrono::time_point<std::chrono::steady_clock> _timepoint;
@@ -19,15 +19,15 @@ private:
     mutable std::mutex _data_access_mutex;
     std::map<std::string_view, std::string> _data;
 public:
-    ServerWatchService(impl::Server* server, impl::SdoPublisher* sdo_publisher);
+    ServerWatchService(impl::Server& server, impl::SdoPublisher& sdo_publisher);
 
     void send() {
         if (_is_enabled && !_object_list.empty()) {
             auto now = std::chrono::steady_clock::now();
             if (now - _timepoint >= _period) {
                 static int i = 0;
-                _server->read(_server->dictionary().config.watch_category,
-                              _server->dictionary().config.watch_subcategory,
+                _server.read(_server.dictionary().config.watch_category,
+                              _server.dictionary().config.watch_subcategory,
                               _object_list[i]);
                 _timepoint = now;
                 i = (i + 1) % _object_list.size();
@@ -38,7 +38,7 @@ public:
     virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) {
         const auto& [key, object] = *entry;
 
-        if ((object.category == _server->dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
+        if ((object.category == _server.dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
             if (object.type != OD_ENUM16) {
                 std::lock_guard<std::mutex> lock(_data_access_mutex);
                 _data[object.name] = sdo_data.to_string(object.type, 2);
@@ -50,17 +50,17 @@ public:
 
     void enable() {
         _is_enabled = true;
-        Log() << "Enabled uCANopen server {" << _server->name() << "} watch requests (period = " << _period << ").\n" << LogPrefix::ok;
+        Log() << "Enabled uCANopen server {" << _server.name() << "} watch requests (period = " << _period << ").\n" << LogPrefix::ok;
     }
 
     void disable() {
         _is_enabled = false;
-        Log() << "Disabled uCANopen server {" << _server->name() << "} watch requests.\n" << LogPrefix::ok;
+        Log() << "Disabled uCANopen server {" << _server.name() << "} watch requests.\n" << LogPrefix::ok;
     }
 
     void set_period(std::chrono::milliseconds period) {
         _period = period;
-        Log() << "Set uCANopen server {" << _server->name() << "} watch requests period = " << period << ".\n" << LogPrefix::ok;
+        Log() << "Set uCANopen server {" << _server.name() << "} watch requests period = " << period << ".\n" << LogPrefix::ok;
     }
 
     std::vector<std::string_view> object_list() const {

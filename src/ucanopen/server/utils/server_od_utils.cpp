@@ -6,7 +6,7 @@ namespace ucanopen {
 namespace utils {
 
 uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const {
-    _server->read("sys", "info", "serial_number");
+    _server.read("sys", "info", "serial_number");
     while (signal_terminate.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout
         && _serial_number == 0) {
         /*WAIT*/
@@ -27,11 +27,11 @@ FrameHandlingStatus SerialNumberGetter::handle_sdo(ODEntryIter entry, SdoType sd
 }
 
 
-StringReader::StringReader(impl::Server* server, impl::SdoPublisher* publisher,
-                            std::string_view category, std::string_view subcategory, std::string_view name)
+StringReader::StringReader(impl::Server& server, impl::SdoPublisher& publisher,
+                           std::string_view category, std::string_view subcategory, std::string_view name)
         : SdoSubscriber(publisher)
         , _server(server) {
-    if (_server->find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success) {
+    if (_server.find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success) {
         _ready = true;
         return;
     }
@@ -43,7 +43,7 @@ StringReader::StringReader(impl::Server* server, impl::SdoPublisher* publisher,
         return;
     }
 
-    if (_server->read(object.category, object.subcategory, object.name) != ODAccessStatus::success) {
+    if (_server.read(object.category, object.subcategory, object.name) != ODAccessStatus::success) {
         _ready = true;
         return;
     }
@@ -73,7 +73,7 @@ FrameHandlingStatus StringReader::handle_sdo(ODEntryIter entry, SdoType sdo_type
 
         if (!_ready) {
             const auto& [key, object] = *_entry;
-            _server->read(object.category, object.subcategory, object.name);
+            _server.read(object.category, object.subcategory, object.name);
         }
 
         return FrameHandlingStatus::success;
@@ -82,11 +82,11 @@ FrameHandlingStatus StringReader::handle_sdo(ODEntryIter entry, SdoType sdo_type
 }
 
 
-NumvalReader::NumvalReader(impl::Server* server, impl::SdoPublisher* publisher,
-                            std::string_view category, std::string_view subcategory, std::string_view name)
+NumvalReader::NumvalReader(impl::Server& server, impl::SdoPublisher& publisher,
+                           std::string_view category, std::string_view subcategory, std::string_view name)
         : SdoSubscriber(publisher)
         , _server(server) {
-    if (_server->find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success) {
+    if (_server.find_od_entry(category, subcategory, name, _entry, traits::check_read_perm{}) != ODAccessStatus::success) {
         _ready = true;
         return;
     }
@@ -98,7 +98,7 @@ NumvalReader::NumvalReader(impl::Server* server, impl::SdoPublisher* publisher,
         return;
     }
 
-    if (_server->read(category, subcategory, name) != ODAccessStatus::success) {
+    if (_server.read(category, subcategory, name) != ODAccessStatus::success) {
         _ready = true;
         return;
     }	

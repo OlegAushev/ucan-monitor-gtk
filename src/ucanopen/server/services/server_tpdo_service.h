@@ -7,9 +7,9 @@
 
 namespace ucanopen {
 
-class ServerTpdoService : public impl::FrameHandlingService {
+class ServerTpdoService : public impl::FrameHandler {
 private:
-    impl::Server* const _server;
+    impl::Server& _server;
 
     struct Message {
         canid_t id;
@@ -20,7 +20,7 @@ private:
     };
     std::map<TpdoType, Message> _tpdo_list;
 public:
-    ServerTpdoService(impl::Server* server);
+    ServerTpdoService(impl::Server& server);
     void register_tpdo(TpdoType tpdo_type, std::chrono::milliseconds timeout, std::function<void(const can_payload&)> handler);
     void update_node_id();
 
