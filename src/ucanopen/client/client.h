@@ -25,7 +25,7 @@ private:
     NmtState _nmt_state;
 
     std::set<std::shared_ptr<Server>> _servers;
-    std::map<canid_t, std::shared_ptr<Server>> _rxid_server_list;
+    std::map<canid_t, std::shared_ptr<Server>> _rxid_to_server;
 
     /* SYNC */
     struct SyncInfo {
