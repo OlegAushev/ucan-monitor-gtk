@@ -7,7 +7,7 @@
 
 namespace ucanopen {
 
-class ServerSdoService : public impl::FrameReceiver, public impl::SdoPublisher {
+class ServerSdoService : public impl::FrameReceiverInterface, public impl::SdoPublisher {
 private:
     impl::Server& _server;
     canid_t _id;
