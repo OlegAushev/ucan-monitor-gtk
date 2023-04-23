@@ -11,9 +11,9 @@ Server::Server(std::shared_ptr<can::Socket> socket, NodeId node_id, const std::s
         , sdo_service(*this)
         , watch_service(*this, sdo_service)
         , config_service(*this) {
-    _frame_handling_services.push_back(&sdo_service);
-    _frame_handling_services.push_back(&tpdo_service);
-    _frame_handling_services.push_back(&heartbeat_service);
+    _rx_services.push_back(&sdo_service);
+    _rx_services.push_back(&tpdo_service);
+    _rx_services.push_back(&heartbeat_service);
 }
 
 
@@ -36,7 +36,7 @@ void Server::_send() {
 
 
 void Server::_handle_frame(const can_frame& frame) {
-    for (auto service : _frame_handling_services) {
+    for (auto service : _rx_services) {
         auto status = service->handle_frame(frame);
         if (status == FrameHandlingStatus::success) {
             break;

@@ -34,7 +34,7 @@ private:
     void _handle_frame(const can_frame& frame);
     void _set_node_id(NodeId nodeId);
 
-    std::vector<impl::FrameHandler*> _frame_handling_services;
+    std::vector<impl::FrameReceiver*> _rx_services;
 public:
     uint32_t get_serial_number();
     std::string read_string(std::string_view category, std::string_view subcategory, std::string_view name,

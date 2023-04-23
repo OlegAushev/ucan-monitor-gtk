@@ -106,9 +106,9 @@ void Client::set_server_node_id(std::string_view name, NodeId node_id) {
 
     (*server_iter)->_set_node_id(node_id);
     // erase outdated elements from [id; server] map
-    for (auto it = _recvid_server_list.begin(); it != _recvid_server_list.end();) {
+    for (auto it = _rxid_server_list.begin(); it != _rxid_server_list.end();) {
         if (it->second->name() == name) {
-            it = _recvid_server_list.erase(it);
+            it = _rxid_server_list.erase(it);
         } else {
             ++it;
         }
@@ -170,8 +170,8 @@ void Client::_run(std::future<void> signal_exit) {
 
 
 void Client::_on_frame_received(const can_frame& frame) {
-    auto server_iter = _recvid_server_list.find(frame.can_id);
-    if (server_iter != _recvid_server_list.end()) {
+    auto server_iter = _rxid_server_list.find(frame.can_id);
+    if (server_iter != _rxid_server_list.end()) {
         server_iter->second->_handle_frame(frame);
     }
 }
@@ -185,12 +185,12 @@ void Client::_calculate_recvid(std::shared_ptr<Server> server) {
     canid_t tsdo = calculate_cob_id(CobType::tsdo, server->node_id());
     canid_t heartbeat = calculate_cob_id(CobType::heartbeat, server->node_id());
 
-    _recvid_server_list.insert({tpdo1, server});
-    _recvid_server_list.insert({tpdo2, server});
-    _recvid_server_list.insert({tpdo3, server});
-    _recvid_server_list.insert({tpdo4, server});
-    _recvid_server_list.insert({tsdo, server});
-    _recvid_server_list.insert({heartbeat, server});
+    _rxid_server_list.insert({tpdo1, server});
+    _rxid_server_list.insert({tpdo2, server});
+    _rxid_server_list.insert({tpdo3, server});
+    _rxid_server_list.insert({tpdo4, server});
+    _rxid_server_list.insert({tsdo, server});
+    _rxid_server_list.insert({heartbeat, server});
 }
 
 
