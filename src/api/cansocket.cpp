@@ -13,21 +13,23 @@ void register_can_socket(std::shared_ptr<can::Socket> can_socket_) {
 
 extern "C" {
 
-void cansocket_connect(const char* interface, int bitrate) {
+int cansocket_connect(const char* interface, int bitrate) {
     if (can_socket == nullptr) {
-        return;
+        return -1;
     }
 
-    can_socket->connect(interface, bitrate);
+    auto error = can_socket->connect(interface, bitrate);
+    return std::to_underlying(error);
 }
 
 
-void cansocket_disconnect() {
+int cansocket_disconnect() {
     if (can_socket == nullptr) {
-        return;
+        return -1;
     }
 
-    can_socket->disconnect();
+    auto error = can_socket->disconnect();
+    return std::to_underlying(error);
 }
 
 }

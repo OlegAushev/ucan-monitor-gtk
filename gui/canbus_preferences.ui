@@ -9,207 +9,211 @@
 		<property name="default-height">700</property>
 		<property name="search-enabled">False</property>	
 		<child>
-			<object class="AdwPreferencesPage">
-				<property name="icon-name">link-symbolic</property>
-				<child>
-					<object class="AdwPreferencesGroup">
-						<property name="title">SocketCAN</property>
-						<!-- INTERFACE COMBOBOX -->
-						<child>
-							<object class="AdwComboRow" id="comborow_can_interface">
-								<property name="title">Interface</property>
-								<property name="model">
-									<object class="GtkStringList" id="list_can_interface">
-										<items>
-											<item>can0</item>
-											<item>can1</item>
-										</items>
-									</object>
-								</property>
-							</object>
-						</child>
-						<!-- BITRATE COMBOBOX -->
-						<child>
-							<object class="AdwComboRow" id="comborow_can_bitrate">
-								<property name="title">Bitrate</property>
-								<property name="model">
-									<object class="GtkStringList" id="list_can_bitrate">
-										<items>
-											<item>125000</item>
-											<item>250000</item>
-											<item>500000</item>
-											<item>1000000</item>
-										</items>
-									</object>
-								</property>
-							</object>
-						</child>
+    <object class="AdwToastOverlay" id="toast_overlay">
+				<property name="child">
+          <object class="AdwPreferencesPage">
+            <property name="icon-name">link-symbolic</property>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">SocketCAN</property>
+                <!-- INTERFACE COMBOBOX -->
+                <child>
+                  <object class="AdwComboRow" id="comborow_can_interface">
+                    <property name="title">Interface</property>
+                    <property name="model">
+                      <object class="GtkStringList" id="list_can_interface">
+                        <items>
+                          <item>can0</item>
+                          <item>can1</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <!-- BITRATE COMBOBOX -->
+                <child>
+                  <object class="AdwComboRow" id="comborow_can_bitrate">
+                    <property name="title">Bitrate</property>
+                    <property name="model">
+                      <object class="GtkStringList" id="list_can_bitrate">
+                        <items>
+                          <item>125000</item>
+                          <item>250000</item>
+                          <item>500000</item>
+                          <item>1000000</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
 
-						<child>
-							<object class="AdwActionRow">
-								<!-- DISCONNECT BUTTON -->
-								<child type="prefix">
-									<object class="GtkButton" id="button_disconnect">
-										<property name="label">Disconnect</property>
-										<property name="halign">center</property>
-										<property name="valign">center</property>
-										<property name="width-request">140</property>
-										<style>
-											<class name="destructive-action"/>
-										</style>
-									</object>
-								</child>
-								<!-- CONNECT BUTTON -->
-								<child type="suffix">
-									<object class="GtkButton" id="button_connect">
-										<property name="label">Connect</property>
-										<property name="halign">center</property>
-										<property name="valign">center</property>
-										<property name="width-request">140</property>
-										<style>
-											<class name="suggested-action"/>
-										</style>
-									</object>					
-								</child>
-							</object>
-						</child>
+                <child>
+                  <object class="AdwActionRow">
+                    <!-- DISCONNECT BUTTON -->
+                    <child type="prefix">
+                      <object class="GtkButton" id="button_disconnect">
+                        <property name="label">Disconnect</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">140</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+                    <!-- CONNECT BUTTON -->
+                    <child type="suffix">
+                      <object class="GtkButton" id="button_connect">
+                        <property name="label">Connect</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">140</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>					
+                    </child>
+                  </object>
+                </child>
 
-					</object>
-				</child>
+              </object>
+            </child>
 
-				<child>
-					<object class="AdwPreferencesGroup">
-						<property name="title">CANopen</property>
-						<!-- CLIENT ID -->
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Client ID</property>
-								<child type="suffix">
-									<object class="GtkSpinButton" id="spinbutton_client_id">
-										<property name="halign">center</property>
-										<property name="valign">center</property>
-										<property name="adjustment">
-											<object class="GtkAdjustment" id="adjustment_client_id">
-												<property name="lower">1</property>
-												<property name="upper">127</property>
-												<property name="step-increment">1</property>
-											</object>
-										</property>
-										<property name="wrap">true</property>
-										<property name="climb-rate">1</property>
-										<property name="numeric">true</property>
-									</object>
-								</child>
-							</object>
-						</child>
-						<!-- SERVER ID -->
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Server ID</property>
-								<child type="suffix">
-									<object class="GtkSpinButton" id="spinbutton_server_id">
-										<property name="halign">center</property>
-										<property name="valign">center</property>
-										<property name="adjustment">
-											<object class="GtkAdjustment" id="adjustment_server_id">
-												<property name="lower">1</property>
-												<property name="upper">127</property>
-												<property name="value">1</property>
-												<property name="step-increment">1</property>
-											</object>
-										</property>
-										<property name="wrap">true</property>
-										<property name="climb-rate">1</property>
-										<property name="numeric">true</property>
-									</object>
-								</child>
-							</object>
-						</child>
-						<!-- TPDO -->
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Client TPDO-messages</property>
-								<property name="activatable_widget">switch_tpdo</property>
-								<child>
-									<object class="GtkSwitch" id="switch_tpdo">
-										<property name="valign">center</property>
-									</object>
-								</child>
-							</object>
-						</child>
-						<!-- SYNC -->
-						<child>
-							<object class="AdwExpanderRow" id="expanderrow_sync">
-								<property name="title">SYNC messages</property>
-								<property name="show-enable-switch">true</property>
-								<child>
-									<object class="AdwActionRow">
-										<property name="title">Period, ms</property>
-										<child type = "suffix">
-											<object class="GtkSpinButton" id="spinbutton_sync_period">
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<property name="adjustment">
-													<object class="GtkAdjustment" id="adjustment_sync_period">
-														<property name="lower">1</property>
-														<property name="upper">5000</property>
-														<property name="value">1</property>
-														<property name="step-increment">1</property>
-													</object>
-												</property>
-												<property name="wrap">true</property>
-												<property name="climb-rate">1</property>
-												<property name="numeric">true</property>
-											</object>
-										</child>
-									</object>
-								</child>
-							</object>
-						</child>						
-						<!-- WATCH -->
-						<child>
-							<object class="AdwExpanderRow" id="expanderrow_watch">
-								<property name="title">Server watch messages</property>
-								<property name="show-enable-switch">true</property>
-								<child>
-									<object class="AdwActionRow">
-										<property name="title">Period, ms</property>
-										<child type="suffix">
-											<object class="GtkSpinButton" id="spinbutton_watch_period">
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<property name="adjustment">
-													<object class="GtkAdjustment" id="adjustment_watch_period">
-														<property name="lower">1</property>
-														<property name="upper">1000</property>
-														<property name="value">1</property>
-														<property name="step-increment">1</property>
-													</object>
-												</property>
-												<property name="wrap">true</property>
-												<property name="climb-rate">1</property>
-												<property name="numeric">true</property>
-											</object>
-										</child>
-									</object>
-								</child>
-							</object>
-						</child>
-						<!-- SERVER RPDO -->
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Server RPDO-messages</property>
-								<property name="activatable_widget">switch_rpdo</property>
-								<child>
-									<object class="GtkSwitch" id="switch_rpdo">
-										<property name="valign">center</property>
-									</object>
-								</child>
-							</object>
-						</child>
-					</object>
-				</child>
-			</object>>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">CANopen</property>
+                <!-- CLIENT ID -->
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Client ID</property>
+                    <child type="suffix">
+                      <object class="GtkSpinButton" id="spinbutton_client_id">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="adjustment">
+                          <object class="GtkAdjustment" id="adjustment_client_id">
+                            <property name="lower">1</property>
+                            <property name="upper">127</property>
+                            <property name="step-increment">1</property>
+                          </object>
+                        </property>
+                        <property name="wrap">true</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- SERVER ID -->
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Server ID</property>
+                    <child type="suffix">
+                      <object class="GtkSpinButton" id="spinbutton_server_id">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="adjustment">
+                          <object class="GtkAdjustment" id="adjustment_server_id">
+                            <property name="lower">1</property>
+                            <property name="upper">127</property>
+                            <property name="value">1</property>
+                            <property name="step-increment">1</property>
+                          </object>
+                        </property>
+                        <property name="wrap">true</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- TPDO -->
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Client TPDO-messages</property>
+                    <property name="activatable_widget">switch_tpdo</property>
+                    <child>
+                      <object class="GtkSwitch" id="switch_tpdo">
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- SYNC -->
+                <child>
+                  <object class="AdwExpanderRow" id="expanderrow_sync">
+                    <property name="title">SYNC messages</property>
+                    <property name="show-enable-switch">true</property>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Period, ms</property>
+                        <child type = "suffix">
+                          <object class="GtkSpinButton" id="spinbutton_sync_period">
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment" id="adjustment_sync_period">
+                                <property name="lower">1</property>
+                                <property name="upper">5000</property>
+                                <property name="value">1</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                            <property name="wrap">true</property>
+                            <property name="climb-rate">1</property>
+                            <property name="numeric">true</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>						
+                <!-- WATCH -->
+                <child>
+                  <object class="AdwExpanderRow" id="expanderrow_watch">
+                    <property name="title">Server watch messages</property>
+                    <property name="show-enable-switch">true</property>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Period, ms</property>
+                        <child type="suffix">
+                          <object class="GtkSpinButton" id="spinbutton_watch_period">
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment" id="adjustment_watch_period">
+                                <property name="lower">1</property>
+                                <property name="upper">1000</property>
+                                <property name="value">1</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                            <property name="wrap">true</property>
+                            <property name="climb-rate">1</property>
+                            <property name="numeric">true</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- SERVER RPDO -->
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Server RPDO-messages</property>
+                    <property name="activatable_widget">switch_rpdo</property>
+                    <child>
+                      <object class="GtkSwitch" id="switch_rpdo">
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
 		</child>
 	</template>
 </interface>

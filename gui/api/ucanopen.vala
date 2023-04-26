@@ -3,8 +3,8 @@
 ///
 
 
-extern void cansocket_connect(string interface, int bitrate);
-extern void cansocket_disconnect();
+extern int cansocket_connect(string interface, int bitrate);
+extern int cansocket_disconnect();
 
 extern void ucanopen_client_set_node_id(uint node_id);
 extern void ucanopen_client_set_server_id(string server_name ,uint node_id);

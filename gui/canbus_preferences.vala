@@ -10,6 +10,9 @@ namespace CanMonitor {
 public class WindowCanBusPreferences : Adw.PreferencesWindow
 {
 	[GtkChild]
+	private unowned Adw.ToastOverlay toast_overlay;
+
+	[GtkChild]
 	private unowned Adw.ComboRow comborow_can_interface;
 	[GtkChild]
 	private unowned Gtk.StringList list_can_interface;
@@ -73,11 +76,8 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 		switch_rpdo.active = _rpdo_state;
 
 		// SIGNALS
-		button_connect.clicked.connect(() => {
-			cansocket_connect(list_can_interface.get_string(comborow_can_interface.selected)
-					, int.parse(list_can_bitrate.get_string(comborow_can_bitrate.selected)));
-		});
-		button_disconnect.clicked.connect(cansocket_disconnect);
+		button_connect.clicked.connect(on_connect_clicked);
+		button_disconnect.clicked.connect(on_disconnect_clicked);
 
 		adjustment_client_id.value_changed.connect(() => {
 			if (adjustment_client_id.value == adjustment_server_id.value)
@@ -177,6 +177,31 @@ public class WindowCanBusPreferences : Adw.PreferencesWindow
 	{
 		get { return _rpdo_state; }
 	}
+
+    void on_connect_clicked() {
+        int errid = cansocket_connect(list_can_interface.get_string(comborow_can_interface.selected),
+                                      int.parse(list_can_bitrate.get_string(comborow_can_bitrate.selected)));
+        Adw.Toast toast;
+        if (errid != 0) {
+            toast = new Adw.Toast("Fail.");
+        } else {
+            toast = new Adw.Toast("Success!"); 
+        }
+        toast.timeout = 1;
+        toast_overlay.add_toast(toast);
+    }
+
+    void on_disconnect_clicked() {
+        int errid = cansocket_disconnect();
+        Adw.Toast toast;
+        if (errid != 0) {
+            toast = new Adw.Toast("Fail.");
+        } else {
+            toast = new Adw.Toast("Success!"); 
+        }
+        toast.timeout = 1;
+        toast_overlay.add_toast(toast);
+    }
 }
 
 
