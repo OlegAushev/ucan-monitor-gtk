@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="CanMonitorWindowCanBusPreferences" parent="AdwPreferencesWindow">
-		<property name="title">CAN Bus Preferences</property>
-		<property name="width-request">320</property>
-		<property name="height-request">640</property>
-		<property name="default-width">320</property>
-		<property name="default-height">700</property>
-		<property name="search-enabled">False</property>	
-		<child>
+  <requires lib="gtk" version="4.0" />
+  <template class="UcanopenPreferencesWindow" parent="AdwPreferencesWindow">
+    <property name="title">CAN Bus Preferences</property>
+    <property name="width-request">320</property>
+    <property name="height-request">640</property>
+    <property name="default-width">320</property>
+    <property name="default-height">700</property>
+    <property name="search-enabled">False</property>	
+    <child>
     <object class="AdwToastOverlay" id="toast_overlay">
-				<property name="child">
+        <property name="child">
           <object class="AdwPreferencesPage">
             <property name="icon-name">link-symbolic</property>
             <child>
@@ -214,6 +214,6 @@
           </object>
         </property>
       </object>
-		</child>
-	</template>
+    </child>
+  </template>
 </interface>

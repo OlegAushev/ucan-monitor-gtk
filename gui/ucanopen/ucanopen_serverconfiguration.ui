@@ -1,183 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="UcanopenServerConfiguration" parent="AdwBin">
-		<child>
-			<object class="AdwToastOverlay" id="toast_overlay">
-				<property name="child">
-					<object class="AdwPreferencesPage">
-						
-            <child>
-							<object class="AdwPreferencesGroup">
-								<property name="title">About</property>
-								
-                <property name="header-suffix">
-									<object class="GtkButton" id="refreshabout_button">
-									  	<property name="child">
-											<object class="AdwButtonContent">
-										  		<property name="icon-name">view-refresh-symbolic</property>
-										  		<property name="label" translatable="yes">Refresh</property>
-											</object>
-									  	</property>
-									  	<style>
-											<class name="flat"/>
-										</style>
-									</object>
-								</property>
-			  
-								<child>
-									<object class="AdwActionRow">
-
-										<child type="prefix">
-											<object class="GtkLabel">
-												<property name="label">Device Name</property>
-											</object>
-										</child>
-
-										<child type="suffix">
-											<object class="GtkLabel" id="devicename_label">
-												<property name="label">n/a</property>
-											</object>
-										</child>
-
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-
-										<child type="prefix">
-											<object class="GtkLabel">
-												<property name="label">Hardware Version</property>
-											</object>
-										</child>
-
-										<child type="suffix">
-											<object class="GtkLabel" id="hardwareversion_label">
-												<property name="label">n/a</property>
-											</object>
-										</child>
-
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-
-										<child type="prefix">
-											<object class="GtkLabel">
-												<property name="label">Firmware Version</property>
-											</object>
-										</child>
-
-										<child type="suffix">
-											<object class="GtkLabel" id="firmwareversion_label">
-												<property name="label">n/a</property>
-											</object>
-										</child>
-                    
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-
-										<child type="prefix">
-											<object class="GtkLabel">
-												<property name="label">Device S/N</property>
-											</object>
-										</child>
-
-										<child type="suffix">
-											<object class="GtkLabel" id="serialnumber_label">
-												<property name="label">n/a</property>
-											</object>
-										</child>
-
-									</object>
-								</child>
-
-							</object>
-						</child>
-
-						<child>
-							<object class="AdwPreferencesGroup">
-								<property name="title">Configuration</property>
-
-								<property name="header-suffix">
-									<object class="GtkButton" id="refreshvalue_button">
-									  	<property name="child">
-											<object class="AdwButtonContent">
-										  		<property name="icon-name">view-refresh-symbolic</property>
-										  		<property name="label" translatable="yes">Refresh</property>
-											</object>
-									  	</property>
-									  	<style>
-											<class name="flat"/>
-										</style>
-									</object>
-								</property>
-								
-								<child>
-									<object class="AdwComboRow" id="category_comborow">
-										<property name="title">Category</property>
-										<property name="width-request">400</property>
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwComboRow" id="object_comborow">
-										<property name="title">Object</property>
-										<property name="width-request">400</property>
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwEntryRow" id="value_entryrow">
-										<property name="title">Value</property>
-										<property name="input-purpose">number</property>
-										<property name="show-apply-button">true</property>
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-
-										<child type="prefix">
-											<object class="GtkButton" id="restore_button">
-												<property name="label">Restore</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<property name="width-request">200</property>
-												<style>
-													<class name="destructive-action"/>
-												</style>
-											</object>
-										</child>
-
-										<child type="suffix">
-											<object class="GtkButton" id="apply_button">
-												<property name="label">Apply</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<property name="width-request">200</property>
-												<style>
-													<class name="suggested-action"/>
-												</style>
-											</object>
-										</child>
-
-									</object>
-								</child>
-
-							</object>
-						</child>
+  <requires lib="gtk" version="4.0" />
+  <template class="UcanopenServerConfiguration" parent="AdwBin">
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="AdwPreferencesPage">
             
-					</object>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">About</property>
+                
+                <property name="header-suffix">
+                  <object class="GtkButton" id="refreshabout_button">
+                      <property name="child">
+                      <object class="AdwButtonContent">
+                          <property name="icon-name">view-refresh-symbolic</property>
+                          <property name="label" translatable="yes">Refresh</property>
+                      </object>
+                      </property>
+                      <style>
+                      <class name="flat"/>
+                    </style>
+                  </object>
+                </property>
+        
+                <child>
+                  <object class="AdwActionRow">
 
-				</property>
-			</object>
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Device Name</property>
+                      </object>
+                    </child>
 
-		</child>
-	</template>
+                    <child type="suffix">
+                      <object class="GtkLabel" id="devicename_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Hardware Version</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="hardwareversion_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Firmware Version</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="firmwareversion_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+                    
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Device S/N</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="serialnumber_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Configuration</property>
+
+                <property name="header-suffix">
+                  <object class="GtkButton" id="refreshvalue_button">
+                      <property name="child">
+                      <object class="AdwButtonContent">
+                          <property name="icon-name">view-refresh-symbolic</property>
+                          <property name="label" translatable="yes">Refresh</property>
+                      </object>
+                      </property>
+                      <style>
+                      <class name="flat"/>
+                    </style>
+                  </object>
+                </property>
+                
+                <child>
+                  <object class="AdwComboRow" id="category_comborow">
+                    <property name="title">Category</property>
+                    <property name="width-request">400</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwComboRow" id="object_comborow">
+                    <property name="title">Object</property>
+                    <property name="width-request">400</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwEntryRow" id="value_entryrow">
+                    <property name="title">Value</property>
+                    <property name="input-purpose">number</property>
+                    <property name="show-apply-button">true</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkButton" id="restore_button">
+                        <property name="label">Restore</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">200</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkButton" id="apply_button">
+                        <property name="label">Apply</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">200</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+              </object>
+            </child>
+            
+          </object>
+
+        </property>
+      </object>
+
+    </child>
+  </template>
 </interface>

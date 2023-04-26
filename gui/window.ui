@@ -188,7 +188,7 @@
 	<menu id="menu_primary">
 		<section>
 			<item>
-				<attribute name="label">CAN bus</attribute>
+				<attribute name="label">CAN Bus</attribute>
 				<attribute name="action">app.canbus_setup</attribute>
 			</item>
 			<item>
