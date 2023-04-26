@@ -6,11 +6,13 @@
 			<object class="AdwToastOverlay" id="toast_overlay">
 				<property name="child">
 					<object class="AdwPreferencesPage">
-						<child>
+						
+            <child>
 							<object class="AdwPreferencesGroup">
 								<property name="title">About</property>
-								<property name="header-suffix">
-									<object class="GtkButton" id="button_refresh_about">
+								
+                <property name="header-suffix">
+									<object class="GtkButton" id="refreshabout_button">
 									  	<property name="child">
 											<object class="AdwButtonContent">
 										  		<property name="icon-name">view-refresh-symbolic</property>
@@ -25,6 +27,7 @@
 			  
 								<child>
 									<object class="AdwActionRow">
+
 										<child type="prefix">
 											<object class="GtkLabel">
 												<property name="label">Device Name</property>
@@ -32,15 +35,17 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkLabel" id="label_device_name">
+											<object class="GtkLabel" id="devicename_label">
 												<property name="label">n/a</property>
 											</object>
 										</child>
+
 									</object>
 								</child>
 
 								<child>
 									<object class="AdwActionRow">
+
 										<child type="prefix">
 											<object class="GtkLabel">
 												<property name="label">Hardware Version</property>
@@ -48,15 +53,17 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkLabel" id="label_hardware_version">
+											<object class="GtkLabel" id="hardwareversion_label">
 												<property name="label">n/a</property>
 											</object>
 										</child>
+
 									</object>
 								</child>
 
 								<child>
 									<object class="AdwActionRow">
+
 										<child type="prefix">
 											<object class="GtkLabel">
 												<property name="label">Firmware Version</property>
@@ -64,15 +71,17 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkLabel" id="label_firmware_version">
+											<object class="GtkLabel" id="firmwareversion_label">
 												<property name="label">n/a</property>
 											</object>
 										</child>
+                    
 									</object>
 								</child>
 
 								<child>
 									<object class="AdwActionRow">
+
 										<child type="prefix">
 											<object class="GtkLabel">
 												<property name="label">Device S/N</property>
@@ -80,20 +89,23 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkLabel" id="label_serial_number">
+											<object class="GtkLabel" id="serialnumber_label">
 												<property name="label">n/a</property>
 											</object>
 										</child>
+
 									</object>
 								</child>
+
 							</object>
 						</child>
 
 						<child>
 							<object class="AdwPreferencesGroup">
 								<property name="title">Configuration</property>
+
 								<property name="header-suffix">
-									<object class="GtkButton" id="button_refresh_value">
+									<object class="GtkButton" id="refreshvalue_button">
 									  	<property name="child">
 											<object class="AdwButtonContent">
 										  		<property name="icon-name">view-refresh-symbolic</property>
@@ -107,46 +119,32 @@
 								</property>
 								
 								<child>
-									<object class="AdwComboRow" id="comborow_category">
+									<object class="AdwComboRow" id="category_comborow">
 										<property name="title">Category</property>
 										<property name="width-request">400</property>
 									</object>
 								</child>
 
 								<child>
-									<object class="AdwComboRow" id="comborow_object">
+									<object class="AdwComboRow" id="object_comborow">
 										<property name="title">Object</property>
 										<property name="width-request">400</property>
-										<!--child type="suffix">
-											<object class="GtkButton" id="button_read">
-												<property name="label">Read</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-											</object>
-										</child-->
 									</object>
 								</child>
 
 								<child>
-									<object class="AdwEntryRow" id="entryrow_value">
+									<object class="AdwEntryRow" id="value_entryrow">
 										<property name="title">Value</property>
 										<property name="input-purpose">number</property>
 										<property name="show-apply-button">true</property>
-
-										<!--child type="suffix">
-											<object class="GtkButton" id="button_write">
-												<property name="label">Write</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-											</object>
-										</child-->
 									</object>
 								</child>
 
 								<child>
 									<object class="AdwActionRow">
+
 										<child type="prefix">
-											<object class="GtkButton" id="button_restore">
+											<object class="GtkButton" id="restore_button">
 												<property name="label">Restore</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -158,7 +156,7 @@
 										</child>
 
 										<child type="suffix">
-											<object class="GtkButton" id="button_apply">
+											<object class="GtkButton" id="apply_button">
 												<property name="label">Apply</property>
 												<property name="halign">center</property>
 												<property name="valign">center</property>
@@ -168,11 +166,13 @@
 												</style>
 											</object>
 										</child>
+
 									</object>
 								</child>
 
 							</object>
 						</child>
+            
 					</object>
 
 				</property>
