@@ -8,13 +8,11 @@ namespace CanMonitor {
 
 public class Application : Adw.Application
 {
-    public Application()
-    {
+    public Application() {
         Object (application_id: "org.example.uCAN-Monitor", flags: ApplicationFlags.FLAGS_NONE);
     }
 
-    construct
-    {
+    construct {
         ActionEntry[] action_entries = {
             {"about", this.on_about_action},
             {"preferences", this.on_preferences_action},
@@ -27,20 +25,18 @@ public class Application : Adw.Application
         this.set_accels_for_action("app.quit", {"<primary>q"});
         }
 
-    public override void activate()
-    {
+    public override void activate() {
         base.activate();
         var win = this.active_window;
         if (win == null)
         {
-            win = new CanMonitor.WindowSelectServer(this);
+            win = new Ucanopen.SelectServerWindow(this);
         }
         win.present();
         message("[gui] Waiting for ucanopen server selection...");
         }
 
-    private void on_about_action()
-    {
+    private void on_about_action() {
         string[] authors = { "Oleg Aushev" };
         Gtk.show_about_dialog (this.active_window,
                 "program-name", "uCAN Monitor",
@@ -48,21 +44,18 @@ public class Application : Adw.Application
                 "version", GIT_DESCRIBE);
     }
 
-    private void on_preferences_action()
-    {
+    private void on_preferences_action() {
         message ("app.preferences action activated");
     }
 
-    private void on_canbus_setup_action()
-    {
+    private void on_canbus_setup_action() {
         var win = this.active_window;
         var win_canbus = new Ucanopen.PreferencesWindow();
         win_canbus.set_transient_for(win);
         win_canbus.present();
     }
 
-    private void on_create_main_window_action()
-    {
+    private void on_create_main_window_action() {
         message(@"[gui] '$(Backend.Ucanopen.server)' is selected.");
         message("[gui] Waiting for backend...");
         Backend.main_enter();

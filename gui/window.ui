@@ -1,204 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="CanMonitorWindow" parent="GtkApplicationWindow">
-		<property name="title">uCAN Monitor</property>
-		<property name="width-request">300</property>
-		<property name="default-width">1500</property>
-		<property name="default-height">900</property>
-		<child type="titlebar">
-			<object class="AdwHeaderBar" id="headerbar">
-				<property name="centering-policy">strict</property>
-				<!-- SIDEBAR BUTTON -->
-				<child type="start">
-					<object class="GtkToggleButton">
-						<property name="icon-name">sidebar-show-symbolic</property>
-						<property name="active" bind-source="flap" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
-					</object>
-				</child>
-				<!-- VIEW SWITCHER -->
-				<child type="title">
-					<object class="AdwViewSwitcherTitle" id="viewswitcher_title">
-						<property name="stack">viewstack</property>
-						<property name="title" bind-source="CanMonitorWindow" bind-property="title" bind-flags="sync-create"/>
-					</object>
-				</child>
-				<!-- MENU BUTTON -->
-				<child type="end">
-					<object class="GtkMenuButton">
-						<property name="icon-name">open-menu-symbolic</property>
-						<property name="menu-model">menu_primary</property>
-					</object>
-				</child>
-				<!-- LOG BUTTON -->
-				<child type="start">
-					<object class="GtkToggleButton">
-						<property name="icon-name">media-view-subtitles-symbolic</property>
-						<property name="active" bind-source="log_textview" bind-property="visible" bind-flags="sync-create|bidirectional"/>
-					</object>
-				</child>
-			</object>
-		</child>
+  <requires lib="gtk" version="4.0" />
+  <template class="CanMonitorWindow" parent="GtkApplicationWindow">
+    <property name="title">uCAN Monitor</property>
+    <property name="width-request">300</property>
+    <property name="default-width">1500</property>
+    <property name="default-height">900</property>
+    
+    <child type="titlebar">
+      <object class="AdwHeaderBar" id="headerbar">
+        <property name="centering-policy">strict</property>
 
-		<child>
-			<object class="GtkBox">
-				<property name="orientation">vertical</property>
-				<child>
-					<object class="AdwFlap" id="flap">
-						<property name="fold-policy">auto</property>
-						<property name="locked">false</property>
-						<property name="flap">scrolledwindow_control_panel</property>
-						<property name="separator">flap_separator</property>
-						<property name="content">flap_content</property>
-						<!-- FLAP -->
-						<child>
-							<object class="GtkScrolledWindow" id="scrolledwindow_control_panel">
-								<property name="hexpand">false</property>
-								<property name="vexpand">true</property>
-								<property name="hscrollbar-policy">never</property>
-								<property name="vscrollbar-policy">automatic</property>
-								<!--child>
-									<object class="SrmDriveControlPanel" id="controlpanel">
-										<style>
-											<class name="background">
-										</style>
-									</object>
-								</child-->
-							</object>	
-						</child>
-						<!-- SEPARATOR -->
-						<child>
-							<object class="GtkSeparator" id="flap_separator"></object>
-						</child>
-						<!-- CONTENT -->
-						<child>
-							<object class="GtkPaned" id="flap_content">
-								<property name="width-request">320</property>
-								<property name="orientation">vertical</property>
-								<property name="wide-handle">false</property>
-								<property name="position">800</property>
-								<child>
-									<object class="AdwViewStack" id="viewstack">
-										<property name="vexpand">True</property>
-										<child>
-											<!-- PAGE 1 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstack_page1">
-												<property name="title">Data</property>
-												<property name="icon-name">view-list-symbolic</property>
-												<property name="child">
-													<object class="GtkScrolledWindow" id="scrolledwindow_data_tables">
-														<property name="hexpand">true</property>
-														<property name="vexpand">true</property>
-														<property name="hscrollbar-policy">automatic</property>
-														<property name="vscrollbar-policy">automatic</property>
-														<!--child>
-															<object class="SrmDriveDataTables" id="data_tables">
-															</object>
-														</child-->
-													</object>
-												</property>
-											</object>
-										</child>
+        <!-- SIDEBAR BUTTON -->
+        <child type="start">
+          <object class="GtkToggleButton">
+            <property name="icon-name">sidebar-show-symbolic</property>
+            <property name="active" bind-source="flap" bind-property="reveal-flap" bind-flags="sync-create|bidirectional"/>
+          </object>
+        </child>
 
-										<child>
-											<!-- PAGE 2 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstack_page2">
-												<property name="title">Status</property>
-												<property name="icon-name">info-symbolic</property>
-												<property name="child">
-													<object class="GtkScrolledWindow">
-														<property name="hexpand">true</property>
-														<property name="vexpand">true</property>
-														<property name="hscrollbar-policy">automatic</property>
-														<property name="vscrollbar-policy">automatic</property>
-														<child>
-															<object class="CanMonitorSystemStatus" id="widget_system_status">
-															</object>
-														</child>
-													</object>
-												</property>
-											</object>
-										</child>
+        <!-- VIEW SWITCHER -->
+        <child type="title">
+          <object class="AdwViewSwitcherTitle" id="viewswitcher_title">
+            <property name="stack">viewstack</property>
+            <property name="title" bind-source="CanMonitorWindow" bind-property="title" bind-flags="sync-create"/>
+          </object>
+        </child>
 
-										<child>
-											<!-- PAGE 3 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstack_page3">
-												<property name="title">Charts</property>
-												<property name="icon-name">computer-symbolic</property>
-												<property name="child">
-													<object class="GtkBox">
-														<property name="orientation">vertical</property>
-														<child>
-															<object class="UcanopenWatchChart">
-															</object>
-														</child>
-														<child>
-															<object class="UcanopenWatchChart">
-															</object>
-														</child>
-														<child>
-															<object class="UcanopenWatchChart">
-															</object>
-														</child>
-													</object>
-												</property>
-											</object>
-										</child>
+        <!-- MENU BUTTON -->
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="icon-name">open-menu-symbolic</property>
+            <property name="menu-model">menu_primary</property>
+          </object>
+        </child>
 
-										<child>
-											<!-- PAGE 4 of VIEWSTACK -->
-											<object class="AdwViewStackPage" id="viewstack_page4">
-												<property name="title">Setup</property>
-												<property name="icon-name">preferences-system-symbolic</property>
-												<property name="child">
-													<object class = "UcanopenServerConfiguration">
-													</object>
-												</property>
-											</object>
-										</child>
-									</object>
-								</child>
+        <!-- LOG BUTTON -->
+        <child type="start">
+          <object class="GtkToggleButton">
+            <property name="icon-name">media-view-subtitles-symbolic</property>
+            <property name="active" bind-source="log_textview" bind-property="visible" bind-flags="sync-create|bidirectional"/>
+          </object>
+        </child>
 
-								
-								<child>
-									<object class="LogTextView" id="log_textview">
-										<property name="visible">true</property>
-									</object>
-								</child>
+      </object>
+    </child>
 
-							</object>
-						</child>
-					</object>		
-				</child>
-				
-				<child>
-					<object class="AdwViewSwitcherBar" id="viewswitcher_bar">
-						<property name="stack">viewstack</property>
-						<property name="reveal" bind-source="viewswitcher_title" bind-property="title-visible" bind-flags="sync-create"/>
-					</object>
-				</child>
-			</object>
-		</child>
-	      
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+
+        <child>
+          <object class="AdwFlap" id="flap">
+            <property name="fold-policy">auto</property>
+            <property name="locked">false</property>
+            <property name="flap">controlpanel_scrolledwindow</property>
+            <property name="separator">flap_separator</property>
+            <property name="content">flap_content</property>
+            
+            <!-- FLAP -->
+            <child>
+              <object class="GtkScrolledWindow" id="controlpanel_scrolledwindow">
+                <property name="hexpand">false</property>
+                <property name="vexpand">true</property>
+                <property name="hscrollbar-policy">never</property>
+                <property name="vscrollbar-policy">automatic</property>
+                <!--child>
+                  <object class="SrmDriveControlPanel" id="controlpanel">
+                    <style>
+                      <class name="background">
+                    </style>
+                  </object>
+                </child-->
+              </object>	
+            </child>
+
+            <!-- SEPARATOR -->
+            <child>
+              <object class="GtkSeparator" id="flap_separator"></object>
+            </child>
+
+            <!-- CONTENT -->
+            <child>
+              <object class="GtkPaned" id="flap_content">
+                <property name="width-request">320</property>
+                <property name="orientation">vertical</property>
+                <property name="wide-handle">false</property>
+                <property name="position">800</property>
+
+                <child>
+                  <object class="AdwViewStack" id="viewstack">
+                    <property name="vexpand">True</property>
+                    
+                    <!-- PAGE 1 of VIEWSTACK -->
+                    <child>
+                      <object class="AdwViewStackPage" id="viewstack_page1">
+                        <property name="title">Data</property>
+                        <property name="icon-name">view-list-symbolic</property>
+                        <property name="child">
+                          <object class="GtkScrolledWindow" id="datatables_scrolledwindow">
+                            <property name="hexpand">true</property>
+                            <property name="vexpand">true</property>
+                            <property name="hscrollbar-policy">automatic</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <!--child>
+                              <object class="SrmDriveDataTables" id="data_tables">
+                              </object>
+                            </child-->
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+                    <!-- PAGE 2 of VIEWSTACK -->
+                    <child>
+                      <object class="AdwViewStackPage" id="viewstack_page2">
+                        <property name="title">Status</property>
+                        <property name="icon-name">info-symbolic</property>
+                        <property name="child">
+                          <object class="GtkScrolledWindow">
+                            <property name="hexpand">true</property>
+                            <property name="vexpand">true</property>
+                            <property name="hscrollbar-policy">automatic</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="CanMonitorSystemStatus" id="widget_system_status">
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+                    <!-- PAGE 3 of VIEWSTACK -->
+                    <child>
+                      <object class="AdwViewStackPage" id="viewstack_page3">
+                        <property name="title">Charts</property>
+                        <property name="icon-name">computer-symbolic</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="UcanopenWatchChart">
+                              </object>
+                            </child>
+                            <child>
+                              <object class="UcanopenWatchChart">
+                              </object>
+                            </child>
+                            <child>
+                              <object class="UcanopenWatchChart">
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+                    <!-- PAGE 4 of VIEWSTACK -->
+                    <child>
+                      <object class="AdwViewStackPage" id="viewstack_page4">
+                        <property name="title">Setup</property>
+                        <property name="icon-name">preferences-system-symbolic</property>
+                        <property name="child">
+                          <object class = "UcanopenServerConfiguration">
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                
+                <child>
+                  <object class="LogTextView" id="log_textview">
+                    <property name="visible">true</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+          </object>		
+        </child>
+        
+        <child>
+          <object class="AdwViewSwitcherBar" id="viewswitcher_bar">
+            <property name="stack">viewstack</property>
+            <property name="reveal" bind-source="viewswitcher_title" bind-property="title-visible" bind-flags="sync-create"/>
+          </object>
+        </child>
+      </object>
+    </child>
+        
+  </template>
 
 
-	</template>
-
-
-	<menu id="menu_primary">
-		<section>
-			<item>
-				<attribute name="label">CAN Bus</attribute>
-				<attribute name="action">app.canbus_setup</attribute>
-			</item>
-			<item>
-				<attribute name="label">Preferences</attribute>
-				<attribute name="action">app.preferences</attribute>
-			</item>
-			<item>
-				<attribute name="label">About uCAN Monitor</attribute>
-				<attribute name="action">app.about</attribute>
-			</item>
-		</section>
-	</menu>
+  <menu id="menu_primary">
+    <section>
+      <item>
+        <attribute name="label">CAN Bus</attribute>
+        <attribute name="action">app.canbus_setup</attribute>
+      </item>
+      <item>
+        <attribute name="label">Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label">About uCAN Monitor</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

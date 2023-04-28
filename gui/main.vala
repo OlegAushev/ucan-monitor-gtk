@@ -24,9 +24,8 @@ extern string server_config_category;
 extern bool log_get_message(string retbuf, int bufsize);
 
 
-int main(string[] args)
-{
-	var app = new CanMonitor.Application();
-	return app.run(args);
+int main(string[] args) {
+    var app = new CanMonitor.Application();
+    return app.run(args);
 }
 

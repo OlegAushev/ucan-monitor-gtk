@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <template class="UcanopenSelectServerWindow" parent="GtkApplicationWindow">
+    <property name="title">uCAN Monitor</property>
+    <property name="width-request">320</property>
+    <property name="height-request">380</property>
+    <property name="default-width">320</property>
+    <property name="default-height">380</property>
+    <child type="titlebar">
+      <object class="AdwHeaderBar" id="headerbar">
+      </object>
+    </child>
+
+    <child>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup" id="pref_group">
+            <property name="title"></property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
