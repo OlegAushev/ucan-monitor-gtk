@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="CanMonitorSystemStatus" parent="AdwBin">
-		<child>
-			<object class="GtkGrid" id="grid">
-				<property name="margin-start">10</property>
-				<property name="margin-end">10</property>
-				<property name="margin-top">10</property>
-				<property name="margin-bottom">10</property>
-				<property name="row-spacing">6</property>
-				<property name="column-spacing">12</property>
-				<!--property name="halign">start</property-->
-			</object>
-		</child>
-	</template>
+  <requires lib="gtk" version="4.0" />
+  <template class="CanMonitorSystemStatus" parent="AdwBin">
+    <child>
+      <object class="GtkGrid" id="grid">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="row-spacing">6</property>
+        <property name="column-spacing">12</property>
+        <!--property name="halign">start</property-->
+      </object>
+    </child>
+  </template>
 </interface>

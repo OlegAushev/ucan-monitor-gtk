@@ -5,96 +5,94 @@
 
 namespace SrmDrive {
 
-
 [GtkTemplate (ui = "/gui/ucanopen_devices/srmdrive/srmdrive_controlpanel.ui")]
 public class ControlPanel : Adw.Bin
 {
-	[GtkChild]
-	private unowned Gtk.Switch switch_power;
-	[GtkChild]
-	private unowned Gtk.Switch switch_run;
-	[GtkChild]
-	private unowned Gtk.Button button_calibrate;
-	[GtkChild]
-	private unowned Gtk.Button button_invert;
     [GtkChild]
-	private unowned Gtk.Button button_clear_errors;
-	[GtkChild]
-	private unowned Gtk.Button button_reset_device;
-
-	[GtkChild]
-	private unowned SpinButtonScale slider_speed;
-	[GtkChild]
-	private unowned SpinButtonScale slider_torque;
-
-	[GtkChild]
-	private unowned Adw.ExpanderRow expanderrow_field;
+    private unowned Gtk.Switch power_switch;
     [GtkChild]
-	private unowned SpinButtonScale slider_field;
+    private unowned Gtk.Switch run_switch;
+    [GtkChild]
+    private unowned Gtk.Button calibrate_button;
+    [GtkChild]
+    private unowned Gtk.Button invert_button;
+    [GtkChild]
+    private unowned Gtk.Button clearerrors_button;
+    [GtkChild]
+    private unowned Gtk.Button resetdevice_button;
 
-	[GtkChild]
-	private unowned Gtk.Switch switch_emergency;
+    [GtkChild]
+    private unowned SpinButtonScale speed_slider;
+    [GtkChild]
+    private unowned SpinButtonScale torque_slider;
 
-	public ControlPanel() {}
+    [GtkChild]
+    private unowned Adw.ExpanderRow field_expanderrow;
+    [GtkChild]
+    private unowned SpinButtonScale field_slider;
 
-	construct
-	{
-		switch_power.notify["state"].connect((s, p) => {
-			srmdrive_set_power_enabled(switch_power.state);
-		});
+    [GtkChild]
+    private unowned Gtk.Switch emergency_switch;
 
-		switch_run.notify["state"].connect((s, p) => {
-			srmdrive_set_run_enabled(switch_run.state);
-		});
+    public ControlPanel() {}
 
-		button_calibrate.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "calibrate");
-		});
+    construct
+    {
+        power_switch.notify["state"].connect((s, p) => {
+            srmdrive_set_power_enabled(power_switch.state);
+        });
 
-		button_invert.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
-		});
+        run_switch.notify["state"].connect((s, p) => {
+            srmdrive_set_run_enabled(run_switch.state);
+        });
 
-        button_clear_errors.clicked.connect(() => {
+        calibrate_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "calibrate");
+        });
+
+        invert_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
+        });
+
+        clearerrors_button.clicked.connect(() => {
             ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
         });
 
-		button_reset_device.clicked.connect(() => {
-			ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
-		});
-		
+        resetdevice_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
+        });
+        
         //--------------------------------------------------------------------------------------------------------------
-		slider_speed.adjustment->value_changed.connect(() => {
-			srmdrive_set_speed(slider_speed.value);
-		});
-		
-		slider_torque.adjustment->value_changed.connect(() => {
-			srmdrive_set_torque(slider_torque.value / 100.0);
-		});
+        speed_slider.adjustment->value_changed.connect(() => {
+            srmdrive_set_speed(speed_slider.value);
+        });
+        
+        torque_slider.adjustment->value_changed.connect(() => {
+            srmdrive_set_torque(torque_slider.value / 100.0);
+        });
 
         //--------------------------------------------------------------------------------------------------------------
-        expanderrow_field.notify["enable-expansion"].connect((s,p) => {
-            if (expanderrow_field.enable_expansion) {
+        field_expanderrow.notify["enable-expansion"].connect((s,p) => {
+            if (field_expanderrow.enable_expansion) {
                 ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_manual_field");
             } else {
                 ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "disable_manual_field");
             }
-		});
+        });
 
-        slider_field.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_field_current", slider_field.value.to_string());
+        field_slider.adjustment->value_changed.connect(() => {
+            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_field_current", field_slider.value.to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------
-		switch_emergency.notify["state"].connect((s, p) => {
-			srmdrive_set_emergency_enabled(switch_emergency.state);
-		});
+        emergency_switch.notify["state"].connect((s, p) => {
+            srmdrive_set_emergency_enabled(emergency_switch.state);
+        });
 
         
-	}
+    }
 }
-	
-	
+
 }
 
 
