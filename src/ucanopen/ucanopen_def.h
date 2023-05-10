@@ -181,6 +181,11 @@ enum ODObjectType {
 };
 
 
+constexpr int od_object_type_sizes[9] = {sizeof(bool), sizeof(int16_t), sizeof(int32_t),
+                                         sizeof(uint16_t), sizeof(uint32_t), sizeof(float),
+                                         sizeof(uint16_t), 0, 0};
+
+
 namespace sdo_cs_codes {
 const uint32_t client_init_write = 1;
 const uint32_t server_init_write = 3;

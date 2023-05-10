@@ -199,13 +199,8 @@ bool Client::_is_free(NodeId node_id) const {
         return false;
     }
 
-    for (const auto& server : _servers) {
-        if (node_id == server->node_id()) {
-            return false;
-        }
-    }
-
-    return true;
+    return std::none_of(_servers.begin(), _servers.end(),
+            [node_id](const auto& server){ return server->node_id() == node_id; });
 }
 
 } // namespace ucanopen

@@ -55,7 +55,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
     message.cs = sdo_cs_codes::client_init_write;
     message.expedited_transfer = 1;
     message.data_size_indicated = 1;
-    message.data_empty_bytes = 0;
+    message.data_empty_bytes = 8 - od_object_type_sizes[object.type];
     message.index = key.index;
     message.subindex = key.subindex;
     message.data = sdo_data;
@@ -114,7 +114,7 @@ ODAccessStatus impl::Server::write(std::string_view category, std::string_view s
     message.cs = sdo_cs_codes::client_init_write;
     message.expedited_transfer = 1;
     message.data_size_indicated = 1;
-    message.data_empty_bytes = 0;
+    message.data_empty_bytes = 8 - od_object_type_sizes[object.type];
     message.index = key.index;
     message.subindex = key.subindex;
     message.data = sdo_data;

@@ -20,7 +20,7 @@ public:
             , _server(server)
     {}
     uint32_t get(std::future<void> signal_terminate) const;
-    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data);
+    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) override;
 };
 
 
@@ -36,7 +36,7 @@ public:
     StringReader(impl::Server& server, impl::SdoPublisher& publisher,
                  std::string_view category, std::string_view subcategory, std::string_view name);
     std::string get(std::future<void> signal_terminate) const;
-    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data);
+    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) override;
 };
 
 
@@ -51,7 +51,7 @@ public:
     NumvalReader(impl::Server& server, impl::SdoPublisher& publisher,
                  std::string_view category, std::string_view subcategory, std::string_view name);
     std::string get(std::future<void> signal_terminate) const;
-    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data);
+    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) override;
 };
 
 }

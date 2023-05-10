@@ -35,7 +35,7 @@ public:
         }
     }
 
-    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) {
+    virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) override {
         const auto& [key, object] = *entry;
 
         if ((object.category == _server.dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
@@ -87,7 +87,7 @@ public:
         std::strncat(retbuf, it->second.c_str(), bufsize-1);
     }
 
-    void set_value(std::string_view watch_name, std::string val) {
+    void set_value(std::string_view watch_name, const std::string& val) {
         if (!_data.contains(watch_name)) { return; }
         std::lock_guard<std::mutex> lock(_data_access_mutex);
         _data[watch_name] = val;

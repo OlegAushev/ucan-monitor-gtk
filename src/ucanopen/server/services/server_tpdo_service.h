@@ -34,7 +34,7 @@ public:
         return _tpdo_list.at(tpdo_type).payload;
     }
 
-    virtual FrameHandlingStatus handle_frame(const can_frame& frame);
+    virtual FrameHandlingStatus handle_frame(const can_frame& frame) override;
 };
 
 } // namespace ucanopen
