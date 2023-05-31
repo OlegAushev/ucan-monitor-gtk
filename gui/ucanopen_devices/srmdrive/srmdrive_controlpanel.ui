@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="SrmDriveControlPanel" parent="AdwBin">
-		<child>
-			<object class="GtkBox">
-				<property name="margin-start">10</property>
-				<property name="margin-end">10</property>
-				<property name="margin-top">10</property>
-				<property name="margin-bottom">10</property>
-				<property name="orientation">vertical</property>
-				<property name="spacing">10</property>	
-
-				<child>
-					<object class="AdwPreferencesGroup" id="actions_group">
-						<property name="hexpand">false</property>
-						<property name="title">Actions</property>
-						
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Power ON/OFF</property>
-								<property name="icon-name">system-shutdown-symbolic</property>
-								<property name="activatable_widget">power_switch</property>
-								
-                <child>
-									<object class="GtkSwitch" id="power_switch">
-										<property name="valign">center</property>
-										<property name="active">false</property>
-									</object>
-								</child>
-
-							</object>
-						</child>
-
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Run ON/OFF</property>
-								<property name="icon-name">media-playback-start-symbolic</property>
-								<property name="activatable_widget">run_switch</property>
-
-								<child>
-									<object class="GtkSwitch" id="run_switch">
-										<property name="valign">center</property>
-										<property name="active">false</property>
-									</object>
-								</child>
-
-							</object>
-						</child>
-
-						<child>
-							<object class="AdwExpanderRow">
-								<property name="title">Misc Actions</property>
-
-								<child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">calibrate_button</property>
-										<property name="title">Calibrate Position Sensor</property>							
-                    <child type="suffix">
-											<object class="GtkButton" id="calibrate_button">
-												<property name="label"></property>
-												<property name="icon-name">object-rotate-right</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-											</object>
-										</child>
-
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">invert_button</property>
-										<property name="title">Invert Default Direction</property>
-										<child type="suffix">
-											<object class="GtkButton" id="invert_button">
-												<property name="label"></property>
-												<property name="icon-name">object-rotate-left</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-											</object>
-										</child>
-									</object>
-								</child>
-
-                <child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">clearerrors_button</property>
-										<property name="title">Clear Errors</property>
-										<child type="suffix">
-											<object class="GtkButton" id="clearerrors_button">
-												<property name="label"></property>
-												<property name="icon-name">dialog-warning-symbolic</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<style>
-													<class name="destructive-action"/>
-												</style>
-											</object>
-										</child>
-									</object>
-								</child>
-
-								<child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">resetdevice_button</property>
-										<property name="title">Reset Device</property>
-										<child type="suffix">
-											<object class="GtkButton" id="resetdevice_button">
-												<property name="label"></property>
-												<property name="icon-name">view-refresh-symbolic</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<style>
-													<class name="destructive-action"/>
-												</style>
-											</object>
-										</child>
-									</object>
-								</child>
-
-							</object>
-						</child>
-
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="speed_slider">
-						<property name="title">Speed, rpm</property>
-						<property name="lower">-8000</property>
-						<property name="upper">8000</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-            <style>
-              <class name="card"/>
-            </style>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="torque_slider">
-						<property name="title">Torque, %</property>
-						<property name="lower">-100</property>
-						<property name="upper">100</property>
-						<property name="step">0.01</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">2</property>
-						<property name="scale-digits">2</property>
-						<property name="scale-width">200</property>
-            <style>
-              <class name="card"/>
-            </style>
-					</object>
-				</child>
+  <requires lib="gtk" version="4.0" />
+  <template class="SrmDriveControlPanel" parent="AdwBin">
+    <child>
+      <object class="GtkBox">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>	
 
         <child>
-					<object class="AdwPreferencesGroup">
-						<property name="title">Debug</property>
+          <object class="AdwPreferencesGroup" id="actions_group">
+            <property name="hexpand">false</property>
+            <property name="title">Actions</property>
+            
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Power ON/OFF</property>
+                <property name="icon-name">system-shutdown-symbolic</property>
+                <property name="activatable_widget">power_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="power_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Run ON/OFF</property>
+                <property name="icon-name">media-playback-start-symbolic</property>
+                <property name="activatable_widget">run_switch</property>
+
+                <child>
+                  <object class="GtkSwitch" id="run_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwExpanderRow">
+                <property name="title">Misc Actions</property>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">calibrate_button</property>
+                    <property name="title">Calibrate Position Sensor</property>							
+                    <child type="suffix">
+                      <object class="GtkButton" id="calibrate_button">
+                        <property name="label"></property>
+                        <property name="icon-name">object-rotate-right</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">invert_button</property>
+                    <property name="title">Invert Default Direction</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="invert_button">
+                        <property name="label"></property>
+                        <property name="icon-name">object-rotate-left</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">clearerrors_button</property>
+                    <property name="title">Clear Errors</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="clearerrors_button">
+                        <property name="label"></property>
+                        <property name="icon-name">dialog-warning-symbolic</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">resetdevice_button</property>
+                    <property name="title">Reset Device</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="resetdevice_button">
+                        <property name="label"></property>
+                        <property name="icon-name">view-refresh-symbolic</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <child>
+          <object class="SpinButtonScale" id="speed_slider">
+            <property name="title">Speed, rpm</property>
+            <property name="lower">-8000</property>
+            <property name="upper">8000</property>
+            <property name="step">1</property>
+            <property name="value">0</property>
+            <property name="spin-width">6</property>
+            <property name="spin-digits">0</property>
+            <property name="scale-digits">0</property>
+            <property name="scale-width">200</property>
+            <style>
+              <class name="card"/>
+            </style>
+          </object>
+        </child>
+
+        <child>
+          <object class="SpinButtonScale" id="torque_slider">
+            <property name="title">Torque, %</property>
+            <property name="lower">-100</property>
+            <property name="upper">100</property>
+            <property name="step">0.01</property>
+            <property name="value">0</property>
+            <property name="spin-width">6</property>
+            <property name="spin-digits">2</property>
+            <property name="scale-digits">2</property>
+            <property name="scale-width">200</property>
+            <style>
+              <class name="card"/>
+            </style>
+          </object>
+        </child>
+
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title">Debug</property>
             <child>
               <object class="AdwExpanderRow" id="field_expanderrow">
                 <property name="title">Manual Field Current</property>
@@ -184,31 +184,78 @@
               </object>
             </child>
 
+            <child>
+              <object class="AdwExpanderRow" id="openloop_expanderrow">
+                <property name="title">Enable Open-loop</property>
+                <property name="show-enable-switch">true</property>
+                <property name="enable-expansion">false</property>
+
+                <child>
+                  <object class="SpinButtonScale" id="current_slider">
+                    <property name="title">Stator Current, %</property>
+                    <property name="lower">0</property>
+                    <property name="upper">100</property>
+                    <property name="step">0.1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">1</property>
+                    <property name="scale-digits">1</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
+              </object>
+
+            </child>
+
+            <child>
+              <object class="AdwExpanderRow" id="gammacorrection_expanderrow">
+                <property name="title">Gamma Correction</property>
+                <property name="show-enable-switch">false</property>
+                <property name="enable-expansion">true</property>
+
+                <child>
+                  <object class="SpinButtonScale" id="gammacorrection_slider">
+                    <property name="lower">-180</property>
+                    <property name="upper">180</property>
+                    <property name="step">0.1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">1</property>
+                    <property name="scale-digits">1</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
+              </object>
+
+            </child>
+
           </object>
         </child>
 
-				<child>
-					<object class="AdwPreferencesGroup" id="emergency_group">
-						<property name="hexpand">false</property>
-						<!--property name="title">Emergency</property-->
-						<property name="vexpand">true</property>
-						<property name="valign">end</property>
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Emergency Stop</property>
-								<property name="icon-name">dialog-warning-symbolic</property>
-								<property name="activatable_widget">emergency_switch</property>
-								<child>
-									<object class="GtkSwitch" id="emergency_switch">
-										<property name="valign">center</property>
-										<property name="active">false</property>
-									</object>
-								</child>
-							</object>
-						</child>				
-					</object>
-				</child>
-			</object>
-		</child>
-	</template>
+        <child>
+          <object class="AdwPreferencesGroup" id="emergency_group">
+            <property name="hexpand">false</property>
+            <!--property name="title">Emergency</property-->
+            <property name="vexpand">true</property>
+            <property name="valign">end</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Emergency Stop</property>
+                <property name="icon-name">dialog-warning-symbolic</property>
+                <property name="activatable_widget">emergency_switch</property>
+                <child>
+                  <object class="GtkSwitch" id="emergency_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+              </object>
+            </child>				
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
 </interface>

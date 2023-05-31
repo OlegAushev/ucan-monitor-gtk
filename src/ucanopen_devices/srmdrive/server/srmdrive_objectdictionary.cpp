@@ -34,6 +34,10 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2001, 0x07}, {"drive", "ctl", "enable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
 {{0x2001, 0x08}, {"drive", "ctl", "disable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
 {{0x2001, 0x09}, {"drive", "ctl", "set_field_current", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x0A}, {"drive", "ctl", "enable_open_loop", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x0B}, {"drive", "ctl", "enable_closed_loop", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x0C}, {"drive", "ctl", "set_current", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x0D}, {"drive", "ctl", "set_gamma_correction", "", OD_FLOAT32, OD_ACCESS_WO}},
 
 
 {{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},

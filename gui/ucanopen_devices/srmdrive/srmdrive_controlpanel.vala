@@ -32,6 +32,14 @@ public class ControlPanel : Adw.Bin
     private unowned SpinButtonScale field_slider;
 
     [GtkChild]
+    private unowned Adw.ExpanderRow openloop_expanderrow;
+    [GtkChild]
+    private unowned SpinButtonScale current_slider;
+
+    [GtkChild]
+    private unowned SpinButtonScale gammacorrection_slider;
+
+    [GtkChild]
     private unowned Gtk.Switch emergency_switch;
 
     public ControlPanel() {}
@@ -82,6 +90,24 @@ public class ControlPanel : Adw.Bin
 
         field_slider.adjustment->value_changed.connect(() => {
             ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_field_current", field_slider.value.to_string());
+        });
+
+        //--------------------------------------------------------------------------------------------------------------
+        openloop_expanderrow.notify["enable-expansion"].connect((s,p) => {
+            if (openloop_expanderrow.enable_expansion) {
+                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_open_loop");
+            } else {
+                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_closed_loop");
+            }
+        });
+
+        current_slider.adjustment->value_changed.connect(() => {
+            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_current", current_slider.value.to_string());
+        });
+
+        //--------------------------------------------------------------------------------------------------------------
+        gammacorrection_slider.adjustment->value_changed.connect(() => {
+            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_gamma_correction", gammacorrection_slider.value.to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------
