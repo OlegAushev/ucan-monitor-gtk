@@ -3,6 +3,7 @@
 #include <ucanopen_devices/crd600/server/crd600_server.h>
 #include <ucanopen_devices/launchpad/server/launchpad_server.h>
 #include <ucanopen_devices/bmsmain/server/bmsmain_server.h>
+#include <ucanopen_devices/atvvcm/server/atvvcm_server.h>
 #include <gnuplotter/gnuplotter.h>
 
 
@@ -13,13 +14,14 @@ extern void register_srmdrive_server(std::shared_ptr<srmdrive::Server> srmdrive_
 extern void register_crd600_server(std::shared_ptr<crd600::Server> crd600_server_);
 extern void register_launchpad_server(std::shared_ptr<launchpad::Server> launchpad_server_);
 extern void register_bmsmain_server(std::shared_ptr<bmsmain::Server> bmsmain_server_);
+extern void register_atvvcm_server(std::shared_ptr<atvvcm::Server> atvvcm_server_);
 }
 
 
 // used in VALA code
 bool backend_is_ready = false;
 const char* backend_ucanopen_server;
-const char* backend_ucanopen_server_list[4] = {"SRM-Drive-80", "CRD600", "LaunchPad", "BMS-Main"};
+const char* backend_ucanopen_server_list[5] = {"SRM-Drive-80", "CRD600", "LaunchPad", "BMS-Main", "ATV-VCM"};
 const char* backend_ucanopen_server_config_category;
 
 
@@ -43,6 +45,7 @@ int backend_main_loop(std::future<void> signal_exit) {
     std::shared_ptr<crd600::Server> crd600_server;
     std::shared_ptr<launchpad::Server> launchpad_server;
     std::shared_ptr<bmsmain::Server> bmsmain_server;
+    std::shared_ptr<atvvcm::Server> atvvcm_server;
 
     std::string server_name(backend_ucanopen_server);
     if (server_name == "SRM-Drive-80") {
@@ -72,6 +75,10 @@ int backend_main_loop(std::future<void> signal_exit) {
         bmsmain_server = std::make_shared<bmsmain::Server>(can_socket, ucanopen::NodeId(0x20), server_name);
         ucanopen_client->register_server(bmsmain_server);
         api::register_bmsmain_server(bmsmain_server);
+    } else if (server_name == "ATV-VCM") {
+        atvvcm_server = std::make_shared<atvvcm::Server>(can_socket, ucanopen::NodeId(0x01), server_name);
+        ucanopen_client->register_server(atvvcm_server);
+        api::register_atvvcm_server(atvvcm_server);
     }
 
     backend_ucanopen_server_config_category = ucanopen_client->server(server_name)->dictionary().config.config_category.data();

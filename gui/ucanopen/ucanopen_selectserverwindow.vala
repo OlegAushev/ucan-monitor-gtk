@@ -88,6 +88,8 @@ public class SelectServerWindow : Gtk.ApplicationWindow
         control_row.add_prefix(exit_button);
         control_row.add_suffix(ok_button);
         pref_group.add(control_row);
+
+        default_height = 146 + Backend.Ucanopen.server_list.length * 56;
     }
 }
 
