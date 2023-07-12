@@ -7,6 +7,9 @@
 		<file>gui/components/log_textview.ui</file>
 		<file>gui/components/spinbutton_scale.ui</file>
 
+    <file>gui/ucanopen_devices/atvvcm/atvvcm_controlpanel.ui</file>
+		<file>gui/ucanopen_devices/atvvcm/atvvcm_datatables.ui</file>
+
 		<file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
 
 		<file>gui/ucanopen_devices/crd600/crd600_controlpanel.ui</file>

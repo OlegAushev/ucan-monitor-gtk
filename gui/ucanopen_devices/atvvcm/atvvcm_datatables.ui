@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="AtvVcmDataTables" parent="AdwBin">
+		<child>
+			<object class="GtkBox">
+				<property name="margin-start">10</property>
+				<property name="margin-end">10</property>
+				<property name="margin-top">10</property>
+				<property name="margin-bottom">10</property>
+				<property name="orientation">horizontal</property>
+				<property name="spacing">10</property>
+
+				<child>
+
+					<!-- SYSTEM -->
+					<object class="AdwPreferencesGroup" id="group_system">
+						<property name="width-request">280</property>
+						<property name="title">System</property>
+						<property name="hexpand">false</property>
+
+						<child>
+							<object class="UcanopenHeartbeatIndicator" id="heartbeat_indicator">
+								<property name="title">Network State</property>
+								<property name="subtitle"></property>
+								<property name="value-chars">10</property>
+							</object>
+						</child>
+
+						<child>
+							<object class="BasicEntry" id="entry_uptime">
+								<property name="title">Uptime</property>
+								<property name="subtitle">s</property>
+								<property name="value-chars">10</property>
+							</object>
+						</child>
+					</object>
+
+				</child>
+
+				<child>
+					<!-- TPDO1 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo1">
+						<property name="width-request">280</property>
+						<property name="title">TPDO1</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="BoolEntry" id="tpdo1_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="value-chars">10</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="BasicEntry" id="entry_tpdo1_raw_data">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="value-chars">16</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO2 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo2">
+						<property name="width-request">280</property>
+						<property name="title">TPDO2</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="BoolEntry" id="tpdo2_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="value-chars">10</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="BasicEntry" id="entry_tpdo2_raw_data">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="value-chars">16</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO3 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo3">
+						<property name="width-request">280</property>
+						<property name="title">TPDO3</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="BoolEntry" id="tpdo3_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="value-chars">10</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="BasicEntry" id="entry_tpdo3_raw_data">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="value-chars">16</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+				<child>
+					<!-- TPDO4 -->
+					<object class="AdwPreferencesGroup" id="group_tpdo4">
+						<property name="width-request">280</property>
+						<property name="title">TPDO4</property>
+						<property name="hexpand">false</property>
+						
+						<child>
+							<object class="BoolEntry" id="tpdo4_indicator">
+								<property name="title">Connection</property>
+								<property name="subtitle"></property>
+								<property name="value-chars">8</property>
+								<property name="true-text">ok</property>
+								<property name="false-text">bad</property>
+								<property name="true-css-class">success</property>
+								<property name="false-css-class">error</property>
+							</object>
+						</child>
+						
+						<child>
+							<object class="BasicEntry" id="entry_tpdo4_raw_data">
+								<property name="title">Raw Data</property>
+								<property name="subtitle">hex</property>
+								<property name="value-chars">16</property>
+							</object>
+						</child>
+					</object>
+				</child>
+
+			</object>
+		</child>
+	</template>
+</interface>
