@@ -31,6 +31,8 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 
 {{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
 {{0x5000, 0x02}, {"watch", "watch", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x03}, {"watch", "watch", "pdm_contactor_state", "", OD_UINT32, OD_ACCESS_RO}},
+
 
 {{0x3000, 0x01}, {"config", "ucanopen", "node_id", "", OD_UINT32, OD_ACCESS_RW}},
 {{0x3000, 0x02}, {"config", "ucanopen", "heartbeat_period", "ms", OD_UINT32, OD_ACCESS_RW}},
