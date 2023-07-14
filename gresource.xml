@@ -9,6 +9,7 @@
 
     <file>gui/ucanopen_devices/atvvcm/atvvcm_controlpanel.ui</file>
 		<file>gui/ucanopen_devices/atvvcm/atvvcm_datatables.ui</file>
+    <file>gui/ucanopen_devices/atvvcm/atvvcm_pdmcontrol.ui</file>
 
 		<file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
 

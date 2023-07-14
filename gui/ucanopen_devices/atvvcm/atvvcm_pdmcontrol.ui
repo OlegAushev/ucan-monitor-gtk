@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<requires lib="gtk" version="4.0" />
+	<template class="AtvVcmPdmControl" parent="AdwBin">
+		<child>
+      <object class="AdwPreferencesGroup">
+        <property name="title">PDM</property>
+        <child>
+            <object class="AdwExpanderRow" id="field_expanderrow">
+              <property name="title">Manual Contactor Control</property>
+              <property name="show-enable-switch">true</property>
+              <property name="enable-expansion">false</property>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Battery</property>
+                  <property name="icon-name">battery-symbolic</property>
+                  <property name="activatable_widget">battery_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="battery_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Motor-1 Bypass</property>
+                  <property name="icon-name">media-optical-symbolic</property>
+                  <property name="activatable_widget">motor1bypass_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="motor1bypass_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Motor-2 Bypass</property>
+                  <property name="icon-name">media-optical-symbolic</property>
+                  <property name="activatable_widget">motor2bypass_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="motor2bypass_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Motor-3 Bypass</property>
+                  <property name="icon-name">media-optical-symbolic</property>
+                  <property name="activatable_widget">motor3bypass_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="motor3bypass_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Motor-4 Bypass</property>
+                  <property name="icon-name">media-optical-symbolic</property>
+                  <property name="activatable_widget">motor4bypass_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="motor4bypass_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">3-ph Charge Mode</property>
+                  <property name="icon-name">thunderbolt-symbolic</property>
+                  <property name="activatable_widget">chargemode_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="chargemode_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Allow Charge</property>
+                  <property name="icon-name">battery-caution-charging-symbolic</property>
+                  <property name="activatable_widget">allowcharge_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="allowcharge_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+              <child>
+                <object class="AdwActionRow">
+                  <property name="title">Aux Equip Bypass</property>
+                  <property name="icon-name">uninterruptible-power-supply-symbolic</property>
+                  <property name="activatable_widget">auxequipbypass_switch</property>
+                  
+                  <child>
+                    <object class="GtkSwitch" id="auxequipbypass_switch">
+                      <property name="valign">center</property>
+                      <property name="active">false</property>
+                    </object>
+                  </child>
+  
+                </object>
+              </child>
+
+            </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+
+        

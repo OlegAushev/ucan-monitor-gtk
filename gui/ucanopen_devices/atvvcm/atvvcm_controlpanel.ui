@@ -1,205 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="AtvVcmControlPanel" parent="AdwBin">
-		<child>
-			<object class="GtkBox">
-				<property name="margin-start">10</property>
-				<property name="margin-end">10</property>
-				<property name="margin-top">10</property>
-				<property name="margin-bottom">10</property>
-				<property name="orientation">vertical</property>
-				<property name="spacing">10</property>
+  <requires lib="gtk" version="4.0" />
+  <template class="AtvVcmControlPanel" parent="AdwBin">
+    <child>
+      <object class="GtkBox">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
 
-				<child>
-					<object class="AdwPreferencesGroup" id="group_actions">
-						<property name="hexpand">false</property>
-						<property name="title">Actions</property>
-						
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Power ON/OFF</property>
-								<property name="icon-name">system-shutdown-symbolic</property>
-								<property name="activatable_widget">switch_power</property>
-								<child>
-									<object class="GtkSwitch" id="switch_power">
-										<property name="valign">center</property>
-										<property name="active">false</property>
-									</object>
-								</child>
-							</object>
-						</child>
+        <child>
+          <object class="AdwPreferencesGroup" id="group_actions">
+            <property name="hexpand">false</property>
+            <property name="title">Actions</property>
+            
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Power ON/OFF</property>
+                <property name="icon-name">system-shutdown-symbolic</property>
+                <property name="activatable_widget">switch_power</property>
+                <child>
+                  <object class="GtkSwitch" id="switch_power">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+              </object>
+            </child>
 
-						<child>
-							<object class="AdwActionRow">
-								<property name="title">Run ON/OFF</property>
-								<property name="icon-name">media-playback-start-symbolic</property>
-								<property name="activatable_widget">switch_run</property>
-								<child>
-									<object class="GtkSwitch" id="switch_run">
-										<property name="valign">center</property>
-										<property name="active">false</property>
-									</object>
-								</child>
-							</object>
-						</child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Run ON/OFF</property>
+                <property name="icon-name">media-playback-start-symbolic</property>
+                <property name="activatable_widget">switch_run</property>
+                <child>
+                  <object class="GtkSwitch" id="switch_run">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+              </object>
+            </child>
 
-						<child>
-							<object class="AdwExpanderRow">
-								<property name="title">Misc Actions</property>
-								<child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">button_clear_errors</property>
-										<property name="title">Clear Errors</property>
-										<child type="suffix">
-											<object class="GtkButton" id="button_clear_errors">
-												<property name="label"></property>
-												<property name="icon-name">dialog-warning-symbolic</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<style>
-													<class name="destructive-action"/>
-												</style>
-											</object>
-										</child>
-									</object>
-								</child>
-								<child>
-									<object class="AdwActionRow">
-										<property name="activatable_widget">button_reset_device</property>
-										<property name="title">Reset Device</property>
-										<child type="suffix">
-											<object class="GtkButton" id="button_reset_device">
-												<property name="label"></property>
-												<property name="icon-name">system-reboot-symbolic</property>
-												<property name="halign">center</property>
-												<property name="valign">center</property>
-												<style>
-													<class name="destructive-action"/>
-												</style>
-											</object>
-										</child>
-									</object>
-								</child>
-							</object>
-						</child>
+            <child>
+              <object class="AdwExpanderRow">
+                <property name="title">Misc Actions</property>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">button_clear_errors</property>
+                    <property name="title">Clear Errors</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="button_clear_errors">
+                        <property name="label"></property>
+                        <property name="icon-name">dialog-warning-symbolic</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">button_reset_device</property>
+                    <property name="title">Reset Device</property>
+                    <child type="suffix">
+                      <object class="GtkButton" id="button_reset_device">
+                        <property name="label"></property>
+                        <property name="icon-name">system-reboot-symbolic</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
 
-					</object>
-				</child>
+          </object>
+        </child>
 
-				<child>
-					<object class="SpinButtonScale" id="slider_client_tpdo1">
-						<property name="title">Client TPDO1</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
+        <child>
+          <object class="AtvVcmPdmControl">
 
-				<child>
-					<object class="SpinButtonScale" id="slider_client_tpdo2">
-						<property name="title">Client TPDO2</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_client_tpdo3">
-						<property name="title">Client TPDO3</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_client_tpdo4">
-						<property name="title">Client TPDO4</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_server_rpdo1">
-						<property name="title">Server RPDO1</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_server_rpdo2">
-						<property name="title">Server RPDO2</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_server_rpdo3">
-						<property name="title">Server RPDO3</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-
-				<child>
-					<object class="SpinButtonScale" id="slider_server_rpdo4">
-						<property name="title">Server RPDO4</property>
-						<property name="lower">0</property>
-						<property name="upper">255</property>
-						<property name="step">1</property>
-						<property name="value">0</property>
-						<property name="spin-width">6</property>
-						<property name="spin-digits">0</property>
-						<property name="scale-digits">0</property>
-						<property name="scale-width">200</property>
-					</object>
-				</child>
-				
-			</object>
-		</child>
-	</template>
+          </object>
+        </child>
+        
+      </object>
+    </child>
+  </template>
 </interface>
