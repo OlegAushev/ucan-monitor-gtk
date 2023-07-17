@@ -29,9 +29,9 @@
     <file>gui/ucanopen/ucanopen_preferenceswindow.ui</file>
 		<file>gui/ucanopen/ucanopen_selectserverwindow.ui</file>
 		<file>gui/ucanopen/ucanopen_serverconfiguration.ui</file>
+		<file>gui/ucanopen/ucanopen_systemstatus.ui</file>
 		<file>gui/ucanopen/ucanopen_watchchart.ui</file>
 
-		<file>gui/widgets/system_status.ui</file>
 		<file>gui/window.ui</file>
 	</gresource>
 </gresources>

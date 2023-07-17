@@ -1,10 +1,4 @@
-///
-///
-///
-
-
 namespace CanMonitor {
-
 
 [GtkTemplate (ui = "/gui/window.ui")]
 public class Window : Gtk.ApplicationWindow
@@ -50,7 +44,5 @@ public class Window : Gtk.ApplicationWindow
     }
 }
 
-
 }
-
 

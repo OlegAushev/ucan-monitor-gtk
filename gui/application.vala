@@ -1,13 +1,6 @@
-///
-///
-///
-
-
 namespace CanMonitor {
 
-
-public class Application : Adw.Application
-{
+public class Application : Adw.Application {
     public Application() {
         Object (application_id: "org.example.uCAN-Monitor", flags: ApplicationFlags.FLAGS_NONE);
     }
@@ -89,7 +82,5 @@ public class Application : Adw.Application
     }
 }
 
-
 }
-
 

@@ -1,8 +1,3 @@
-///
-///
-///
-
-
 extern string GIT_DESCRIBE;
 
 // core backend

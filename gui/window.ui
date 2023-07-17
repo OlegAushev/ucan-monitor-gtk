@@ -124,7 +124,7 @@
                             <property name="hscrollbar-policy">automatic</property>
                             <property name="vscrollbar-policy">automatic</property>
                             <child>
-                              <object class="CanMonitorSystemStatus" id="widget_system_status">
+                              <object class="UcanopenSystemStatus" id="widget_system_status">
                               </object>
                             </child>
                           </object>

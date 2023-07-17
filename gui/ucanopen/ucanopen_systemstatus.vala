@@ -1,12 +1,6 @@
-///
-///
-///
+namespace Ucanopen {
 
-
-namespace CanMonitor {
-
-
-[GtkTemplate (ui = "/gui/widgets/system_status.ui")]
+[GtkTemplate (ui = "/gui/ucanopen/ucanopen_systemstatus.ui")]
 public class SystemStatus : Adw.Bin
 {
     [GtkChild]
@@ -110,12 +104,12 @@ public class SystemStatus : Adw.Bin
     
     public bool update()
     {
-        _updateErrors();
-        _updateWarnings();
+        _update_errors();
+        _update_warnings();
         return true;
     }
 
-    private void _updateErrors()
+    private void _update_errors()
     {
         uint error_code = ucanopen_devices_get_error_code(Backend.Ucanopen.server);
         if (error_code == _error_code)
@@ -138,7 +132,7 @@ public class SystemStatus : Adw.Bin
         }
     }
 
-    private void _updateWarnings()
+    private void _update_warnings()
     {
         uint warning_code = ucanopen_devices_get_warning_code(Backend.Ucanopen.server);
         if (warning_code == _warning_code)
@@ -162,7 +156,5 @@ public class SystemStatus : Adw.Bin
     }
 }
 
-
 }
-
 

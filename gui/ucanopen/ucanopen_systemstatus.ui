@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="CanMonitorSystemStatus" parent="AdwBin">
+  <template class="UcanopenSystemStatus" parent="AdwBin">
     <child>
       <object class="GtkGrid" id="grid">
         <property name="margin-start">10</property>
