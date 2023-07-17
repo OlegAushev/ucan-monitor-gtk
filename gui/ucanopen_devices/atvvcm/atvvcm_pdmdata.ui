@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <template class="AtvVcmPdmData" parent="AdwPreferencesGroup">
+    <property name="title">PDM</property>
+
+    <child>
+      <object class="BoolEntry" id="battery_indicator">
+        <property name="title">Battery Contactors</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="motor1bypass_indicator">
+        <property name="title">Motor-1 Bypass</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="motor2bypass_indicator">
+        <property name="title">Motor-2 Bypass</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="motor3bypass_indicator">
+        <property name="title">Motor-3 Bypass</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="motor4bypass_indicator">
+        <property name="title">Motor-4 Bypass</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="chargemode_indicator">
+        <property name="title">3-ph Charge Mode</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="allowcharge_indicator">
+        <property name="title">Allow Charge</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="BoolEntry" id="auxequipbypass_indicator">
+        <property name="title">Aux Equip Bypass</property>
+        <property name="subtitle"></property>
+        <property name="value-chars">10</property>
+        <property name="true-text">closed</property>
+        <property name="false-text">open</property>
+        <property name="true-css-class">success</property>
+        <property name="false-css-class">error</property>
+      </object>
+    </child>
+
+  </template>
+</interface>
+
+        

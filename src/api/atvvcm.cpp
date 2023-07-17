@@ -26,5 +26,11 @@ void atvvcm_set_server_value(unsigned int rpdo_num, double value) {
     atvvcm_server->set_server_value(static_cast<ucanopen::RpdoType>(rpdo_num), value);
 }
 
+
+bool atvvcm_get_pdm_contactor_state(unsigned int contactor) {
+    assert(contactor <= atvvcm::pdm_contactor_count);
+    return atvvcm_server->pdm_contactor_state(static_cast<atvvcm::PdmContactor>(contactor));
+}
+
 }
 

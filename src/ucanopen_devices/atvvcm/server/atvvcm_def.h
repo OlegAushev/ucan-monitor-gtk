@@ -106,4 +106,18 @@ inline const std::vector<std::string_view> warning_list = {
     "can_bus_connection_lost",
 };
 
+
+enum class PdmContactor {
+    battery_connect,
+    motor1_bypass,
+    motor2_bypass,
+    motor3_bypass,
+    motor4_bypass,
+    charge_mode,
+    charge_allow,
+    equip_bypass
+};
+static constexpr int pdm_contactor_count = 8;
+
 } // namespace atvvcm
+

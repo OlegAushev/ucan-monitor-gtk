@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-	<requires lib="gtk" version="4.0" />
-	<template class="AtvVcmPdmControl" parent="AdwBin">
-		<child>
+  <requires lib="gtk" version="4.0" />
+  <template class="AtvVcmPdmControl" parent="AdwBin">
+    <child>
       <object class="AdwPreferencesGroup">
         <property name="title">PDM</property>
         <child>

@@ -14,6 +14,7 @@ extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
 
 class Server : public ucanopen::Server, public ucanopen::SdoSubscriber {
 private:
+    std::array<bool, pdm_contactor_count> _pdm_contactor_state = {};
     std::array<float, 4> _client_values;
     std::array<float, 4> _server_values;
 
@@ -64,6 +65,8 @@ public:
 
     uint32_t errors() const { return _errors; }
     uint16_t warnings() const { return _warnings; }
+
+    bool pdm_contactor_state(PdmContactor contactor) const { return _pdm_contactor_state[std::to_underlying(contactor)]; }
 
     ucanopen::can_payload create_client_tpdo1() {
         static unsigned int counter = 0;

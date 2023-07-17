@@ -46,6 +46,10 @@ ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
         }
     } else if (entry->second.category == _dictionary.config.config_category && entry->second.type == ucanopen::OD_ENUM16) {
         
+    } else if (entry->second.name == "pdm_contactor_state") {
+        for (auto i = 0; i < pdm_contactor_count; ++i) {
+            _pdm_contactor_state[i] = data.u32() & (1 << i);
+        }
     }
 
     return ucanopen::FrameHandlingStatus::success;
