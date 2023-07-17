@@ -108,7 +108,7 @@ public class DataTables : Adw.Bin
         heartbeat_indicator.update();
 
         string buf = string.nfill(16, '\0');
-        ucanopen_server_get_watch_value(Backend.Ucanopen.server, "uptime", buf, 16);
+        ucanopen_server_get_watch_value(Backend.Ucanopen.server, "watch", "uptime", buf, 16);
         entry_uptime.string_value = buf;
     }
 

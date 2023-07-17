@@ -9,7 +9,6 @@ using namespace ucanopen;
 extern const ucanopen::ObjectDictionary object_dictionary = {
 .config = {
     .watch_category = "watch",
-    .watch_subcategory = "watch",
     .config_category = "config"
 },
 .entries = {

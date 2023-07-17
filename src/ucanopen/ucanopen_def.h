@@ -423,7 +423,6 @@ inline bool operator<(const ODObjectAux& lhs, const ODObjectAux& rhs) {
 
 struct ObjectDictionaryConfig {
     std::string_view watch_category;
-    std::string_view watch_subcategory;
     std::string_view config_category;
 };
 

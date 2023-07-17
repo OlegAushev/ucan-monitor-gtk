@@ -14,7 +14,7 @@ extern void ucanopen_client_set_sync_enabled(bool enabled);
 extern void ucanopen_client_set_sync_period(int period);
 extern void ucanopen_client_set_watch_enabled(bool enabled);
 extern void ucanopen_client_set_watch_period(int period);
-extern void ucanopen_server_get_watch_value(string server_name, string watch_name, char* retbuf, int bufsize);
+extern void ucanopen_server_get_watch_value(string server_name, string watch_subcategory, string watch_name, char* retbuf, int bufsize);
 extern int ucanopen_server_get_config_categories(string server_name, char** retbuf, int str_count, int str_size);
 extern int ucanopen_server_get_config_objects(string server_name, string category, char** retbuf, int str_count, int str_size);
 extern bool ucanopen_server_is_heartbeat_ok(string server_name);

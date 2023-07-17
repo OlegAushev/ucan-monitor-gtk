@@ -15,9 +15,9 @@ private:
     bool _is_enabled = false;
     std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
     std::chrono::time_point<std::chrono::steady_clock> _timepoint;
-    std::vector<std::string_view> _object_list;
+    std::vector<std::pair<std::string_view, std::string_view>> _object_list;
     mutable std::mutex _data_access_mutex;
-    std::map<std::string_view, std::string> _data;
+    std::map<std::pair<std::string_view, std::string_view>, std::string> _data;
 public:
     ServerWatchService(impl::Server& server, impl::SdoPublisher& sdo_publisher);
 
@@ -27,8 +27,8 @@ public:
             if (now - _timepoint >= _period) {
                 static int i = 0;
                 _server.read(_server.dictionary().config.watch_category,
-                              _server.dictionary().config.watch_subcategory,
-                              _object_list[i]);
+                              _object_list[i].first,
+                              _object_list[i].second);
                 _timepoint = now;
                 i = (i + 1) % _object_list.size();
             }
@@ -41,7 +41,7 @@ public:
         if ((object.category == _server.dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
             if (object.type != OD_ENUM16) {
                 std::lock_guard<std::mutex> lock(_data_access_mutex);
-                _data[object.name] = sdo_data.to_string(object.type, 2);
+                _data[std::make_pair(object.subcategory, object.name)] = sdo_data.to_string(object.type, 2);
             }
             return FrameHandlingStatus::success;
         }
@@ -63,21 +63,21 @@ public:
         Log() << "Set uCANopen server {" << _server.name() << "} watch requests period = " << period << ".\n" << LogPrefix::ok;
     }
 
-    std::vector<std::string_view> object_list() const {
+    std::vector<std::pair<std::string_view, std::string_view>> object_list() const {
         return _object_list;
     }
 
-    std::string value(std::string_view watch_name) const {
-        auto it = _data.find(watch_name);
+    std::string value(std::string_view watch_subcategory, std::string_view watch_name) const {
+        auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             return "n/a";
         }
         return it->second;
     }
 
-    void value(std::string_view watch_name, char* retbuf, int bufsize) const {
+    void value(std::string_view watch_subcategory, std::string_view watch_name, char* retbuf, int bufsize) const {
         retbuf[0] = '\0';
-        auto it = _data.find(watch_name);
+        auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             const char* str = "n/a";
             std::strncat(retbuf, str, bufsize-1);
@@ -87,10 +87,10 @@ public:
         std::strncat(retbuf, it->second.c_str(), bufsize-1);
     }
 
-    void set_value(std::string_view watch_name, const std::string& val) {
-        if (!_data.contains(watch_name)) { return; }
+    void set_value(std::string_view watch_subcategory, std::string_view watch_name, const std::string& val) {
+        if (!_data.contains(std::make_pair(watch_subcategory, watch_name))) { return; }
         std::lock_guard<std::mutex> lock(_data_access_mutex);
-        _data[watch_name] = val;
+        _data[std::make_pair(watch_subcategory, watch_name)] = val;
     }
 };
 
