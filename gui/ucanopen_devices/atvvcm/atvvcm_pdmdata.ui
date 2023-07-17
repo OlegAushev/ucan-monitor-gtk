@@ -6,11 +6,11 @@
 
     <child>
       <object class="BoolEntry" id="battery_indicator">
-        <property name="title">Battery Contactors</property>
+        <property name="title">Battery</property>
         <property name="subtitle"></property>
         <property name="value-chars">10</property>
-        <property name="true-text">closed</property>
-        <property name="false-text">open</property>
+        <property name="true-text">on</property>
+        <property name="false-text">off</property>
         <property name="true-css-class">success</property>
         <property name="false-css-class">error</property>
       </object>
@@ -66,13 +66,13 @@
 
     <child>
       <object class="BoolEntry" id="chargemode_indicator">
-        <property name="title">3-ph Charge Mode</property>
+        <property name="title">Charge Mode</property>
         <property name="subtitle"></property>
         <property name="value-chars">10</property>
-        <property name="true-text">closed</property>
-        <property name="false-text">open</property>
-        <property name="true-css-class">success</property>
-        <property name="false-css-class">error</property>
+        <property name="true-text">3-phase</property>
+        <property name="false-text">1-phase</property>
+        <!--property name="true-css-class">success</property-->
+        <!--property name="false-css-class">error</property-->
       </object>
     </child>
 
@@ -81,8 +81,8 @@
         <property name="title">Allow Charge</property>
         <property name="subtitle"></property>
         <property name="value-chars">10</property>
-        <property name="true-text">closed</property>
-        <property name="false-text">open</property>
+        <property name="true-text">yes</property>
+        <property name="false-text">no</property>
         <property name="true-css-class">success</property>
         <property name="false-css-class">error</property>
       </object>
