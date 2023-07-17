@@ -21,8 +21,7 @@ public class Application : Adw.Application {
     public override void activate() {
         base.activate();
         var win = this.active_window;
-        if (win == null)
-        {
+        if (win == null) {
             win = new Ucanopen.SelectServerWindow(this);
         }
         win.present();
@@ -52,8 +51,7 @@ public class Application : Adw.Application {
         message(@"[gui] '$(Backend.Ucanopen.server)' is selected.");
         message("[gui] Waiting for backend...");
         Backend.main_enter();
-        while (!Backend.is_ready)
-        {
+        while (!Backend.is_ready) {
             Thread.usleep(10000);	// with empty loop Release build is not working
         }
         
@@ -73,8 +71,7 @@ public class Application : Adw.Application {
         this.shutdown.connect(Backend.main_exit);
 
         var win = this.active_window;
-        if (win == null)
-        {
+        if (win == null) {
             win = new CanMonitor.Window(this);
         }
         win.present();
@@ -83,4 +80,3 @@ public class Application : Adw.Application {
 }
 
 }
-

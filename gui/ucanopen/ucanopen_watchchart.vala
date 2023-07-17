@@ -1,14 +1,7 @@
-///
-///
-///
-
-
 namespace Ucanopen {
 
-
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_watchchart.ui")]
-public class WatchChart : Adw.Bin
-{
+public class WatchChart : Adw.Bin {
 	[GtkChild]
 	private unowned Adw.ComboRow comborow_watch_name;
 	[GtkChild]
@@ -16,8 +9,7 @@ public class WatchChart : Adw.Bin
 
 	public WatchChart() {}
 
-	construct
-	{
+	construct {
 		/////////////////////////////////////////////////////////////
 		var rss = new AdvvChart.Series("RSS",  new AdvvChart.Line());
 		rss.line.color = {0.88f, 0.11f, 0.14f, 1.0f};
@@ -60,12 +52,6 @@ public class WatchChart : Adw.Bin
 
 		frame_chart.child = chart;
 	}
-
-
-
 }
 
-
 }
-
-

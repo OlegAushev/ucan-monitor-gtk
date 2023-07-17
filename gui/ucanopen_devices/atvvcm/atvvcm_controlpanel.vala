@@ -1,9 +1,7 @@
 namespace AtvVcm {
 
-
 [GtkTemplate (ui = "/gui/ucanopen_devices/atvvcm/atvvcm_controlpanel.ui")]
-public class ControlPanel : Adw.Bin
-{
+public class ControlPanel : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Button button_clear_errors;
     [GtkChild]
@@ -11,8 +9,7 @@ public class ControlPanel : Adw.Bin
 
     public ControlPanel() {}
 
-    construct
-    {
+    construct {
         button_clear_errors.clicked.connect(() => {
             ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
         });
@@ -32,9 +29,5 @@ public class ControlPanel : Adw.Bin
         });
     }
 }
-    
-    
+
 }
-    
-    
-    

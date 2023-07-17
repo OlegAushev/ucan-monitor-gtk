@@ -1,14 +1,7 @@
-///
-///
-///
-
-
 namespace Ucanopen {
 
-
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_preferenceswindow.ui")]
-public class PreferencesWindow : Adw.PreferencesWindow
-{
+public class PreferencesWindow : Adw.PreferencesWindow {
     [GtkChild]
     private unowned Adw.ToastOverlay toast_overlay;
 
@@ -60,8 +53,7 @@ public class PreferencesWindow : Adw.PreferencesWindow
     
     public PreferencesWindow() {}
 
-    construct
-    {
+    construct {
         adjustment_client_id.value = _client_id;
         adjustment_server_id.value = _server_id;
 
@@ -80,12 +72,9 @@ public class PreferencesWindow : Adw.PreferencesWindow
         button_disconnect.clicked.connect(on_disconnect_clicked);
 
         adjustment_client_id.value_changed.connect(() => {
-            if (adjustment_client_id.value == adjustment_server_id.value)
-            {
+            if (adjustment_client_id.value == adjustment_server_id.value) {
                 adjustment_client_id.value = _client_id;
-            }
-            else
-            {
+            } else {
                 if (adjustment_client_id.value == _client_id) return;
 
                 ucanopen_client_set_node_id((uint)adjustment_client_id.value);
@@ -94,12 +83,9 @@ public class PreferencesWindow : Adw.PreferencesWindow
         });
 
         adjustment_server_id.value_changed.connect(() => {
-            if (adjustment_server_id.value == adjustment_client_id.value)
-            {
+            if (adjustment_server_id.value == adjustment_client_id.value) {
                 adjustment_server_id.value = _server_id;
-            }
-            else
-            {
+            } else {
                 if (adjustment_server_id.value == _server_id) return;
 
                 ucanopen_client_set_server_id(Backend.Ucanopen.server, (uint)adjustment_server_id.value);
@@ -138,43 +124,35 @@ public class PreferencesWindow : Adw.PreferencesWindow
         });
     }
 
-    public static uint client_id
-    {
+    public static uint client_id {
         get { return _client_id; }
     }
 
-    public static uint server_id
-    {
+    public static uint server_id {
         get { return _server_id; }
     }
 
-    public static bool tpdo_state
-    {
+    public static bool tpdo_state {
         get { return _tpdo_state; }
     }
 
-    public static bool sync_state
-    {
+    public static bool sync_state {
         get { return _sync_state; }
     }
 
-    public static int sync_period
-    {
+    public static int sync_period {
         get { return _sync_period; }
     }
 
-    public static bool watch_state
-    {
+    public static bool watch_state {
         get { return _watch_state; }
     }
 
-    public static int watch_period
-    {
+    public static int watch_period {
         get { return _watch_period; }
     }
 
-    public static bool rpdo_state
-    {
+    public static bool rpdo_state {
         get { return _rpdo_state; }
     }
 
@@ -204,7 +182,4 @@ public class PreferencesWindow : Adw.PreferencesWindow
     }
 }
 
-
-}
-
-    
+}  

@@ -23,4 +23,3 @@ int main(string[] args) {
     var app = new CanMonitor.Application();
     return app.run(args);
 }
-

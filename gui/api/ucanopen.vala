@@ -1,8 +1,3 @@
-///
-///
-///
-
-
 extern int cansocket_connect(string interface, int bitrate);
 extern int cansocket_disconnect();
 

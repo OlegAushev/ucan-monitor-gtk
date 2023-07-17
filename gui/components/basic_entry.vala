@@ -1,8 +1,3 @@
-///
-///
-///
-
-
 [GtkTemplate (ui = "/gui/components/basic_entry.ui")]
 public class BasicEntry : Adw.ActionRow {
 	[GtkChild]
@@ -81,5 +76,3 @@ public class BasicEntry : Adw.ActionRow {
 		_entry.remove_css_class(css_class);
 	}
 }
-
-

@@ -1,8 +1,7 @@
 namespace Ucanopen {
 
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_systemstatus.ui")]
-public class SystemStatus : Adw.Bin
-{
+public class SystemStatus : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Grid grid;
 
@@ -27,11 +26,9 @@ public class SystemStatus : Adw.Bin
 
     public SystemStatus() {}
 
-    construct
-    {
+    construct {
         // errors
-        for (int i = 0; i < _error_name_count_max; ++i)
-        {
+        for (int i = 0; i < _error_name_count_max; ++i) {
             _error_names[i] = string.nfill(_error_name_len_max, '\0');
         }
         _error_name_count = ucanopen_devices_get_error_names(Backend.Ucanopen.server,
@@ -41,16 +38,14 @@ public class SystemStatus : Adw.Bin
 
         error_bytes = new Adw.PreferencesGroup[4];
         error_bits = new BoolEntry[32];
-        for (int i = 0; i < 4; ++i)
-        {
+        for (int i = 0; i < 4; ++i) {
             error_bytes[i] = new Adw.PreferencesGroup();
             error_bytes[i].title = @"Error Byte $i";
             error_bytes[i].width_request = 280;
             error_bytes[i].hexpand = false;
             grid.attach(error_bytes[i], i, 0);
 
-            for (int j = 0; j < 8; ++j)
-            {
+            for (int j = 0; j < 8; ++j) {
                 error_bits[8*i+j] = new BoolEntry();	
                 error_bits[8*i+j].title = _error_names[8*i+j];
 
@@ -65,8 +60,7 @@ public class SystemStatus : Adw.Bin
         }
 
         // warnings
-        for (int i = 0; i < _warning_name_count_max; ++i)
-        {
+        for (int i = 0; i < _warning_name_count_max; ++i) {
             _warning_names[i] = string.nfill(_warning_name_len_max, '\0');
         }
         _warning_name_count = ucanopen_devices_get_warning_names(Backend.Ucanopen.server,
@@ -76,16 +70,14 @@ public class SystemStatus : Adw.Bin
 
         warning_bytes = new Adw.PreferencesGroup[4];
         warning_bits = new BoolEntry[32];
-        for (int i = 0; i < 4; ++i)
-        {
+        for (int i = 0; i < 4; ++i) {
             warning_bytes[i] = new Adw.PreferencesGroup();
             warning_bytes[i].title = @"Warning Byte $i";
             warning_bytes[i].width_request = 280;
             warning_bytes[i].hexpand = false;
             grid.attach(warning_bytes[i], i, 1);
 
-            for (int j = 0; j < 8; ++j)
-            {
+            for (int j = 0; j < 8; ++j) {
                 warning_bits[8*i+j] = new BoolEntry();	
                 warning_bits[8*i+j].title = _warning_names[8*i+j];
 
@@ -102,54 +94,41 @@ public class SystemStatus : Adw.Bin
         Timeout.add(50, update);
     }
     
-    public bool update()
-    {
+    public bool update() {
         _update_errors();
         _update_warnings();
         return true;
     }
 
-    private void _update_errors()
-    {
+    private void _update_errors() {
         uint error_code = ucanopen_devices_get_error_code(Backend.Ucanopen.server);
-        if (error_code == _error_code)
-        {
+        if (error_code == _error_code) {
             return;
         }
 
         _error_code = error_code;
 
-        for (int i = 0; i < _error_name_count; ++i)
-        {
-            if ((_error_code & (1 << i)) != 0)
-            {
+        for (int i = 0; i < _error_name_count; ++i) {
+            if ((_error_code & (1 << i)) != 0) {
                 error_bits[i].value = true;
-            }
-            else
-            {
+            } else {
                 error_bits[i].value = false;
             }
         }
     }
 
-    private void _update_warnings()
-    {
+    private void _update_warnings() {
         uint warning_code = ucanopen_devices_get_warning_code(Backend.Ucanopen.server);
-        if (warning_code == _warning_code)
-        {
+        if (warning_code == _warning_code) {
             return;
         }
 
         _warning_code = warning_code;
 
-        for (int i = 0; i < _warning_name_count; ++i)
-        {
-            if ((_warning_code & (1 << i)) != 0)
-            {
+        for (int i = 0; i < _warning_name_count; ++i) {
+            if ((_warning_code & (1 << i)) != 0) {
                 warning_bits[i].value = true;
-            }
-            else
-            {
+            } else {
                 warning_bits[i].value = false;
             }
         }
@@ -157,4 +136,3 @@ public class SystemStatus : Adw.Bin
 }
 
 }
-

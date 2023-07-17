@@ -1,11 +1,5 @@
-///
-///
-///
-
-
 [GtkTemplate (ui = "/gui/components/bool_entry.ui")]
-public class BoolEntry : Adw.ActionRow
-{
+public class BoolEntry : Adw.ActionRow {
 	[GtkChild]
 	private unowned Gtk.Entry _entry;
 
@@ -19,20 +13,15 @@ public class BoolEntry : Adw.ActionRow
 
 	construct {}
 
-	public bool value
-	{
+	public bool value {
 		get { return _value; }
-		set
-		{ 
+		set { 
 			_value = value;
-			if (_value)
-			{
+			if (_value) {
 				_entry.remove_css_class(_false_css_class);
 				_entry.text = _true_text;
 				_entry.add_css_class(_true_css_class);
-			}
-			else
-			{
+			} else {
 				_entry.remove_css_class(_true_css_class);
 				_entry.text = _false_text;
 				_entry.add_css_class(_false_css_class);
@@ -40,43 +29,34 @@ public class BoolEntry : Adw.ActionRow
 		}
 	}
 
-	public string true_text
-	{
+	public string true_text {
 		set { _true_text = value; }
 	}
 
-	public string false_text
-	{
+	public string false_text {
 		set { _false_text = value; }
 	}
 
-	public string true_css_class
-	{
+	public string true_css_class {
 		set { _true_css_class = value; }
 	}
 
-	public string false_css_class
-	{
+	public string false_css_class {
 		set { _false_css_class = value; }
 	}
 
-	public int value_width
-	{
+	public int value_width {
 		get { return _entry.width_request; }
 		set { _entry.width_request = value; }
 	}
 
-	public int value_chars
-	{
+	public int value_chars {
 		get { return _entry.max_width_chars; }
 		set { _entry.max_width_chars = value; }
 	}
 
-	public float value_xalign
-	{
+	public float value_xalign {
 		get { return _entry.xalign; }
 		set { _entry.xalign = value; }
 	}
 }
-
-

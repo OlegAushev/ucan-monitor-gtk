@@ -1,11 +1,5 @@
-///
-///
-///
-
-
 [GtkTemplate (ui = "/gui/components/log_textview.ui")]
-public class LogTextView : Adw.Bin
-{
+public class LogTextView : Adw.Bin {
 	[GtkChild]
 	private unowned Gtk.TextView _textview;
 
@@ -13,8 +7,7 @@ public class LogTextView : Adw.Bin
 
 	public LogTextView() {}
 
-	construct
-	{
+	construct {
 		_textbuffer = new Gtk.TextBuffer(null);
 		_textview.buffer = _textbuffer;
 
@@ -32,11 +25,9 @@ public class LogTextView : Adw.Bin
 		Timeout.add(100, update);
 	}
 
-	public bool update()
-	{
+	public bool update() {
 		string message = string.nfill(256, '\0');
-		if (log_get_message(message, 256))
-		{
+		if (log_get_message(message, 256)) {
 			Gtk.TextIter end_iter;
 			_textbuffer.get_end_iter(out end_iter);
             int line = end_iter.get_line();
@@ -70,8 +61,7 @@ public class LogTextView : Adw.Bin
             Gtk.TextIter aux_iter1 = line_begin_iter;
             Gtk.TextIter aux_iter2 = line_begin_iter;
             if ((line_begin_iter.forward_search("{", Gtk.TextSearchFlags.TEXT_ONLY, out searchres_begin, out aux_iter1, null))
-             && (line_begin_iter.forward_search("}", Gtk.TextSearchFlags.TEXT_ONLY, out aux_iter2, out searchres_end, null)))
-            {
+             && (line_begin_iter.forward_search("}", Gtk.TextSearchFlags.TEXT_ONLY, out aux_iter2, out searchres_end, null))) {
                 _textbuffer.apply_tag_by_name("blue_text", searchres_begin, searchres_end);
             }
 		}
@@ -79,5 +69,3 @@ public class LogTextView : Adw.Bin
 		return true;
 	}
 }
-
-

@@ -1,13 +1,7 @@
-///
-///
-///
-
-
 namespace Ucanopen {
 
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_selectserverwindow.ui")]
-public class SelectServerWindow : Gtk.ApplicationWindow
-{
+public class SelectServerWindow : Gtk.ApplicationWindow {
     [GtkChild]
     private unowned Adw.PreferencesGroup pref_group;
 
@@ -22,8 +16,7 @@ public class SelectServerWindow : Gtk.ApplicationWindow
     const int server_max_count = 10;
     private Gtk.StringList _servers;
 
-    public SelectServerWindow(Gtk.Application app)
-    {
+    public SelectServerWindow(Gtk.Application app) {
         Object (application: app);
 
         exit_button.clicked.connect(() => {
@@ -31,10 +24,8 @@ public class SelectServerWindow : Gtk.ApplicationWindow
         });
 
         ok_button.clicked.connect(() => {
-            for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
-            {
-                if (buttons[i].active)
-                {
+            for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i) {
+                if (buttons[i].active) {
                     Backend.Ucanopen.server = Backend.Ucanopen.server_list[i];
                 }
             }
@@ -43,24 +34,19 @@ public class SelectServerWindow : Gtk.ApplicationWindow
         });
     }
 
-    construct
-    {
+    construct {
         rows = new Adw.ActionRow[server_max_count];
         buttons = new Gtk.CheckButton[server_max_count];
 
         _servers = new Gtk.StringList(null);
-        for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i)
-        {
+        for (int i = 0; i < Backend.Ucanopen.server_list.length && i < server_max_count; ++i) {
             _servers.append(Backend.Ucanopen.server_list[i]);
 
             rows[i] = new Adw.ActionRow();
             buttons[i] = new Gtk.CheckButton();
-            if (i == 0)
-            {
+            if (i == 0) {
                 buttons[i].active = true;
-            }
-            else
-            {
+            } else {
                 buttons[i].group = buttons[0];
             }
             
@@ -94,4 +80,3 @@ public class SelectServerWindow : Gtk.ApplicationWindow
 }
 
 }
-

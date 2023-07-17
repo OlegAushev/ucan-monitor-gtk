@@ -1,13 +1,7 @@
-///
-///
-///
-
-
 namespace SrmDrive {
 
 [GtkTemplate (ui = "/gui/ucanopen_devices/srmdrive/srmdrive_controlpanel.ui")]
-public class ControlPanel : Adw.Bin
-{
+public class ControlPanel : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Switch power_switch;
     [GtkChild]
@@ -44,8 +38,7 @@ public class ControlPanel : Adw.Bin
 
     public ControlPanel() {}
 
-    construct
-    {
+    construct {
         power_switch.notify["state"].connect((s, p) => {
             srmdrive_set_power_enabled(power_switch.state);
         });
@@ -113,12 +106,8 @@ public class ControlPanel : Adw.Bin
         //--------------------------------------------------------------------------------------------------------------
         emergency_switch.notify["state"].connect((s, p) => {
             srmdrive_set_emergency_enabled(emergency_switch.state);
-        });
-
-        
+        });     
     }
 }
 
 }
-
-

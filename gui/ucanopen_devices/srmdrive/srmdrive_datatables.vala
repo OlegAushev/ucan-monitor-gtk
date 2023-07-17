@@ -1,14 +1,7 @@
-///
-///
-///
-
-
 namespace SrmDrive {
 
-
 [GtkTemplate (ui = "/gui/ucanopen_devices/srmdrive/srmdrive_datatables.ui")]
-public class DataTables : Adw.Bin
-{
+public class DataTables : Adw.Bin {
     [GtkChild]
     private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
     [GtkChild]
@@ -88,13 +81,11 @@ public class DataTables : Adw.Bin
 
     public DataTables() {}
 
-    construct
-    {
+    construct {
         Timeout.add(50, update);
     }
     
-    public bool update()
-    {
+    public bool update() {
         _update_watch_data();
         _update_tpdo1_data();
         _update_tpdo2_data();
@@ -103,15 +94,13 @@ public class DataTables : Adw.Bin
         return true;
     }
 
-    private void _update_watch_data()
-    {
+    private void _update_watch_data() {
         heartbeat_indicator.update();
 
         string buf = string.nfill(16, '\0');
         ucanopen_server_get_watch_value(Backend.Ucanopen.server, "watch", "uptime", buf, 16);
         entry_uptime.string_value = buf;
     }
-
 
     private void _update_tpdo1_data() {
         tpdo1_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 0);
@@ -136,8 +125,7 @@ public class DataTables : Adw.Bin
         entry_speed.int_value = srmdrive_tpdo1_get_speed();
     }
 
-    private void _update_tpdo2_data()
-    {
+    private void _update_tpdo2_data() {
         tpdo2_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 1);
         entry_tpdo2_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 1);
 
@@ -148,8 +136,7 @@ public class DataTables : Adw.Bin
         entry_elec_power.uint_value = srmdrive_tpdo2_get_elec_power();
     }
 
-    private void _update_tpdo3_data()
-    {
+    private void _update_tpdo3_data() {
         tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
         entry_tpdo3_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 2);
 
@@ -160,8 +147,7 @@ public class DataTables : Adw.Bin
         entry_fw_temp.int_value = srmdrive_tpdo3_get_fw_temp();
     }
 
-    private void _update_tpdo4_data()
-    {
+    private void _update_tpdo4_data() {
         tpdo4_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 3);
         entry_tpdo4_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 3);
         entry_errors.uint_value = ucanopen_devices_get_error_code(Backend.Ucanopen.server);
@@ -169,7 +155,4 @@ public class DataTables : Adw.Bin
     }
 }
 
-
 }
-
-

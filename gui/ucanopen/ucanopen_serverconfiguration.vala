@@ -1,14 +1,7 @@
-///
-///
-///
-
-
 namespace Ucanopen {
 
-
 [GtkTemplate (ui = "/gui/ucanopen/ucanopen_serverconfiguration.ui")]
-public class ServerConfiguration : Adw.Bin
-{
+public class ServerConfiguration : Adw.Bin {
     [GtkChild]
     private unowned Adw.ToastOverlay toast_overlay;
 
@@ -53,8 +46,7 @@ public class ServerConfiguration : Adw.Bin
 
     public ServerConfiguration() {}
 
-    construct
-    {
+    construct {
         refreshabout_button.clicked.connect(() => {
             string buf = string.nfill(32, '0');
             ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "device_name", 500, buf, 32);
@@ -68,13 +60,11 @@ public class ServerConfiguration : Adw.Bin
         });
 
 
-        for (int i = 0; i < _category_count_max; ++i)
-        {
+        for (int i = 0; i < _category_count_max; ++i) {
             _categories[i] = string.nfill(_category_str_size, '\0');
         }
 
-        for (int i = 0; i < _object_count_max; ++i)
-        {
+        for (int i = 0; i < _object_count_max; ++i) {
             _objects[i] = string.nfill(_object_str_size, '\0');
         }
 
@@ -86,17 +76,14 @@ public class ServerConfiguration : Adw.Bin
         int category_count = ucanopen_server_get_config_categories(Backend.Ucanopen.server,
                 _categories, _category_count_max, _category_str_size);
 
-        if (category_count != 0)
-        {
-            for (int i = 0; i < category_count; ++i)
-            {
+        if (category_count != 0) {
+            for (int i = 0; i < category_count; ++i) {
                 _categories_model.append(_categories[i]);
             }
 
             int object_count = ucanopen_server_get_config_objects(Backend.Ucanopen.server,
                     _categories[category_comborow.selected], _objects, _object_count_max, _object_str_size);
-            for (int i = 0; i < object_count; ++i)
-            {
+            for (int i = 0; i < object_count; ++i) {
                 _objects_model.append(_objects[i]);
             }
 
@@ -135,8 +122,7 @@ public class ServerConfiguration : Adw.Bin
         });
     }
 
-    void on_object_selected()
-    {
+    void on_object_selected() {
         string buf = string.nfill(32, '\0');
         ucanopen_server_read_numval(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
                 _categories[category_comborow.selected], _objects[object_comborow.selected],
@@ -144,22 +130,19 @@ public class ServerConfiguration : Adw.Bin
         value_entryrow.text = buf;
     }
 
-    void on_category_selected()
-    {
+    void on_category_selected() {
         object_comborow.notify["selected"].disconnect(on_object_selected);
         _objects_model.splice(0, _objects_model.get_n_items(), null);
         int object_count = ucanopen_server_get_config_objects(Backend.Ucanopen.server,
                 _categories[category_comborow.selected], _objects, _object_count_max, _object_str_size);
-        for (int i = 0; i < object_count; ++i)
-        {
+        for (int i = 0; i < object_count; ++i) {
             _objects_model.append(_objects[i]);
         }
         object_comborow.notify["selected"].connect(on_object_selected);
         on_object_selected();
     }
 
-    void on_value_refresh()
-    {
+    void on_value_refresh() {
         string buf = string.nfill(32, '\0');
         ucanopen_server_read_numval(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
                 _categories[category_comborow.selected], _objects[object_comborow.selected],
@@ -167,18 +150,14 @@ public class ServerConfiguration : Adw.Bin
         value_entryrow.text = buf;
     }
 
-    void on_value_write()
-    {
+    void on_value_write() {
         float val;
         bool is_number = float.try_parse(value_entryrow.text, out val);
-        if (is_number && value_entryrow.text.length != 0)
-        {
+        if (is_number && value_entryrow.text.length != 0) {
             ucanopen_server_write(Backend.Ucanopen.server, Backend.Ucanopen.server_config_category,
                     _categories[category_comborow.selected], _objects[object_comborow.selected],
                     value_entryrow.text);
-        }
-        else
-        {
+        } else {
             string message = string.join("", "Bad value: ", value_entryrow.text);
             Adw.Toast toast = new Adw.Toast(message);
             toast.timeout = 1;
@@ -187,7 +166,4 @@ public class ServerConfiguration : Adw.Bin
     }
 }
 
-
 }
-
-

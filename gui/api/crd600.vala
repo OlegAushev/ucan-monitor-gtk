@@ -1,8 +1,3 @@
-///
-///
-///
-
-
 extern void crd600_set_power_enabled(bool enabled);
 extern void crd600_set_drive1_run_enabled(bool enabled);
 extern void crd600_set_drive2_run_enabled(bool enabled);
@@ -22,3 +17,4 @@ extern bool crd600_tpdo1_get_error();
 extern bool crd600_tpdo1_get_warning();
 extern bool crd600_tpdo1_get_overheat();
 extern void crd600_tpdo1_get_control_loop_type(char* retbuf, int bufsize);
+
