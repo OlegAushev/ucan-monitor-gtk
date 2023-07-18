@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <template class="AtvVcmMotorControl" parent="AdwBin">
+    <child>
+      <object class="AdwPreferencesGroup" id="_group">
+        <!--property name="title">PDM</property-->
+        <child>
+          <object class="AdwExpanderRow">
+            <property name="title">Manual Control</property>
+            <property name="show-enable-switch">true</property>
+            <property name="enable-expansion">false</property>
+
+            <child>
+              <object class="SpinButtonScale" id="torque_slider">
+                <property name="title">Torque, %</property>
+                <property name="lower">-100</property>
+                <property name="upper">100</property>
+                <property name="step">0.1</property>
+                <property name="value">0</property>
+                <property name="spin-width">6</property>
+                <property name="spin-digits">1</property>
+                <property name="scale-digits">1</property>
+                <property name="scale-width">200</property>
+              </object>
+            </child>
+            
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -93,6 +93,30 @@
 
           </object>
         </child>
+
+        <child>
+          <object class="AtvVcmMotorControl">
+            <property name="title">Motor FL</property> 
+          </object>
+        </child>
+
+        <child>
+          <object class="AtvVcmMotorControl">
+            <property name="title">Motor FR</property> 
+          </object>
+        </child>
+
+        <child>
+          <object class="AtvVcmMotorControl">
+            <property name="title">Motor RL</property> 
+          </object>
+        </child>
+
+        <child>
+          <object class="AtvVcmMotorControl">
+            <property name="title">Motor RR</property> 
+          </object>
+        </child>
         
       </object>
     </child>
