@@ -96,25 +96,25 @@
 
         <child>
           <object class="AtvVcmMotorControl">
-            <property name="title">Motor FL</property> 
+            <property name="title">Motor Front Left</property> 
           </object>
         </child>
 
         <child>
           <object class="AtvVcmMotorControl">
-            <property name="title">Motor FR</property> 
+            <property name="title">Motor Front Right</property> 
           </object>
         </child>
 
         <child>
           <object class="AtvVcmMotorControl">
-            <property name="title">Motor RL</property> 
+            <property name="title">Motor Rear Left</property> 
           </object>
         </child>
 
         <child>
           <object class="AtvVcmMotorControl">
-            <property name="title">Motor RR</property> 
+            <property name="title">Motor Rear Right</property> 
           </object>
         </child>
         

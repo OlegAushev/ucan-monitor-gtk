@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <template class="AtvVcmMotorData" parent="AdwPreferencesGroup">
+    
+    <child>
+      <object class="BasicEntry" id="entry_speed">
+        <property name="title">Speed</property>
+        <property name="subtitle">rpm</property>
+        <property name="value-chars">10</property>
+      </object>
+    </child>
+  
+  </template>
+</interface>
