@@ -28,6 +28,15 @@ public class MotorControl : Adw.Bin {
     [GtkChild]
     private unowned Gtk.CheckButton reverse_button;
 
+    [GtkChild]
+    private unowned SpinButtonScale speed_lf_slider;
+    [GtkChild]
+    private unowned SpinButtonScale speed_lb_slider;
+    [GtkChild]
+    private unowned SpinButtonScale speed_rf_slider;
+    [GtkChild]
+    private unowned SpinButtonScale speed_rb_slider;
+
     public MotorControl() {}
 
     construct {
@@ -94,6 +103,30 @@ public class MotorControl : Adw.Bin {
 				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "gear", "2"); 
 			}
 		});
+
+        speed_lf_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(speed_lf_slider.value + 10000)) << 4;
+            val = val + 0;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+        });
+
+        speed_lb_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(speed_lb_slider.value + 10000)) << 4;
+            val = val + 1;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+        });
+
+        speed_rf_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(speed_rf_slider.value + 10000)) << 4;
+            val = val + 2;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+        });
+
+        speed_rb_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(speed_rb_slider.value + 10000)) << 4;
+            val = val + 3;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+        });
     }
 
 
