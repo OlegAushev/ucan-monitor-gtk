@@ -1,6 +1,6 @@
-namespace AtvVcm {
+namespace AtvVcu {
 
-[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcm/atvvcm_pdmcontrol.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcu/atvvcu_pdmcontrol.ui")]
 public class PdmControl : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Switch battery_switch;

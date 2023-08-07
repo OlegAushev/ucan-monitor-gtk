@@ -1,7 +1,7 @@
-#include "atvvcm_server.h"
+#include "atvvcu_server.h"
 
 
-namespace atvvcm {
+namespace atvvcu {
 
 using namespace ucanopen;
 
@@ -54,5 +54,5 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 }
 };
 
-} // namespace atvvcm
+} // namespace atvvcu
 

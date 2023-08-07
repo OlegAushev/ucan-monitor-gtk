@@ -31,10 +31,10 @@ public class Window : Gtk.ApplicationWindow {
         case "BMS-Main":
             datatables_scrolledwindow.child = new BmsMain.DataTables();
             break;
-        case "ATV-VCM":
-            controlpanel_scrolledwindow.child = new AtvVcm.ControlPanel();
+        case "ATV-VCU":
+            controlpanel_scrolledwindow.child = new AtvVcu.ControlPanel();
             controlpanel_scrolledwindow.child.add_css_class("background");
-            datatables_scrolledwindow.child = new AtvVcm.DataTables();
+            datatables_scrolledwindow.child = new AtvVcu.DataTables();
             break;
         default:
             message("Error: unknown server");

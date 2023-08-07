@@ -1,7 +1,7 @@
-#include "atvvcm_server.h"
+#include "atvvcu_server.h"
 
 
-namespace atvvcm {
+namespace atvvcu {
 
 Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, const std::string& name)
         : ucanopen::Server(socket, node_id, name, object_dictionary)
@@ -55,5 +55,5 @@ ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
     return ucanopen::FrameHandlingStatus::success;
 }
 
-} // namespace atvvcm
+} // namespace atvvcu
 

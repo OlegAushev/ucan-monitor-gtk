@@ -1,6 +1,6 @@
-namespace AtvVcm {
+namespace AtvVcu {
 
-[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcm/atvvcm_controlpanel.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcu/atvvcu_controlpanel.ui")]
 public class ControlPanel : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Button button_clear_errors;

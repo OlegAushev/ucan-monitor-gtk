@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="AtvVcmDataTables" parent="AdwBin">
+  <template class="AtvVcuDataTables" parent="AdwBin">
     <child>
       <object class="GtkBox">
         <property name="margin-start">10</property>
@@ -39,7 +39,7 @@
         </child>
 
         <child>
-          <object class="AtvVcmPdmData">
+          <object class="AtvVcuPdmData">
             <property name="width-request">280</property>
           </object>
         </child>
@@ -49,28 +49,28 @@
             <property name="orientation">vertical</property>
 
             <child>
-              <object class="AtvVcmMotorData">
+              <object class="AtvVcuMotorData">
                 <property name="title">Motor Front Left</property>
                 <property name="width-request">280</property>
               </object>
             </child>
 
             <child>
-              <object class="AtvVcmMotorData">
+              <object class="AtvVcuMotorData">
                 <property name="title">Motor Front Right</property>
                 <property name="width-request">280</property>
               </object>
             </child>
 
             <child>
-              <object class="AtvVcmMotorData">
+              <object class="AtvVcuMotorData">
                 <property name="title">Motor Rear Left</property>
                 <property name="width-request">280</property>
               </object>
             </child>
 
             <child>
-              <object class="AtvVcmMotorData">
+              <object class="AtvVcuMotorData">
                 <property name="title">Motor Rear Right</property>
                 <property name="width-request">280</property>
               </object>

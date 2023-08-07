@@ -2,11 +2,11 @@
 
 
 #include "ucanopen/server/server.h"
-#include "atvvcm_def.h"
+#include "atvvcu_def.h"
 #include "log/log.h"
 
 
-namespace atvvcm {
+namespace atvvcu {
 
 extern const ucanopen::ObjectDictionary object_dictionary;
 extern const ucanopen::ObjectDictionaryConfig object_dictionary_config;
@@ -97,5 +97,5 @@ public:
     }
 };
 
-} // namespace atvvcm
+} // namespace atvvcu
 

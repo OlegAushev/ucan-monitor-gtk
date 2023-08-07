@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="AtvVcmControlPanel" parent="AdwBin">
+  <template class="AtvVcuControlPanel" parent="AdwBin">
     <child>
       <object class="GtkBox">
         <property name="margin-start">10</property>
@@ -89,31 +89,31 @@
         </child>
 
         <child>
-          <object class="AtvVcmPdmControl">
+          <object class="AtvVcuPdmControl">
 
           </object>
         </child>
 
         <child>
-          <object class="AtvVcmMotorControl">
+          <object class="AtvVcuMotorControl">
             <property name="title">Motor Front Left</property> 
           </object>
         </child>
 
         <child>
-          <object class="AtvVcmMotorControl">
+          <object class="AtvVcuMotorControl">
             <property name="title">Motor Front Right</property> 
           </object>
         </child>
 
         <child>
-          <object class="AtvVcmMotorControl">
+          <object class="AtvVcuMotorControl">
             <property name="title">Motor Rear Left</property> 
           </object>
         </child>
 
         <child>
-          <object class="AtvVcmMotorControl">
+          <object class="AtvVcuMotorControl">
             <property name="title">Motor Rear Right</property> 
           </object>
         </child>

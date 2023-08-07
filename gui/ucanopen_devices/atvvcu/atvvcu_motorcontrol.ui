@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="AtvVcmMotorControl" parent="AdwBin">
+  <template class="AtvVcuMotorControl" parent="AdwBin">
     <child>
       <object class="AdwPreferencesGroup" id="_group">
         <!--property name="title">PDM</property-->

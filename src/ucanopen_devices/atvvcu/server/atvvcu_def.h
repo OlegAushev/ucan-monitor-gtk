@@ -6,7 +6,7 @@
 #include <vector>
 
 
-namespace atvvcm {
+namespace atvvcu {
 
 struct CobTpdo4 {
     uint64_t counter : 2;
@@ -119,5 +119,5 @@ enum class PdmContactor {
 };
 static constexpr int pdm_contactor_count = 8;
 
-} // namespace atvvcm
+} // namespace atvvcu
 

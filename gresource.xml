@@ -7,12 +7,12 @@
     <file>gui/components/log_textview.ui</file>
     <file>gui/components/spinbutton_scale.ui</file>
 
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_controlpanel.ui</file>
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_datatables.ui</file>
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_motorcontrol.ui</file>
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_motordata.ui</file>
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_pdmcontrol.ui</file>
-    <file>gui/ucanopen_devices/atvvcm/atvvcm_pdmdata.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_controlpanel.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_datatables.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_motorcontrol.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_motordata.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_pdmcontrol.ui</file>
+    <file>gui/ucanopen_devices/atvvcu/atvvcu_pdmdata.ui</file>
 
     <file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
 

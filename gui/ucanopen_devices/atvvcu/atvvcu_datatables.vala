@@ -1,6 +1,6 @@
-namespace AtvVcm {
+namespace AtvVcu {
 
-[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcm/atvvcm_datatables.ui")]
+[GtkTemplate (ui = "/gui/ucanopen_devices/atvvcu/atvvcu_datatables.ui")]
 public class DataTables : Adw.Bin {
 	[GtkChild]
 	private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
