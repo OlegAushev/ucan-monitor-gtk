@@ -12,6 +12,149 @@
             <property name="enable-expansion">false</property>
 
             <child>
+              <object class="AdwComboRow" id="ctlmode_comborow">
+                <property name="title">Control Mode</property>
+                <property name="model">
+                  <object class="GtkStringList" id="ctlmode_list">
+                    <items>
+                      <item>Speed</item>
+                      <item>Torque</item>
+                    </items>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Enable Drive Controllers</property>
+                <property name="icon-name">battery-symbolic</property>
+                <property name="activatable_widget">enable_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="enable_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Active Discharge</property>
+                <property name="icon-name">battery-symbolic</property>
+                <property name="activatable_widget">activedischarge_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="activedischarge_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Main Relay</property>
+                <property name="icon-name">battery-symbolic</property>
+                <property name="activatable_widget">mainrelay_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="mainrelay_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwExpanderRow" id="expanderrowGear">
+                <property name="title">Gear</property>
+                <property name="icon-name">system-run-symbolic</property>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">neutral_button</property>
+                    <property name="title">Neutral</property>
+                    <child type="prefix">
+                      <object class="GtkCheckButton" id="neutral_button">
+                        <property name="valign">center</property>
+                        <property name="active">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">forward_button</property>
+                    <property name="title">Forward</property>
+                    <child type="prefix">
+                      <object class="GtkCheckButton" id="forward_button">
+                        <property name="valign">center</property>
+                        <property name="group">neutral_button</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">reverse_button</property>
+                    <property name="title">Reverse</property>
+                    <child type="prefix">
+                      <object class="GtkCheckButton" id="reverse_button">
+                        <property name="valign">center</property>
+                        <property name="group">neutral_button</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Footbrake</property>
+                <property name="icon-name">battery-symbolic</property>
+                <property name="activatable_widget">footbrake_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="footbrake_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Handbrake</property>
+                <property name="icon-name">battery-symbolic</property>
+                <property name="activatable_widget">handbrake_switch</property>
+                
+                <child>
+                  <object class="GtkSwitch" id="handbrake_switch">
+                    <property name="valign">center</property>
+                    <property name="active">false</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+
+
+
+
+
+
+            <child>
               <object class="SpinButtonScale" id="torque_slider">
                 <property name="title">Torque, %</property>
                 <property name="lower">-100</property>
