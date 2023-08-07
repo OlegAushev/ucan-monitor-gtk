@@ -49,13 +49,13 @@ public class ServerConfiguration : Adw.Bin {
     construct {
         refreshabout_button.clicked.connect(() => {
             string buf = string.nfill(32, '0');
-            ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "device_name", 500, buf, 32);
+            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "device_name", 500, buf, 32);
             devicename_label.label = buf;
-            ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "hardware_version", 500, buf, 32);
+            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "hardware_version", 500, buf, 32);
             hardwareversion_label.label = buf;
-            ucanopen_server_read_string(Backend.Ucanopen.server, "sys", "info", "firmware_version", 500, buf, 32);
+            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "firmware_version", 500, buf, 32);
             firmwareversion_label.label = buf;
-            ucanopen_server_read_numval(Backend.Ucanopen.server, "sys", "info", "serial_number", 500, buf, 32);
+            ucanopen_server_read_numval(Backend.Ucanopen.server, "info", "sys", "serial_number", 500, buf, 32);
             serialnumber_label.label = buf;
         });
 

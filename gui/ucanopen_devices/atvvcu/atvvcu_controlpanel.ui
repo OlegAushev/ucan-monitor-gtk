@@ -96,25 +96,7 @@
 
         <child>
           <object class="AtvVcuMotorControl">
-            <property name="title">Motor Front Left</property> 
-          </object>
-        </child>
-
-        <child>
-          <object class="AtvVcuMotorControl">
-            <property name="title">Motor Front Right</property> 
-          </object>
-        </child>
-
-        <child>
-          <object class="AtvVcuMotorControl">
-            <property name="title">Motor Rear Left</property> 
-          </object>
-        </child>
-
-        <child>
-          <object class="AtvVcuMotorControl">
-            <property name="title">Motor Rear Right</property> 
+            <property name="title">Motor Drives</property> 
           </object>
         </child>
         
