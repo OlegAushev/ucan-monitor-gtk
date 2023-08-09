@@ -22,7 +22,7 @@ public class LogTextView : Adw.Bin {
 		css_provider.load_from_data("textview text { background-color: #1e1e1e; }".data);
 		_textview.get_style_context().add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);
 
-		Timeout.add(100, update);
+		Timeout.add(10, update);
 	}
 
 	public bool update() {

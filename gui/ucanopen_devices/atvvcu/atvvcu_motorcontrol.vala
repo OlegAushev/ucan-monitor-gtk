@@ -179,12 +179,12 @@ public class MotorControl : Adw.Bin {
         });
 
         eltorque_max_slider.adjustment->value_changed.connect(() => {
-            uint val = (uint)torque_rf_slider.value;
+            uint val = (uint)eltorque_max_slider.value;
             ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "eltorque_max", val.to_string()); 
         });
 
         braketorque_max_slider.adjustment->value_changed.connect(() => {
-            uint val = (uint)(torque_rb_slider.value + 400);
+            uint val = (uint)(braketorque_max_slider.value + 400);
             ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "braketorque_max", val.to_string()); 
         });
     }
