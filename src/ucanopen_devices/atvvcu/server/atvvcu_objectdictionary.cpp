@@ -34,9 +34,11 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2002, 0x05}, {"ctl", "motordrives", "gear", "", OD_UINT32, OD_ACCESS_WO}},
 {{0x2002, 0x06}, {"ctl", "motordrives", "footbrake_status", "", OD_UINT32, OD_ACCESS_WO}},
 {{0x2002, 0x07}, {"ctl", "motordrives", "handbrake_status", "", OD_UINT32, OD_ACCESS_WO}},
-{{0x2002, 0x08}, {"ctl", "motordrives", "speed_ref", "", OD_INT32, OD_ACCESS_WO}},
-{{0x2002, 0x09}, {"ctl", "motordrives", "torque_ref", "", OD_FLOAT32, OD_ACCESS_WO}},
-
+{{0x2002, 0x08}, {"ctl", "motordrives", "faultreset_status", "", OD_UINT32, OD_ACCESS_WO}},
+{{0x2002, 0x09}, {"ctl", "motordrives", "speed_ref", "", OD_INT32, OD_ACCESS_WO}},
+{{0x2002, 0x0A}, {"ctl", "motordrives", "torque_ref", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2002, 0x0B}, {"ctl", "motordrives", "eltorque_max", "", OD_INT32, OD_ACCESS_WO}},
+{{0x2002, 0x0C}, {"ctl", "motordrives", "braketorque_max", "", OD_INT32, OD_ACCESS_WO}},
 
 
 {{0x5000, 0x01}, {"watch", "sys", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},

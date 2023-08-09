@@ -20,7 +20,9 @@ public class MotorControl : Adw.Bin {
     private unowned Gtk.Switch footbrake_switch;
     [GtkChild]
     private unowned Gtk.Switch handbrake_switch;
-
+    [GtkChild]
+    private unowned Gtk.Switch faultreset_switch;
+    
     [GtkChild]
     private unowned Gtk.CheckButton neutral_button;
     [GtkChild]
@@ -36,6 +38,20 @@ public class MotorControl : Adw.Bin {
     private unowned SpinButtonScale speed_rf_slider;
     [GtkChild]
     private unowned SpinButtonScale speed_rb_slider;
+
+    [GtkChild]
+    private unowned SpinButtonScale torque_lf_slider;
+    [GtkChild]
+    private unowned SpinButtonScale torque_lb_slider;
+    [GtkChild]
+    private unowned SpinButtonScale torque_rf_slider;
+    [GtkChild]
+    private unowned SpinButtonScale torque_rb_slider;
+
+    [GtkChild]
+    private unowned SpinButtonScale eltorque_max_slider;
+    [GtkChild]
+    private unowned SpinButtonScale braketorque_max_slider;
 
     public MotorControl() {}
 
@@ -84,6 +100,14 @@ public class MotorControl : Adw.Bin {
             }
         });
 
+        faultreset_switch.notify["state"].connect((s, p) => {
+            if (faultreset_switch.state) {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "faultreset_status", "1");
+            } else {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "faultreset_status", "0");
+            }
+        });
+
         neutral_button.toggled.connect((s) => {
 			if (neutral_button.active)
 			{
@@ -126,6 +150,42 @@ public class MotorControl : Adw.Bin {
             uint val = ((uint)(speed_rb_slider.value + 10000)) << 4;
             val = val + 3;
             ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+        });
+
+        //---
+
+        torque_lf_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(torque_lf_slider.value + 400)) << 4;
+            val = val + 0;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+        });
+
+        torque_lb_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(torque_lb_slider.value + 400)) << 4;
+            val = val + 1;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+        });
+
+        torque_rf_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(torque_rf_slider.value + 400)) << 4;
+            val = val + 2;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+        });
+
+        torque_rb_slider.adjustment->value_changed.connect(() => {
+            uint val = ((uint)(torque_rb_slider.value + 400)) << 4;
+            val = val + 3;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+        });
+
+        eltorque_max_slider.adjustment->value_changed.connect(() => {
+            uint val = (uint)torque_rf_slider.value;
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "eltorque_max", val.to_string()); 
+        });
+
+        braketorque_max_slider.adjustment->value_changed.connect(() => {
+            uint val = (uint)(torque_rb_slider.value + 400);
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "braketorque_max", val.to_string()); 
         });
     }
 

@@ -76,34 +76,6 @@
                 <property name="icon-name">system-run-symbolic</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title">Footbrake</property>
-                    <property name="icon-name">battery-symbolic</property>
-                    <property name="activatable_widget">footbrake_switch</property>
-                    <child>
-                      <object class="GtkSwitch" id="footbrake_switch">
-                        <property name="valign">center</property>
-                        <property name="active">false</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-    
-                <child>
-                  <object class="AdwActionRow">
-                    <property name="title">Handbrake</property>
-                    <property name="icon-name">battery-symbolic</property>
-                    <property name="activatable_widget">handbrake_switch</property>                    
-                    <child>
-                      <object class="GtkSwitch" id="handbrake_switch">
-                        <property name="valign">center</property>
-                        <property name="active">false</property>
-                      </object>
-                    </child>   
-                  </object>
-                </child>
-
-                <child>
-                  <object class="AdwActionRow">
                     <property name="title">Enable Drive Controllers</property>
                     <property name="icon-name">battery-symbolic</property>
                     <property name="activatable_widget">enable_switch</property>
@@ -145,6 +117,49 @@
                     </child>  
                   </object>
                 </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Footbrake</property>
+                    <property name="icon-name">battery-symbolic</property>
+                    <property name="activatable_widget">footbrake_switch</property>
+                    <child>
+                      <object class="GtkSwitch" id="footbrake_switch">
+                        <property name="valign">center</property>
+                        <property name="active">false</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+    
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Handbrake</property>
+                    <property name="icon-name">battery-symbolic</property>
+                    <property name="activatable_widget">handbrake_switch</property>                    
+                    <child>
+                      <object class="GtkSwitch" id="handbrake_switch">
+                        <property name="valign">center</property>
+                        <property name="active">false</property>
+                      </object>
+                    </child>   
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Fault Reset</property>
+                    <property name="icon-name">battery-symbolic</property>
+                    <property name="activatable_widget">faultreset_switch</property>                    
+                    <child>
+                      <object class="GtkSwitch" id="faultreset_switch">
+                        <property name="valign">center</property>
+                        <property name="active">false</property>
+                      </object>
+                    </child>   
+                  </object>
+                </child>
+
               </object>
             </child>
 
@@ -207,6 +222,96 @@
                     <property name="scale-width">200</property>
                   </object>
                 </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="AdwExpanderRow" id="torque_expanderrow">
+                <property name="title">Torque</property>
+                <property name="icon-name">system-run-symbolic</property>
+                <child>
+                  <object class="SpinButtonScale" id="torque_lf_slider">
+                    <property name="title">Torque LF, Nm</property>
+                    <property name="lower">-400</property>
+                    <property name="upper">400</property>
+                    <property name="step">1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">0</property>
+                    <property name="scale-digits">0</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="SpinButtonScale" id="torque_lb_slider">
+                    <property name="title">Torque LB, Nm</property>
+                    <property name="lower">-400</property>
+                    <property name="upper">400</property>
+                    <property name="step">1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">0</property>
+                    <property name="scale-digits">0</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="SpinButtonScale" id="torque_rf_slider">
+                    <property name="title">Torque RF, Nm</property>
+                    <property name="lower">-400</property>
+                    <property name="upper">400</property>
+                    <property name="step">1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">0</property>
+                    <property name="scale-digits">0</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="SpinButtonScale" id="torque_rb_slider">
+                    <property name="title">Torque RB, Nm</property>
+                    <property name="lower">-400</property>
+                    <property name="upper">400</property>
+                    <property name="step">1</property>
+                    <property name="value">0</property>
+                    <property name="spin-width">6</property>
+                    <property name="spin-digits">0</property>
+                    <property name="scale-digits">0</property>
+                    <property name="scale-width">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="SpinButtonScale" id="eltorque_max_slider">
+                <property name="title">Electric Torque Max, Nm</property>
+                <property name="lower">0</property>
+                <property name="upper">400</property>
+                <property name="step">1</property>
+                <property name="value">0</property>
+                <property name="spin-width">6</property>
+                <property name="spin-digits">0</property>
+                <property name="scale-digits">0</property>
+                <property name="scale-width">200</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="SpinButtonScale" id="braketorque_max_slider">
+                <property name="title">Brake Torque Max, Nm</property>
+                <property name="lower">-400</property>
+                <property name="upper">400</property>
+                <property name="step">1</property>
+                <property name="value">400</property>
+                <property name="spin-width">6</property>
+                <property name="spin-digits">0</property>
+                <property name="scale-digits">0</property>
+                <property name="scale-width">200</property>
               </object>
             </child>
 
