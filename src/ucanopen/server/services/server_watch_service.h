@@ -9,6 +9,7 @@
 
 namespace ucanopen {
 
+
 class ServerWatchService : public SdoSubscriber {
 private:
     impl::Server& _server;
@@ -17,7 +18,13 @@ private:
     std::chrono::time_point<std::chrono::steady_clock> _timepoint;
     std::vector<std::pair<std::string_view, std::string_view>> _object_list;
     mutable std::mutex _data_access_mutex;
-    std::map<std::pair<std::string_view, std::string_view>, std::string> _data;
+
+    struct WatchData {
+        ExpeditedSdoData raw;
+        std::string str;
+    };
+
+    std::map<std::pair<std::string_view, std::string_view>, WatchData> _data;
 public:
     ServerWatchService(impl::Server& server, impl::SdoPublisher& sdo_publisher);
 
@@ -39,9 +46,10 @@ public:
         const auto& [key, object] = *entry;
 
         if ((object.category == _server.dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
+            _data[std::make_pair(object.subcategory, object.name)].raw = sdo_data;
             if (object.type != OD_ENUM16) {
                 std::lock_guard<std::mutex> lock(_data_access_mutex);
-                _data[std::make_pair(object.subcategory, object.name)] = sdo_data.to_string(object.type, 2);
+                _data[std::make_pair(object.subcategory, object.name)].str = sdo_data.to_string(object.type, 2);
             }
             return FrameHandlingStatus::success;
         }
@@ -72,7 +80,7 @@ public:
         if (it == _data.end()) {
             return "n/a";
         }
-        return it->second;
+        return it->second.str;
     }
 
     void value(std::string_view watch_subcategory, std::string_view watch_name, char* retbuf, int bufsize) const {
@@ -84,15 +92,17 @@ public:
             return;
         }
         std::lock_guard<std::mutex> lock(_data_access_mutex);
-        std::strncat(retbuf, it->second.c_str(), bufsize-1);
+        std::strncat(retbuf, it->second.str.c_str(), bufsize-1);
     }
 
-    void set_value(std::string_view watch_subcategory, std::string_view watch_name, const std::string& val) {
-        if (!_data.contains(std::make_pair(watch_subcategory, watch_name))) { return; }
-        std::lock_guard<std::mutex> lock(_data_access_mutex);
-        _data[std::make_pair(watch_subcategory, watch_name)] = val;
+    ExpeditedSdoData value(std::string_view watch_subcategory, std::string_view watch_name) {
+        auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
+        if (it == _data.end()) {
+            return 0;
+        }
+        return it->second.raw;
     }
 };
 
-} // namespace ucanopen
 
+} // namespace ucanopen
