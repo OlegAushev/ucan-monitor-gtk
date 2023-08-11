@@ -43,7 +43,26 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 
 {{0x5000, 0x01}, {"watch", "sys", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
 {{0x5000, 0x02}, {"watch", "sys", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
+
 {{0x5000, 0x03}, {"watch", "pdm", "pdm_contactor_state", "", OD_UINT32, OD_ACCESS_RO}},
+
+{{0x5000, 0x04}, {"watch", "motordrives", "lf_speed_torque", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x05}, {"watch", "motordrives", "lb_speed_torque", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x06}, {"watch", "motordrives", "rf_speed_torque", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x07}, {"watch", "motordrives", "rb_speed_torque", "", OD_UINT32, OD_ACCESS_RO}},
+
+{{0x5000, 0x08}, {"watch", "motordrives", "lf_vdc_ac", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x09}, {"watch", "motordrives", "lb_vdc_ac", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x0A}, {"watch", "motordrives", "rf_vdc_ac", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x0B}, {"watch", "motordrives", "rb_vdc_ac", "", OD_UINT32, OD_ACCESS_RO}},
+
+{{0x5000, 0x0C}, {"watch", "motordrives", "lf_temp", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x0D}, {"watch", "motordrives", "lb_temp", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x0E}, {"watch", "motordrives", "rf_temp", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x0F}, {"watch", "motordrives", "rb_temp", "", OD_UINT32, OD_ACCESS_RO}},
+
+{{0x5000, 0x10}, {"watch", "motordrives", "status", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x11}, {"watch", "motordrives", "fault_code", "", OD_UINT32, OD_ACCESS_RO}},
 
 
 }

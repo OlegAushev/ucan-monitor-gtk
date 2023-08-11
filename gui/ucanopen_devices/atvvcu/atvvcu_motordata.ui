@@ -1,15 +1,255 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="AtvVcuMotorData" parent="AdwPreferencesGroup">
-    
+  <template class="AtvVcuMotorData" parent="AdwBin">
     <child>
-      <object class="BasicEntry" id="entry_speed">
-        <property name="title">Speed</property>
-        <property name="subtitle">rpm</property>
-        <property name="value-chars">10</property>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">10</property>
+        <!--LEFT-->
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            
+            <!--LEFT FRONT-->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Motor LF</property>
+                <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_speed_lf">
+                    <property name="title">Speed</property>
+                    <property name="subtitle">rpm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_torque_lf">
+                    <property name="title">Torque</property>
+                    <property name="subtitle">Nm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_vdc_lf">
+                    <property name="title">DC Voltage</property>
+                    <property name="subtitle">V</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_ac_lf">
+                    <property name="title">AC Current</property>
+                    <property name="subtitle">A</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_motortemp_lf">
+                    <property name="title">Motor Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_controllertemp_lf">
+                    <property name="title">Controller Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+              </object> 
+            </child>
+            
+            <!--LEFT BACK-->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Motor LB</property>
+                <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_speed_lb">
+                    <property name="title">Speed</property>
+                    <property name="subtitle">rpm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_torque_lb">
+                    <property name="title">Torque</property>
+                    <property name="subtitle">Nm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_vdc_lb">
+                    <property name="title">DC Voltage</property>
+                    <property name="subtitle">v</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_ac_lb">
+                    <property name="title">AC Current</property>
+                    <property name="subtitle">A</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_motortemp_lb">
+                    <property name="title">Motor Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_controllertemp_lb">
+                    <property name="title">Controller Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>    
+          </object>
+        </child>
+        <!--RIGTH-->
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            
+            <!--RIGHT FRONT-->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Motor RF</property>
+                <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_speed_rf">
+                    <property name="title">Speed</property>
+                    <property name="subtitle">rpm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_torque_rf">
+                    <property name="title">Torque</property>
+                    <property name="subtitle">Nm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_vdc_rf">
+                    <property name="title">DC Voltage</property>
+                    <property name="subtitle">V</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_ac_rf">
+                    <property name="title">AC Current</property>
+                    <property name="subtitle">A</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_motortemp_rf">
+                    <property name="title">Motor Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_controllertemp_rf">
+                    <property name="title">Controller Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <!--RIGHT BACK-->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title">Motor RB</property>
+                <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_speed_rb">
+                    <property name="title">Speed</property>
+                    <property name="subtitle">rpm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_torque_rb">
+                    <property name="title">Torque</property>
+                    <property name="subtitle">Nm</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_vdc_rb">
+                    <property name="title">DC Voltage</property>
+                    <property name="subtitle">V</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_ac_rb">
+                    <property name="title">AC Current</property>
+                    <property name="subtitle">A</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_motortemp_rb">
+                    <property name="title">Motor Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_controllertemp_rb">
+                    <property name="title">Controller Temp</property>
+                    <property name="subtitle">°C</property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>     
+          </object>
+        </child>
+
       </object>
     </child>
-  
   </template>
 </interface>

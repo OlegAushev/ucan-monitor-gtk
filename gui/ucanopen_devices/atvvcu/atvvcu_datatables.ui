@@ -45,37 +45,8 @@
         </child>
 
         <child>
-          <object class="GtkBox">
-            <property name="orientation">vertical</property>
-
-            <child>
-              <object class="AtvVcuMotorData">
-                <property name="title">Motor Front Left</property>
-                <property name="width-request">280</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="AtvVcuMotorData">
-                <property name="title">Motor Front Right</property>
-                <property name="width-request">280</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="AtvVcuMotorData">
-                <property name="title">Motor Rear Left</property>
-                <property name="width-request">280</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="AtvVcuMotorData">
-                <property name="title">Motor Rear Right</property>
-                <property name="width-request">280</property>
-              </object>
-            </child>
-
+          <object class="AtvVcuMotorData">
+            
           </object>
         </child>
 
