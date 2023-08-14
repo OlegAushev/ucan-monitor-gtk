@@ -19,6 +19,24 @@
                 <property name="width-request">280</property>
 
                 <child>
+                  <object class="BasicEntry" id="entry_status_lf">
+                    <property name="title">Status</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultcode_lf">
+                    <property name="title">Fault Code</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
                   <object class="BasicEntry" id="entry_speed_lf">
                     <property name="title">Speed</property>
                     <property name="subtitle">rpm</property>
@@ -74,6 +92,24 @@
               <object class="AdwPreferencesGroup">
                 <property name="title">Motor LB</property>
                 <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_status_lb">
+                    <property name="title">Status</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultcode_lb">
+                    <property name="title">Fault Code</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
 
                 <child>
                   <object class="BasicEntry" id="entry_speed_lb">
@@ -140,6 +176,24 @@
                 <property name="width-request">280</property>
 
                 <child>
+                  <object class="BasicEntry" id="entry_status_rf">
+                    <property name="title">Status</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultcode_rf">
+                    <property name="title">Fault Code</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
                   <object class="BasicEntry" id="entry_speed_rf">
                     <property name="title">Speed</property>
                     <property name="subtitle">rpm</property>
@@ -195,6 +249,24 @@
               <object class="AdwPreferencesGroup">
                 <property name="title">Motor RB</property>
                 <property name="width-request">280</property>
+
+                <child>
+                  <object class="BasicEntry" id="entry_status_rb">
+                    <property name="title">Status</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultcode_rb">
+                    <property name="title">Fault Code</property>
+                    <property name="subtitle">hex</property>
+                    <property name="value-chars">10</property>
+                    <property name="ulong-format">%016lX</property>
+                  </object>
+                </child>
 
                 <child>
                   <object class="BasicEntry" id="entry_speed_rb">
