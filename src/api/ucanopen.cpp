@@ -67,6 +67,16 @@ void ucanopen_server_get_watch_value(const char* server_name, const char* watch_
 }
 
 
+float ucanopen_server_get_watch_value_f32(const char* server_name, const char* watch_subcategory, const char* watch_name) {
+    return ucanopen_client->server(server_name)->watch_service.value(watch_subcategory, watch_name).f32();
+}
+
+
+unsigned int ucanopen_server_get_watch_value_u32(const char* server_name, const char* watch_subcategory, const char* watch_name) {
+    return ucanopen_client->server(server_name)->watch_service.value(watch_subcategory, watch_name).u32();
+}
+
+
 int ucanopen_server_get_config_categories(const char* server_name, char** retbuf, int str_count, int str_size) {
     int retval = ucanopen_client->server(server_name)->config_service.object_list().size();
     if (retval >= str_count) {

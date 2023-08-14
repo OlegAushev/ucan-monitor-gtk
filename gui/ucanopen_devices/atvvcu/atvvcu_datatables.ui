@@ -52,8 +52,6 @@
 
         </child>
 
-
-
         <child>
           <object class="AtvVcuMotorData">
             <property name="hexpand">false</property>            
