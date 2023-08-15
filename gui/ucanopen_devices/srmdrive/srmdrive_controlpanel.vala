@@ -48,19 +48,19 @@ public class ControlPanel : Adw.Bin {
         });
 
         calibrate_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "calibrate");
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "calibrate");
         });
 
         invert_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "invert_rotdir");
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "invert_rotdir");
         });
 
         clearerrors_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "clear_errors");
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "clear_errors");
         });
 
         resetdevice_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "reset_device");
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "reset_device");
         });
         
         //--------------------------------------------------------------------------------------------------------------
@@ -75,32 +75,32 @@ public class ControlPanel : Adw.Bin {
         //--------------------------------------------------------------------------------------------------------------
         field_expanderrow.notify["enable-expansion"].connect((s,p) => {
             if (field_expanderrow.enable_expansion) {
-                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_manual_field");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_manual_field");
             } else {
-                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "disable_manual_field");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "disable_manual_field");
             }
         });
 
         field_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_field_current", field_slider.value.to_string());
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_field_current", field_slider.value.to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------
         openloop_expanderrow.notify["enable-expansion"].connect((s,p) => {
             if (openloop_expanderrow.enable_expansion) {
-                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_open_loop");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_open_loop");
             } else {
-                ucanopen_server_exec(Backend.Ucanopen.server, "drive", "ctl", "enable_closed_loop");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_closed_loop");
             }
         });
 
         current_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_current", current_slider.value.to_string());
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_current", current_slider.value.to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------
         gammacorrection_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "drive", "ctl", "set_gamma_correction", gammacorrection_slider.value.to_string());
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_gamma_correction", gammacorrection_slider.value.to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------

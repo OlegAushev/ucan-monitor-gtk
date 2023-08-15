@@ -12,35 +12,35 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
     .config_category = "config"
 },
 .entries = {
-{{0x1008, 0x00}, {"sys", "info", "device_name", "", OD_STRING, OD_ACCESS_CONST}},
-{{0x1009, 0x00}, {"sys", "info", "hardware_version", "", OD_STRING, OD_ACCESS_CONST}},
-{{0x100A, 0x00}, {"sys", "info", "firmware_version", "", OD_STRING, OD_ACCESS_CONST}},
+{{0x1008, 0x00}, {"info", "sys", "device_name", "", OD_STRING, OD_ACCESS_CONST}},
+{{0x1009, 0x00}, {"info", "sys", "hardware_version", "", OD_STRING, OD_ACCESS_CONST}},
+{{0x100A, 0x00}, {"info", "sys", "firmware_version", "", OD_STRING, OD_ACCESS_CONST}},
 
-{{0x1010, 0x01}, {"sys", "ctl", "save_all_parameters", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x1011, 0x01}, {"sys", "ctl", "restore_all_default_parameters", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x1010, 0x01}, {"ctl", "sys", "save_all_parameters", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x1011, 0x01}, {"ctl", "sys", "restore_all_default_parameters", "", OD_EXEC, OD_ACCESS_WO}},
 
-{{0x1018, 0x04}, {"sys", "info", "serial_number", "", OD_UINT32, OD_ACCESS_CONST}},
+{{0x1018, 0x04}, {"info", "sys", "serial_number", "", OD_UINT32, OD_ACCESS_CONST}},
 
-{{0x2000, 0x01}, {"sys", "ctl", "reset_device", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2000, 0x02}, {"sys", "ctl", "clear_errors", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2000, 0x01}, {"ctl", "sys", "reset_device", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2000, 0x02}, {"ctl", "sys", "clear_errors", "", OD_EXEC, OD_ACCESS_WO}},
 
-{{0x2001, 0x01}, {"drive", "ctl", "startup", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x02}, {"drive", "ctl", "shutdown", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x03}, {"drive", "ctl", "calibrate", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x04}, {"drive", "ctl", "invert_rotdir", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x05}, {"drive", "ctl", "enable_torque_ref", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x06}, {"drive", "ctl", "enable_speed_ref", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x07}, {"drive", "ctl", "enable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x08}, {"drive", "ctl", "disable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x09}, {"drive", "ctl", "set_field_current", "", OD_FLOAT32, OD_ACCESS_WO}},
-{{0x2001, 0x0A}, {"drive", "ctl", "enable_open_loop", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x0B}, {"drive", "ctl", "enable_closed_loop", "", OD_EXEC, OD_ACCESS_WO}},
-{{0x2001, 0x0C}, {"drive", "ctl", "set_current", "", OD_FLOAT32, OD_ACCESS_WO}},
-{{0x2001, 0x0D}, {"drive", "ctl", "set_gamma_correction", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x01}, {"ctl", "drive", "startup", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x02}, {"ctl", "drive", "shutdown", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x03}, {"ctl", "drive", "calibrate", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x04}, {"ctl", "drive", "invert_rotdir", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x05}, {"ctl", "drive", "enable_torque_ref", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x06}, {"ctl", "drive", "enable_speed_ref", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x07}, {"ctl", "drive", "enable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x08}, {"ctl", "drive", "disable_manual_field", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x09}, {"ctl", "drive", "set_field_current", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x0A}, {"ctl", "drive", "enable_open_loop", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x0B}, {"ctl", "drive", "enable_closed_loop", "", OD_EXEC, OD_ACCESS_WO}},
+{{0x2001, 0x0C}, {"ctl", "drive", "set_current", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x0D}, {"ctl", "drive", "set_gamma_correction", "", OD_FLOAT32, OD_ACCESS_WO}},
 
 
-{{0x5000, 0x01}, {"watch", "watch", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
-{{0x5000, 0x02}, {"watch", "watch", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
+{{0x5000, 0x01}, {"watch", "sys", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
+{{0x5000, 0x02}, {"watch", "sys", "syslog_message", "", OD_UINT32, OD_ACCESS_RO}},
 
 
 {{0x3000, 0x01}, {"config", "ucanopen", "node_id", "", OD_UINT32, OD_ACCESS_RW}},

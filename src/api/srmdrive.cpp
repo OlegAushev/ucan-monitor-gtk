@@ -18,9 +18,9 @@ extern "C" {
 
 void srmdrive_set_power_enabled(bool enabled) {
     if (enabled) {
-        srmdrive_server->exec("drive", "ctl", "startup");
+        srmdrive_server->exec("ctl", "drive", "startup");
     } else {
-        srmdrive_server->exec("drive", "ctl", "shutdown");
+        srmdrive_server->exec("ctl", "drive", "shutdown");
     }
 }
 
