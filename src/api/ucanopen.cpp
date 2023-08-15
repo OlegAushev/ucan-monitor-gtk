@@ -63,7 +63,7 @@ void ucanopen_client_set_watch_period(int period) {
 
 
 void ucanopen_server_get_watch_value(const char* server_name, const char* watch_subcategory, const char* watch_name, char* retbuf, int bufsize) {
-    ucanopen_client->server(server_name)->watch_service.value(watch_subcategory, watch_name, retbuf, bufsize);
+    ucanopen_client->server(server_name)->watch_service.value_cstr(watch_subcategory, watch_name, retbuf, bufsize);
 }
 
 

@@ -75,7 +75,7 @@ public:
         return _object_list;
     }
 
-    std::string value(std::string_view watch_subcategory, std::string_view watch_name) const {
+    std::string value_str(std::string_view watch_subcategory, std::string_view watch_name) const {
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             return "n/a";
@@ -83,7 +83,7 @@ public:
         return it->second.str;
     }
 
-    void value(std::string_view watch_subcategory, std::string_view watch_name, char* retbuf, int bufsize) const {
+    void value_cstr(std::string_view watch_subcategory, std::string_view watch_name, char* retbuf, int bufsize) const {
         retbuf[0] = '\0';
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
@@ -101,6 +101,14 @@ public:
             return 0;
         }
         return it->second.raw;
+    }
+
+    void set_value_str(std::string_view watch_subcategory, std::string_view watch_name, std::string value_str) {
+        auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
+        if (it == _data.end()) {
+            return;
+        }
+        it->second.str = value_str;
     }
 };
 
