@@ -102,7 +102,7 @@ public class ServerConfiguration : Adw.Bin {
             dialog.set_response_appearance("cancel", DESTRUCTIVE);
             dialog.set_response_appearance("continue", SUGGESTED);
             dialog.response["continue"].connect(() => {
-                ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "save_all_parameters");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "save_all_parameters");
             });
             dialog.present();	
         });
@@ -116,7 +116,7 @@ public class ServerConfiguration : Adw.Bin {
             dialog.set_response_appearance("cancel", DESTRUCTIVE);
             dialog.set_response_appearance("continue", SUGGESTED);
             dialog.response["continue"].connect(() => {
-                ucanopen_server_exec(Backend.Ucanopen.server, "sys", "ctl", "restore_all_default_parameters");
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "restore_all_default_parameters");
             });
             dialog.present();		
         });
