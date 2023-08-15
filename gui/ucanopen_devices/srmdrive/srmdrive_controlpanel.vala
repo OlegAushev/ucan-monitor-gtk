@@ -11,6 +11,8 @@ public class ControlPanel : Adw.Bin {
     [GtkChild]
     private unowned Gtk.Button invert_button;
     [GtkChild]
+    private unowned Gtk.Button resetdriverfault_button;
+    [GtkChild]
     private unowned Gtk.Button clearerrors_button;
     [GtkChild]
     private unowned Gtk.Button resetdevice_button;
@@ -53,6 +55,10 @@ public class ControlPanel : Adw.Bin {
 
         invert_button.clicked.connect(() => {
             ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "invert_rotdir");
+        });
+
+        resetdriverfault_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "reset_driver_fault");
         });
 
         clearerrors_button.clicked.connect(() => {

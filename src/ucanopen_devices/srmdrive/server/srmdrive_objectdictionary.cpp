@@ -37,6 +37,8 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2001, 0x0B}, {"ctl", "drive", "enable_closed_loop", "", OD_EXEC, OD_ACCESS_WO}},
 {{0x2001, 0x0C}, {"ctl", "drive", "set_current", "", OD_FLOAT32, OD_ACCESS_WO}},
 {{0x2001, 0x0D}, {"ctl", "drive", "set_gamma_correction", "", OD_FLOAT32, OD_ACCESS_WO}},
+{{0x2001, 0x0E}, {"ctl", "drive", "reset_driver_fault", "", OD_EXEC, OD_ACCESS_WO}},
+
 
 
 {{0x5000, 0x01}, {"watch", "sys", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
