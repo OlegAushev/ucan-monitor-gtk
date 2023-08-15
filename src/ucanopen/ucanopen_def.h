@@ -273,8 +273,11 @@ public:
             return std::to_string(u16());
         case ucanopen::OD_EXEC:
             return std::string();
-        case ucanopen::OD_STRING:
-            return std::string();
+        case ucanopen::OD_STRING: {
+            char ret[5] = {0};
+            memcpy(ret, &_data, sizeof(_data));
+            return std::string(ret);
+        }
         }
         return std::string();
     }

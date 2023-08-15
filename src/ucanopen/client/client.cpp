@@ -160,7 +160,8 @@ void Client::_run(std::future<void> signal_exit) {
         can_frame frame;
         can::Error recv_error = _socket->recv(frame);
         while (recv_error == can::Error::none) {
-            (void) std::async(&Client::_on_frame_received, this, frame);
+            //(void) std::async(&Client::_on_frame_received, this, frame);
+            _on_frame_received(frame);
             recv_error = _socket->recv(frame);
         }
     }
