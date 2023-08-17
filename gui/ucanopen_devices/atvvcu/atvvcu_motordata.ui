@@ -19,11 +19,39 @@
                 <property name="width-request">280</property>
 
                 <child>
-                  <object class="BasicEntry" id="entry_status_lf">
-                    <property name="title">Status</property>
-                    <property name="subtitle">hex</property>
+                  <object class="BoolEntry" id="entry_controlmode_lf">
+                    <property name="title">Control Mode</property>
+                    <property name="subtitle"></property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="true-text">torque</property>
+                    <property name="false-text">speed</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BoolEntry" id="entry_enablestatus_lf">
+                    <property name="title">Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                    <property name="true-text">enabled</property>
+                    <property name="false-text">disabled</property>
+                    <property name="true-css-class">success</property>
+                    <property name="false-css-class">error</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_dischargestatus_lf">
+                    <property name="title">Discharge Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultlevel_lf">
+                    <property name="title">Fault Level</property>
+                    <property name="value-chars">10</property>
                   </object>
                 </child>
 
@@ -32,7 +60,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="uint-format">0x%02X</property>
                   </object>
                 </child>
 
@@ -94,11 +122,39 @@
                 <property name="width-request">280</property>
 
                 <child>
-                  <object class="BasicEntry" id="entry_status_lb">
-                    <property name="title">Status</property>
-                    <property name="subtitle">hex</property>
+                  <object class="BoolEntry" id="entry_controlmode_lb">
+                    <property name="title">Control Mode</property>
+                    <property name="subtitle"></property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="true-text">torque</property>
+                    <property name="false-text">speed</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BoolEntry" id="entry_enablestatus_lb">
+                    <property name="title">Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                    <property name="true-text">enabled</property>
+                    <property name="false-text">disabled</property>
+                    <property name="true-css-class">success</property>
+                    <property name="false-css-class">error</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_dischargestatus_lb">
+                    <property name="title">Discharge Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultlevel_lb">
+                    <property name="title">Fault Level</property>
+                    <property name="value-chars">10</property>
                   </object>
                 </child>
 
@@ -107,7 +163,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="ulong-format">0x%02X</property>
                   </object>
                 </child>
 
@@ -176,11 +232,39 @@
                 <property name="width-request">280</property>
 
                 <child>
-                  <object class="BasicEntry" id="entry_status_rf">
-                    <property name="title">Status</property>
-                    <property name="subtitle">hex</property>
+                  <object class="BoolEntry" id="entry_controlmode_rf">
+                    <property name="title">Control Mode</property>
+                    <property name="subtitle"></property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="true-text">torque</property>
+                    <property name="false-text">speed</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BoolEntry" id="entry_enablestatus_rf">
+                    <property name="title">Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                    <property name="true-text">enabled</property>
+                    <property name="false-text">disabled</property>
+                    <property name="true-css-class">success</property>
+                    <property name="false-css-class">error</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_dischargestatus_rf">
+                    <property name="title">Discharge Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultlevel_rf">
+                    <property name="title">Fault Level</property>
+                    <property name="value-chars">10</property>
                   </object>
                 </child>
 
@@ -189,7 +273,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="ulong-format">0x%02X</property>
                   </object>
                 </child>
 
@@ -251,11 +335,39 @@
                 <property name="width-request">280</property>
 
                 <child>
-                  <object class="BasicEntry" id="entry_status_rb">
-                    <property name="title">Status</property>
-                    <property name="subtitle">hex</property>
+                  <object class="BoolEntry" id="entry_controlmode_rb">
+                    <property name="title">Control Mode</property>
+                    <property name="subtitle"></property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="true-text">torque</property>
+                    <property name="false-text">speed</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BoolEntry" id="entry_enablestatus_rb">
+                    <property name="title">Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                    <property name="true-text">enabled</property>
+                    <property name="false-text">disabled</property>
+                    <property name="true-css-class">success</property>
+                    <property name="false-css-class">error</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_dischargestatus_rb">
+                    <property name="title">Discharge Status</property>
+                    <property name="subtitle"></property>
+                    <property name="value-chars">10</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="BasicEntry" id="entry_faultlevel_rb">
+                    <property name="title">Fault Level</property>
+                    <property name="value-chars">10</property>
                   </object>
                 </child>
 
@@ -264,7 +376,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">%016lX</property>
+                    <property name="ulong-format">0x%02X</property>
                   </object>
                 </child>
 
