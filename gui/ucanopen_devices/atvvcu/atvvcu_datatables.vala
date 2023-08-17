@@ -45,10 +45,7 @@ public class DataTables : Adw.Bin {
 
     private void _update_system_data() {
         heartbeat_indicator.update();
-
-        string buf = string.nfill(16, '\0');
-        ucanopen_server_get_watch_value(Backend.Ucanopen.server, "sys", "uptime", buf, 16);
-        entry_uptime.string_value = buf;
+        entry_uptime.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "sys", "uptime");
     }
 
     private void _update_tpdo1_data() {
