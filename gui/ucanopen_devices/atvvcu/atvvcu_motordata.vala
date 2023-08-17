@@ -36,9 +36,7 @@ public class MotorData : Adw.Bin {
     }
 
     private void update_lf_data() {
-        string buf = string.nfill(16, '\0');
-        ucanopen_server_get_watch_value(Backend.Ucanopen.server, "motordrive", "speed_lf", buf, 16);
-        entry_speed_lf.string_value = buf;
+        entry_speed_lf.int_value = ucanopen_server_get_watch_value_i32(Backend.Ucanopen.server, "motordrive", "speed_lf");
     }
 
     private void update_lb_data() {

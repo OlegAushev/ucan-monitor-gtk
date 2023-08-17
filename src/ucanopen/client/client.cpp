@@ -30,7 +30,7 @@ void Client::set_node_id(NodeId node_id) {
     if (node_id == _node_id) { return; }
 
     std::stringstream logmsg;
-    logmsg << "uCANopen client ID = " << node_id.get() << " (0x" << std::hex << node_id.get() << std::dec << ")";
+    logmsg << "uCANopen client ID = " << node_id.get() << " (0x" << std::hex << std::uppercase << node_id.get() << std::nouppercase << std::dec << ")";
 
     if (!node_id.valid()) {
         Log() << "Failed to set " << logmsg << ": invalid ID.\n" << LogPrefix::failed;
@@ -49,7 +49,7 @@ void Client::set_node_id(NodeId node_id) {
 
 void Client::register_server(std::shared_ptr<Server> server) {
     std::stringstream logmsg;
-    logmsg << "uCANopen server {" << server->name() << "} ID 0x" << std::hex << server->node_id().get() << std::dec;
+    logmsg << "uCANopen server {" << server->name() << "} ID 0x" << std::hex << std::uppercase << server->node_id().get() << std::nouppercase << std::dec;
 
 
     auto server_same_name = std::find_if(_servers.begin(), _servers.end(), 
@@ -80,7 +80,7 @@ void Client::register_server(std::shared_ptr<Server> server) {
 
 void Client::set_server_node_id(std::string_view name, NodeId node_id) {
     std::stringstream logmsg;
-    logmsg << "uCANopen server {" << name << "} ID = " << node_id.get() << " (0x" << std::hex << node_id.get() << std::dec << ")";
+    logmsg << "uCANopen server {" << name << "} ID = " << node_id.get() << " (0x" << std::hex << std::uppercase << node_id.get() << std::nouppercase << std::dec << ")";
 
     auto server_iter = std::find_if(_servers.begin(), _servers.end(),
             [name](const auto& s) { return s->name() == name; });

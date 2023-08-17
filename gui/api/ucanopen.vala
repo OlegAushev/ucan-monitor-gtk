@@ -13,6 +13,8 @@ extern void ucanopen_client_set_watch_period(int period);
 extern void ucanopen_server_get_watch_value(string server_name, string watch_subcategory, string watch_name, char* retbuf, int bufsize);
 extern float ucanopen_server_get_watch_value_f32(string server_name, string watch_subcategory, string watch_name);
 extern uint ucanopen_server_get_watch_value_u32(string server_name, string watch_subcategory, string watch_name);
+extern int ucanopen_server_get_watch_value_i32(string server_name, string watch_subcategory, string watch_name);
+
 
 extern int ucanopen_server_get_config_categories(string server_name, char** retbuf, int str_count, int str_size);
 extern int ucanopen_server_get_config_objects(string server_name, string category, char** retbuf, int str_count, int str_size);
