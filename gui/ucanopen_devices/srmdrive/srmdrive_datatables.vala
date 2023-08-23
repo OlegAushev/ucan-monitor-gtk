@@ -5,7 +5,17 @@ public class DataTables : Adw.Bin {
     [GtkChild]
     private unowned Ucanopen.HeartbeatIndicator heartbeat_indicator;
     [GtkChild]
-    private unowned BasicEntry entry_uptime;
+    private unowned BasicEntry entry_w_uptime;
+    [GtkChild]
+    private unowned BasicEntry entry_w_voltage_dc;
+    [GtkChild]
+    private unowned BasicEntry entry_w_current_pha;
+    [GtkChild]
+    private unowned BasicEntry entry_w_current_phb;
+    [GtkChild]
+    private unowned BasicEntry entry_w_current_phc;
+    [GtkChild]
+    private unowned BasicEntry entry_w_current_f;
     
     //------------------------------------------------------------------------------------------------------------------
     [GtkChild]
@@ -96,7 +106,12 @@ public class DataTables : Adw.Bin {
 
     private void _update_watch_data() {
         heartbeat_indicator.update();
-        entry_uptime.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "sys", "uptime");
+        entry_w_uptime.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "sys", "uptime");
+        entry_w_voltage_dc.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "drive", "voltage_dc");
+        entry_w_current_pha.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "drive", "current_pha");
+        entry_w_current_phb.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "drive", "current_phb");
+        entry_w_current_phc.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "drive", "current_phc");
+        entry_w_current_f.float_value = ucanopen_server_get_watch_value_f32(Backend.Ucanopen.server, "drive", "current_f");
     }
 
     private void _update_tpdo1_data() {

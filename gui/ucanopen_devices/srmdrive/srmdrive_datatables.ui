@@ -27,14 +27,59 @@
             </child>
 
             <child>
-              <object class="BasicEntry" id="entry_uptime">
+              <object class="BasicEntry" id="entry_w_uptime">
                 <property name="title">Uptime</property>
                 <property name="subtitle">s</property>
                 <property name="value-chars">10</property>
                 <property name="float-format">%.2f</property>
               </object>
             </child>
-            
+
+            <child>
+              <object class="BasicEntry" id="entry_w_voltage_dc">
+                <property name="title">DC Voltage</property>
+                <property name="subtitle">V</property>
+                <property name="value-chars">10</property>
+                <property name="float-format">%.2f</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="BasicEntry" id="entry_w_current_pha">
+                <property name="title">PhA Current</property>
+                <property name="subtitle">A</property>
+                <property name="value-chars">10</property>
+                <property name="float-format">%.2f</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="BasicEntry" id="entry_w_current_phb">
+                <property name="title">PhB Current</property>
+                <property name="subtitle">A</property>
+                <property name="value-chars">10</property>
+                <property name="float-format">%.2f</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="BasicEntry" id="entry_w_current_phc">
+                <property name="title">PhC Current</property>
+                <property name="subtitle">A</property>
+                <property name="value-chars">10</property>
+                <property name="float-format">%.2f</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="BasicEntry" id="entry_w_current_f">
+                <property name="title">Field Current</property>
+                <property name="subtitle">A</property>
+                <property name="value-chars">10</property>
+                <property name="float-format">%.2f</property>
+              </object>
+            </child>
+
           </object>
         </child>
 
