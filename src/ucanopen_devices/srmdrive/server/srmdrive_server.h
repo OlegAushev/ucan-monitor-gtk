@@ -60,7 +60,7 @@ private:
 
     struct Tpdo2 {
         unsigned int stator_current;
-        unsigned int field_current;
+        float field_current;
         unsigned int out_voltage;
         unsigned int mech_power;
         unsigned int elec_power;

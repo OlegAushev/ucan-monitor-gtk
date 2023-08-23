@@ -16,7 +16,7 @@ extern int srmdrive_tpdo1_get_torque();
 extern int srmdrive_tpdo1_get_speed();
 
 extern uint srmdrive_tpdo2_get_stator_current();
-extern uint srmdrive_tpdo2_get_field_current();
+extern float srmdrive_tpdo2_get_field_current();
 extern uint srmdrive_tpdo2_get_out_voltage();
 extern uint srmdrive_tpdo2_get_mech_power();
 extern uint srmdrive_tpdo2_get_elec_power();

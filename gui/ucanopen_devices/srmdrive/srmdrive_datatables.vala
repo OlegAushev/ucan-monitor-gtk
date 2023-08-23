@@ -142,7 +142,7 @@ public class DataTables : Adw.Bin {
         entry_tpdo2_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 1);
 
         entry_stator_current.uint_value = srmdrive_tpdo2_get_stator_current();
-        entry_field_current.uint_value = srmdrive_tpdo2_get_field_current();
+        entry_field_current.float_value = srmdrive_tpdo2_get_field_current();
         entry_out_voltage.uint_value = srmdrive_tpdo2_get_out_voltage();
         entry_mech_power.uint_value = srmdrive_tpdo2_get_mech_power();
         entry_elec_power.uint_value = srmdrive_tpdo2_get_elec_power();

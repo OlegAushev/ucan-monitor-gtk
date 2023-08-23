@@ -63,7 +63,7 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
 void Server::_handle_tpdo2(const ucanopen::can_payload& payload) {
     CobTpdo2 tpdo = ucanopen::from_payload<CobTpdo2>(payload);
     _tpdo2.stator_current = tpdo.stator_current;
-    _tpdo2.field_current = tpdo.field_current;
+    _tpdo2.field_current = float(tpdo.field_current) / 10.f;
     _tpdo2.out_voltage = tpdo.out_voltage;
     _tpdo2.mech_power = tpdo.mech_power;
     _tpdo2.elec_power = tpdo.elec_power;

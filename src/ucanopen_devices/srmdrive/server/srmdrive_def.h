@@ -28,7 +28,7 @@ struct CobTpdo1 {
 struct CobTpdo2 {
     uint16_t counter : 2;
     uint16_t stator_current : 14;
-    uint16_t field_current;
+    int16_t field_current;
     uint16_t out_voltage : 8;
     uint16_t mech_power : 8;
     uint16_t elec_power : 8;

@@ -105,7 +105,7 @@ unsigned int srmdrive_tpdo2_get_stator_current() {
 }
 
 
-unsigned int srmdrive_tpdo2_get_field_current() {
+float srmdrive_tpdo2_get_field_current() {
     return srmdrive_server->tpdo2().field_current;
 }
 

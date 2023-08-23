@@ -254,6 +254,7 @@
                 <property name="title">Field Current</property>
                 <property name="subtitle">A</property>
                 <property name="value-chars">10</property>
+                <property name="float-format">%.1f</property>
               </object>
             </child>
 
@@ -268,7 +269,7 @@
             <child>
               <object class="BasicEntry" id="entry_mech_power">
                 <property name="title">Mech Power</property>
-                <property name="subtitle">W</property>
+                <property name="subtitle">kW</property>
                 <property name="value-chars">10</property>
               </object>
             </child>
@@ -276,7 +277,7 @@
             <child>
               <object class="BasicEntry" id="entry_elec_power">
                 <property name="title">Elec Power</property>
-                <property name="subtitle">VA</property>
+                <property name="subtitle">kVA</property>
                 <property name="value-chars">10</property>
               </object>
             </child>
