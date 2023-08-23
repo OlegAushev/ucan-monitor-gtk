@@ -22,6 +22,7 @@ extern uint srmdrive_tpdo2_get_mech_power();
 extern uint srmdrive_tpdo2_get_elec_power();
 extern bool srmdrive_tpdo2_get_manual_field_current_enabled();
 
+extern bool srmdrive_tpdo3_get_overheat_status();
 extern int srmdrive_tpdo3_get_pwrmodule_temp();
 extern int srmdrive_tpdo3_get_excmodule_temp();
 extern int srmdrive_tpdo3_get_pcb_temp();

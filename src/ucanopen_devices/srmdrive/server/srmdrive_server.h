@@ -68,6 +68,7 @@ private:
     } _tpdo2{};
 
     struct Tpdo3 {
+        bool status_overheat;
         int pwrmodule_temp;
         int excmodule_temp;
         int pcb_temp;

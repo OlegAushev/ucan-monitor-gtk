@@ -40,7 +40,8 @@ struct CobTpdo2 {
 struct CobTpdo3 {
     uint16_t counter : 2;
     uint16_t _reserved : 14;
-    uint16_t _reserved2 : 8;
+    uint16_t status_overheat : 1;
+    uint16_t _reserved2 : 7;
     uint16_t pwrmodule_temp : 8;
     uint16_t excmodule_temp : 8;
     uint16_t pcb_temp : 8;

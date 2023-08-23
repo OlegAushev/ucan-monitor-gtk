@@ -155,6 +155,7 @@ public class DataTables : Adw.Bin {
         tpdo3_indicator.value = ucanopen_server_is_tpdo_ok(Backend.Ucanopen.server, 2);
         entry_tpdo3_raw_data.ulong_value = ucanopen_server_get_tpdo_data(Backend.Ucanopen.server, 2);
 
+        entry_overheat_status.value = srmdrive_tpdo3_get_overheat_status();
         entry_pwrmodule_temp.int_value = srmdrive_tpdo3_get_pwrmodule_temp();
         entry_excmodule_temp.int_value = srmdrive_tpdo3_get_excmodule_temp();
         entry_pcb_temp.int_value = srmdrive_tpdo3_get_pcb_temp();

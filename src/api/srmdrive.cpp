@@ -130,6 +130,11 @@ bool srmdrive_tpdo2_get_manual_field_current_enabled() {
 
 
 //----------------------------------------------------------------------------------------------------------------------
+bool srmdrive_tpdo3_get_overheat_status() {
+    return srmdrive_server->tpdo3().status_overheat;
+}
+
+
 int srmdrive_tpdo3_get_pwrmodule_temp() {
     return srmdrive_server->tpdo3().pwrmodule_temp;
 }

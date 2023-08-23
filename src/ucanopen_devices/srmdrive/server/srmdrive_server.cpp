@@ -73,6 +73,7 @@ void Server::_handle_tpdo2(const ucanopen::can_payload& payload) {
 
 void Server::_handle_tpdo3(const ucanopen::can_payload& payload) {
     CobTpdo3 tpdo = ucanopen::from_payload<CobTpdo3>(payload);
+    _tpdo3.status_overheat = tpdo.status_overheat;
     _tpdo3.pwrmodule_temp = int(tpdo.pwrmodule_temp) - 40;
     _tpdo3.excmodule_temp = int(tpdo.excmodule_temp) - 40;
     _tpdo3.pcb_temp = int(tpdo.pcb_temp) - 40;
