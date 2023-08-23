@@ -64,6 +64,7 @@ private:
         unsigned int out_voltage;
         unsigned int mech_power;
         unsigned int elec_power;
+        bool manual_field_current_enabled;
     } _tpdo2{};
 
     struct Tpdo3 {

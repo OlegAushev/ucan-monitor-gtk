@@ -157,18 +157,6 @@
             </child>
 
             <child>
-              <object class="BoolEntry" id="entry_overheat_status">
-                <property name="title">Overheat</property>
-                <property name="subtitle"></property>
-                <property name="value-chars">10</property>
-                <property name="true-text">1</property>
-                <property name="false-text">0</property>
-                <property name="true-css-class">error</property>
-                <property name="false-css-class">success</property>
-              </object>
-            </child>
-
-            <child>
               <object class="BasicEntry" id="entry_drive_reference">
                 <property name="title">Drive Reference</property>
                 <property name="subtitle"></property>
@@ -281,6 +269,18 @@
                 <property name="value-chars">10</property>
               </object>
             </child>
+
+            <child>
+              <object class="BoolEntry" id="entry_manual_field_current">
+                <property name="title">Manual Field Current</property>
+                <property name="subtitle"></property>
+                <property name="value-chars">10</property>
+                <property name="true-text">enabled</property>
+                <property name="false-text">disabled</property>
+                <property name="true-css-class">error</property>
+                <property name="false-css-class">success</property>
+              </object>
+            </child>
             
           </object>
         </child>
@@ -312,6 +312,18 @@
                 <property name="subtitle">hex</property>
                 <property name="value-chars">16</property>
                 <property name="ulong-format">%016lX</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="BoolEntry" id="entry_overheat_status">
+                <property name="title">Overheat</property>
+                <property name="subtitle"></property>
+                <property name="value-chars">10</property>
+                <property name="true-text">1</property>
+                <property name="false-text">0</property>
+                <property name="true-css-class">error</property>
+                <property name="false-css-class">success</property>
               </object>
             </child>
 

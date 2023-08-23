@@ -124,6 +124,10 @@ unsigned int srmdrive_tpdo2_get_elec_power() {
     return srmdrive_server->tpdo2().elec_power;
 }
 
+bool srmdrive_tpdo2_get_manual_field_current_enabled() { 
+    return srmdrive_server->tpdo2().manual_field_current_enabled;
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 int srmdrive_tpdo3_get_pwrmodule_temp() {

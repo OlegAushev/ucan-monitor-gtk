@@ -31,8 +31,6 @@ public class DataTables : Adw.Bin {
     [GtkChild]
     private unowned BoolEntry entry_warning_status;
     [GtkChild]
-    private unowned BoolEntry entry_overheat_status;
-    [GtkChild]
     private unowned BasicEntry entry_drive_reference;
     [GtkChild]
     private unowned BasicEntry entry_control_loop_type;
@@ -58,12 +56,16 @@ public class DataTables : Adw.Bin {
     private unowned BasicEntry entry_mech_power;
     [GtkChild]
     private unowned BasicEntry entry_elec_power;
-   
+    [GtkChild]
+    private unowned BoolEntry entry_manual_field_current;
+
     //------------------------------------------------------------------------------------------------------------------    
     [GtkChild]
     private unowned BoolEntry tpdo3_indicator;
     [GtkChild]
     private unowned BasicEntry entry_tpdo3_raw_data;
+    [GtkChild]
+    private unowned BoolEntry entry_overheat_status;
     [GtkChild]
     private unowned BasicEntry entry_pwrmodule_temp;
     [GtkChild]
@@ -146,6 +148,7 @@ public class DataTables : Adw.Bin {
         entry_out_voltage.uint_value = srmdrive_tpdo2_get_out_voltage();
         entry_mech_power.uint_value = srmdrive_tpdo2_get_mech_power();
         entry_elec_power.uint_value = srmdrive_tpdo2_get_elec_power();
+        entry_manual_field_current.value = srmdrive_tpdo2_get_manual_field_current_enabled();
     }
 
     private void _update_tpdo3_data() {

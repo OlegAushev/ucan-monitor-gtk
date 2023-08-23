@@ -32,7 +32,8 @@ struct CobTpdo2 {
     uint16_t out_voltage : 8;
     uint16_t mech_power : 8;
     uint16_t elec_power : 8;
-    uint16_t _reserved : 8;
+    uint16_t manual_field_current_enabled : 1;
+    uint16_t _reserved : 7;
 };
 
 

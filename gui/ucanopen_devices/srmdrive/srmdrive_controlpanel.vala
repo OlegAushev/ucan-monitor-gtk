@@ -6,6 +6,12 @@ public class ControlPanel : Adw.Bin {
     private unowned Gtk.Switch power_switch;
     [GtkChild]
     private unowned Gtk.Switch run_switch;
+
+    [GtkChild]
+    private unowned Gtk.Button ref_torque_button;
+    [GtkChild]
+    private unowned Gtk.Button ref_speed_button;
+
     [GtkChild]
     private unowned Gtk.Button calibrate_button;
     [GtkChild]
@@ -47,6 +53,14 @@ public class ControlPanel : Adw.Bin {
 
         run_switch.notify["state"].connect((s, p) => {
             srmdrive_set_run_enabled(run_switch.state);
+        });
+
+        ref_torque_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_torque_ref");
+        });
+
+        ref_speed_button.clicked.connect(() => {
+            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_speed_ref");
         });
 
         calibrate_button.clicked.connect(() => {
