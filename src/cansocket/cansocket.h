@@ -65,8 +65,8 @@ private:
     pollfd _recv_fd;
     static constexpr std::chrono::milliseconds _recv_timeout = std::chrono::milliseconds(1);
 
-    std::mutex _send_mutex;
-    std::mutex _recv_mutex;
+    std::mutex _send_mtx;
+    std::mutex _recv_mtx;
 
 public:
     Socket();

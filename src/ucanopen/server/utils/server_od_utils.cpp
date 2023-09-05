@@ -5,7 +5,7 @@ namespace ucanopen {
 
 namespace utils {
 
-uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const {
+uint32_t SerialNumberReader::get(std::future<void> signal_terminate) const {
     _server.read("sys", "info", "serial_number");
     while (signal_terminate.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout
         && _serial_number == 0) {
@@ -15,7 +15,7 @@ uint32_t SerialNumberGetter::get(std::future<void> signal_terminate) const {
 }
 
 
-FrameHandlingStatus SerialNumberGetter::handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) {
+FrameHandlingStatus SerialNumberReader::handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) {
     if (sdo_type == SdoType::response_to_read
      && entry->second.category == "sys"
      && entry->second.subcategory == "info"

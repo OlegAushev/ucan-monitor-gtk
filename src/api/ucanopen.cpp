@@ -166,8 +166,8 @@ void ucanopen_server_exec(const char* server_name, const char* category, const c
 }
 
 
-unsigned int ucanopen_server_get_serial_number(const char* server_name) {
-    return ucanopen_client->server(server_name)->get_serial_number();
+unsigned int ucanopen_server_read_serial_number(const char* server_name) {
+    return ucanopen_client->server(server_name)->read_serial_number();
 }
 
 

@@ -10,12 +10,12 @@ namespace ucanopen {
 
 namespace utils {
 
-class SerialNumberGetter : public SdoSubscriber {
+class SerialNumberReader : public SdoSubscriber {
 private:
     impl::Server& _server;
     uint32_t _serial_number = 0;
 public:
-    SerialNumberGetter(impl::Server& server, impl::SdoPublisher& publisher)
+    SerialNumberReader(impl::Server& server, impl::SdoPublisher& publisher)
             : SdoSubscriber(publisher)
             , _server(server)
     {}

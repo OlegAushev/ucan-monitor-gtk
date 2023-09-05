@@ -77,8 +77,8 @@ Error Socket::connect(const std::string& interface, int bitrate) {
         return Error::invalid_argument;
     }
 
-    std::lock_guard<std::mutex> lock1(_send_mutex);
-    std::lock_guard<std::mutex> lock2(_recv_mutex);
+    std::lock_guard<std::mutex> lock1(_send_mtx);
+    std::lock_guard<std::mutex> lock2(_recv_mtx);
 
     /* FIND SCRIPT */
     Log() << "Searching for SocketCAN enabling script...\n" << LogPrefix::align;
@@ -128,8 +128,8 @@ Error Socket::disconnect() {
         return Error::none;
     }
 
-    std::lock_guard<std::mutex> lock1(_send_mutex);
-    std::lock_guard<std::mutex> lock2(_recv_mutex);
+    std::lock_guard<std::mutex> lock1(_send_mtx);
+    std::lock_guard<std::mutex> lock2(_recv_mtx);
 
     if (close(_socket) < 0) {
         Log() << "Failed to close CAN socket.\n" << LogPrefix::failed;
@@ -159,7 +159,7 @@ Error Socket::send(const can_frame& frame) {
         return Error::socket_closed;
     }
 
-    std::lock_guard<std::mutex> lock(_send_mutex);
+    std::lock_guard<std::mutex> lock(_send_mtx);
 
     if (::write(_socket, &frame, sizeof(can_frame)) != sizeof(can_frame)) {
         return Error::send_error;
@@ -175,7 +175,7 @@ Error Socket::recv(can_frame& frame) {
 
     int byte_count;
 
-    std::lock_guard<std::mutex> lock(_recv_mutex);
+    std::lock_guard<std::mutex> lock(_recv_mtx);
 
     int ret = poll(&_recv_fd, 1, _recv_timeout.count());
     switch (ret) {

@@ -69,10 +69,10 @@ std::string Server::read_numval(std::string_view category, std::string_view subc
 }
 
 
-uint32_t Server::get_serial_number() {
+uint32_t Server::read_serial_number() {
     std::promise<void> signal_terminate;
-    utils::SerialNumberGetter sn_getter(*this, sdo_service);
-    std::future<uint32_t> sn_future = std::async(&utils::SerialNumberGetter::get, &sn_getter, signal_terminate.get_future());
+    utils::SerialNumberReader reader(*this, sdo_service);
+    std::future<uint32_t> sn_future = std::async(&utils::SerialNumberReader::get, &reader, signal_terminate.get_future());
     if (sn_future.wait_for(std::chrono::milliseconds(1000)) != std::future_status::ready) {
         signal_terminate.set_value();
         return sn_future.get();
