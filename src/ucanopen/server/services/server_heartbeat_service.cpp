@@ -3,6 +3,7 @@
 
 namespace ucanopen {
 
+
 ServerHeartbeatService::ServerHeartbeatService(impl::Server& server, std::chrono::milliseconds timeout)
         : _server(server) {
     _id = calculate_cob_id(CobType::heartbeat, _server.node_id());
@@ -12,11 +13,13 @@ ServerHeartbeatService::ServerHeartbeatService(impl::Server& server, std::chrono
 
 
 void ServerHeartbeatService::update_node_id() {
+    std::lock_guard<std::mutex> lock(_mtx);
     _id = calculate_cob_id(CobType::heartbeat, _server.node_id());
 }
 
 
 FrameHandlingStatus ServerHeartbeatService::handle_frame(const can_frame& frame) {
+    std::lock_guard<std::mutex> lock(_mtx);
     if (frame.can_id != _id) { return FrameHandlingStatus::id_mismatch; }
     
     _timepoint = std::chrono::steady_clock::now();
@@ -24,5 +27,5 @@ FrameHandlingStatus ServerHeartbeatService::handle_frame(const can_frame& frame)
     return FrameHandlingStatus::success;
 }
 
-} // namespace ucanopen
 
+} // namespace ucanopen

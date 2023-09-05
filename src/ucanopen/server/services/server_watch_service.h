@@ -17,7 +17,6 @@ private:
     std::chrono::milliseconds _period = std::chrono::milliseconds(1000);
     std::chrono::time_point<std::chrono::steady_clock> _timepoint;
     std::vector<std::pair<std::string_view, std::string_view>> _object_list;
-    mutable std::mutex _data_access_mutex;
 
     struct WatchData {
         ExpeditedSdoData raw;
@@ -25,6 +24,7 @@ private:
     };
 
     std::map<std::pair<std::string_view, std::string_view>, WatchData> _data;
+    mutable std::mutex _data_mtx;
 public:
     ServerWatchService(impl::Server& server, impl::SdoPublisher& sdo_publisher);
 
@@ -43,12 +43,12 @@ public:
     }
 
     virtual FrameHandlingStatus handle_sdo(ODEntryIter entry, SdoType sdo_type, ExpeditedSdoData sdo_data) override {
+        std::lock_guard<std::mutex> lock(_data_mtx);
         const auto& [key, object] = *entry;
 
         if ((object.category == _server.dictionary().config.watch_category) && (sdo_type == SdoType::response_to_read)) {
             _data[std::make_pair(object.subcategory, object.name)].raw = sdo_data;
             if (object.type != OD_ENUM16) {
-                std::lock_guard<std::mutex> lock(_data_access_mutex);
                 _data[std::make_pair(object.subcategory, object.name)].str = sdo_data.to_string(object.type, 2);
             }
             return FrameHandlingStatus::success;
@@ -76,6 +76,7 @@ public:
     }
 
     std::string value_str(std::string_view watch_subcategory, std::string_view watch_name) const {
+        std::lock_guard<std::mutex> lock(_data_mtx);
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             return "n/a";
@@ -84,6 +85,7 @@ public:
     }
 
     void value_cstr(std::string_view watch_subcategory, std::string_view watch_name, char* retbuf, int bufsize) const {
+        std::lock_guard<std::mutex> lock(_data_mtx);
         retbuf[0] = '\0';
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
@@ -91,11 +93,11 @@ public:
             std::strncat(retbuf, str, bufsize-1);
             return;
         }
-        std::lock_guard<std::mutex> lock(_data_access_mutex);
         std::strncat(retbuf, it->second.str.c_str(), bufsize-1);
     }
 
     ExpeditedSdoData value(std::string_view watch_subcategory, std::string_view watch_name) {
+        std::lock_guard<std::mutex> lock(_data_mtx);
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             return 0;
@@ -104,6 +106,7 @@ public:
     }
 
     void set_value_str(std::string_view watch_subcategory, std::string_view watch_name, std::string value_str) {
+        std::lock_guard<std::mutex> lock(_data_mtx);
         auto it = _data.find(std::make_pair(watch_subcategory, watch_name));
         if (it == _data.end()) {
             return;
