@@ -57,99 +57,99 @@ public class MotorControl : Adw.Bin {
 
     construct {
         ctlmode_comborow.notify["selected"].connect((s, p) => {
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "control_mode", ctlmode_comborow.selected.to_string());
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "control_mode", ctlmode_comborow.selected.to_string());
         });
 
         enable_switch.notify["state"].connect((s, p) => {
             if (enable_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "enable_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "enable_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_status", "0");
             }
         });
 
         activedischarge_switch.notify["state"].connect((s, p) => {
             if (activedischarge_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "active_discharge_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "active_discharge_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "active_discharge_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "active_discharge_status", "0");
             }
         });
 
         mainrelay_switch.notify["state"].connect((s, p) => {
             if (mainrelay_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "mainrelay_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "mainrelay_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "mainrelay_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "mainrelay_status", "0");
             }
         });
 
         footbrake_switch.notify["state"].connect((s, p) => {
             if (footbrake_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "footbrake_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "footbrake_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "footbrake_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "footbrake_status", "0");
             }
         });
 
         handbrake_switch.notify["state"].connect((s, p) => {
             if (handbrake_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "handbrake_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "handbrake_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "handbrake_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "handbrake_status", "0");
             }
         });
 
         faultreset_switch.notify["state"].connect((s, p) => {
             if (faultreset_switch.state) {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "faultreset_status", "1");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "faultreset_status", "1");
             } else {
-                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "faultreset_status", "0");
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "faultreset_status", "0");
             }
         });
 
         neutral_button.toggled.connect((s) => {
 			if (neutral_button.active)
 			{
-				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "gear", "0");
+				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "gear", "0");
 			}
 		});
 		forward_button.toggled.connect((s) => {
 			if (forward_button.active)
 			{
-				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "gear", "1");
+				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "gear", "1");
 			}
 		});
 
 		reverse_button.toggled.connect((s) => {
 			if (reverse_button.active)
 			{
-				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "gear", "2"); 
+				ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "gear", "2"); 
 			}
 		});
 
         speed_lf_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(speed_lf_slider.value + 10000)) << 4;
             val = val + 0;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "speed_ref", val.to_string()); 
         });
 
         speed_lb_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(speed_lb_slider.value + 10000)) << 4;
             val = val + 1;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "speed_ref", val.to_string()); 
         });
 
         speed_rf_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(speed_rf_slider.value + 10000)) << 4;
             val = val + 2;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "speed_ref", val.to_string()); 
         });
 
         speed_rb_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(speed_rb_slider.value + 10000)) << 4;
             val = val + 3;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "speed_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "speed_ref", val.to_string()); 
         });
 
         //---
@@ -157,35 +157,35 @@ public class MotorControl : Adw.Bin {
         torque_lf_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(torque_lf_slider.value + 400)) << 4;
             val = val + 0;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "torque_ref", val.to_string()); 
         });
 
         torque_lb_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(torque_lb_slider.value + 400)) << 4;
             val = val + 1;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "torque_ref", val.to_string()); 
         });
 
         torque_rf_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(torque_rf_slider.value + 400)) << 4;
             val = val + 2;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "torque_ref", val.to_string()); 
         });
 
         torque_rb_slider.adjustment->value_changed.connect(() => {
             uint val = ((uint)(torque_rb_slider.value + 400)) << 4;
             val = val + 3;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "torque_ref", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "torque_ref", val.to_string()); 
         });
 
         eltorque_max_slider.adjustment->value_changed.connect(() => {
             uint val = (uint)eltorque_max_slider.value;
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "eltorque_max", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "eltorque_max", val.to_string()); 
         });
 
         braketorque_max_slider.adjustment->value_changed.connect(() => {
             uint val = (uint)(braketorque_max_slider.value + 400);
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrives", "braketorque_max", val.to_string()); 
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "braketorque_max", val.to_string()); 
         });
     }
 

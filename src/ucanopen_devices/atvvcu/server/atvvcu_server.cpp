@@ -9,14 +9,14 @@ Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, co
     _client_values.fill(0);
     _server_values.fill(0);
 
-    // tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(60),
-    //         [this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
-    // tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(110),
-    //         [this](ucanopen::can_payload payload) { this->_handle_tpdo2(payload); });
-    // tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
-    //         [this](ucanopen::can_payload payload) { this->_handle_tpdo3(payload); });
-    // tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(110),
-    //         [this](ucanopen::can_payload payload) { this->_handle_tpdo4(payload); });
+    tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo1, std::chrono::milliseconds(1100),
+            [this](ucanopen::can_payload payload) { this->_handle_tpdo1(payload); });
+    tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo2, std::chrono::milliseconds(1100),
+            [this](ucanopen::can_payload payload) { this->_handle_tpdo2(payload); });
+    tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo3, std::chrono::milliseconds(1100),
+            [this](ucanopen::can_payload payload) { this->_handle_tpdo3(payload); });
+    tpdo_service.register_tpdo(ucanopen::TpdoType::tpdo4, std::chrono::milliseconds(1100),
+            [this](ucanopen::can_payload payload) { this->_handle_tpdo4(payload); });
 
     // rpdo_service.register_rpdo(ucanopen::RpdoType::rpdo1, std::chrono::milliseconds(25),
     //         [this](){ return this->_create_rpdo1(); });
@@ -31,8 +31,8 @@ Server::Server(std::shared_ptr<can::Socket> socket, ucanopen::NodeId node_id, co
 
 void Server::_handle_tpdo4(const ucanopen::can_payload& payload) {
     CobTpdo4 message = ucanopen::from_payload<CobTpdo4>(payload);
-    _errors = message.errors;
-    _warnings = message.warnings;
+    //_errors = message.errors;
+    //_warnings = message.warnings;
 }
 
 

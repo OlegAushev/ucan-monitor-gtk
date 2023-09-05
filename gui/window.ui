@@ -141,16 +141,16 @@
                           <object class="GtkBox">
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="UcanopenWatchChart">
-                              </object>
+                              <!--object class="UcanopenWatchChart">
+                              </object-->
                             </child>
                             <child>
-                              <object class="UcanopenWatchChart">
-                              </object>
+                              <!--object class="UcanopenWatchChart">
+                              </object-->
                             </child>
                             <child>
-                              <object class="UcanopenWatchChart">
-                              </object>
+                              <!--object class="UcanopenWatchChart">
+                              </object-->
                             </child>
                           </object>
                         </property>

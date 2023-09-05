@@ -19,7 +19,7 @@ public class LogTextView : Adw.Bin {
         _textbuffer.create_tag("purple_text", "foreground", "#c061cb", null);
 
 		Gtk.CssProvider css_provider = new Gtk.CssProvider();
-		css_provider.load_from_data("textview text { background-color: #1e1e1e; }".data);
+		css_provider.load_from_data("textview text { background-color: #1e1e1e; }", 44);
 		_textview.get_style_context().add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);
 
 		Timeout.add(10, update);
