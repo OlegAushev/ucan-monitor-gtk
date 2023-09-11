@@ -115,7 +115,7 @@ public class ControlPanel : Adw.Bin {
         });
 
         current_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_current", current_slider.value.to_string());
+            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_current", (current_slider.value/100).to_string());
         });
 
         //--------------------------------------------------------------------------------------------------------------
