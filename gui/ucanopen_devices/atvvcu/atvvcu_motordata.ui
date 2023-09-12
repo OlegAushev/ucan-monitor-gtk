@@ -163,7 +163,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">0x%02X</property>
+                    <property name="uint-format">0x%02X</property>
                   </object>
                 </child>
 
@@ -273,7 +273,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">0x%02X</property>
+                    <property name="uint-format">0x%02X</property>
                   </object>
                 </child>
 
@@ -376,7 +376,7 @@
                     <property name="title">Fault Code</property>
                     <property name="subtitle">hex</property>
                     <property name="value-chars">10</property>
-                    <property name="ulong-format">0x%02X</property>
+                    <property name="uint-format">0x%02X</property>
                   </object>
                 </child>
 
