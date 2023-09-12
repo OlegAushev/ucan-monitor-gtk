@@ -6,7 +6,7 @@
       <object class="AdwPreferencesGroup">
         <property name="title">PDM</property>
         <child>
-            <object class="AdwExpanderRow" id="field_expanderrow">
+            <object class="AdwExpanderRow" id="expanderrow">
               <property name="title">Manual Contactor Control</property>
               <property name="show-enable-switch">true</property>
               <property name="enable-expansion">false</property>

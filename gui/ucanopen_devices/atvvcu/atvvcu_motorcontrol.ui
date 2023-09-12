@@ -12,6 +12,67 @@
             <property name="enable-expansion">false</property>
 
             <child>
+              <object class="AdwExpanderRow">
+                <property name="title">Enable CAN Node</property>
+                <property name="enable-expansion">true</property>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Left Front</property>
+                    <property name="activatable_widget">lf_enable_node_switch</property>              
+                    <child>
+                      <object class="GtkSwitch" id="lf_enable_node_switch">
+                        <property name="valign">center</property>
+                        <property name="active">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Left Back</property>
+                    <property name="activatable_widget">lb_enable_node_switch</property>              
+                    <child>
+                      <object class="GtkSwitch" id="lb_enable_node_switch">
+                        <property name="valign">center</property>
+                        <property name="active">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Right Front</property>
+                    <property name="activatable_widget">rf_enable_node_switch</property>              
+                    <child>
+                      <object class="GtkSwitch" id="rf_enable_node_switch">
+                        <property name="valign">center</property>
+                        <property name="active">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="title">Right Back</property>
+                    <property name="activatable_widget">rb_enable_node_switch</property>              
+                    <child>
+                      <object class="GtkSwitch" id="rb_enable_node_switch">
+                        <property name="valign">center</property>
+                        <property name="active">true</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+
+            <child>
               <object class="AdwComboRow" id="ctlmode_comborow">
                 <property name="title">Control Mode</property>
                 <property name="model">

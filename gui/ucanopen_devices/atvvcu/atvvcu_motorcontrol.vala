@@ -6,6 +6,15 @@ public class MotorControl : Adw.Bin {
     private unowned Adw.PreferencesGroup _group;
 
     [GtkChild]
+    private unowned Gtk.Switch lf_enable_node_switch;
+    [GtkChild]
+    private unowned Gtk.Switch lb_enable_node_switch;
+    [GtkChild]
+    private unowned Gtk.Switch rf_enable_node_switch;
+    [GtkChild]
+    private unowned Gtk.Switch rb_enable_node_switch;
+
+    [GtkChild]
     private unowned Adw.ComboRow ctlmode_comborow;
     [GtkChild]
     private unowned Gtk.StringList ctlmode_list;
@@ -56,6 +65,62 @@ public class MotorControl : Adw.Bin {
     public MotorControl() {}
 
     construct {
+        lf_enable_node_switch.notify["state"].connect((s, p) => {
+            if (lf_enable_node_switch.state) {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_node", "0");
+            } else {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "disable_node", "0");
+            }
+        });
+
+        lb_enable_node_switch.notify["state"].connect((s, p) => {
+            if (lb_enable_node_switch.state) {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_node", "1");
+            } else {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "disable_node", "1");
+            }
+        });
+
+        rf_enable_node_switch.notify["state"].connect((s, p) => {
+            if (rf_enable_node_switch.state) {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_node", "2");
+            } else {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "disable_node", "2");
+            }
+        });
+
+        rb_enable_node_switch.notify["state"].connect((s, p) => {
+            if (rb_enable_node_switch.state) {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "enable_node", "3");
+            } else {
+                ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "disable_node", "3");
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ctlmode_comborow.notify["selected"].connect((s, p) => {
             ucanopen_server_write(Backend.Ucanopen.server, "ctl", "motordrive", "control_mode", ctlmode_comborow.selected.to_string());
         });

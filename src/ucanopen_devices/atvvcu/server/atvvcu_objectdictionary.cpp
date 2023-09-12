@@ -39,6 +39,8 @@ extern const ucanopen::ObjectDictionary object_dictionary = {
 {{0x2002, 0x0A}, {"ctl", "motordrive", "torque_ref", "", OD_UINT32, OD_ACCESS_WO}},
 {{0x2002, 0x0B}, {"ctl", "motordrive", "eltorque_max", "", OD_UINT32, OD_ACCESS_WO}},
 {{0x2002, 0x0C}, {"ctl", "motordrive", "braketorque_max", "", OD_UINT32, OD_ACCESS_WO}},
+{{0x2002, 0x0D}, {"ctl", "motordrive", "enable_node", "", OD_UINT32, OD_ACCESS_WO}},
+{{0x2002, 0x0E}, {"ctl", "motordrive", "disable_node", "", OD_UINT32, OD_ACCESS_WO}},
 
 
 {{0x5000, 0x01}, {"watch", "sys", "uptime", "s", OD_FLOAT32, OD_ACCESS_RO}},
