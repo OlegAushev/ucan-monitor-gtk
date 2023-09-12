@@ -28,8 +28,9 @@ public:
 
     bool is_ok(TpdoType tpdo_type) const {
         std::lock_guard<std::mutex> lock(_mtx);
-        if (!_tpdo_list.contains(tpdo_type)) { return false; }
-        return (std::chrono::steady_clock::now() - _tpdo_list.at(tpdo_type).timepoint) <= _tpdo_list.at(tpdo_type).timeout;
+        if (!_tpdo_list.contains(tpdo_type)) { return false; };
+        auto now = std::chrono::steady_clock::now();
+        return (now - _tpdo_list.at(tpdo_type).timepoint) <= _tpdo_list.at(tpdo_type).timeout;
     }
 
     can_payload data(TpdoType tpdo_type) const {
