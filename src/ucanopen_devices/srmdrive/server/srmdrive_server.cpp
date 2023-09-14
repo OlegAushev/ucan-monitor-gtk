@@ -94,11 +94,16 @@ ucanopen::can_payload Server::_create_rpdo1() {
     static unsigned int counter = 0;
     CobRpdo1 rpdo;
 
-    rpdo.counter = counter;
+    rpdo.power = _power_enabled;
     rpdo.run = _run_enabled;
+    rpdo.ctlmode = std::to_underlying(_ctlmode);
     rpdo.emergency_stop = _emergency_enabled;
+    rpdo.torque_ref = 10000.0f * _torque_perunit_ref;
+    rpdo.speed_ref = _speed_rpm_ref;
 
+    rpdo.counter = counter;
     counter = (counter + 1) & 0x3;
+
     return ucanopen::to_payload<CobRpdo1>(rpdo);
 }
 
@@ -108,10 +113,8 @@ ucanopen::can_payload Server::_create_rpdo2() {
     CobRpdo2 rpdo;
 
     rpdo.counter = counter;
-    rpdo.torque_ref = 32767.0f * _torque_perunit_ref;
-    rpdo.speed_ref = _speed_rpm_ref;
-
     counter = (counter + 1) & 0x3;
+
     return ucanopen::to_payload<CobRpdo2>(rpdo);
 }
 

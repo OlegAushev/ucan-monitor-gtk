@@ -8,9 +8,9 @@ public class ControlPanel : Adw.Bin {
     private unowned Gtk.Switch run_switch;
 
     [GtkChild]
-    private unowned Gtk.Button ref_torque_button;
+    private unowned Gtk.CheckButton ctlmode_torque_button;
     [GtkChild]
-    private unowned Gtk.Button ref_speed_button;
+    private unowned Gtk.CheckButton ctlmode_speed_button;
 
     [GtkChild]
     private unowned Gtk.Button calibrate_button;
@@ -55,12 +55,16 @@ public class ControlPanel : Adw.Bin {
             srmdrive_set_run_enabled(run_switch.state);
         });
 
-        ref_torque_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_torque_ref");
+        ctlmode_torque_button.toggled.connect(() => {
+            if (ctlmode_torque_button.active) {
+                srmdrive_set_ctlmode(0);
+            }
         });
 
-        ref_speed_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_speed_ref");
+        ctlmode_speed_button.toggled.connect(() => {
+            if (ctlmode_speed_button.active) {
+                srmdrive_set_ctlmode(1);
+            }
         });
 
         calibrate_button.clicked.connect(() => {

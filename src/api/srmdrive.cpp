@@ -17,16 +17,21 @@ extern "C" {
 
 
 void srmdrive_set_power_enabled(bool enabled) {
-    if (enabled) {
-        srmdrive_server->exec("ctl", "drive", "startup");
-    } else {
-        srmdrive_server->exec("ctl", "drive", "shutdown");
-    }
+    srmdrive_server->set_power_enabled(enabled);
 }
 
 
 void srmdrive_set_run_enabled(bool enabled) {
     srmdrive_server->set_run_enabled(enabled);
+}
+
+
+void srmdrive_set_ctlmode(int mode) {
+    if (mode == 0) {
+        srmdrive_server->set_ctlmode(srmdrive::ControlMode::torque);
+    } else {
+        srmdrive_server->set_ctlmode(srmdrive::ControlMode::speed);
+    }
 }
 
 

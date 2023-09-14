@@ -49,35 +49,33 @@
             </child>
 
             <child>
-              <object class="AdwExpanderRow" id="reference_expanderrow">
-                <property name="title">Drive Reference</property>
+              <object class="AdwExpanderRow" id="ctlmode_expanderrow">
+                <property name="title">Control Mode</property>
+                
                 <child>
                   <object class="AdwActionRow">
+                    <property name="activatable_widget">ctlmode_torque_button</property>
                     <child type="prefix">
-                      <object class="GtkButton" id="ref_torque_button">
+                      <object class="GtkCheckButton" id="ctlmode_torque_button">
                         <property name="label">Torque</property>
-                        <property name="halign">center</property>
-                        <property name="valign">center</property>
-                        <property name="width-request">140</property>
-                        <style>
-                          <class name="destructive-action"/>
-                        </style>
-                      </object>
-                    </child>
-                    
-                    <child type="suffix">
-                      <object class="GtkButton" id="ref_speed_button">
-                        <property name="label">Speed</property>
-                        <property name="halign">center</property>
-                        <property name="valign">center</property>
-                        <property name="width-request">140</property>
-                        <style>
-                          <class name="suggested-action"/>
-                        </style>
-                      </object>					
+                        <property name="active">true</property>
+                      </object>                      
                     </child>
                   </object>
                 </child>
+
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="activatable_widget">ctlmode_speed_button</property>
+                    <child type="prefix">
+                      <object class="GtkCheckButton" id="ctlmode_speed_button">
+                        <property name="label">Speed</property>
+                        <property name="group">ctlmode_torque_button</property>
+                      </object>                      
+                    </child>
+                  </object>
+                </child>
+
               </object>
             </child>
 

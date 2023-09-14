@@ -24,15 +24,20 @@ private:
     uint32_t _errors = 0;
     uint16_t _warnings = 0;
 
+    bool _power_enabled = false;
     bool _run_enabled = false;
+    ControlMode _ctlmode = ControlMode::torque;
     bool _emergency_enabled = false;
     float _torque_perunit_ref = 0;
     float _speed_rpm_ref = 0;
+
 public:
     uint32_t errors() const { return _errors; }
     uint16_t warnings() const { return _warnings; }
 
+    void set_power_enabled(bool enabled) { _power_enabled = enabled; }
     void set_run_enabled(bool enabled) { _run_enabled = enabled; }
+    void set_ctlmode(ControlMode mode) { _ctlmode = mode; }
     void set_emergency_enabled(bool enabled) { _emergency_enabled = enabled; }
     void set_torque(float value_perunit) { _torque_perunit_ref = std::clamp(value_perunit, -1.0f, 1.0f); }
     void set_speed(float value_rpm) { _speed_rpm_ref = value_rpm; }

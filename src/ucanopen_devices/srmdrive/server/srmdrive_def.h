@@ -59,19 +59,29 @@ struct CobTpdo4 {
 
 //----------------------------------------------------------------------------------------------------------------------
 struct CobRpdo1 {
-    uint32_t counter : 2;
+    uint32_t power : 1;
     uint32_t run : 1;
-    uint32_t _reserved1 : 29;
+    uint32_t ctlmode : 1;
+    uint32_t disable_isotest : 1;
     uint32_t emergency_stop : 1;
-    uint32_t _reserved2 : 31;
+    uint32_t _reserved1 : 11;
+    int16_t torque_ref;
+    int16_t speed_ref;
+    uint32_t _reserved2 : 6;
+    uint32_t counter : 2;
+    uint32_t crc : 8;
 };
 
 
 struct CobRpdo2 {
+    uint32_t manual_fieldctl : 1;
+    uint32_t ctlloop : 1;
+    uint32_t _reserved1 : 14;
+    uint16_t field_current_ref;
+    uint16_t stator_current_ref;
+    uint32_t _reserved2 : 6;
     uint32_t counter : 2;
-    uint32_t _reserved : 30;
-    int16_t torque_ref;
-    int16_t speed_ref;
+    uint32_t crc : 8;
 };
 
 
@@ -154,5 +164,17 @@ inline const std::vector<std::string_view> warning_list = {
     "insulation_na",
 };
 
-}
 
+enum class ControlMode {
+    torque,
+    speed
+};
+
+
+enum class ControlLoopType {
+    closed,
+    open
+};
+
+
+}
