@@ -16,16 +16,8 @@ void register_srmdrive_server(std::shared_ptr<srmdrive::Server> srmdrive_server_
 extern "C" {
 
 
-void srmdrive_set_power_enabled(bool enabled) {
-    srmdrive_server->set_power_enabled(enabled);
-}
-
-
-void srmdrive_set_run_enabled(bool enabled) {
-    srmdrive_server->set_run_enabled(enabled);
-}
-
-
+void srmdrive_set_power_enabled(bool enabled) { srmdrive_server->set_power_enabled(enabled); }
+void srmdrive_set_run_enabled(bool enabled) { srmdrive_server->set_run_enabled(enabled); }
 void srmdrive_set_ctlmode(int mode) {
     if (mode == 0) {
         srmdrive_server->set_ctlmode(srmdrive::ControlMode::torque);
@@ -33,21 +25,21 @@ void srmdrive_set_ctlmode(int mode) {
         srmdrive_server->set_ctlmode(srmdrive::ControlMode::speed);
     }
 }
+void srmdrive_set_emergency_enabled(bool enabled) { srmdrive_server->set_emergency_enabled(enabled); }
+void srmdrive_set_torque(double value_perunit) { srmdrive_server->set_torque(value_perunit); }
+void srmdrive_set_speed(double value_rpm) { srmdrive_server->set_speed(value_rpm); }
 
 
-void srmdrive_set_emergency_enabled(bool enabled) {
-    srmdrive_server->set_emergency_enabled(enabled);
+void srmdrive_set_manual_fieldctl_enabled(bool enabled) { srmdrive_server->set_manual_fieldctl_enabled(enabled); }
+void srmdrive_set_ctlloop(int ctlloop) {
+    if (ctlloop == 0) {
+        srmdrive_server->set_ctlloop(srmdrive::ControlLoopType::closed);
+    } else {
+        srmdrive_server->set_ctlloop(srmdrive::ControlLoopType::open);
+    }
 }
-
-
-void srmdrive_set_torque(double value_perunit) {
-    srmdrive_server->set_torque(value_perunit);
-}
-
-
-void srmdrive_set_speed(double value_rpm) {
-    srmdrive_server->set_speed(value_rpm);
-}
+void srmdrive_set_field_current(double val) { srmdrive_server->set_field_current(val); }
+void srmdrive_set_stator_current(double val_perunit) { srmdrive_server->set_stator_current(val_perunit); }
 
 
 //----------------------------------------------------------------------------------------------------------------------

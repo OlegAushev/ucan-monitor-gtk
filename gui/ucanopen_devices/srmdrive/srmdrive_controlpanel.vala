@@ -98,24 +98,16 @@ public class ControlPanel : Adw.Bin {
 
         //--------------------------------------------------------------------------------------------------------------
         field_expanderrow.notify["enable-expansion"].connect((s,p) => {
-            if (field_expanderrow.enable_expansion) {
-                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_manual_field");
-            } else {
-                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "disable_manual_field");
-            }
+            srmdrive_set_manual_fieldctl_enabled(field_expanderrow.enable_expansion);
         });
 
         field_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_field_current", field_slider.value.to_string());
+            srmdrive_set_field_current(field_slider.value / 100.0);
         });
 
         //--------------------------------------------------------------------------------------------------------------
         openloop_expanderrow.notify["enable-expansion"].connect((s,p) => {
-            if (openloop_expanderrow.enable_expansion) {
-                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_open_loop");
-            } else {
-                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "enable_closed_loop");
-            }
+            srmdrive_set_ctlloop((int)openloop_expanderrow.enable_expansion);
         });
 
         current_slider.adjustment->value_changed.connect(() => {

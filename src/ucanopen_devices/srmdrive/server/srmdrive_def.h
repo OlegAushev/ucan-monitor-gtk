@@ -51,9 +51,10 @@ struct CobTpdo3 {
 
 
 struct CobTpdo4 {
-    uint64_t counter : 2;
-    uint64_t errors : 31;
-    uint64_t warnings : 31;
+    uint32_t errors;
+    uint32_t warnings : 22;
+    uint32_t counter : 2;
+    uint32_t crc : 8;
 };
 
 

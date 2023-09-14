@@ -112,6 +112,11 @@ ucanopen::can_payload Server::_create_rpdo2() {
     static unsigned int counter = 0;
     CobRpdo2 rpdo;
 
+    rpdo.manual_fieldctl = _manual_fieldctl;
+    rpdo.ctlloop = std::to_underlying(_ctlloop);
+    rpdo.field_current_ref = 10.0f * _field_current_ref;
+    rpdo.stator_current_ref = 10000.0f * _stator_current_perunit_ref;
+
     rpdo.counter = counter;
     counter = (counter + 1) & 0x3;
 
