@@ -54,7 +54,7 @@ struct CobTpdo4 {
     uint32_t errors;
     uint32_t warnings : 22;
     uint32_t counter : 2;
-    uint32_t crc : 8;
+    uint32_t checksum : 8;
 };
 
 
@@ -70,7 +70,7 @@ struct CobRpdo1 {
     int16_t speed_ref;
     uint32_t _reserved2 : 6;
     uint32_t counter : 2;
-    uint32_t crc : 8;
+    uint32_t checksum : 8;
 };
 
 
@@ -82,7 +82,7 @@ struct CobRpdo2 {
     uint16_t stator_current_ref;
     uint32_t _reserved2 : 6;
     uint32_t counter : 2;
-    uint32_t crc : 8;
+    uint32_t checksum : 8;
 };
 
 
@@ -156,6 +156,8 @@ inline const std::vector<std::string_view> warning_list = {
     "can_bus_error",
     "can_bus_overrun",
     "can_bus_connection_lost",
+    "can_bus_checksum_mismatch",
+    "can_bus_counter_freeze",
     "dclink_disconnected",
     "dclink_charging",
     "converter_overheat",
@@ -176,6 +178,11 @@ enum class ControlLoopType {
     closed,
     open
 };
+
+
+inline uint8_t calc_crc8(uint8_t* buf, int len) {
+
+}
 
 
 }

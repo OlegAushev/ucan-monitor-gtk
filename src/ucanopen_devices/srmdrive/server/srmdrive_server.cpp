@@ -1,4 +1,5 @@
 #include "srmdrive_server.h"
+#include <boost/crc.hpp>
 
 
 namespace srmdrive {
@@ -104,7 +105,13 @@ ucanopen::can_payload Server::_create_rpdo1() {
     rpdo.counter = counter;
     counter = (counter + 1) & 0x3;
 
-    return ucanopen::to_payload<CobRpdo1>(rpdo);
+    auto payload = ucanopen::to_payload<CobRpdo1>(rpdo);
+
+    boost::crc_basic<8> crc8(0x7, 0x0, 0x0, false, false);
+    crc8.process_bytes(payload.data(), 7);
+    payload[7] = crc8.checksum();
+
+    return payload;
 }
 
 
