@@ -61,29 +61,26 @@ private:
     ucanopen::can_payload _create_rpdo2();
 
     struct Tpdo1 {
-        bool status_run;
-        bool status_error;
-        bool status_warning;
-        bool status_overheat;
-        std::string reference;
-        std::string control_loop;
+        bool run;
+        bool error;
+        bool warning;
+        bool overheat;
+        std::string ctlmode;
+        std::string ctlloop;
         std::string drive_state;
-        unsigned int dc_voltage;
         int torque;
         int speed;
     } _tpdo1{};
 
     struct Tpdo2 {
+        unsigned int dc_voltage;
         unsigned int stator_current;
         float field_current;
-        unsigned int out_voltage;
         unsigned int mech_power;
-        unsigned int elec_power;
-        bool manual_field_current_enabled;
+        bool manual_field_current;
     } _tpdo2{};
 
     struct Tpdo3 {
-        bool status_overheat;
         int pwrmodule_temp;
         int excmodule_temp;
         int pcb_temp;

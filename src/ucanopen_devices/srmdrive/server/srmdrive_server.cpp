@@ -42,12 +42,12 @@ ucanopen::FrameHandlingStatus Server::handle_sdo(ucanopen::ODEntryIter entry,
 //----------------------------------------------------------------------------------------------------------------------
 void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
     CobTpdo1 tpdo = ucanopen::from_payload<CobTpdo1>(payload);
-    _tpdo1.status_run = tpdo.status_run;
-    _tpdo1.status_error = tpdo.status_error;
-    _tpdo1.status_warning = tpdo.status_warning;
-    _tpdo1.status_overheat = tpdo.status_overheat;
-    _tpdo1.reference = (tpdo.reference == 1) ? "speed" : "torque";
-    _tpdo1.control_loop = (tpdo.control_loop == 1) ? "closed" : "open";
+    _tpdo1.run = tpdo.run;
+    _tpdo1.error = tpdo.error;
+    _tpdo1.warning = tpdo.warning;
+    _tpdo1.overheat = tpdo.overheat;
+    _tpdo1.ctlmode = (tpdo.ctlmode == 0) ? "torque" : "speed";
+    _tpdo1.ctlloop = (tpdo.ctlloop == 0) ? "closed" : "open";
 
     if (tpdo.drive_state >= drive_states.size()) {
         _tpdo1.drive_state = "n/a";
@@ -55,7 +55,6 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
         _tpdo1.drive_state = drive_states[tpdo.drive_state];
     }
 
-    _tpdo1.dc_voltage = tpdo.dc_voltage;
     _tpdo1.torque = tpdo.torque;
     _tpdo1.speed = tpdo.speed;
 }
@@ -63,18 +62,16 @@ void Server::_handle_tpdo1(const ucanopen::can_payload& payload){
 
 void Server::_handle_tpdo2(const ucanopen::can_payload& payload) {
     CobTpdo2 tpdo = ucanopen::from_payload<CobTpdo2>(payload);
+    _tpdo2.dc_voltage = tpdo.dc_voltage;
     _tpdo2.stator_current = tpdo.stator_current;
     _tpdo2.field_current = float(tpdo.field_current) / 10.f;
-    _tpdo2.out_voltage = tpdo.out_voltage;
     _tpdo2.mech_power = tpdo.mech_power;
-    _tpdo2.elec_power = tpdo.elec_power;
-    _tpdo2.manual_field_current_enabled = tpdo.manual_field_current_enabled;
+    _tpdo2.manual_field_current = tpdo.manual_field_current;
 }
 
 
 void Server::_handle_tpdo3(const ucanopen::can_payload& payload) {
     CobTpdo3 tpdo = ucanopen::from_payload<CobTpdo3>(payload);
-    _tpdo3.status_overheat = tpdo.status_overheat;
     _tpdo3.pwrmodule_temp = int(tpdo.pwrmodule_temp) - 40;
     _tpdo3.excmodule_temp = int(tpdo.excmodule_temp) - 40;
     _tpdo3.pcb_temp = int(tpdo.pcb_temp) - 40;

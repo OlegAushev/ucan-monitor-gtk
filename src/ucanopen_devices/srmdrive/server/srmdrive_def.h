@@ -11,50 +11,53 @@
 namespace srmdrive {
 
 struct CobTpdo1 {
-    uint16_t counter : 2;
-    uint16_t status_run : 1;
-    uint16_t status_error : 1;
-    uint16_t status_warning : 1;
-    uint16_t status_overheat : 1;
-    uint16_t reference : 1;
-    uint16_t control_loop : 1;
+    uint16_t run : 1;
+    uint16_t error : 1;
+    uint16_t warning : 1;
+    uint16_t overheat : 1;
+    uint16_t ctlmode : 1;
+    uint16_t ctlloop : 1;
+    uint16_t _reserved : 2;
     uint16_t drive_state : 8;
-    uint16_t dc_voltage : 16;
     int16_t torque : 16;
     int16_t speed : 16;
+    uint16_t counter : 2;
+    uint16_t _reserved2 : 6;
+    uint16_t checksum : 8;
 };
 
 
 struct CobTpdo2 {
-    uint16_t counter : 2;
-    uint16_t stator_current : 14;
-    int16_t field_current;
-    uint16_t out_voltage : 8;
+    uint16_t dc_voltage : 16;
+    uint16_t stator_current : 16;
+    uint16_t field_current : 8;
     uint16_t mech_power : 8;
-    uint16_t elec_power : 8;
-    uint16_t manual_field_current_enabled : 1;
-    uint16_t _reserved : 7;
+    uint16_t counter : 2;
+    uint16_t manual_field_current : 1;
+    uint16_t _reserved : 5;
+    uint16_t checksum : 8;
 };
 
 
 struct CobTpdo3 {
-    uint16_t counter : 2;
-    uint16_t _reserved : 14;
-    uint16_t status_overheat : 1;
-    uint16_t _reserved2 : 7;
     uint16_t pwrmodule_temp : 8;
     uint16_t excmodule_temp : 8;
     uint16_t pcb_temp : 8;
     uint16_t aw_temp : 8;
     uint16_t fw_temp : 8;
+    uint16_t _reserved : 6;
+    uint16_t counter : 2;
+    uint16_t _reserved2 : 6;
+    uint16_t checksum : 8;
 };
 
 
 struct CobTpdo4 {
     uint32_t errors;
-    uint32_t warnings : 22;
-    uint32_t counter : 2;
-    uint32_t checksum : 8;
+    uint16_t warnings;
+    uint16_t counter : 2;
+    uint16_t _reserved : 6;
+    uint16_t checksum : 8;
 };
 
 
@@ -68,8 +71,8 @@ struct CobRpdo1 {
     uint32_t _reserved1 : 11;
     int16_t torque_ref;
     int16_t speed_ref;
-    uint32_t _reserved2 : 6;
     uint32_t counter : 2;
+    uint32_t _reserved2 : 6;
     uint32_t checksum : 8;
 };
 
@@ -80,8 +83,8 @@ struct CobRpdo2 {
     uint32_t _reserved1 : 14;
     uint16_t field_current_ref;
     uint16_t stator_current_ref;
-    uint32_t _reserved2 : 6;
     uint32_t counter : 2;
+    uint32_t _reserved2 : 6;
     uint32_t checksum : 8;
 };
 

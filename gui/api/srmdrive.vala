@@ -17,18 +17,15 @@ extern bool srmdrive_tpdo1_get_warning_status();
 extern bool srmdrive_tpdo1_get_overheat_status();
 extern void srmdrive_tpdo1_get_drive_reference(char* retbuf, int bufsize);
 extern void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, int bufsize);
-extern uint srmdrive_tpdo1_get_dc_voltage();
 extern int srmdrive_tpdo1_get_torque();
 extern int srmdrive_tpdo1_get_speed();
 
+extern uint srmdrive_tpdo2_get_dc_voltage();
 extern uint srmdrive_tpdo2_get_stator_current();
 extern float srmdrive_tpdo2_get_field_current();
-extern uint srmdrive_tpdo2_get_out_voltage();
 extern uint srmdrive_tpdo2_get_mech_power();
-extern uint srmdrive_tpdo2_get_elec_power();
 extern bool srmdrive_tpdo2_get_manual_field_current_enabled();
 
-extern bool srmdrive_tpdo3_get_overheat_status();
 extern int srmdrive_tpdo3_get_pwrmodule_temp();
 extern int srmdrive_tpdo3_get_excmodule_temp();
 extern int srmdrive_tpdo3_get_pcb_temp();

@@ -50,39 +50,34 @@ void srmdrive_tpdo1_get_drive_state(char* retbuf, int bufsize) {
 
 
 bool srmdrive_tpdo1_get_run_status() {
-    return srmdrive_server->tpdo1().status_run;
+    return srmdrive_server->tpdo1().run;
 };
 
 
 bool srmdrive_tpdo1_get_error_status() {
-    return srmdrive_server->tpdo1().status_error;
+    return srmdrive_server->tpdo1().error;
 }
 
 
 bool srmdrive_tpdo1_get_warning_status() {
-    return srmdrive_server->tpdo1().status_warning;
+    return srmdrive_server->tpdo1().warning;
 }
 
 
 bool srmdrive_tpdo1_get_overheat_status() {
-    return srmdrive_server->tpdo1().status_overheat;
+    return srmdrive_server->tpdo1().overheat;
 }
 
 
 void srmdrive_tpdo1_get_drive_reference(char* retbuf, int bufsize) {
     retbuf[0] = '\0';
-    strncat(retbuf, srmdrive_server->tpdo1().reference.c_str(), bufsize-1);
+    strncat(retbuf, srmdrive_server->tpdo1().ctlmode.c_str(), bufsize-1);
 }
 
 
 void srmdrive_tpdo1_get_drive_loop_type(char* retbuf, int bufsize) {
     retbuf[0] = '\0';
-    strncat(retbuf, srmdrive_server->tpdo1().control_loop.c_str(), bufsize-1);
-}
-
-
-unsigned int srmdrive_tpdo1_get_dc_voltage() {
-    return srmdrive_server->tpdo1().dc_voltage;
+    strncat(retbuf, srmdrive_server->tpdo1().ctlloop.c_str(), bufsize-1);
 }
 
 
@@ -97,6 +92,11 @@ int srmdrive_tpdo1_get_speed() {
 
 
 //----------------------------------------------------------------------------------------------------------------------
+unsigned int srmdrive_tpdo2_get_dc_voltage() {
+    return srmdrive_server->tpdo2().dc_voltage;
+}
+
+
 unsigned int srmdrive_tpdo2_get_stator_current() {
     return srmdrive_server->tpdo2().stator_current;
 }
@@ -107,31 +107,17 @@ float srmdrive_tpdo2_get_field_current() {
 }
 
 
-unsigned int srmdrive_tpdo2_get_out_voltage() {
-    return srmdrive_server->tpdo2().out_voltage;
-}
-
-
 unsigned int srmdrive_tpdo2_get_mech_power() {
     return srmdrive_server->tpdo2().mech_power;
 }
 
 
-unsigned int srmdrive_tpdo2_get_elec_power() {
-    return srmdrive_server->tpdo2().elec_power;
-}
-
 bool srmdrive_tpdo2_get_manual_field_current_enabled() { 
-    return srmdrive_server->tpdo2().manual_field_current_enabled;
+    return srmdrive_server->tpdo2().manual_field_current;
 }
 
 
 //----------------------------------------------------------------------------------------------------------------------
-bool srmdrive_tpdo3_get_overheat_status() {
-    return srmdrive_server->tpdo3().status_overheat;
-}
-
-
 int srmdrive_tpdo3_get_pwrmodule_temp() {
     return srmdrive_server->tpdo3().pwrmodule_temp;
 }
