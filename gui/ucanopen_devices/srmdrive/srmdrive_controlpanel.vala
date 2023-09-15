@@ -102,7 +102,7 @@ public class ControlPanel : Adw.Bin {
         });
 
         field_slider.adjustment->value_changed.connect(() => {
-            srmdrive_set_field_current(field_slider.value / 100.0);
+            srmdrive_set_field_current(field_slider.value);
         });
 
         //--------------------------------------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ public class ControlPanel : Adw.Bin {
         });
 
         current_slider.adjustment->value_changed.connect(() => {
-            ucanopen_server_write(Backend.Ucanopen.server, "ctl", "drive", "set_current", (current_slider.value/100).to_string());
+            srmdrive_set_stator_current(current_slider.value / 100.0);
         });
 
         //--------------------------------------------------------------------------------------------------------------
