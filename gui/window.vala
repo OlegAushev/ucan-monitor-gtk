@@ -6,6 +6,13 @@ public class Window : Gtk.ApplicationWindow {
     private unowned Gtk.ScrolledWindow datatables_scrolledwindow;
     [GtkChild]
     private unowned Gtk.ScrolledWindow controlpanel_scrolledwindow;
+    [GtkChild]
+    private unowned LogTextView log_textview;
+    [GtkChild]
+    private unowned Adw.ViewStack viewstack;
+    [GtkChild]
+    private unowned Gtk.Paned flap_content;
+
 
     public Window(Gtk.Application app) {
         Object (application: app);
@@ -40,6 +47,15 @@ public class Window : Gtk.ApplicationWindow {
             message("Error: unknown server");
             break;
         }
+
+        viewstack.pages.selection_changed.connect((position, n_items) => {
+            if (viewstack.pages.is_selected(2) || viewstack.pages.is_selected(3)) {
+                log_textview.visible = true;
+                flap_content.position = flap_content.max_position / 2;
+            } else {
+                log_textview.visible = false;
+            }
+        });
     }
 }
 
