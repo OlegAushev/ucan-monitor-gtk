@@ -126,10 +126,11 @@ inline const std::vector<std::string> drive_states = {
     "run",
     "stop",
     "shutdown",
-    "cal_startup",
+    "cal_start",
     "cal_stage1",
     "cal_stage2",
     "cal_stage3",
+    "cal_stop"
 };
 
 
