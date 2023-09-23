@@ -6,17 +6,6 @@ public class ServerConfiguration : Adw.Bin {
     private unowned Adw.ToastOverlay toast_overlay;
 
     [GtkChild]
-    private unowned Gtk.Button refreshabout_button;
-    [GtkChild]
-    private unowned Gtk.Label devicename_label;
-    [GtkChild]
-    private unowned Gtk.Label hardwareversion_label;
-    [GtkChild]
-    private unowned Gtk.Label firmwareversion_label;
-    [GtkChild]
-    private unowned Gtk.Label serialnumber_label;
-
-    [GtkChild]
     private unowned Adw.ComboRow category_comborow;
     [GtkChild]
     private unowned Adw.ComboRow object_comborow;
@@ -47,19 +36,6 @@ public class ServerConfiguration : Adw.Bin {
     public ServerConfiguration() {}
 
     construct {
-        refreshabout_button.clicked.connect(() => {
-            string buf = string.nfill(32, '0');
-            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "device_name", 500, buf, 32);
-            devicename_label.label = buf;
-            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "hardware_version", 500, buf, 32);
-            hardwareversion_label.label = buf;
-            ucanopen_server_read_string(Backend.Ucanopen.server, "info", "sys", "firmware_version", 500, buf, 32);
-            firmwareversion_label.label = buf;
-            ucanopen_server_read_numval(Backend.Ucanopen.server, "info", "sys", "serial_number", 500, buf, 32);
-            serialnumber_label.label = buf;
-        });
-
-
         for (int i = 0; i < _category_count_max; ++i) {
             _categories[i] = string.nfill(_category_str_size, '\0');
         }

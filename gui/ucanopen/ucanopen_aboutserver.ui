@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <template class="UcanopenAboutServer" parent="AdwBin">
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="AdwPreferencesPage">
+            
+            <child>
+              <object class="AdwPreferencesGroup">
+                <!--property name="title">About</property-->
+                
+                <property name="header-suffix">
+                  <object class="GtkButton" id="refreshabout_button">
+                      <property name="child">
+                      <object class="AdwButtonContent">
+                          <property name="icon-name">view-refresh-symbolic</property>
+                          <property name="label" translatable="yes">Refresh</property>
+                      </object>
+                      </property>
+                      <style>
+                      <class name="flat"/>
+                    </style>
+                  </object>
+                </property>
+        
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Device Name</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="devicename_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Hardware Version</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="hardwareversion_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Firmware Version</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="firmwareversion_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+                    
+                  </object>
+                </child>
+
+                <child>
+                  <object class="AdwActionRow">
+
+                    <child type="prefix">
+                      <object class="GtkLabel">
+                        <property name="label">Device S/N</property>
+                      </object>
+                    </child>
+
+                    <child type="suffix">
+                      <object class="GtkLabel" id="serialnumber_label">
+                        <property name="label">n/a</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+              </object>
+            </child>
+            
+          </object>
+
+        </property>
+      </object>
+
+    </child>
+  </template>
+</interface>

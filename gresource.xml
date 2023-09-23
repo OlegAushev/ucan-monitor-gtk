@@ -27,6 +27,7 @@
 
     <file>gui/template/template_widget.ui</file>
 
+    <file>gui/ucanopen/ucanopen_aboutserver.ui</file>
     <file>gui/ucanopen/ucanopen_heartbeatindicator.ui</file>
     <file>gui/ucanopen/ucanopen_preferenceswindow.ui</file>
     <file>gui/ucanopen/ucanopen_selectserverwindow.ui</file>

@@ -116,7 +116,7 @@
                     <child>
                       <object class="AdwViewStackPage" id="viewstack_page2">
                         <property name="title">Status</property>
-                        <property name="icon-name">info-symbolic</property>
+                        <property name="icon-name">view-list-symbolic</property>
                         <property name="child">
                           <object class="GtkScrolledWindow">
                             <property name="hexpand">true</property>
@@ -133,7 +133,7 @@
                     </child>
 
                     <!-- PAGE 3 of VIEWSTACK -->
-                    <child>
+                    <!--child>
                       <object class="AdwViewStackPage" id="viewstack_page3">
                         <property name="title">Charts</property>
                         <property name="icon-name">computer-symbolic</property>
@@ -141,21 +141,21 @@
                           <object class="GtkBox">
                             <property name="orientation">vertical</property>
                             <child>
-                              <!--object class="UcanopenWatchChart">
-                              </object-->
+                              <object class="UcanopenWatchChart">
+                              </object>
                             </child>
                             <child>
-                              <!--object class="UcanopenWatchChart">
-                              </object-->
+                              <object class="UcanopenWatchChart">
+                              </object>
                             </child>
                             <child>
-                              <!--object class="UcanopenWatchChart">
-                              </object-->
+                              <object class="UcanopenWatchChart">
+                              </object>
                             </child>
                           </object>
                         </property>
                       </object>
-                    </child>
+                    </child-->
 
                     <!-- PAGE 4 of VIEWSTACK -->
                     <child>
@@ -168,6 +168,23 @@
                         </property>
                       </object>
                     </child>
+
+                    <!-- PAGE 5 of VIEWSTACK -->
+                    <child>
+                      <object class="AdwViewStackPage" id="viewstack_page5">
+                        <property name="title">About</property>
+                        <property name="icon-name">help-about-symbolic</property>
+                        <property name="child">
+                          <object class = "UcanopenAboutServer">
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+
+
+
+
                   </object>
                 </child>
 
