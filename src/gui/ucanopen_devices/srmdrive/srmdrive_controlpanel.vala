@@ -68,11 +68,31 @@ public class ControlPanel : Adw.Bin {
         });
 
         calibrate_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "calibrate");
+            Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+                    "Warning!",
+                    "Calibration procedure is about to begin.");
+            dialog.add_response("cancel", "Cancel");
+            dialog.add_response("continue", "Continue");
+            dialog.set_response_appearance("cancel", DESTRUCTIVE);
+            dialog.set_response_appearance("continue", SUGGESTED);
+            dialog.response["continue"].connect(() => {
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "calibrate");
+            });
+            dialog.present();
         });
 
         invert_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "invert_rotdir");
+            Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+                    "Warning!",
+                    "Default rotation direction will be changed.");
+            dialog.add_response("cancel", "Cancel");
+            dialog.add_response("continue", "Continue");
+            dialog.set_response_appearance("cancel", DESTRUCTIVE);
+            dialog.set_response_appearance("continue", SUGGESTED);
+            dialog.response["continue"].connect(() => {
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "drive", "invert_rotdir");
+            });
+            dialog.present();
         });
 
         resetdriverfault_button.clicked.connect(() => {

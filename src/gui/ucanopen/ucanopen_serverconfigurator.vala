@@ -80,7 +80,7 @@ public class ServerConfigurator : Adw.Bin {
             dialog.response["continue"].connect(() => {
                 ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "save_all_parameters");
             });
-            dialog.present();	
+            dialog.present();
         });
 
         restore_button.clicked.connect(() => {
