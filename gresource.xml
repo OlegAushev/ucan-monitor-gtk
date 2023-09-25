@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/">
-    <file>gui/components/basic_entry.ui</file>
-    <file>gui/components/bool_entry.ui</file>
-    <file>gui/components/check_entry.ui</file>
-    <file>gui/components/log_textview.ui</file>
-    <file>gui/components/spinbutton_scale.ui</file>
+    <file>src/gui/assets/widgets/basic_entry.ui</file>
+    <file>src/gui/assets/widgets/bool_entry.ui</file>
+    <file>src/gui/assets/widgets/check_entry.ui</file>
+    <file>src/gui/assets/widgets/log_textview.ui</file>
+    <file>src/gui/assets/widgets/spinbutton_scale.ui</file>
 
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_controlpanel.ui</file>
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_datatables.ui</file>
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_motorcontrol.ui</file>
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_motordata.ui</file>
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_pdmcontrol.ui</file>
-    <file>gui/ucanopen_devices/atvvcu/atvvcu_pdmdata.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_controlpanel.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_datatables.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_motorcontrol.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_motordata.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_pdmcontrol.ui</file>
+    <file>src/gui/assets/ucanopen_devices/atvvcu/atvvcu_pdmdata.ui</file>
 
-    <file>gui/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
+    <file>src/gui/assets/ucanopen_devices/bmsmain/bmsmain_datatables.ui</file>
 
-    <file>gui/ucanopen_devices/crd600/crd600_controlpanel.ui</file>
-    <file>gui/ucanopen_devices/crd600/crd600_datatables.ui</file>
+    <file>src/gui/assets/ucanopen_devices/crd600/crd600_controlpanel.ui</file>
+    <file>src/gui/assets/ucanopen_devices/crd600/crd600_datatables.ui</file>
 
-    <file>gui/ucanopen_devices/launchpad/launchpad_controlpanel.ui</file>
-    <file>gui/ucanopen_devices/launchpad/launchpad_datatables.ui</file>
+    <file>src/gui/assets/ucanopen_devices/launchpad/launchpad_controlpanel.ui</file>
+    <file>src/gui/assets/ucanopen_devices/launchpad/launchpad_datatables.ui</file>
 
-    <file>gui/ucanopen_devices/srmdrive/srmdrive_controlpanel.ui</file>
-    <file>gui/ucanopen_devices/srmdrive/srmdrive_datatables.ui</file>
+    <file>src/gui/assets/ucanopen_devices/srmdrive/srmdrive_controlpanel.ui</file>
+    <file>src/gui/assets/ucanopen_devices/srmdrive/srmdrive_datatables.ui</file>
 
-    <file>gui/template/template_widget.ui</file>
+    <file>src/gui/assets/template_widget.ui</file>
 
-    <file>gui/ucanopen/ucanopen_aboutserver.ui</file>
-    <file>gui/ucanopen/ucanopen_heartbeatindicator.ui</file>
-    <file>gui/ucanopen/ucanopen_preferenceswindow.ui</file>
-    <file>gui/ucanopen/ucanopen_selectserverwindow.ui</file>
-    <file>gui/ucanopen/ucanopen_serverconfiguration.ui</file>
-    <file>gui/ucanopen/ucanopen_systemstatus.ui</file>
-    <file>gui/ucanopen/ucanopen_watchchart.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_aboutserver.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_heartbeatindicator.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_preferenceswindow.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_selectserverwindow.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_serverconfiguration.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_systemstatus.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_watchchart.ui</file>
 
-    <file>gui/window.ui</file>
+    <file>src/gui/assets/window.ui</file>
   </gresource>
 </gresources>
