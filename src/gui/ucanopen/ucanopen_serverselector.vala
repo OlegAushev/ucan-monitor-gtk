@@ -1,7 +1,7 @@
 namespace Ucanopen {
 
-[GtkTemplate (ui = "/src/gui/assets/ucanopen/ucanopen_selectserverwindow.ui")]
-public class SelectServerWindow : Gtk.ApplicationWindow {
+[GtkTemplate (ui = "/src/gui/assets/ucanopen/ucanopen_serverselector.ui")]
+public class ServerSelector : Gtk.ApplicationWindow {
     [GtkChild]
     private unowned Adw.PreferencesGroup pref_group;
 
@@ -16,7 +16,7 @@ public class SelectServerWindow : Gtk.ApplicationWindow {
     const int server_max_count = 10;
     private Gtk.StringList _servers;
 
-    public SelectServerWindow(Gtk.Application app) {
+    public ServerSelector(Gtk.Application app) {
         Object (application: app);
 
         exit_button.clicked.connect(() => {

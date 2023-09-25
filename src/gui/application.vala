@@ -22,7 +22,7 @@ public class Application : Adw.Application {
         base.activate();
         var win = this.active_window;
         if (win == null) {
-            win = new Ucanopen.SelectServerWindow(this);
+            win = new Ucanopen.ServerSelector(this);
         }
         win.present();
         message("[gui] Waiting for ucanopen server selection...");

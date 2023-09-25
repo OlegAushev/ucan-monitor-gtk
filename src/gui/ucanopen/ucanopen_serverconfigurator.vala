@@ -1,7 +1,7 @@
 namespace Ucanopen {
 
-[GtkTemplate (ui = "/src/gui/assets/ucanopen/ucanopen_serverconfiguration.ui")]
-public class ServerConfiguration : Adw.Bin {
+[GtkTemplate (ui = "/src/gui/assets/ucanopen/ucanopen_serverconfigurator.ui")]
+public class ServerConfigurator : Adw.Bin {
     [GtkChild]
     private unowned Adw.ToastOverlay toast_overlay;
 
@@ -33,7 +33,7 @@ public class ServerConfiguration : Adw.Bin {
     private Gtk.StringList _objects_model;
 
 
-    public ServerConfiguration() {}
+    public ServerConfigurator() {}
 
     construct {
         for (int i = 0; i < _category_count_max; ++i) {

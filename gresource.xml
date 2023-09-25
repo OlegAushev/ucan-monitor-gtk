@@ -30,8 +30,8 @@
     <file>src/gui/assets/ucanopen/ucanopen_aboutserver.ui</file>
     <file>src/gui/assets/ucanopen/ucanopen_heartbeatindicator.ui</file>
     <file>src/gui/assets/ucanopen/ucanopen_preferenceswindow.ui</file>
-    <file>src/gui/assets/ucanopen/ucanopen_selectserverwindow.ui</file>
-    <file>src/gui/assets/ucanopen/ucanopen_serverconfiguration.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_serverconfigurator.ui</file>
+    <file>src/gui/assets/ucanopen/ucanopen_serverselector.ui</file>
     <file>src/gui/assets/ucanopen/ucanopen_systemstatus.ui</file>
     <file>src/gui/assets/ucanopen/ucanopen_watchchart.ui</file>
 

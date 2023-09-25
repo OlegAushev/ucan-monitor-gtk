@@ -163,7 +163,7 @@
                         <property name="title">Setup</property>
                         <property name="icon-name">preferences-system-symbolic</property>
                         <property name="child">
-                          <object class = "UcanopenServerConfiguration">
+                          <object class = "UcanopenServerConfigurator">
                           </object>
                         </property>
                       </object>

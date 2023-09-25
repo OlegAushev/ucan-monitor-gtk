@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <template class="UcanopenSelectServerWindow" parent="GtkApplicationWindow">
+  <template class="UcanopenServerSelector" parent="GtkApplicationWindow">
     <property name="title">uCAN Monitor</property>
     <property name="width-request">320</property>
     <property name="height-request">380</property>
