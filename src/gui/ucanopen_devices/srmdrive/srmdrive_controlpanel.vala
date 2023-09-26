@@ -104,7 +104,17 @@ public class ControlPanel : Adw.Bin {
         });
 
         resetdevice_button.clicked.connect(() => {
-            ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "reset_device");
+            Adw.MessageDialog dialog = new Adw.MessageDialog((Gtk.Window)root,
+                    "Warning!",
+                    "Device will be reset.");
+            dialog.add_response("cancel", "Cancel");
+            dialog.add_response("continue", "Continue");
+            dialog.set_response_appearance("cancel", DESTRUCTIVE);
+            dialog.set_response_appearance("continue", SUGGESTED);
+            dialog.response["continue"].connect(() => {
+                ucanopen_server_exec(Backend.Ucanopen.server, "ctl", "sys", "reset_device");
+            });
+            dialog.present();
         });
         
         //--------------------------------------------------------------------------------------------------------------
