@@ -17,13 +17,13 @@ extern "C" {
 
 void atvvcu_set_client_value(unsigned int tpdo_num, double value) {
     assert(tpdo_num <= 3);
-    atvvcu_server->set_client_value(static_cast<ucanopen::TpdoType>(tpdo_num), value);
+    atvvcu_server->set_client_value(static_cast<ucanopen::CobTpdo>(tpdo_num), value);
 }
 
 
 void atvvcu_set_server_value(unsigned int rpdo_num, double value) {
     assert(rpdo_num <= 3);
-    atvvcu_server->set_server_value(static_cast<ucanopen::RpdoType>(rpdo_num), value);
+    atvvcu_server->set_server_value(static_cast<ucanopen::CobRpdo>(rpdo_num), value);
 }
 
 

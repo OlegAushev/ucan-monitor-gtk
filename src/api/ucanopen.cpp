@@ -141,13 +141,13 @@ void ucanopen_server_get_nmt_state(const char* server_name, char* retbuf, int bu
 
 bool ucanopen_server_is_tpdo_ok(const char* server_name, uint tpdo_num) {
     assert(tpdo_num <= 3);
-    return ucanopen_client->server(server_name)->tpdo_service.is_ok(static_cast<ucanopen::TpdoType>(tpdo_num));
+    return ucanopen_client->server(server_name)->tpdo_service.is_ok(static_cast<ucanopen::CobTpdo>(tpdo_num));
 }
 
 
 unsigned long ucanopen_server_get_tpdo_data(const char* server_name, uint tpdo_num) {
     assert(tpdo_num <= 3);
-    return ucanopen::from_payload<uint64_t>(ucanopen_client->server(server_name)->tpdo_service.data(static_cast<ucanopen::TpdoType>(tpdo_num)));
+    return ucanopen::from_payload<uint64_t>(ucanopen_client->server(server_name)->tpdo_service.data(static_cast<ucanopen::CobTpdo>(tpdo_num)));
 }
 
 
