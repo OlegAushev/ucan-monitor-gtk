@@ -31,21 +31,21 @@ add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
 # Boost
-find_package(Boost 1.56 REQUIRED COMPONENTS system filesystem iostreams)
+# find_package(Boost 1.56 REQUIRED COMPONENTS system filesystem iostreams)
 
 ################################################################################
 # Headers and Sources
 set(app_incdirs
-	${PROJECT_SOURCE_DIR}
-	${PROJECT_SOURCE_DIR}/include
-	${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 file(GLOB_RECURSE app_sources CONFIGURE_DEPENDS
-	${PROJECT_SOURCE_DIR}/include/*.c
-	${PROJECT_SOURCE_DIR}/include/*.cpp
-	${PROJECT_SOURCE_DIR}/src/*.c
-	${PROJECT_SOURCE_DIR}/src/*.cpp
+    ${PROJECT_SOURCE_DIR}/include/*.c
+    ${PROJECT_SOURCE_DIR}/include/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/*.c
+    ${PROJECT_SOURCE_DIR}/src/*.cpp
 )
 
 ################################################################################
@@ -58,33 +58,33 @@ set(gresource_c ${CMAKE_CURRENT_BINARY_DIR}/gresource.c)
 file(GLOB_RECURSE ui_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/gui/*.ui)
 
 add_custom_command(
-	OUTPUT ${gresource_c}
-	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${gresource_c} ${gresource_xml}
-	VERBATIM
-	MAIN_DEPENDENCY ${gresource_xml}
-	DEPENDS	${ui_sources}
+    OUTPUT ${gresource_c}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${gresource_c} ${gresource_xml}
+    VERBATIM
+    MAIN_DEPENDENCY ${gresource_xml}
+    DEPENDS	${ui_sources}
 )
 
 add_custom_target(
-	gresource-target
-	DEPENDS ${gresource_c}
+    gresource-target
+    DEPENDS ${gresource_c}
 )
 
 ################################################################################
 # Vala Sources
 file(GLOB_RECURSE vala_sources RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS
-	${PROJECT_SOURCE_DIR}/src/gui/*.vala
+    ${PROJECT_SOURCE_DIR}/src/gui/*.vala
 )
 
 vala_precompile(vala_c
-	${vala_sources}
+    ${vala_sources}
 PACKAGES
-	gtk4
-	libadwaita-1
-	gee-0.8
+    gtk4
+    libadwaita-1
+    gee-0.8
 OPTIONS
-	--gresources=${PROJECT_SOURCE_DIR}/${gresource_xml}
+    --gresources=${PROJECT_SOURCE_DIR}/${gresource_xml}
 )
 #message("valac output: " ${vala_c})
 
@@ -94,55 +94,52 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(executable ${CMAKE_PROJECT_NAME})
 
 add_executable(${executable}
-	${app_sources}
-	${gresource_c}
-	${vala_c}
+    ${app_sources}
+    ${gresource_c}
+    ${vala_c}
 )
 
 add_dependencies(${executable} gresource-target)
 
 target_compile_definitions(${executable} PRIVATE
-	$<$<CONFIG:Debug>:DEBUG>
-	#${GTK4_CFLAGS_OTHER}
+    $<$<CONFIG:Debug>:DEBUG>
+    #${GTK4_CFLAGS_OTHER}
 )
 
 target_include_directories(${executable} PRIVATE
-	${app_incdirs}
+    ${app_incdirs}
 )
 
 target_link_libraries(${executable}
-	${GTK4_LIBRARIES}
-	Threads::Threads
+    ${GTK4_LIBRARIES}
+    Threads::Threads
+    git-info
 )
 
-target_link_libraries(${executable}
-	git-info
-)
-
-target_link_libraries(${executable}
-	Boost::system
-	Boost::filesystem
-    Boost::iostreams
-)
+# target_link_libraries(${executable}
+#     Boost::system
+#     Boost::filesystem
+#     Boost::iostreams
+# )
 
 ################################################################################
 # Compiler Options and Features
 target_compile_options(${executable} PRIVATE
-	#$<$<CONFIG:Debug>:-Og -g3 -ggdb>
-	#$<$<CONFIG:Release>:-Og -g0>
-	-Wall
-	-Wextra
-	-Wpedantic
-	-fdiagnostics-color=always
+    #$<$<CONFIG:Debug>:-Og -g3 -ggdb>
+    #$<$<CONFIG:Release>:-Og -g0>
+    -Wall
+    -Wextra
+    -Wpedantic
+    -fdiagnostics-color=always
 )
 
 target_compile_features(${executable} PRIVATE
-	c_std_11
-	cxx_std_23
+    c_std_11
+    cxx_std_23
 )
 
 target_link_options(${executable} PRIVATE
-	-Wl,--export-dynamic # sic! for signals
+    -Wl,--export-dynamic # sic! for signals
 )
 
 ################################################################################
@@ -153,8 +150,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ################################################################################
 # Set install target for flatpak-builder
 install(TARGETS ${CMAKE_PROJECT_NAME}
-	RUNTIME
-	DESTINATION /app/bin
+    RUNTIME
+    DESTINATION /app/bin
 )
 
 
