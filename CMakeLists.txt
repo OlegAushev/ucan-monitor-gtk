@@ -31,7 +31,7 @@ add_definitions(${GTK4_CFLAGS_OTHER})
 
 ################################################################################
 # Boost
-# find_package(Boost 1.56 REQUIRED COMPONENTS system filesystem iostreams)
+find_package(Boost 1.56 REQUIRED COMPONENTS system filesystem iostreams)
 
 ################################################################################
 # Headers and Sources
@@ -116,11 +116,11 @@ target_link_libraries(${executable}
     git-info
 )
 
-# target_link_libraries(${executable}
-#     Boost::system
-#     Boost::filesystem
-#     Boost::iostreams
-# )
+target_link_libraries(${executable}
+    Boost::system
+    Boost::filesystem
+    Boost::iostreams
+)
 
 ################################################################################
 # Compiler Options and Features
